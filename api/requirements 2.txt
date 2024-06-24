@@ -1,7 +1,6 @@
 fastapi
 uvicorn[standard]
-gunicorn
-python-dotenv
-litellm
 openai
 qdrant-client
+python-dotenv
+litellm
