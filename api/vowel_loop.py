@@ -121,12 +121,18 @@ async def experience(messages):
     search_results = search(embedding)
     deduplicated_results = deduplicate(search_results)
 
-    reranked_prompt = f"{prompt}\n\nSearch Results:\n{[r.payload['content'] for r in deduplicated_results]}\n\nReranked Search Results:"
+    # Create a string of search results
+    search_results_str = "\n".join([r.payload['content'] for r in deduplicated_results])
+
+    reranked_prompt = f"{prompt}\n\nSearch Results:\n{search_results_str}\n\nReranked Search Results:"
     messages.append({"role": "system", "content": experience_system_prompt})
     messages.append({"role": "user", "content": reranked_prompt})
     completion = await chat_completion(messages)
     print(f"Experience: {completion}")
-    return completion
+
+    # Combine search results and completion
+    combined_result = f"Search Results:\n{search_results_str}\n\nGenerated Response:\n{completion}"
+    return combined_result
 
 async def intention(messages):
     intention_system_prompt = """
