@@ -23,12 +23,13 @@ async def read_root():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    print("websocket_endpoint called!")
     await websocket.accept()
     try:
+        print("WebSocket connection open")
         while True:
             data = await websocket.receive_json()
             user_prompt = data.get("prompt")
-            print(f"Received prompt: {user_prompt}")
             if user_prompt:
                 await vowel_loop(user_prompt, websocket)
     except Exception as e:

@@ -24,7 +24,7 @@ const StreamChat = () => {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log('WebSocket message received:', data);
-      if (data.content) {
+      if (data.step) {
         setMessages((prevMessages) => [...prevMessages, { step: data.step, content: data.content }]);
       } else if (data.error) {
         console.error(`WebSocket message received: ${data.error}`);

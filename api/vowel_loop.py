@@ -64,12 +64,9 @@ async def chat_completion(messages, model="gpt-4o", max_tokens=4000, n=1, stop=N
         max_tokens=max_tokens,
         n=n,
         stop=stop,
-        temperature=temperature,
-        stream=True
+        temperature=temperature
     )
-    for chunk in response:
-        if 'choices' in chunk and 'delta' in chunk['choices'][0]:
-            yield chunk['choices'][0]['delta']['content']
+    return response.choices[0].message.content
 
 def upsert(id, input_string, embedding, collection_name="choir"):
         try:
@@ -112,9 +109,9 @@ async def action(messages, user_prompt):
 
     messages.append({"role": "system", "content": action_system_prompt})
     messages.append({"role": "user", "content": user_prompt})
-    async for completion in chat_completion(messages):
-        print(f"Action: {completion}")
-        return completion
+    completion = await chat_completion(messages)
+    print(f"Action: {completion}")
+    return completion
 
 async def experience(messages):
     experience_system_prompt = """This is step 2 of the Vowel Loop, Experience: Search your memory for relevant context that could help refine the response from step 1."""
@@ -127,9 +124,9 @@ async def experience(messages):
     reranked_prompt = f"{prompt}\n\nSearch Results:\n{[r.payload['content'] for r in deduplicated_results]}\n\nReranked Search Results:"
     messages.append({"role": "system", "content": experience_system_prompt})
     messages.append({"role": "user", "content": reranked_prompt})
-    async for completion in chat_completion(messages):
-        print(f"Experience: {completion}")
-        return completion
+    completion = await chat_completion(messages)
+    print(f"Experience: {completion}")
+    return completion
 
 async def intention(messages):
     intention_system_prompt = """
@@ -139,9 +136,9 @@ async def intention(messages):
     intention_prompt = f"{messages[-1]['content']}\n\nReflection on goal satisfiability:"
     messages.append({"role": "system", "content": intention_system_prompt})
     messages.append({"role": "user", "content": intention_prompt})
-    async for completion in chat_completion(messages):
-        print(f"Intention: {completion}")
-        return completion
+    completion = await chat_completion(messages)
+    print(f"Intention: {completion}")
+    return completion
 
 async def observation(messages):
     observation_system_prompt = """This is step 4 of the Vowel Loop, Observation: Note any key insights from this iteration that could help improve future responses.
@@ -151,9 +148,9 @@ async def observation(messages):
     observation_prompt = f"{messages[-1]['content']}\n\nNote for future recall:"
     messages.append({"role": "system", "content": observation_system_prompt})
     messages.append({"role": "user", "content": observation_prompt})
-    async for completion in chat_completion(messages):
-        print(f"Observation: {completion}")
-        return completion
+    completion = await chat_completion(messages)
+    print(f"Observation: {completion}")
+    return completion
 
 async def update(messages):
     update_system_prompt = """This is step 5 of the Vowel Loop, Update: Decide whether to perform another round of the loop to further refine the response or to provide a final answer to the user. Respond with 'LOOP' or 'RETURN'."""
@@ -161,64 +158,52 @@ async def update(messages):
     update_prompt = f"{messages[-1]['content']}\n\nShould we LOOP or RETURN final response?"
     messages.append({"role": "system", "content": update_system_prompt})
     messages.append({"role": "user", "content": update_prompt})
-    async for completion in chat_completion(messages, max_tokens=1):
-        print(f"Update: {completion}")
 
-        observation_result = messages[-2]["content"].replace("Observation: ", "")
-        save_observation(observation_result)
+    completion = await chat_completion(messages, max_tokens=1)
+    print(f"Update: {completion}")
 
-        if completion and completion.lower() == "return":
-            return "return"
-        elif completion and completion.lower() == "loop":
-            print("Looping...\n")
-            return "loop"
-        else:
-            print("Invalid update response. Please try again.")
-            return "invalid"
+    observation_result = messages[-2]["content"].replace("Observation: ", "")
+    save_observation(observation_result)
+
+    if completion and completion.lower() == "return":
+        return "return"
+    elif completion and completion.lower() == "loop":
+        print("Looping...\n")
+        return "loop"
+    else:
+        print("Invalid update response. Please try again.")
+        return "invalid"
 
 async def yield_response(messages):
     yield_system_prompt = """This is the final step of the Vowel Loop, Yield: Synthesize the accumulated context from all iterations and provide a final response that comprehensively addresses the user's original prompt."""
     messages.append({"role": "system", "content": yield_system_prompt})
     messages.append({"role": "user", "content": "Synthesize the accumulated context and provide a final response:"})
-    async for final_response in chat_completion(messages):
-        return final_response
+    final_response = await chat_completion(messages)
+    print(f"Final Response: {final_response}")
+    return final_response
 
 async def vowel_loop(user_prompt, websocket: WebSocket):
+    print("XXXXXX")
     messages = [{"role": "user", "content": user_prompt}]
+    for step_function in [action, experience, intention, observation, update]:
+        if step_function == action:
+            result = await step_function(messages, user_prompt)  # Pass user_prompt only to action
+            print(f"Action: {result}")
+        else:
+            result = await step_function(messages)
+            print(f"{step_function.__name__.capitalize()}: {result}")
+        messages.append({"role": "assistant", "content": f"{step_function.__name__.capitalize()}: {result}"})
+        await websocket.send_json({"step": step_function.__name__, "content": result})
 
-    # Action Step
-    action_result = await action(messages, user_prompt)
-    messages.append({"role": "assistant", "content": f"Action: {action_result}"})
-    print(f"Sending action result: {action_result}")
-    await websocket.send_json({"step": "action", "content": action_result})
+        if step_function == update:
+            if result.lower() == "return":
+                final_response = await yield_response(messages)
+                await websocket.send_json({"step": "final", "content": final_response})
+                return  # Exit after sending final response
+            elif result.lower() == "loop":
+                print("Looping...")
+                return await vowel_loop(user_prompt, websocket)  # Recursive call to restart the loop
 
-    # Experience Step
-    experience_result = await experience(messages)
-    messages.append({"role": "assistant", "content": f"Experience: {experience_result}"})
-    print(f"Sending experience result: {experience_result}")
-    await websocket.send_json({"step": "experience", "content": experience_result})
-
-    # Intention Step
-    intention_result = await intention(messages)
-    messages.append({"role": "assistant", "content": f"Intention: {intention_result}"})
-    print(f"Sending intention result: {intention_result}")
-    await websocket.send_json({"step": "intention", "content": intention_result})
-
-    # Observation Step
-    observation_result = await observation(messages)
-    messages.append({"role": "assistant", "content": f"Observation: {observation_result}"})
-    print(f"Sending observation result: {observation_result}")
-    await websocket.send_json({"step": "observation", "content": observation_result})
-
-    # Update Step
-    update_result = await update(messages)
-    print(f"Sending update result: {update_result}")
-    await websocket.send_json({"step": "update", "content": update_result})
-
-    if update_result.lower() == "return":
-        final_response = await yield_response(messages)
-        print(f"Sending final response: {final_response}")
-        await websocket.send_json({"step": "final", "content": final_response})
-        return final_response
-    elif update_result.lower() == "loop":
-        await vowel_loop(user_prompt, websocket)  # Continue the loop if needed
+    # If loop exits without "return" or "loop", handle unexpected exit here
+    print("Unexpected exit from the Vowel Loop.")
+    await websocket.send_json({"error": "Unexpected exit from the Vowel Loop."})
