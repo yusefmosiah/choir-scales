@@ -1,4 +1,4 @@
-from openai import OpenAI
+from litellm import completion, embedding
 from qdrant_client import QdrantClient, models
 from qdrant_client.http.exceptions import ApiException, UnexpectedResponse
 from datetime import datetime
@@ -6,16 +6,14 @@ import logging
 import uuid
 import os
 import asyncio
-from fastapi import WebSocket
-
+from starlette.websockets import WebSocket, WebSocketState
 from dotenv import load_dotenv
 
 load_dotenv()
 
-openai_client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 qdrant_client = QdrantClient(url=os.environ.get("QDRANT_URL"), api_key=os.environ.get("QDRANT_API_KEY"))
 
-def embed(input_text, model_name="text-embedding-ada-002", chunk_size=10000, overlap=5000):
+async def embed(input_text, model_name="text-embedding-ada-002", chunk_size=10000, overlap=5000):
     chunks = []
     start = 0
     while start < len(input_text):
@@ -25,15 +23,15 @@ def embed(input_text, model_name="text-embedding-ada-002", chunk_size=10000, ove
 
     embeddings = []
     for chunk in chunks:
-        embedding_response = openai_client.embeddings.create(
+        embedding_response = embedding(
             input=chunk,
             model=model_name
         )
-        embeddings.append(embedding_response.data[0].embedding)
+        embeddings.append(embedding_response.data[0]['embedding'])
 
     return embeddings
 
-def search(embeddings, collection_name="choir", search_limit=40):
+async def search(embeddings, collection_name="choir", search_limit=80):
     search_results = []
     for embedding in embeddings:
         results = qdrant_client.search(
@@ -57,18 +55,16 @@ def deduplicate(search_results):
     print(f"Deduplicated {len(search_results)} search results to {len(deduplicated_results)} unique results: {deduplicated_results}")
     return deduplicated_results
 
-async def chat_completion(messages, model="gpt-4o", max_tokens=4000, n=1, stop=None, temperature=0.7):
-    response = openai_client.chat.completions.create(
+async def chat_completion(messages, model="gpt-4o", max_tokens=4000, temperature=0.7):
+    response = completion(
         model=model,
         messages=messages,
         max_tokens=max_tokens,
-        n=n,
-        stop=stop,
         temperature=temperature
     )
     return response.choices[0].message.content
 
-def upsert(id, input_string, embedding, collection_name="choir"):
+async def upsert(id, input_string, embedding, collection_name="choir"):
         try:
             qdrant_client.upsert(
                 collection_name=collection_name,
@@ -85,22 +81,25 @@ def upsert(id, input_string, embedding, collection_name="choir"):
             logging.error(f"Error during upsert operation: {e}")
             # Handle the error as needed
 
-def save_observation(observation):
+async def save_observation(observation):
     try:
-        embedding = embed(observation)
+        print(f"Saving observation: {observation}")
+        embeddings = await embed(observation)
+
         observation_id = str(uuid.uuid4())  # Generate a unique ID for the observation
 
-        upsert(
-            id=observation_id,
-            input_string=observation,
-            embedding=embedding
-        )
+        for embedding in embeddings:
+            await upsert(
+                id=observation_id,
+                input_string=observation,
+                embedding=embedding
+            )
 
     except Exception as e:
         logging.error(f"Error during save_observation: {e}")
         # Handle the error as needed
 
-async def action(messages, user_prompt):
+async def action(messages):
     action_system_prompt = """
     This is the Vowel Loop, a decision-making model that turns the OODA loop on its head. Rather than accumulating data before acting, you act with "beginners mind"/emptiness, then reflect on your "System 1" action.
     A user has asked you to engage in the Vowel Loop reasoning process.
@@ -108,7 +107,6 @@ async def action(messages, user_prompt):
     """
 
     messages.append({"role": "system", "content": action_system_prompt})
-    messages.append({"role": "user", "content": user_prompt})
     completion = await chat_completion(messages)
     print(f"Action: {completion}")
     return completion
@@ -117,8 +115,8 @@ async def experience(messages):
     experience_system_prompt = """This is step 2 of the Vowel Loop, Experience: Search your memory for relevant context that could help refine the response from step 1."""
 
     prompt = messages[-1]["content"]
-    embedding = embed(prompt)
-    search_results = search(embedding)
+    embedding = await embed(prompt)
+    search_results = await search(embedding)
     deduplicated_results = deduplicate(search_results)
 
     # Create a string of search results
@@ -156,6 +154,7 @@ async def observation(messages):
     messages.append({"role": "user", "content": observation_prompt})
     completion = await chat_completion(messages)
     print(f"Observation: {completion}")
+    await save_observation(completion)
     return completion
 
 async def update(messages):
@@ -167,9 +166,6 @@ async def update(messages):
 
     completion = await chat_completion(messages, max_tokens=1)
     print(f"Update: {completion}")
-
-    observation_result = messages[-2]["content"].replace("Observation: ", "")
-    save_observation(observation_result)
 
     if completion and completion.lower() == "return":
         return "return"
@@ -189,27 +185,31 @@ async def yield_response(messages):
     return final_response
 
 async def vowel_loop(user_prompt, websocket: WebSocket):
-    print("XXXXXX")
+    print("Starting Vowel Loop")
     messages = [{"role": "user", "content": user_prompt}]
     for step_function in [action, experience, intention, observation, update]:
-        if step_function == action:
-            result = await step_function(messages, user_prompt)  # Pass user_prompt only to action
-            print(f"Action: {result}")
-        else:
-            result = await step_function(messages)
-            print(f"{step_function.__name__.capitalize()}: {result}")
-        messages.append({"role": "assistant", "content": f"{step_function.__name__.capitalize()}: {result}"})
-        await websocket.send_json({"step": step_function.__name__, "content": result})
+        result = await step_function(messages)
+        print(f"{step_function.__name__.capitalize()}: {result}")
+        messages.append({"role": "assistant", "content": result})
 
+        # Send the result immediately after each step
+        if websocket.client_state == WebSocketState.CONNECTED:
+            await websocket.send_json({"step": step_function.__name__, "content": result})
+            print(f"Sent {step_function.__name__} result to client.")
+            await asyncio.sleep(0.01)  # Add a small delay to ensure proper ordering
+        else:
+            print("WebSocket is not connected.")
+
+        # Check the result of the update step to decide whether to exit or loop
         if step_function == update:
             if result.lower() == "return":
                 final_response = await yield_response(messages)
                 await websocket.send_json({"step": "final", "content": final_response})
+                print("Sent final response to client.")
                 return  # Exit after sending final response
             elif result.lower() == "loop":
                 print("Looping...")
                 return await vowel_loop(user_prompt, websocket)  # Recursive call to restart the loop
 
-    # If loop exits without "return" or "loop", handle unexpected exit here
     print("Unexpected exit from the Vowel Loop.")
     await websocket.send_json({"error": "Unexpected exit from the Vowel Loop."})
