@@ -28,16 +28,22 @@ class VowelLoop:
         for step_function in [self._action, self._experience, self._intention, self._observation, self._update]:
             result = await step_function()
             await self._send_result(websocket, step_function.__name__.replace("_", ""), result)
-            await asyncio.sleep(0.1) # needed else steps bunch together
+            await asyncio.sleep(0.1)  # needed else steps bunch together
 
             if step_function == self._update:
-                if result.lower() == "return":
+                if result == "return" or result == "error":
                     final_response = await self._yield()
                     await self._send_result(websocket, "final", final_response)
-                    await asyncio.sleep(0.1) # needed else steps bunch together
+                    await asyncio.sleep(0.1)  # needed else steps bunch together
                     self.state.complete()
-                elif result.lower() == "loop":
+                elif result == "loop":
                     self.state.loop()
+                else:
+                    logger.error(f"Unexpected result from update step: {result}")
+                    final_response = await self._yield()
+                    await self._send_result(websocket, "final", final_response)
+                    await asyncio.sleep(0.1)
+                    self.state.complete()
 
         return self.state.messages
 
@@ -127,9 +133,32 @@ class VowelLoop:
         update_message = f"{self.state.messages[-1]['content']}\n\nShould we LOOP or RETURN final response?"
         self.state.messages.append({"role": "system", "content": update_prompt})
         self.state.messages.append({"role": "user", "content": update_message})
-        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE)
+
+        functions = [
+            {
+                "name": "update_function",
+                "description": "Decide whether to loop or return the final response",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "decision": {
+                            "type": "string",
+                            "enum": ["LOOP", "RETURN"]
+                        }
+                    },
+                    "required": ["decision"]
+                }
+            }
+        ]
+
+        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE, functions)
         self.state.messages.append({"role": "assistant", "content": result})
-        return result.lower()
+
+        if result.lower() in ["loop", "return"]:
+            return result.lower()
+        else:
+            logger.error(f"Unexpected result from chat completion: {result}")
+            return "error"
 
     async def _yield(self) -> str:
         yield_prompt = """
@@ -139,6 +168,36 @@ class VowelLoop:
         """
         self.state.messages.append({"role": "system", "content": yield_prompt})
         self.state.messages.append({"role": "user", "content": "Synthesize the accumulated context and provide a final response:"})
-        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE)
+
+        functions = [
+            {
+                "name": "yield_function",
+                "description": "Synthesize the accumulated context and provide a final response",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "final_response": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["final_response"]
+                }
+            }
+        ]
+
+        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE, functions)
         self.state.messages.append({"role": "assistant", "content": result})
         return result
+
+    async def update_function(self, decision: str) -> str:
+        if decision.lower() == "loop":
+            self.state.loop()
+            return "LOOP"
+        elif decision.lower() == "return":
+            self.state.complete()
+            return "RETURN"
+        else:
+            return "Invalid decision"
+
+    async def yield_function(self, final_response: str) -> str:
+        return final_response
