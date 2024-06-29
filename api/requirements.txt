@@ -5,3 +5,5 @@ python-dotenv
 litellm
 openai
 qdrant-client
+pydantic
+pydantic-settings

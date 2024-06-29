@@ -1,7 +1,10 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketDisconnect
-from vowel_loop import vowel_loop
+from vowel_loop import VowelLoop
+from config import Config
+from database import DatabaseClient
+from utils import logger
 
 app = FastAPI()
 
@@ -17,6 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+config = Config()
+db_client = DatabaseClient(config)
+vowel_loop = VowelLoop(config, db_client)
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -26,19 +33,20 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_json()
             user_prompt = data.get("prompt")
             if user_prompt:
-                chat_history = await vowel_loop(user_prompt, websocket, chat_history)
+                chat_history = await vowel_loop.run(user_prompt, websocket, chat_history)
             else:
                 await websocket.send_json({"error": "No prompt provided"})
     except WebSocketDisconnect:
-        print("WebSocket disconnected")
+        logger.info("WebSocket disconnected")
     except Exception as e:
-        print(f"Error: {str(e)}")
+        logger.error(f"Error: {str(e)}")
         try:
             await websocket.send_json({"error": str(e)})
         except RuntimeError:
-            print("Failed to send error message, WebSocket already closed")
+            logger.error("Failed to send error message, WebSocket already closed")
     finally:
         try:
             await websocket.close()
         except RuntimeError:
-            print("WebSocket already closed")
+            logger.error("WebSocket already closed")
+
