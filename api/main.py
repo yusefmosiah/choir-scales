@@ -17,21 +17,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def read_root():
-    print("read root called!\n\nHello, World!")
-    return {"message": "Hello, World!"}
-
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    chat_history = []
     try:
-        data = await websocket.receive_json()
-        user_prompt = data.get("prompt")
-        if user_prompt:
-            await vowel_loop(user_prompt, websocket)
-        else:
-            await websocket.send_json({"error": "No prompt provided"})
+        while True:
+            data = await websocket.receive_json()
+            user_prompt = data.get("prompt")
+            if user_prompt:
+                chat_history = await vowel_loop(user_prompt, websocket, chat_history)
+            else:
+                await websocket.send_json({"error": "No prompt provided"})
     except WebSocketDisconnect:
         print("WebSocket disconnected")
     except Exception as e:

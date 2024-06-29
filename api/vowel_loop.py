@@ -184,32 +184,31 @@ async def yield_response(messages):
     print(f"Final Response: {final_response}")
     return final_response
 
-async def vowel_loop(user_prompt, websocket: WebSocket):
+async def vowel_loop(user_prompt, websocket: WebSocket, chat_history=[]):
     print("Starting Vowel Loop")
-    messages = [{"role": "user", "content": user_prompt}]
+    messages = chat_history + [{"role": "user", "content": user_prompt}]
     for step_function in [action, experience, intention, observation, update]:
         result = await step_function(messages)
         print(f"{step_function.__name__.capitalize()}: {result}")
         messages.append({"role": "assistant", "content": result})
 
-        # Send the result immediately after each step
         if websocket.client_state == WebSocketState.CONNECTED:
             await websocket.send_json({"step": step_function.__name__, "content": result})
             print(f"Sent {step_function.__name__} result to client.")
-            await asyncio.sleep(0.01)  # Add a small delay to ensure proper ordering
+            await asyncio.sleep(0.1)
         else:
             print("WebSocket is not connected.")
 
-        # Check the result of the update step to decide whether to exit or loop
         if step_function == update:
             if result.lower() == "return":
                 final_response = await yield_response(messages)
                 await websocket.send_json({"step": "final", "content": final_response})
                 print("Sent final response to client.")
-                return  # Exit after sending final response
+                return messages  # Return updated chat history
             elif result.lower() == "loop":
                 print("Looping...")
-                return await vowel_loop(user_prompt, websocket)  # Recursive call to restart the loop
+                return await vowel_loop(user_prompt, websocket, messages)
 
     print("Unexpected exit from the Vowel Loop.")
     await websocket.send_json({"error": "Unexpected exit from the Vowel Loop."})
+    return messages
