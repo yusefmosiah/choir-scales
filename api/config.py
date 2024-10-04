@@ -8,8 +8,11 @@ class Config(BaseSettings):
     QDRANT_URL: str = os.getenv("QDRANT_URL", "http://localhost:6333")
     QDRANT_API_KEY: str = os.getenv("QDRANT_API_KEY", "")
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-    EMBEDDING_MODEL: str = "text-embedding-ada-002"
-    CHAT_MODEL: str = "gpt-4o"
+    AZURE_API_KEY: str = os.getenv("AZURE_API_KEY", "")
+    AZURE_API_BASE: str = os.getenv("AZURE_API_BASE", "")
+    AZURE_API_VERSION: str = "2024-02-15-preview"
+    EMBEDDING_MODEL: str = "choir-embeddings-ada-002"
+    CHAT_MODEL: str = "azure/choir-gpt-4o"
     MAX_TOKENS: int = 4000
     TEMPERATURE: float = 0.7
     COLLECTION_NAME: str = "choir"

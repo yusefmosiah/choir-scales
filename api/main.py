@@ -1,7 +1,7 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketDisconnect
-from vowel_loop import VowelLoop
+from chorus import Chorus
 from config import Config
 from database import DatabaseClient
 from utils import logger
@@ -22,7 +22,7 @@ app.add_middleware(
 
 config = Config()
 db_client = DatabaseClient(config)
-vowel_loop = VowelLoop(config, db_client)
+chorus = Chorus(config, db_client)
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -33,7 +33,7 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_json()
             user_prompt = data.get("prompt")
             if user_prompt:
-                chat_history = await vowel_loop.run(user_prompt, websocket, chat_history)
+                chat_history = await chorus.run(user_prompt, websocket, chat_history)
             else:
                 await websocket.send_json({"error": "No prompt provided"})
     except WebSocketDisconnect:
@@ -49,4 +49,3 @@ async def websocket_endpoint(websocket: WebSocket):
             await websocket.close()
         except RuntimeError:
             logger.error("WebSocket already closed")
-

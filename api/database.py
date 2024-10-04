@@ -44,7 +44,7 @@ class DatabaseClient:
                 points=[
                     models.PointStruct(
                         id=str(uuid.uuid4()),
-                        payload={"content": input_string, "created_at": datetime.now().isoformat(), "agent": "vowel_loop_v1"},
+                        payload={"content": input_string, "created_at": datetime.now().isoformat(), "agent": "chorus.000"},
                         vector=embedding,
                     )
                 ],

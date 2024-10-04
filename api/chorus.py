@@ -4,10 +4,10 @@ from typing import List, Dict, Any
 from starlette.websockets import WebSocket, WebSocketState
 from config import Config
 from database import DatabaseClient
-from models import Message, VowelLoopState
+from models import Message, ChorusState
 from utils import logger, get_embedding, chat_completion, chunk_text
 
-class VowelLoopStep(Enum):
+class ChorusStep(Enum):
     ACTION = "action"
     EXPERIENCE = "experience"
     INTENTION = "intention"
@@ -15,11 +15,11 @@ class VowelLoopStep(Enum):
     UPDATE = "update"
     YIELD = "yield"
 
-class VowelLoop:
+class Chorus:
     def __init__(self, config: Config, db_client: DatabaseClient):
         self.config = config
         self.db_client = db_client
-        self.state = VowelLoopState()
+        self.state = ChorusState()
 
     async def run(self, user_prompt: str, websocket: WebSocket, chat_history: List[Dict[str, str]]) -> List[Dict[str, str]]:
         self.state.reset()
@@ -31,10 +31,10 @@ class VowelLoop:
             await asyncio.sleep(0.1)  # needed else steps bunch together
 
             if step_function == self._update:
-                if result == "return" or result == "error":
+                if result in ["return", "error"]:
                     final_response = await self._yield()
                     await self._send_result(websocket, "final", final_response)
-                    await asyncio.sleep(0.1)  # needed else steps bunch together
+                    await asyncio.sleep(0.1)
                     self.state.complete()
                 elif result == "loop":
                     self.state.loop()
@@ -47,7 +47,7 @@ class VowelLoop:
 
         return self.state.messages
 
-    async def _execute_step(self, step: VowelLoopStep) -> str:
+    async def _execute_step(self, step: ChorusStep) -> str:
         step_function = getattr(self, f"_{step.value}")
         return await step_function()
 
@@ -62,13 +62,13 @@ class VowelLoop:
         await websocket.send_json({"status": "interrupted"})
         self.state.clear_interrupt()
 
-    def _get_next_step(self) -> VowelLoopStep:
-        return VowelLoopStep(self.state.current_step)
+    def _get_next_step(self) -> ChorusStep:
+        return ChorusStep(self.state.current_step)
 
     async def _action(self) -> str:
         action_prompt = """
-        This is the Vowel Loop, a decision-making model that turns the OODA loop on its head.
-        Rather than accumulating data before acting, you act with "beginners mind"/emptiness,
+        This is the Chorus Loop, a decision-making model that turns the OODA loop on its head.
+        Rather than accumulating data before acting, you act with "beginner's mind"/emptiness,
         then reflect on your "System 1" action.
         This is step 1, Action: Provide an initial response to the user's prompt to the best of your ability.
         """
@@ -78,7 +78,7 @@ class VowelLoop:
         return result
 
     async def _experience(self) -> str:
-        experience_prompt = "This is step 2 of the Vowel Loop, Experience: Search your memory for relevant context that could help refine the response from step 1."
+        experience_prompt = "This is step 2 of the Chorus Loop, Experience: Search your memory for relevant context that could help refine the response from step 1."
         prompt = self.state.messages[-1]["content"]
         embedding = await get_embedding(prompt, self.config.EMBEDDING_MODEL)
         search_results = await self.db_client.search(embedding)
@@ -94,7 +94,7 @@ class VowelLoop:
 
     async def _intention(self) -> str:
         intention_prompt = """
-        This is step 3 of the Vowel Loop, Intention: Impute the user's intention,
+        This is step 3 of the Chorus Loop, Intention: Impute the user's intention,
         reflecting on whether the query can be satisfactorily responded to based on
         the priors recalled in the Experience step
         """
@@ -107,7 +107,7 @@ class VowelLoop:
 
     async def _observation(self) -> str:
         observation_prompt = """
-        This is step 4 of the Vowel Loop, Observation: Note any key insights from this iteration
+        This is step 4 of the Chorus Loop, Observation: Note any key insights from this iteration
         that could help improve future responses. This note will be saved to a global vector
         database accessible to all instances of this AI Agent, for all users.
         Don't save any private information.
@@ -126,7 +126,7 @@ class VowelLoop:
 
     async def _update(self) -> str:
         update_prompt = """
-        This is step 5 of the Vowel Loop, Update: Decide whether to perform another round
+        This is step 5 of the Chorus Loop, Update: Decide whether to perform another round
         of the loop to further refine the response or to provide a final answer to the user.
         Respond with 'LOOP' or 'RETURN'.
         """
@@ -162,7 +162,7 @@ class VowelLoop:
 
     async def _yield(self) -> str:
         yield_prompt = """
-        This is the final step of the Vowel Loop, Yield: Synthesize the accumulated context
+        This is the final step of the Chorus Loop, Yield: Synthesize the accumulated context
         from all iterations and provide a final response that comprehensively addresses
         the user's original prompt.
         """

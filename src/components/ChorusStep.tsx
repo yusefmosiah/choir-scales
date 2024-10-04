@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-interface VowelLoopStepProps {
+interface ChorusStepProps {
   step: string;
   content: string;
 }
 
-const VowelLoopStep: React.FC<VowelLoopStepProps> = ({ step, content }) => {
+const ChorusStep: React.FC<ChorusStepProps> = ({ step, content }) => {
   const [isExpanded, setIsExpanded] = useState(step === 'action');
 
   return (
@@ -23,4 +23,4 @@ const VowelLoopStep: React.FC<VowelLoopStepProps> = ({ step, content }) => {
   );
 };
 
-export default VowelLoopStep;
+export default ChorusStep;

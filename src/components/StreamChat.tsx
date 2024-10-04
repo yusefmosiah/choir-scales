@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import VowelLoopStep from './VowelLoopStep';
+import ChorusStep from './ChorusStep';
 import FinalResponse from './FinalResponse';
 import SourcesColumn from './SourcesColumn';
 
@@ -105,7 +105,7 @@ const StreamChat = () => {
                   message.step === 'final' ? (
                     <FinalResponse key={messageIndex} content={message.content} sources={sources} />
                   ) : (
-                    <VowelLoopStep key={messageIndex} step={message.step} content={message.content} />
+                    <ChorusStep key={messageIndex} step={message.step} content={message.content} />
                   )
                 ))}
               </div>

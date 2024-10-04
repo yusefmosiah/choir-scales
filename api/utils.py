@@ -1,6 +1,7 @@
 import logging
 from litellm import completion, embedding
 from typing import List, Dict, Any
+from api.config import Config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -8,11 +9,14 @@ logger = logging.getLogger(__name__)
 
 async def get_embedding(input_text: str, model: str) -> List[float]:
     try:
-        embedding_response = embedding(
+        response = embedding(
+            model=f"azure/{model}",
             input=input_text,
-            model=model
+            api_key=Config().AZURE_API_KEY,
+            api_base=Config().AZURE_API_BASE,
+            api_version=Config().AZURE_API_VERSION
         )
-        return embedding_response.data[0]['embedding']
+        return response['data'][0]['embedding']
     except Exception as e:
         logger.error(f"Error getting embedding: {e}")
         return []

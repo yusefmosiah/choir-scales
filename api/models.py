@@ -5,10 +5,10 @@ class Message(Dict):
     role: str
     content: str
 
-class VowelLoopState:
+class ChorusState:
     def __init__(self):
         self.messages: List[Message] = []
-        self.current_step: VowelLoopStep = VowelLoopStep.ACTION
+        self.current_step: ChorusStep = ChorusStep.ACTION
         self.is_complete: bool = False
         self.is_interrupted: bool = False
 
@@ -25,9 +25,9 @@ class VowelLoopState:
         self.is_interrupted = False
 
     def loop(self):
-        self.current_step = VowelLoopStep.ACTION
+        self.current_step = ChorusStep.ACTION
 
-class VowelLoopStep(Enum):
+class ChorusStep(Enum):
     ACTION = "action"
     EXPERIENCE = "experience"
     INTENTION = "intention"
