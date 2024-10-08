@@ -4,16 +4,8 @@ from typing import List, Dict, Any
 from starlette.websockets import WebSocket, WebSocketState
 from config import Config
 from database import DatabaseClient
-from models import Message, ChorusState
+from models import Message, ChorusState, ChorusStep
 from utils import logger, get_embedding, chat_completion, chunk_text
-
-class ChorusStep(Enum):
-    ACTION = "action"
-    EXPERIENCE = "experience"
-    INTENTION = "intention"
-    OBSERVATION = "observation"
-    UPDATE = "update"
-    YIELD = "yield"
 
 class Chorus:
     def __init__(self, config: Config, db_client: DatabaseClient):
@@ -53,7 +45,12 @@ class Chorus:
 
     async def _send_result(self, websocket: WebSocket, step: str, content: str):
         if websocket.client_state == WebSocketState.CONNECTED:
-            await websocket.send_json({"step": step, "content": content})
+            message = {"step": step, "content": content}
+            # For the 'experience' step, include sources as plain strings
+            if step == "experience" and isinstance(content, dict):
+                message["content"] = content.get("content", "")
+                message["sources"] = content.get("sources", [])
+            await websocket.send_json(message)
             logger.info(f"Sent {step} result to client.")
         else:
             logger.warning("WebSocket is not connected.")
@@ -77,20 +74,22 @@ class Chorus:
         self.state.messages.append({"role": "assistant", "content": result})
         return result
 
-    async def _experience(self) -> str:
+    async def _experience(self) -> Dict[str, Any]:
+        #todo: rerank sources in ui;
+        #todo: display appropriate source meta
         experience_prompt = "This is step 2 of the Chorus Loop, Experience: Search your memory for relevant context that could help refine the response from step 1."
         prompt = self.state.messages[-1]["content"]
         embedding = await get_embedding(prompt, self.config.EMBEDDING_MODEL)
         search_results = await self.db_client.search(embedding)
 
-        search_results_str = "\n".join([r['payload']['content'] for r in search_results])
+        search_results_str = "\n".join(search_results)
         reranked_prompt = f"{prompt}\n\nSearch Results:\n{search_results_str}\n\nReranked Search Results:"
 
         self.state.messages.append({"role": "system", "content": experience_prompt})
         self.state.messages.append({"role": "user", "content": reranked_prompt})
         result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE)
         self.state.messages.append({"role": "assistant", "content": result})
-        return f"Search Results:\n{search_results_str}\n\nGenerated Response:\n{result}"
+        return {"content": result, "sources": search_results}
 
     async def _intention(self) -> str:
         intention_prompt = """
@@ -151,7 +150,13 @@ class Chorus:
             }
         ]
 
-        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE, functions)
+        result = await chat_completion(
+            self.state.messages,
+            self.config.CHAT_MODEL,
+            self.config.MAX_TOKENS,
+            self.config.TEMPERATURE,
+            functions
+        )
         self.state.messages.append({"role": "assistant", "content": result})
 
         if result.lower() in ["loop", "return"]:
@@ -167,12 +172,12 @@ class Chorus:
         the user's original prompt.
         """
         self.state.messages.append({"role": "system", "content": yield_prompt})
-        self.state.messages.append({"role": "user", "content": "Synthesize the accumulated context and provide a final response:"})
+        self.state.messages.append({"role": "user", "content": "Write a final response to the user's prompt, recognizing that sources are displayed in the sources column next to the response:"})
 
         functions = [
             {
                 "name": "yield_function",
-                "description": "Synthesize the accumulated context and provide a final response",
+                "description": "Write a final response to the user's prompt, recognizing that sources are displayed in the sources column next to the response",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -185,7 +190,13 @@ class Chorus:
             }
         ]
 
-        result = await chat_completion(self.state.messages, self.config.CHAT_MODEL, self.config.MAX_TOKENS, self.config.TEMPERATURE, functions)
+        result = await chat_completion(
+            self.state.messages,
+            self.config.CHAT_MODEL,
+            self.config.MAX_TOKENS,
+            self.config.TEMPERATURE,
+            functions
+        )
         self.state.messages.append({"role": "assistant", "content": result})
         return result
 

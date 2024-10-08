@@ -56,7 +56,8 @@ const StreamChat = () => {
         console.log('WebSocket message received:', data);
         if (data.step) {
           if (data.step === 'experience') {
-            setSources(data.content.split('\n').filter((line: string) => line.startsWith('Search Results:')));
+            const parsedSources: string[] = data.sources || [];
+            setSources(parsedSources);
           }
           setChatHistory(prev => {
             const newHistory = [...prev];
@@ -81,11 +82,6 @@ const StreamChat = () => {
     } else {
       sendMessage(input);
     }
-
-    setInput('');
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-    }
   };
 
   const sendMessage = (message: string) => {
@@ -101,13 +97,13 @@ const StreamChat = () => {
           <div className="overflow-y-auto flex-grow p-4" ref={chatContainerRef}>
             {chatHistory.map((chat, chatIndex) => (
               <div key={chatIndex} className={`p-2 rounded mb-4 ${chat.type === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                {chat.messages.map((message, messageIndex) => (
+                {chat.messages.map((message, messageIndex) =>
                   message.step === 'final' ? (
-                    <FinalResponse key={messageIndex} content={message.content} sources={sources} />
+                    <FinalResponse key={messageIndex} content={message.content} />
                   ) : (
                     <ChorusStep key={messageIndex} step={message.step} content={message.content} />
                   )
-                ))}
+                )}
               </div>
             ))}
           </div>

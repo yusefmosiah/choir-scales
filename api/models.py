@@ -1,7 +1,9 @@
 from typing import List, Dict, Any
 from enum import Enum
+from pydantic import BaseModel
 
-class Message(Dict):
+
+class Message(BaseModel):
     role: str
     content: str
 
