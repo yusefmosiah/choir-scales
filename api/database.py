@@ -5,6 +5,7 @@ from datetime import datetime
 import uuid
 from config import Config
 from utils import logger
+import json
 
 class DatabaseClient:
     def __init__(self, config: Config):
@@ -23,21 +24,36 @@ class DatabaseClient:
         logger.info(f"Deduplicated {len(search_results)} search results to {len(deduplicated_results)} unique results")
         return deduplicated_results
 
-    async def search(self, embedding: List[float]) -> List[str]:
+    async def search(self, embedding: List[float]) -> List[Dict[str, Any]]:
         try:
             results = self.client.search(
                 collection_name=self.config.COLLECTION_NAME,
                 query_vector=embedding,
                 limit=self.config.SEARCH_LIMIT
             )
-            search_results = [result.model_dump() for result in results]
-            deduplicated_results = self.deduplicate_search_results(search_results)
-            return deduplicated_results
+            search_results = []
+            for result in results:
+                try:
+                    search_result = {
+                        "id": str(result.id),
+                        "content": result.payload.get('content', ''),
+                        "created_at": result.payload.get('created_at', ''),
+                        "agent": result.payload.get('agent', ''),
+                        "token_value": result.payload.get('token_value', 0),
+                        "similarity": result.score
+                    }
+                    search_results.append(search_result)
+                except Exception as e:
+                    logger.error(f"Error processing search result: {e}")
+                    continue
+
+            logger.info(f"First 10 search results: {search_results[:10]}")
+            return search_results
         except Exception as e:
             logger.error(f"Error during search operation: {e}")
             return []
 
-    async def upsert(self, content: str, embedding: List[float]) -> None:
+    async def upsert(self, content: str, embedding: List[float], is_human_generated: bool) -> None:
         try:
             self.client.upsert(
                 collection_name=self.config.COLLECTION_NAME,
@@ -45,9 +61,10 @@ class DatabaseClient:
                     models.PointStruct(
                         id=str(uuid.uuid4()),
                         payload={
-                            "content": content,  # Store only content
+                            "content": content,
                             "created_at": datetime.now().isoformat(),
-                            "agent": "chorus.000"
+                            "agent": "human" if is_human_generated else "ai",
+                            "token_value": 0  # Initialize with 0, update later as needed
                         },
                         vector=embedding,
                     )

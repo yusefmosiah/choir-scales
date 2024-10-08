@@ -1,7 +1,19 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from enum import Enum
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, validator
+from datetime import datetime
+import json
 
+class ChorusStepEnum(str, Enum):
+    # todo: merge yield and final
+    ACTION = "action"
+    EXPERIENCE = "experience"
+    INTENTION = "intention"
+    OBSERVATION = "observation"
+    UPDATE = "update"
+    YIELD = "yield"
+    FINAL = "final"
+    ERROR = "error"
 
 class Message(BaseModel):
     role: str
@@ -10,7 +22,7 @@ class Message(BaseModel):
 class ChorusState:
     def __init__(self):
         self.messages: List[Message] = []
-        self.current_step: ChorusStep = ChorusStep.ACTION
+        self.current_step: ChorusStepEnum = ChorusStepEnum.ACTION
         self.is_complete: bool = False
         self.is_interrupted: bool = False
 
@@ -27,12 +39,43 @@ class ChorusState:
         self.is_interrupted = False
 
     def loop(self):
-        self.current_step = ChorusStep.ACTION
+        self.current_step = ChorusStepEnum.ACTION
 
-class ChorusStep(Enum):
-    ACTION = "action"
-    EXPERIENCE = "experience"
-    INTENTION = "intention"
-    OBSERVATION = "observation"
-    UPDATE = "update"
-    YIELD = "yield"
+class Source(BaseModel):
+    id: str
+    content: str
+    created_at: Optional[datetime] = None
+    agent: Optional[str] = None
+    token_value: Optional[int] = 0
+    similarity: Optional[float] = 0.0
+
+    @validator('created_at', pre=True)
+    def parse_created_at(cls, value):
+        if value in (None, ''):
+            return None
+        if isinstance(value, datetime):
+            return value
+        if isinstance(value, str):
+            try:
+                return datetime.fromisoformat(value)
+            except ValueError:
+                return None
+        return None
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.isoformat() if v else None
+        }
+
+class ChorusResponse(BaseModel):
+    step: str
+    content: str
+    sources: Optional[List[Source]] = None
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.isoformat() if v else None
+        }
+
+    def to_json(self):
+        return json.dumps(self.dict(), default=str)
