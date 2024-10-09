@@ -1,6 +1,6 @@
 from typing import List, Dict, Any, Optional
 from enum import Enum
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime
 import json
 
@@ -49,7 +49,7 @@ class Source(BaseModel):
     token_value: Optional[int] = 0
     similarity: Optional[float] = 0.0
 
-    @validator('created_at', pre=True)
+    @field_validator('created_at', mode='before')
     def parse_created_at(cls, value):
         if value in (None, ''):
             return None
@@ -62,20 +62,22 @@ class Source(BaseModel):
                 return None
         return None
 
-    class Config:
-        json_encoders = {
+    model_config = {
+        "json_encoders": {
             datetime: lambda v: v.isoformat() if v else None
         }
+    }
 
 class ChorusResponse(BaseModel):
     step: str
     content: str
     sources: Optional[List[Source]] = None
 
-    class Config:
-        json_encoders = {
+    model_config = {
+        "json_encoders": {
             datetime: lambda v: v.isoformat() if v else None
         }
+    }
 
     def to_json(self):
         return json.dumps(self.dict(), default=str)

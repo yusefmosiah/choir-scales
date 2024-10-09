@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import ChorusStep from './ChorusStep';
 import SourcesList from './SourcesList';
+import { Source } from '../types';
+
 
 interface ChorusPanelProps {
   steps: { step: string; content: string }[];

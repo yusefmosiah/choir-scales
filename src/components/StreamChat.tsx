@@ -3,7 +3,7 @@ import ChorusPanel from './ChorusPanel';
 import UserInput from './UserInput';
 import AIResponse from './AIResponse';
 import ReactMarkdown from 'react-markdown';
-
+import { Source } from '../types';
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<

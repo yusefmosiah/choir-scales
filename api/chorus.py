@@ -199,7 +199,7 @@ class Chorus:
                     content = parsed_content['content']
             except json.JSONDecodeError:
                 pass  # Content is not JSON, use as is
-            return ChorusResponse(step=self.state.current_step, content=content)
+            return ChorusResponse(step=self.state.current_step.value, content=content)
         except Exception as e:
             logger.error(f"Error in structured chat completion: {str(e)}")
-            return ChorusResponse(step=ChorusStepEnum.ERROR, content=f"An error occurred: {str(e)}")
+            return ChorusResponse(step=ChorusStepEnum.ERROR.value, content=f"An error occurred: {str(e)}")

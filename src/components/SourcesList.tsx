@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-
+import { Source } from '../types';
 interface SourcesListProps {
   sources: Source[];
   sortOption: string;

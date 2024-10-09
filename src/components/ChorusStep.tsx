@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import SourcesList from './SourcesList';
-
+import { Source } from '../types';
 interface ChorusStepProps {
   step: string;
   content: string;
