@@ -1,15 +1,30 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import SourcesList from './SourcesList';
 
 interface ChorusStepProps {
   step: string;
   content: string;
+  isExperience: boolean;
+  sources: Source[];
+  sortOption: string;
+  onSortChange: (option: string) => void;
 }
 
-const ChorusStep: React.FC<ChorusStepProps> = ({ step, content }) => {
+const ChorusStep: React.FC<ChorusStepProps> = ({ step, content, isExperience, sources, sortOption, onSortChange }) => {
   return (
-    <div className="p-2 mb-2 bg-gray-800 rounded-lg border border-gray-700">
-      <h3 className="text-lg font-semibold text-white">{step.charAt(0).toUpperCase() + step.slice(1)}</h3>
-      <p className="text-sm text-white">{content}</p>
+    <div className="p-2 mb-4 bg-gray-800 rounded-lg border border-gray-700">
+      <h3 className="mb-2 text-lg font-semibold text-white capitalize">{step}</h3>
+      <div className="mb-2 text-sm text-white">
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
+      {isExperience && (
+        <SourcesList
+          sources={sources}
+          sortOption={sortOption}
+          onSortChange={onSortChange}
+        />
+      )}
     </div>
   );
 };

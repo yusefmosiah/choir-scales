@@ -59,7 +59,9 @@ class Chorus:
     async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
         if websocket.client_state == WebSocketState.CONNECTED:
             try:
-                await websocket.send_json(json.loads(response.to_json()))
+                response_data = json.loads(response.to_json())
+                response_data['isStreaming'] = self.state.current_step != ChorusStepEnum.FINAL
+                await websocket.send_json(response_data)
                 logger.info(f"Sent {response.step} result to client.")
             except Exception as e:
                 logger.error(f"Error sending result to client: {e}")

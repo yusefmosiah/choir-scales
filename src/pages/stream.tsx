@@ -3,10 +3,10 @@ import StreamChat from '../components/StreamChat';
 
 const StreamPage = () => {
   return (
-    <div>
+    <div className="bg-gray-900">
       <Head>
-        <title>Stream Chat</title>
-        <meta name="description" content="Stream chat with OpenAI" />
+        <title>Choir — Chorus AI</title>
+        <meta name="description" content="Choir — Chorus AI" />
       </Head>
       <StreamChat />
     </div>

@@ -1,24 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import ChorusStep from './ChorusStep';
-import FinalResponse from './FinalResponse';
-import SourcesColumn from './SourcesColumn';
+import React, { useState, useEffect, useRef } from 'react';
+import ChorusPanel from './ChorusPanel';
+import UserInput from './UserInput';
+import AIResponse from './AIResponse';
+import ReactMarkdown from 'react-markdown';
 
-interface ChorusResponse {
-  step: string;
-  content: string;
-  sources?: Source[];
-}
-
-interface Source {
-  id: string;
-  content: string;
-  created_at: string;
-  agent: string;
-  token_value: number;
-  similarity: number;
-}
-
-const StreamChat = () => {
+const StreamChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<
     { type: 'user' | 'ai'; messages: { step: string; content: string }[] }[]
@@ -26,7 +12,7 @@ const StreamChat = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [sources, setSources] = useState<Source[]>([]);
   const [sortOption, setSortOption] = useState<'date' | 'similarity' | 'tokens' | 'custom'>('custom');
-  const [showSources, setShowSources] = useState(false);
+  const [isPanelVisible, setIsPanelVisible] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -47,15 +33,19 @@ const StreamChat = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
-    adjustTextareaHeight();
+    adjustTextareaHeight(e.target);
   };
 
-  const adjustTextareaHeight = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
+  const adjustTextareaHeight = (element: HTMLTextAreaElement) => {
+    element.style.height = 'auto';
+    element.style.height = `${element.scrollHeight}px`;
   };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      adjustTextareaHeight(textareaRef.current);
+    }
+  }, [input]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,68 +122,74 @@ const StreamChat = () => {
 
   const sortedSources = sortSources(sources);
 
+  const renderChatContent = () => {
+    return chatHistory.map((chat, chatIndex) => (
+      <div key={chatIndex} className="mb-4">
+        {chat.type === 'user' && (
+          <UserInput content={chat.messages[0].content} />
+        )}
+        {chat.type === 'ai' && (
+          <AIResponse>
+            <ReactMarkdown>
+              {chat.messages.find(m => m.step === 'final')?.content ||
+               chat.messages.find(m => m.step === 'action')?.content || ''}
+            </ReactMarkdown>
+          </AIResponse>
+        )}
+      </div>
+    ));
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
-      <div className="overflow-hidden flex-grow">
-        <div className="flex flex-col h-full lg:flex-row">
-          <div className="overflow-y-auto flex-grow p-4" ref={chatContainerRef}>
-            {chatHistory.map((chat, chatIndex) => (
-              <div key={chatIndex} className={`mb-4 ${chat.type === 'user' ? 'bg-blue-900' : 'bg-gray-900'} rounded-lg p-2`}>
-                {chat.type === 'user' && (
-                  <div className="p-2 mb-2 bg-blue-800 rounded-lg border border-blue-700">
-                    <h3 className="text-lg font-semibold text-white">User</h3>
-                    <p className="text-sm text-white">{chat.messages[0].content}</p>
-                  </div>
-                )}
-                {chat.type === 'ai' && chat.messages.map((message, messageIndex) =>
-                  message.step === 'final' ? (
-                    <FinalResponse key={messageIndex} content={message.content} />
-                  ) : (
-                    <ChorusStep key={messageIndex} step={message.step} content={message.content} />
-                  )
-                )}
-              </div>
-            ))}
+    <div className="flex h-[calc(100vh-64px)] w-full"> {/* Adjust 64px if your top bar has a different height */}
+      <div className="flex flex-col flex-grow h-full">
+        <div className="overflow-y-auto flex-grow p-4 w-full" ref={chatContainerRef}>
+          <div className="mx-auto max-w-3xl">
+            {renderChatContent()}
           </div>
-          {showSources && (
-            <div className="overflow-y-auto p-4 bg-gray-800 lg:w-1/3">
-              <SourcesColumn
-                humanSources={[]}
-                aiSources={sortedSources}
-                sortOption={sortOption}
-                onSortChange={setSortOption}
+        </div>
+        <div className="p-4 mb-4 w-full bg-gray-900"> {/* Added mb-4 for bottom margin */}
+          <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
+            <div className="relative">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInputChange}
+                className="p-3 pr-24 w-full text-white bg-gray-800 rounded-lg border border-gray-700 resize-none"
+                placeholder="Enter your prompt"
+                rows={1}
+                style={{ minHeight: '2.5rem', maxHeight: '10rem' }}
               />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 px-4 py-1 text-white bg-cyan-500 rounded-md transform -translate-y-1/2"
+                disabled={isStreaming}
+              >
+                {isStreaming ? 'Streaming...' : 'Submit'}
+              </button>
             </div>
-          )}
+          </form>
         </div>
       </div>
-      <div className="p-4 bg-gray-800 border-t border-gray-700">
-        <form onSubmit={handleSubmit} className="flex items-end">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            className="flex-grow p-2 text-white bg-gray-700 rounded-l border border-gray-600 resize-none"
-            placeholder="Enter your prompt"
-            rows={1}
-            style={{ minHeight: '2.5rem', maxHeight: '10rem' }}
-          />
-          <button
-            type="submit"
-            className="p-2 h-full text-white bg-blue-500 rounded-r"
-            disabled={isStreaming}
-          >
-            {isStreaming ? 'Streaming...' : 'Submit'}
-          </button>
-          <button
-            type="button"
-            className="p-2 ml-2 text-white bg-gray-700 rounded"
-            onClick={() => setShowSources(!showSources)}
-          >
-            {showSources ? 'Hide Sources' : 'Show Sources'}
-          </button>
-        </form>
+      <div className={`
+        fixed md:relative md:w-1/3 lg:w-2/5 xl:w-1/2 inset-x-0 bottom-0 md:inset-y-0 md:right-0
+        bg-gray-800 transition-all duration-300 ease-in-out
+        ${isPanelVisible ? 'h-3/4 translate-y-0 md:h-full' : 'h-0 translate-y-full md:h-full md:translate-y-0'}
+        overflow-y-auto z-10
+      `}>
+        <ChorusPanel
+          steps={chatHistory[chatHistory.length - 1]?.type === 'ai' ? chatHistory[chatHistory.length - 1].messages : []}
+          sources={sortedSources}
+          sortOption={sortOption}
+          onSortChange={setSortOption}
+        />
       </div>
+      <button
+        className="fixed right-4 bottom-20 z-20 p-4 text-2xl text-white bg-cyan-500 rounded-full shadow-lg md:hidden"
+        onClick={() => setIsPanelVisible(!isPanelVisible)}
+      >
+        {isPanelVisible ? '✕' : '☰'}
+      </button>
     </div>
   );
 };
