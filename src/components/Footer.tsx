@@ -5,15 +5,15 @@ export const Footer: FC = () => {
     return (
         <div className="flex">
             <footer className="border-t-2 border-[#141414] bg-black hover:text-white w-screen" >
-                <div className="ml-12 py-12 mr-12">
-                    <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-8 md:space-x-12 relative">
-                        <div className='flex flex-col col-span-2 mx-4 items-center md:items-start'>
+                <div className="py-12 mr-12 ml-12">
+                    <div className="grid relative grid-cols-2 gap-2 md:grid-cols-6 md:gap-8 md:space-x-12">
+                        <div className='flex flex-col col-span-2 items-center mx-4 md:items-start'>
                             <div className='flex flex-row ml-1'>
-                                <Link href="https://solana.com" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choir.com" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     <div className='flex flex-row ml-1'>
                                         <Image
-                                            src="/solanaLogo.png"
-                                            alt="solana icon"
+                                            src="/choirLogo.png"
+                                            alt="choir icon"
                                             width={156}
                                             height={96}
                                         />
@@ -21,12 +21,12 @@ export const Footer: FC = () => {
                                 </Link>
                             </div>
                             <div className="flex md:ml-2">
-                                <a href="https://twitter.com/solana_devs" type="button" className="border-white text-secondary hover:text-white leading-normal hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                                <a href="https://twitter.com/choir_devs" type="button" className="m-1 w-9 h-9 leading-normal border-white transition duration-150 ease-in-out text-secondary hover:text-white hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0">
                                     <svg aria-hidden="true"
                                         focusable="false"
                                         data-prefix="fab"
                                         data-icon="twitter"
-                                        className="w-4 h-full mx-auto"
+                                        className="mx-auto w-4 h-full"
                                         role="img"
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 512 512"
@@ -37,12 +37,12 @@ export const Footer: FC = () => {
                                     ></path>
                                     </svg>
                                 </a>
-                                <a href="https://github.com/solana-labs"  type="button" className="border-white text-secondary hover:text-white leading-normal hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1">
+                                <a href="https://github.com/choir-labs"  type="button" className="m-1 w-9 h-9 leading-normal border-white transition duration-150 ease-in-out text-secondary hover:text-white hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0">
                                     <svg aria-hidden="true"
                                         focusable="false"
                                         data-prefix="fab"
                                         data-icon="github"
-                                        className="w-4 h-full mx-auto"
+                                        className="mx-auto w-4 h-full"
                                         role="img"
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 496 512"
@@ -54,73 +54,73 @@ export const Footer: FC = () => {
                                     </svg>
                                 </a>
                             </div>
-                            <div className="mb-6 m-1 sm:text-left place-items-start items-start font-normal tracking-tight text-secondary">
-                                        © 2023 Solana Foundation
+                            <div className="items-start place-items-start m-1 mb-6 font-normal tracking-tight sm:text-left text-secondary">
+                                        © 2023 choir Foundation
                             </div>
                         </div>
 
-                        <div className="mb-6 items-center mx-auto max-w-screen-lg">
-                            <div className="font-normal capitalize mb-2.5">SOLANA</div>
+                        <div className="items-center mx-auto mb-6 max-w-screen-lg">
+                            <div className="font-normal capitalize mb-2.5">choir</div>
 
-                            <div className="flex flex-col mb-0 gap-2">
-                                <Link href="https://solana.com" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                            <div className="flex flex-col gap-2 mb-0">
+                                <Link href="https://choir.com" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Labs
                                 </Link>
-                                <Link href="https://solana.org" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choir.org" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Foundation
                                 </Link>
-                                <Link href="https://solanamobile.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
-                                    Solana Mobile
+                                <Link href="https://choirmobile.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                    choir Mobile
                                 </Link>
-                                <Link href="https://solanapay.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
-                                    Solana Pay
+                                <Link href="https://choirpay.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                    choir Pay
                                 </Link>
-                                <Link href="https://solana.org/grants" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choir.org/grants" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Grants
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="mb-6 items-center mx-auto max-w-screen-lg">
+                        <div className="items-center mx-auto mb-6 max-w-screen-lg">
                             <h5 className="font-normal capitalize tracking-tight  mb-2.5">DEVELOPERS</h5>
 
-                            <div className="flex flex-col mb-0 gap-2">
-                                <Link href="https://docs.solana.com/developers" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                            <div className="flex flex-col gap-2 mb-0">
+                                <Link href="https://docs.choir.com/developers" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Documentation
                                 </Link>
-                                <Link href="https://github.com/solana-mobile/solana-mobile-stack-sdk" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://github.com/choir-mobile/choir-mobile-stack-sdk" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Mobile SDK
                                 </Link>
-                                <Link href="https://github.com/solana-labs/solana-pay" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://github.com/choir-labs/choir-pay" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Pay SDK
                                 </Link>
-                                <Link href="https://solanacookbook.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choircookbook.com/" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Cookbook
                                 </Link>
-                                <Link href="https://solana.com/developers/dao" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choir.com/developers/dao" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     DAOs
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="mb-6 items-center mx-auto max-w-screen-lg">
+                        <div className="items-center mx-auto mb-6 max-w-screen-lg">
                             <h5 className="font-normal tracking-tight  mb-2.5">ECOSYSTEM</h5>
 
-                            <div className="flex flex-col mb-0 gap-2">
-                                <Link href="https://solana.com/news" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                            <div className="flex flex-col gap-2 mb-0">
+                                <Link href="https://choir.com/news" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     News
                                 </Link>
-                                <Link href="https://solana.org/validators" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://choir.org/validators" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Validators
                                 </Link>
-                                <Link href="https://www.youtube.com/@SolanaFndn" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                <Link href="https://www.youtube.com/@choirFndn" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Youtube
                                 </Link>
                                 <Link href="https://app.realms.today/discover" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
                                     Realms
                                 </Link>
-                                <Link href="https://www.solanau.org" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
-                                    Solana U
+                                <Link href="https://www.choiru.org" target="_blank" rel="noopener noreferrer" passHref className="text-secondary hover:text-white">
+                                    choir U
                                 </Link>
                             </div>
                         </div>
