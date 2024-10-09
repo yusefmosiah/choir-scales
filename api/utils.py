@@ -1,7 +1,7 @@
 import logging
 from litellm import completion, embedding
 from typing import List, Dict, Any
-from api.config import Config
+from config import Config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
