@@ -22,7 +22,8 @@
   "ts-node": {
     "require": ["tsconfig-paths/register"],
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "commonjs",
+      "resolveExtensions": [".tsx", ".ts", ".js"]
     }
   }
 }
