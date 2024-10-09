@@ -9,7 +9,7 @@ interface ChorusPanelProps {
   steps: { step: string; content: string }[];
   sources: Source[];
   sortOption: string;
-  onSortChange: (option: string) => void;
+  onSortChange: (option: 'date' | 'similarity' | 'tokens' | 'custom') => void;
 }
 
 const ChorusPanel: React.FC<ChorusPanelProps> = ({ steps, sources, sortOption, onSortChange }) => {

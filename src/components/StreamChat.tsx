@@ -4,6 +4,7 @@ import UserInput from './UserInput';
 import AIResponse from './AIResponse';
 import ReactMarkdown from 'react-markdown';
 import { Source } from '../types';
+import { ChorusResponse } from '../types';
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<
@@ -181,7 +182,7 @@ const StreamChat: React.FC = () => {
           steps={chatHistory[chatHistory.length - 1]?.type === 'ai' ? chatHistory[chatHistory.length - 1].messages : []}
           sources={sortedSources}
           sortOption={sortOption}
-          onSortChange={setSortOption}
+          onSortChange={(option) => setSortOption(option as 'date' | 'similarity' | 'tokens' | 'custom')}
         />
       </div>
       <button
