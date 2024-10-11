@@ -55,7 +55,7 @@ Choir is committed to:
 **Pioneering Socially Intelligent AI:**
 
 - **Leveraging High-Quality Data**:
-  - **User-Generated Content**: Training AI models on rich, diverse text created by our community.
+  - **User-Generated Content**: Training AI models on rich, diverse content created by our community.
   - **Token Scoring Mechanism**: Utilizing our unique token-based feedback to refine AI learning objectives.
 - **Advancing AI Capabilities**:
   - **Social Intelligence**: Developing AI that understands context, nuance, and human interaction.
@@ -87,6 +87,73 @@ Choir is committed to:
 - **Global Influence**: Collaborate on projects addressing real-world challenges, driving innovation and positive change.
 
 ---
+
+## Our Bold Claim
+
+**Choir is set to revolutionize online collaboration by combining fair rewards, genuine connections, and cutting-edge AI, all while putting control back into your hands.**
+
+---
+
+## The Hypothesis That Explains Everything
+
+**When people are empowered to own their contributions and collaborate freely, they produce higher-quality content and build stronger relationships. This, in turn, leads to more socially intelligent AI and a better world for all.**
+
+---
+
+## Our Fundraising Approach
+
+We believe in aligning our financial strategies with our values:
+
+- **Equity Offering**: We're raising $2.88 million for 10% equity in Choir Inc., enabling us to expand our team and scale effectively.
+- **Community-Driven Token Sales**:
+  - **Decentralized Governance**: The community will decide the terms for selling CHOIR tokens from the treasury.
+  - **Strategic Use of Funds**: Proceeds will fund services that benefit the community, such as security audits, events, and marketing.
+- **Compliance and Transparency**:
+  - **Regulatory Alignment**: Our fundraising efforts are designed to comply with legal standards, including SEC regulations.
+  - **Open Communication**: We maintain transparency with our community and investors regarding our plans and progress.
+
+---
+
+## Join Us on This Journey
+
+- **Experience the MVP**: Sign up at [www.choir.chat](https://choir.chat) starting October 19, 2024.
+- **Invest in the Future**: If you're interested in participating in our funding round, we'd love to connect.
+- **Be Part of the Change**: Contribute your voice, collaborate with others, and help us shape the future of AI and digital collaboration.
+
+---
+
+## Our Bold Claim
+
+**Choir is set to revolutionize online collaboration by combining fair rewards, genuine connections, and cutting-edge AI, all while putting control back into your hands.**
+
+---
+
+## The Hypothesis That Explains Everything
+
+**When people are empowered to own their contributions and collaborate freely, they produce higher-quality content and build stronger relationships. This, in turn, leads to more socially intelligent AI and a better world for all.**
+
+---
+
+## Our Fundraising Approach
+
+We believe in aligning our financial strategies with our values:
+
+- **Equity Offering**: We're raising $x million for y% equity in Choir Inc., enabling us to expand our team and scale effectively.
+- **Community-Driven Token Sales**:
+  - **Decentralized Governance**: The community will decide the terms for selling CHOIR tokens from the treasury.
+  - **Strategic Use of Funds**: Proceeds will fund services that benefit the community, such as security audits, events, and marketing.
+- **Compliance and Transparency**:
+  - **Regulatory Alignment**: Our fundraising efforts are designed to comply with legal standards, including SEC regulations.
+  - **Open Communication**: We maintain transparency with our community and investors regarding our plans and progress.
+
+---
+
+## Join Us on This Journey
+
+- **Experience the MVP**: Sign up at [www.choir.chat](https://choir.chat) starting October 19, 2024.
+- **Invest in the Future**: If you're interested in participating in our funding round, we'd love to connect.
+- **Be Part of the Change**: Contribute your voice, collaborate with others, and help us shape the future of AI and digital collaboration.
+
 
 **Choir**: Where your voice matters, your contributions are rewarded, and together, we create a better future.
 
