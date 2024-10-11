@@ -4,15 +4,41 @@
 
 ## **Abstract**
 
-Choir presents an innovative socioeconomic media network that leverages blockchain technology to redefine content creation, curation, and collaboration. Central to Choir's ecosystem is the Choir Token (CHOIR), a cryptocurrency meticulously designed to incentivize meaningful contributions, foster high-quality content, and promote collaborative editing. This whitepaper delineates the comprehensive tokenomics of Choir, elucidating the mechanisms of token distribution, circulation, and economic incentives that underpin user engagement and platform sustainability.
+Choir presents an innovative socioeconomic media network that leverages blockchain technology to redefine content creation, curation, and collaboration. Central to Choir's ecosystem is the **Choir Token (CHOIR)**, a cryptocurrency meticulously designed to incentivize meaningful contributions, foster high-quality content, and promote collaborative editing. This whitepaper delineates the comprehensive tokenomics of Choir, elucidating the mechanisms of token distribution, circulation, and economic incentives that underpin user engagement and platform sustainability through our **Proof of Text** mechanism.
 
 ---
 
 ## **Introduction**
 
-In the digital landscape, the proliferation of content has democratized information sharing but has also introduced challenges related to content quality, credibility, and meaningful collaboration. Traditional social media platforms often rely on centralized algorithms that prioritize engagement over substance, leading to issues like misinformation and low-quality content proliferation.
+In the digital landscape, the proliferation of text-based content has democratized information sharing but has also introduced challenges related to content quality, credibility, and meaningful collaboration. Traditional social media platforms often rely on centralized algorithms that prioritize engagement over substance, leading to issues like misinformation and low-quality content proliferation.
 
-Choir addresses these challenges by creating a decentralized platform where content and its metadata are treated as valuable assets. By integrating blockchain technology and a thoughtfully designed token economy, Choir incentivizes users to produce original, high-quality content, engage in collaborative editing, and invest in the platform's growth. This approach not only enhances content quality but also fosters a vibrant, engaged community.
+**Choir** addresses these challenges by creating a decentralized platform where text content and its metadata are treated as valuable assets. By integrating blockchain technology and a thoughtfully designed token economy, Choir incentivizes users to produce original, high-quality text, engage in collaborative editing, and invest in the platform's growth. This approach not only enhances content quality but also fosters a vibrant, engaged community.
+
+---
+
+## **Proof of Text Mechanism**
+
+### **Key Components**
+
+1. **Collaborative Editing as a Quality Driver**
+
+   - **Edit Proposals**: Users propose edits to existing text content by staking Choir tokens.
+   - **Approval Process**: All authors of the original content must unanimously approve the proposed edit for it to be applied.
+   - **Editor Inclusion**: Approved editors are added to the author set, gaining veto power over future edits.
+
+2. **Tokenomics and Incentive Alignment**
+
+   - **Staking Tokens**: Proposing an edit requires the editor to stake tokens, signifying investment in the content's improvement.
+   - **Token Distribution**:
+     - **Unanimous Approval**: Staked tokens accrue to the content's token balance.
+     - **Unanimous Rejection**: Tokens are distributed to rejecting authors, rewarding them for maintaining content integrity.
+     - **Split Decision**: Tokens intended for approvers are redirected to the Choir Treasury; rejecters receive their portion.
+
+3. **Content Token Balance as a Quality Indicator**
+
+   - **Accumulated Tokens**: Content accrues tokens through approved edits, increasing its token balance.
+   - **Quality Signal**: A higher token balance signifies community investment and confidence in the text's quality.
+   - **Reranking Algorithm**: Text with higher token balances is more likely to be cited and featured, promoting visibility of high-quality content.
 
 ---
 
@@ -324,9 +350,9 @@ Choir addresses these challenges by creating a decentralized platform where cont
 
 ## **Conclusion**
 
-Choir's tokenomics are meticulously crafted to create a sustainable, decentralized, and collaborative ecosystem that values high-quality content and active user engagement. By treating content as valuable assets and integrating a robust token distribution mechanism, Choir incentivizes meaningful contributions and fosters a vibrant community.
+Choir's tokenomics are meticulously crafted to create a sustainable, decentralized, and collaborative ecosystem that values high-quality text content and active user engagement. By treating text as a valuable asset and integrating a robust token distribution mechanism, Choir incentivizes meaningful contributions and fosters a vibrant community.
 
-The fixed token supply, combined with dynamic reward adjustments and a fair divestment mechanism, ensures economic stability and aligns user incentives with platform goals. As users create, cite, and collaboratively edit content, they actively participate in shaping the platform's content landscape, promoting a culture of quality, originality, and collaboration.
+The fixed token supply, combined with dynamic reward adjustments and a fair divestment mechanism, ensures economic stability and aligns user incentives with platform goals. As users create, cite, and collaboratively edit text, they actively participate in shaping the platform's content landscape, promoting a culture of quality, originality, and collaboration.
 
 Choir stands as a transformative platform in the social media landscape, offering a fair, transparent, and incentive-aligned environment where content quality and user contributions are genuinely valued and rewarded.
 
