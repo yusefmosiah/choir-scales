@@ -9,26 +9,24 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
 ### Core Components
 
 1. **Chorus AI System**
-
    - Implemented in `chorus.py`
    - Uses a multi-step process: Action, Experience, Intention, Observation, Update, and Yield
-   - Integrates with a vector database (Qdrant) for semantic search
+   - Integrates with Qdrant vector database for semantic search
+   - Planned enhancements include merging `final_response` and `yield` steps, and including inline citations
 
 2. **Frontend Components**
-
    - React-based components for user interaction
-   - Key components include:
-     - StreamChat
-     - ChorusStep
-     - ChorusPanel
-     - SourcesList
-     - UserInput
-     - AIResponse
+   - Key components include StreamChat, ChorusStep, ChorusPanel, SourcesList, UserInput, and AIResponse
+   - Planned enhancements:
+     - Implement chat thread tabs in left sidebar
+     - Create separate interfaces for signed-in and signed-out users
+     - Develop a dashboard for signed-in users
+     - Integrate Authors Chat within chat threads
 
 3. **Blockchain Integration**
-
    - Solana wallet integration (functional)
    - Components for wallet connection and transactions (SignMessage, SendTransaction)
+   - Plans to integrate Thirdweb Embedded Wallet as an alternative option
 
 4. **User Interface**
    - Dark-themed interface with a chat-like layout
@@ -55,12 +53,17 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
 
 - CHOIR token defined with a total supply of 10 billion
 - Token distribution mechanisms outlined in the whitepaper
-- Implementation still in planning phase
+- Implementation of token flow mechanics in progress:
+  - Content creation rewards
+  - Automatic citation rewards
+  - Collaborative editing and token investment
+  - Divestment mechanism
 
-### AI Model
+### AI Model Development
 
 - Target date for the first AI model release: April 27, 2025
 - Plan to use Reinforcement Learning with the token-scored dataset
+- Focus on enhancing qualitative aspects such as stylistic nuance and artistic expression
 
 ## Development Status
 
@@ -91,7 +94,7 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
 The immediate next steps, as outlined in the blueprint, focus on:
 
 1. Enhancing Solana Wallet Authentication
-2. Further integrating Qdrant for Data Storage
+2. Optimizing Qdrant Integration for Data Storage
 3. Enhancing the Chorus AI System
 4. Redesigning the User Interface and Enhancing UX
    - Implement chat thread tabs in left sidebar
@@ -107,9 +110,9 @@ The immediate next steps, as outlined in the blueprint, focus on:
 10. Producing Media Assets and Publishing Documentation
 11. Deploying, Testing, and Launching MVP
 
-These steps are part of a 7-day sprint to reach the MVP by October 17, 2024.
+These steps are part of a sprint to reach the MVP launch by October 17, 2024.
 
-## Solana Wallet Integration
+## Key Challenges and Considerations
 
 The Choir project utilizes the Solana Wallet Adapter for seamless integration with Solana wallets. Here's how it's implemented in the codebase:
 
@@ -164,4 +167,4 @@ While testing is deferred for the initial MVP sprint, the project has a clear st
    - Examine the impact of different account states
    - Conduct comprehensive testing by combining multiple aspects
 
-The decision to defer testing until after the MVP launch phase allows the team to focus on rapid development and feature implementation during the initial sprint. This approach aims to balance the need for a quick MVP release with the long-term goal of ensuring robust and secure code.
+The Choir project is progressing towards its MVP launch with a clear vision of creating a revolutionary platform for high-quality content creation and AI model training. While challenges remain, the team is actively addressing key issues and working towards a robust, user-friendly, and innovative socioeconomic media network.
