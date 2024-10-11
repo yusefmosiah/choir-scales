@@ -4,41 +4,15 @@
 
 ## **Abstract**
 
-Choir presents an innovative socioeconomic media network that leverages blockchain technology to redefine content creation, curation, and collaboration. Central to Choir's ecosystem is the **Choir Token (CHOIR)**, a cryptocurrency meticulously designed to incentivize meaningful contributions, foster high-quality content, and promote collaborative editing. This whitepaper delineates the comprehensive tokenomics of Choir, elucidating the mechanisms of token distribution, circulation, and economic incentives that underpin user engagement and platform sustainability through our **Proof of Text** mechanism.
+Choir presents an innovative socioeconomic media network that leverages blockchain technology to redefine content creation, curation, and collaboration. Central to Choir's ecosystem is the Choir Token (CHOIR), a cryptocurrency meticulously designed to incentivize meaningful contributions, foster high-quality content, and promote collaborative editing. This whitepaper delineates the comprehensive tokenomics of Choir, elucidating the mechanisms of token distribution, circulation, and economic incentives that underpin user engagement and platform sustainability. A key feature of Choir is the integration of an interactive Authors Chat during the edit proposal process, enhancing collaborative decision-making and content quality through a user-friendly interface.
 
 ---
 
 ## **Introduction**
 
-In the digital landscape, the proliferation of text-based content has democratized information sharing but has also introduced challenges related to content quality, credibility, and meaningful collaboration. Traditional social media platforms often rely on centralized algorithms that prioritize engagement over substance, leading to issues like misinformation and low-quality content proliferation.
+In the digital landscape, the proliferation of content has democratized information sharing but has also introduced challenges related to content quality, credibility, and meaningful collaboration. Traditional social media platforms often rely on centralized algorithms that prioritize engagement over substance, leading to issues like misinformation and low-quality content proliferation.
 
-**Choir** addresses these challenges by creating a decentralized platform where text content and its metadata are treated as valuable assets. By integrating blockchain technology and a thoughtfully designed token economy, Choir incentivizes users to produce original, high-quality text, engage in collaborative editing, and invest in the platform's growth. This approach not only enhances content quality but also fosters a vibrant, engaged community.
-
----
-
-## **Proof of Text Mechanism**
-
-### **Key Components**
-
-1. **Collaborative Editing as a Quality Driver**
-
-   - **Edit Proposals**: Users propose edits to existing text content by staking Choir tokens.
-   - **Approval Process**: All authors of the original content must unanimously approve the proposed edit for it to be applied.
-   - **Editor Inclusion**: Approved editors are added to the author set, gaining veto power over future edits.
-
-2. **Tokenomics and Incentive Alignment**
-
-   - **Staking Tokens**: Proposing an edit requires the editor to stake tokens, signifying investment in the content's improvement.
-   - **Token Distribution**:
-     - **Unanimous Approval**: Staked tokens accrue to the content's token balance.
-     - **Unanimous Rejection**: Tokens are distributed to rejecting authors, rewarding them for maintaining content integrity.
-     - **Split Decision**: Tokens intended for approvers are redirected to the Choir Treasury; rejecters receive their portion.
-
-3. **Content Token Balance as a Quality Indicator**
-
-   - **Accumulated Tokens**: Content accrues tokens through approved edits, increasing its token balance.
-   - **Quality Signal**: A higher token balance signifies community investment and confidence in the text's quality.
-   - **Reranking Algorithm**: Text with higher token balances is more likely to be cited and featured, promoting visibility of high-quality content.
+Choir addresses these challenges by creating a decentralized platform where content and its metadata are treated as valuable assets. By integrating blockchain technology and a thoughtfully designed token economy, Choir incentivizes users to produce original, high-quality content, engage in collaborative editing, and invest in the platform's growth. The introduction of an interactive Authors Chat during edit proposals further enhances collaboration, allowing authors and editors to discuss, refine, and reach consensus on content improvements through a seamless user interface. This approach not only enhances content quality but also fosters a vibrant, engaged community.
 
 ---
 
@@ -72,7 +46,8 @@ In the digital landscape, the proliferation of text-based content has democratiz
    - **Description**: Smart contracts that temporarily hold tokens while an edit proposal is under consideration.
    - **Functionality**:
      - Manage the staking and distribution of tokens based on edit approval outcomes.
-     - Ensure secure and transparent handling of tokens during the edit lifecycle.
+     - Facilitate secure and transparent handling of tokens during the edit lifecycle.
+     - Provide access to the **Authors Chat** for collaborative discussion.
 
 4. **Content Accounts**
    - **Description**: Blockchain accounts representing individual pieces of content.
@@ -80,6 +55,15 @@ In the digital landscape, the proliferation of text-based content has democratiz
      - Store the token score of the content, reflecting its accumulated value.
      - Maintain records of co-authors and their respective token shares.
      - Facilitate token accumulation and investment within the content.
+
+5. **Authors Chat**
+   - **Description**: A private communication channel accessible to co-authors and edit proposers during the edit review period.
+   - **Functionality**:
+     - **Citations and Edit Requests as Chat Messages**: Citations and edit requests appear as new messages in the chat thread of the cited or edited content.
+     - **User Interface Indicators**: Tabs or chat threads highlight unread citation messages or edit requests through color changes or notifications.
+     - **Interactive Collaboration**: Authors and editors can respond to messages, engage in discussions, and iteratively refine edit proposals.
+     - **Cross-Thread Communication**: Responses are mirrored in the appropriate chat threads of all involved parties, ensuring seamless communication.
+     - **Notifications**: Citations and edit requests generate email or app notifications to keep users informed.
 
 ---
 
@@ -115,6 +99,9 @@ In the digital landscape, the proliferation of text-based content has democratiz
 ### **3. Automatic Citation Rewards**
 
 - **Mechanism**: When new content is created, the system automatically cites relevant existing content using a reranking algorithm.
+- **User Interface Integration**:
+  - **Chat Threads**: Citations appear as new messages in the chat thread of the cited content.
+  - **Notification Indicators**: Tabs or chat threads change color or display badges to indicate new unread citation messages.
 - **Token Distribution**:
   - **Cited Authors**: Receive tokens as a reward for their content being referenced.
   - **Allocation Ratio**: A predefined fraction of the content creation reward is allocated for citations.
@@ -128,6 +115,18 @@ In the digital landscape, the proliferation of text-based content has democratiz
   - **Process**: Users propose edits to existing content by staking tokens in an edit escrow contract.
   - **Staking Requirement**: A fixed number of tokens must be staked to initiate an edit proposal, representing an investment in the content's improvement.
 
+- **User Interface and Authors Chat**:
+  - **Edit Requests as Chat Messages**:
+    - **Appearance**: Edit requests appear as new messages in the chat thread of the content being edited.
+    - **Interactive Elements**: Messages include discrete options or buttons for authors to tap/click, such as approve or reject.
+  - **Notification System**:
+    - **Visual Indicators**: Tabs or chat threads highlight new edit requests through color changes or notification badges.
+    - **Email/App Notifications**: Authors receive notifications about new edit requests and messages.
+  - **Communication and Collaboration**:
+    - **Responses**: Authors can respond to edit requests within the chat thread, engaging in discussion.
+    - **Cross-Thread Updates**: Responses are mirrored in the chat threads of all involved parties, ensuring synchronized communication.
+    - **Iterative Editing**: Editors can revise their proposals based on feedback received in the Authors Chat until consensus is reached.
+
 - **Approval Process**:
   - **Review Window**: Co-authors have a 7-day period to approve or reject the proposed edit.
   - **Abstention Rule**: If co-authors neither approve nor reject within 7 days, their abstention is treated as an implicit approval.
@@ -136,7 +135,6 @@ In the digital landscape, the proliferation of text-based content has democratiz
   - **Approval (Explicit or Implicit)**:
     - **Content's Token Balance**: Receives the staked tokens, enhancing content's visibility and ranking.
     - **Editor**: Becomes a co-author, gaining veto power over future edits.
-
   - **Denial**:
     - **Rejecting Authors**: Receive a portion of the staked tokens as a reward for maintaining content integrity.
     - **Editor**: Loses the staked tokens.
@@ -156,8 +154,43 @@ In the digital landscape, the proliferation of text-based content has democratiz
 
 ### **5. Token Recapture from Split Edit Decisions**
 
-- **Mechanism**: In scenarios where there is no unanimous decision on edit proposals, a portion of the staked tokens is recaptured by the Choir Treasury.
+- **Mechanism**: In scenarios where there is no unanimous decision on edit proposals after Authors Chat discussions, a portion of the staked tokens is recaptured by the Choir Treasury.
 - **Purpose**: Maintains the economic balance by ensuring the Treasury remains a central node in token distribution.
+
+---
+
+## **User Interface and Interaction**
+
+### **1. Chat Threads and Messaging**
+
+- **Chat Thread Structure**:
+  - **Organization**: Each piece of content has an associated chat thread, accessible through a list of tabs or messages.
+  - **Visual Indicators**: Tabs or threads change color or display badges to indicate new unread messages.
+- **Citations as Messages**:
+  - **Appearance**: When content is cited, a message appears in the chat thread of the cited content, notifying authors.
+  - **Response Capability**: Authors can respond to citation messages, engaging with the citing user.
+- **Edit Requests as Messages**:
+  - **Interactive Elements**: Edit requests include options for authors to approve or reject the proposal directly within the message.
+  - **Discussion**: Authors can respond with comments or questions, facilitating dialogue with the editor.
+- **Cross-Thread Communication**:
+  - **Synchronization**: Messages and responses are mirrored in the chat threads of all involved parties, ensuring everyone is updated.
+- **Notifications**:
+  - **Email/App Alerts**: Users receive notifications for new citations, edit requests, and messages in their chat threads.
+  - **Real-Time Updates**: The platform provides immediate alerts to keep users engaged and informed.
+
+### **2. Authors Chat Functionality**
+
+- **Access During Edit Proposals**:
+  - **Temporary Inclusion**: Edit proposers gain access to the Authors Chat of the content they wish to edit during the review period.
+- **Collaboration Tools**:
+  - **Messaging**: Enables real-time text communication between authors and editors.
+  - **Revision Sharing**: Editors can share updated versions of their proposals within the chat.
+- **Consensus Building**:
+  - **Iterative Feedback**: Authors provide feedback, and editors can adjust proposals accordingly.
+  - **Approval Facilitation**: Through open dialogue, the likelihood of reaching consensus on edits increases.
+- **User Experience Enhancements**:
+  - **Intuitive Interface**: Designed for ease of use to encourage participation from all users.
+  - **Inclusive Communication**: All co-authors and the editor can view and participate in the discussion.
 
 ---
 
@@ -170,7 +203,8 @@ In the digital landscape, the proliferation of text-based content has democratiz
    - Tokens are distributed as rewards for content creation and automatic citations.
 
 3. **From Users to Content Accounts**:
-   - Users invest tokens into content through proposing edits, which upon approval, are transferred to the content's token balance.
+   - Users invest tokens into content through proposing edits.
+   - Editors collaborate with authors via the Authors Chat to refine and gain approval for edits.
 
 4. **Within Content Accounts**:
    - Accumulated tokens enhance content visibility and ranking.
@@ -193,47 +227,35 @@ In the digital landscape, the proliferation of text-based content has democratiz
 
 ### **2. Promoting Collaborative Editing**
 
+- **Authors Chat Integration**:
+  - **Enhanced Communication**: The Authors Chat allows for real-time discussions between authors and editors during the edit proposal process.
+  - **Iterative Improvement**: Editors can revise their proposals based on feedback, increasing the likelihood of approval.
+  - **Consensus Building**: Facilitates a collaborative environment where authors and editors work together to improve content quality.
 - **Shared Ownership**: Editors who successfully propose edits become co-authors, fostering a sense of ownership and responsibility for content quality.
 - **Veto Power**: Co-authors gain the ability to veto future edits, ensuring that content remains aligned with collective standards.
 
-### **3. Ensuring Content Visibility and Ranking**
+### **3. Enhancing User Experience**
+
+- **Intuitive Interface**: The chat-based system for citations and edit requests is user-friendly and promotes engagement.
+- **Real-Time Notifications**: Keeps users informed about interactions with their content, encouraging timely responses.
+- **Cross-Thread Communication**: Ensures seamless dialogue between all parties involved in content creation and editing.
+
+### **4. Ensuring Content Visibility and Ranking**
 
 - **Token Accumulation**: Content with higher token balances is more visible on the platform, encouraging continuous improvement and investment.
 - **Reranking Algorithm**: Automatically surfaces high-quality content based on token scores and semantic relevance, enhancing user experience.
 
-### **4. Sustainable Token Economy**
+### **5. Sustainable Token Economy**
 
 - **Hard Cap**: The total supply of 10 billion CHOIR tokens ensures scarcity and potential value appreciation.
 - **No In-Protocol Burning**: Tokens remain within the ecosystem, maintaining a stable token economy while allowing users to manage their tokens freely.
 - **Token Recapture Mechanism**: Ensures the Choir Treasury sustains token distribution over time, preventing inflation.
 
-### **5. Dynamic and Engaged Community**
+### **6. Dynamic and Engaged Community**
 
 - **Hot Potato Divestment**: Encourages active participation and investment in content, as authors who do not believe in a content's future value can divest, transferring control to those who do.
 - **Economic Gamification**: Treating content as buyable and sellable assets creates a dynamic marketplace that rewards meaningful contributions and active engagement.
-
----
-
-## **Token Supply Management**
-
-### **Hard Cap**
-
-- **Total Supply**: 10 billion CHOIR tokens.
-- **Enforcement**: A hard cap ensures that no more than 10 billion tokens can ever exist, preserving scarcity and value.
-
-### **Initial Allocation**
-
-- **Choir Treasury**: All 10 billion tokens are minted to the Choir Treasury at genesis, serving as the primary source for distributing tokens to users.
-
-### **No In-Protocol Burning**
-
-- **Policy**: The Choir protocol does not include mechanisms for burning tokens.
-- **User Freedom**: Users retain the ability to send tokens to any address, including inactive or "burn" addresses, but the protocol itself does not facilitate or enforce burning.
-
-### **Token Recapture**
-
-- **Mechanism**: Tokens from split edit decisions are returned to the Choir Treasury.
-- **Purpose**: Maintains the Treasury's role in sustaining token distribution and managing the ecosystem's economic balance.
+- **Collaborative Culture**: The Authors Chat enhances community interaction, leading to higher-quality content and stronger relationships among users.
 
 ---
 
@@ -243,19 +265,25 @@ In the digital landscape, the proliferation of text-based content has democratiz
 
 - **Rewards**: Receive tokens upon content creation and when their content is cited.
 - **Incentive**: Produce original, high-quality content to maximize token rewards and content visibility.
+- **Engagement**: Stay responsive to citations and engage with other users through chat threads.
 
 ### **Editors**
 
 - **Cost**: Stake tokens to propose edits, representing an investment in content quality.
+- **Access to Authors Chat**:
+  - **Benefit**: Can collaborate with authors to refine edit proposals, increasing chances of approval.
+  - **Incentive**: Engage in constructive dialogue to improve content and gain co-authorship.
 - **Rewards**:
   - **Approval**: Gain co-authorship and enhance the content's token balance.
-  - **Denial**: Receive tokens from rejecting authors, compensating for maintaining content integrity.
-- **Incentive**: Propose valuable edits that are likely to be approved to gain rewards and co-authorship.
+  - **Denial**: Lose staked tokens, encouraging editors to propose valuable edits.
 
 ### **Authors**
 
 - **Rewards**: Earn tokens from content citations and edit denials.
-- **Incentive**: Maintain content quality by approving beneficial edits and rejecting harmful ones, ensuring the content remains valuable and relevant.
+- **Incentive**:
+  - **Quality Maintenance**: Use the Authors Chat to discuss and refine edits, ensuring content integrity.
+  - **Collaboration**: Work with editors to improve content, benefiting from enhanced content value.
+- **Engagement**: Respond to citations and edit requests promptly through chat threads and notifications.
 
 ---
 
@@ -306,26 +334,46 @@ In the digital landscape, the proliferation of text-based content has democratiz
 
 ---
 
-## **Token Flow Diagram**
+## **Simulation and Scaling Analysis**
 
-1. **Initial Allocation**:
-   - 10 billion CHOIR tokens minted to the Choir Treasury.
+### **Simulation Parameters**
 
-2. **From Treasury to Users**:
-   - Tokens distributed as rewards for content creation and automatic citations.
+- **Initial Token Supply**: 10,000,000,000 CHOIR tokens in Choir Treasury.
+- **User Growth Rate**: 5% per month.
+- **Content Creation Rate**: 1 content piece per user per month.
+- **Edit Proposal Rate**: 0.1 edit proposals per content per month.
+- **Approval Rate**: 75% explicit approvals after Authors Chat collaboration.
+- **Abstention Rate**: 20% abstentions treated as implicit approvals.
+- **Token Decay Rate**: 1% per month.
+- **Tokens per Content Creation**: 10 CHOIR tokens.
+- **Fraction for Citations**: 50%.
+- **Tokens per Edit Proposal**: 5 CHOIR tokens.
+- **Citations per Content**: 3.
 
-3. **From Users to Content Accounts**:
-   - Users invest tokens into content through proposing edits.
+### **Simulation Insights**
 
-4. **Within Content Accounts**:
-   - Accumulated tokens enhance content visibility and ranking.
-   - Tokens represent collective investment in content quality.
+- **Token Distribution Dynamics**: Tokens flow from the Treasury to users, and from users to content accounts through content creation and collaborative editing.
+- **Impact of Authors Chat**:
+  - **Increased Approval Rates**: Collaboration leads to higher edit approval rates, enhancing content quality.
+  - **Reduced Denials**: Open communication reduces misunderstandings and unnecessary denials.
+- **User Engagement**:
+  - **Active Participation**: The intuitive interface encourages users to engage with citations and edit requests promptly.
+  - **Community Building**: Increased interactions strengthen the community and promote a collaborative culture.
+- **Content Visibility**: Content with higher token balances becomes more visible, attracting more citations and further token accumulation.
+- **Economic Sustainability**: The fixed token supply, combined with token decay and recapture mechanisms, ensures a balanced and sustainable token economy.
 
-5. **Divestment**:
-   - Authors divest their share of tokens from content accounts, receiving a proportional amount based on the number of co-authors.
+### **Visualization**
 
-6. **Recapture by Treasury**:
-   - Tokens from split edit decisions are returned to the Choir Treasury.
+Visual representations of the simulation can provide valuable insights into token distribution trends, content growth, and user engagement over time. These visualizations include:
+
+1. **Total Token Supply Over Time**
+2. **Token Minting and Distribution Over Time**
+3. **Edit Approvals and Denials Over Time**
+4. **Content Creation and Collaborative Edits Over Time**
+5. **User Interaction Metrics**: Charts showing the frequency of chat messages, response times, and engagement levels.
+6. **Token Circulation Overview**
+
+*(Note: Visualization images are generated via simulation tools and are essential for understanding the dynamic token flows within the Choir ecosystem.)*
 
 ---
 
@@ -345,136 +393,20 @@ In the digital landscape, the proliferation of text-based content has democratiz
 
 - **Documentation**: Provide comprehensive guides and resources to help users understand Choir's tokenomics and their roles within the ecosystem.
 - **Support**: Offer support channels for users to seek assistance and clarify doubts related to token management and platform usage.
+- **Authors Chat Guidelines**: Educate users on effective communication and collaboration within the Authors Chat to maximize its benefits.
+- **User Interface Tutorials**: Provide tutorials on navigating chat threads, responding to citations, and managing edit requests.
 
 ---
 
 ## **Conclusion**
 
-Choir's tokenomics are meticulously crafted to create a sustainable, decentralized, and collaborative ecosystem that values high-quality text content and active user engagement. By treating text as a valuable asset and integrating a robust token distribution mechanism, Choir incentivizes meaningful contributions and fosters a vibrant community.
+Choir's tokenomics are meticulously crafted to create a sustainable, decentralized, and collaborative ecosystem that values high-quality content and active user engagement. By treating content as valuable assets and integrating a robust token distribution mechanism, Choir incentivizes meaningful contributions and fosters a vibrant community. The integration of the Authors Chat, with its intuitive user interface, during edit proposals significantly enhances collaboration, allowing authors and editors to co-create content that meets collective standards.
 
-The fixed token supply, combined with dynamic reward adjustments and a fair divestment mechanism, ensures economic stability and aligns user incentives with platform goals. As users create, cite, and collaboratively edit text, they actively participate in shaping the platform's content landscape, promoting a culture of quality, originality, and collaboration.
+The fixed token supply, combined with dynamic reward adjustments and a fair divestment mechanism, ensures economic stability and aligns user incentives with platform goals. As users create, cite, and collaboratively edit content, they actively participate in shaping the platform's content landscape, promoting a culture of quality, originality, and collaboration.
 
 Choir stands as a transformative platform in the social media landscape, offering a fair, transparent, and incentive-aligned environment where content quality and user contributions are genuinely valued and rewarded.
 
 ---
-
-Chorus AI Appendix
-
-The Chorus AI is a decision-making model used in Choir to process user prompts and generate refined responses. It consists of several iterative steps that help in refining content and making informed decisions. Here’s a detailed breakdown of each step in the Chorus AI:
-
-- Action:
-
-- Description: This is the initial step where an initial response to the user's prompt is generated.
-
-- Process: The system acts with a "beginner's mind" and provides an initial response based on the user's input.
-
-- Example: A user submits a prompt, and the system generates a preliminary response.
-
-- Experience:
-
-- Description: In this step, the system searches for relevant context to refine the initial response.
-
-- Process: The system searches its memory (using embeddings and a vector database) for relevant information that could help improve the initial response. During this step, content creation rewards and citation rewards are distributed.
-
-- Example: The system retrieves similar past responses or related content to provide a more informed answer. Both the content creator and the cited sources earn Choir tokens for their contributions.
-
-- Intention:
-
-- Description: This step involves reflecting on the user's intention and whether the query can be satisfactorily responded to based on the retrieved context.
-
-- Process: The system reflects on the goal of the user's query and assesses if the response meets the user's needs.
-
-- Example: The system evaluates if the retrieved context and initial response align with the user's intended query.
-
-- Observation:
-
-- Description: Key insights from the iteration are noted to improve future responses.
-
-- Process: The system notes any key insights or learnings from the current iteration and saves them to a global vector database.
-
-- Example: The system saves useful information that could help in future similar queries.
-
-- Update:
-
-- Description: This step decides whether to perform another round of the loop or to provide a final answer.
-
-- Process: The system decides whether to loop again to further refine the response or to finalize the answer.
-
-- Example: The system may decide to loop again if the response is not satisfactory or finalize the response if it meets the user's needs.
-
-- Yield:
-
-- Description: This is the final step where the accumulated context from all iterations is synthesized to provide a comprehensive final response.
-
-- Process: The system synthesizes all the gathered information and iterations to provide a final, refined response.
-
-- Example: The system provides a final, well-informed response to the user's query.
-
-### Example Workflow in Choir
-
-When a user makes content in Choir, the Chorus AI can be used to refine and improve the content before it is stored and cited. Here’s how the Chorus AI might be applied:
-
-- User Prompt: A user inputs text or uploads content.
-
-- Action: The system generates an initial response or embedding for the content.
-
-- Experience: The system searches for similar content or context to refine the initial response. During this step, content creation rewards and citation rewards are distributed to the content creator and cited sources, respectively.
-
-- Intention: The system reflects on the user's intention and assesses if the response meets the user's needs.
-
-- Observation: Key insights from the iteration are noted and saved for future use.
-
-- Update: The system decides whether to loop again or finalize the response.
-
-- Yield: The system synthesizes all gathered information to provide a final, refined response.
-
-By following the Chorus AI, Choir ensures that the content is well-refined and contextually relevant, enhancing the overall quality and reliability of the platform. Additionally, the Experience step incentivizes content creation and citation by distributing rewards, fostering a collaborative and rewarding environment.
-
-### Reranking Sub-Appendix
-
-The current Chorus AI uses similarity search to find relevant content. However, the Choir reranking system should consider multiple dimensions to provide a more comprehensive and meaningful ranking. The reranking should be based on the following five dimensions:
-
-- Highest Token Count:
-
-- Description: Content with the highest number of tokens staked.
-
-- Purpose: Prioritizes content that has received significant support from the community.
-
-- Highest Raw Similarity:
-
-- Description: Content that is most similar to the user's input based on embeddings.
-
-- Purpose: Ensures that the most contextually relevant content is considered.
-
-- Oldest Relevant:
-
-- Description: The oldest content that is still relevant to the user's input.
-
-- Purpose: Highlights content that has stood the test of time and remains relevant.
-
-- Newest Relevant:
-
-- Description: The most recent content that is relevant to the user's input.
-
-- Purpose: Brings attention to the latest contributions and updates.
-
-- Most Coauthors:
-
-- Description: Content that has the highest number of coauthors.
-
-- Purpose: Emphasizes collaborative efforts and diverse perspectives.
-
-### Reranking Process
-
-- Initial Retrieval: Pull approximately 200 similar files based on the initial similarity search.
-
-- Reranking: Rerank the retrieved files along the five dimensions mentioned above.
-
-- Top Selection: Select the top 20 files in each category.
-
-- Final List: Combine and present the final list of top-ranked content to the user.
-
-By incorporating these dimensions into the reranking process, Choir can provide a more nuanced and valuable set of content recommendations, enhancing the user experience and fostering a richer, more collaborative environment.
 
 ## **Disclaimer**
 
