@@ -1,4 +1,4 @@
-2024-09-18T19:07:44-04:00
+2024-10-10
 Yusef Mosiah Nathanson
 Creating a Proof of Text
 In the evolving landscape of social media, the challenge of maintaining high-quality content while fostering genuine user engagement remains paramount. Traditional platforms often struggle with content moderation, echo chambers, and the monetization paradox, where content creators are incentivized more by quantity than quality. Choir seeks to address these issues by introducing a novel consensus mechanism known as Proof of Text. This essay delves into how Choir's unique approach ensures content integrity, fosters collaboration, and aligns incentives within its socioeconomic ecosystem.
