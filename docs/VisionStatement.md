@@ -56,21 +56,29 @@ Choir proposes a decentralized media network where content is evaluated, curated
 
 ### **4.1 Ecosystem Components**
 
-1. **Choir Treasury**
+1. **Chorus AI System**
+   - **Role**: Core AI system for content analysis and generation.
+   - **Function**: Implements a multi-step process (Action, Experience, Intention, Observation, Update, and Yield) for AI-driven interactions.
+
+2. **Choir Treasury**
    - **Role**: Centralized repository holding the initial supply of 10 billion CHOIR tokens.
    - **Function**: Distributes tokens to users as rewards for content creation and automatic citations; recaptures tokens from split edit decisions.
 
-2. **Users**
+3. **Users**
    - **Role**: Content creators, editors, and curators.
    - **Function**: Earn tokens through content creation, citations, and collaborative editing; invest tokens into content accounts; divest tokens by relinquishing authorship.
 
-3. **Edit Escrow Contracts**
+4. **Edit Escrow Contracts**
    - **Role**: Temporary holding of tokens during the edit proposal process.
    - **Function**: Manage the staking and distribution of tokens based on edit approval or denial outcomes.
 
-4. **Content Accounts**
+5. **Content Accounts**
    - **Role**: Blockchain accounts representing individual pieces of content.
    - **Function**: Store the token score of content; maintain records of co-authors and their token shares; accumulate tokens to enhance content visibility.
+
+6. **Qdrant Vector Database**
+   - **Role**: Storage and retrieval of content and embeddings.
+   - **Function**: Enables semantic search and efficient content management.
 
 ### **4.2 Token Flow Mechanics**
 
@@ -253,9 +261,17 @@ High-signal content is characterized by:
 
 ### **9.1 Current Phase (October 2024 - April 2025)**
 
-1. **MVP Deployment**
-   - Launch the Choir platform with core functionalities: content creation, automatic citation, and collaborative editing.
-   - Distribute initial tokens from the Choir Treasury to early users.
+1. **MVP Development and Deployment (October 2024)**
+   - Implement Solana Wallet Authentication enhancements.
+   - Further integrate Qdrant for efficient data storage and retrieval.
+   - Enhance the Chorus AI System, including merging `final_response` and `yield` steps.
+   - Redesign the User Interface and improve UX, including chat thread tabs and Authors Chat integration.
+   - Implement Authors Chat functionality.
+   - Prepare for full Tokenomics integration.
+   - Develop and deploy initial Solana Programs (Smart Contracts).
+   - Implement an Email Notification System.
+   - Integrate Thirdweb Embedded Wallet.
+   - Launch the Choir platform with core functionalities by October 17, 2024.
 
 2. **User Onboarding and Growth**
    - Implement marketing strategies to attract a diverse user base.

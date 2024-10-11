@@ -48,6 +48,7 @@ class DatabaseClient:
                     continue
 
             logger.info(f"First 10 search results: {search_results[:10]}")
+            logger.info(f"Total number of search results: {len(search_results)}")
             return search_results
         except Exception as e:
             logger.error(f"Error during search operation: {e}")

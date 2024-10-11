@@ -1,4 +1,3 @@
-
 Choir Proof of Text
 Creating a Proof of Text
 In the evolving landscape of social media, the challenge of maintaining high-quality content while fostering genuine user engagement remains paramount. Traditional platforms often struggle with content moderation, echo chambers, and the monetization paradox, where content creators are incentivized more by quantity than quality. Choir seeks to address these issues by introducing a novel consensus mechanism known as Proof of Text. This essay delves into how Choir's unique approach ensures content integrity, fosters collaboration, and aligns incentives within its socioeconomic ecosystem.
@@ -17,19 +16,21 @@ Users create content by submitting text, images, or files.
 
 Upon submission, the content is embedded using OpenAI's API and stored in the Qdrant vector database.
 
-Choir tokens are minted and distributed to the content creator and any cited sources, incentivizing original creation and proper referencing.
+CHOIR tokens are minted and distributed to the content creator and any cited sources, incentivizing original creation and proper referencing.
 
 Proposing Edits
 
-Users can propose edits to existing content by spending a certain amount of Choir tokens.
+Users can propose edits to existing content by staking a certain amount of CHOIR tokens.
 
-This cost ensures that edit proposals are meaningful and discourages frivolous changes.
+This staking requirement ensures that edit proposals are meaningful and discourages frivolous changes.
+
+The proposed edit is displayed in the Authors Chat, allowing for collaborative discussion.
 
 Consensus Building through Approval and Rejection
 
-Unanimous Approval: If all authors of the original content approve the edit, the proposed changes are applied. The tokens spent by the editor are added to the content's token balance, making it more likely to be cited in the future. Additionally, the editor gains veto power, being added to the author set.
+Unanimous Approval: If all authors of the original content approve the edit, the proposed changes are applied. The tokens staked by the editor are added to the content's token balance, making it more likely to be cited in the future. Additionally, the editor gains co-authorship status.
 
-Unanimous Rejection: If all authors reject the edit, the tokens spent by the editor are distributed among the rejecting authors, rewarding them for maintaining content quality.
+Unanimous Rejection: If all authors reject the edit, the tokens staked by the editor are distributed among the rejecting authors, rewarding them for maintaining content quality.
 
 Split Decision: In cases where some authors approve and others reject the edit, the tokens intended for approvers are redirected to the Choir Treasury, while those for rejecters are distributed to the rejecting authors. This ensures that partial consensus still rewards users who contribute to content curation while preventing token inflation.
 
@@ -43,7 +44,7 @@ The Proof of Text relies heavily on aligning incentives to promote high-quality 
 
 Content Creators and Citing Authors: Earn tokens for their contributions, encouraging original and well-referenced content.
 
-Editors: Motivated to propose meaningful edits that enhance content quality, as successful edits can accrue tokens to the content and confer veto power.
+Editors: Motivated to propose meaningful edits that enhance content quality, as successful edits can accrue tokens to the content and confer co-authorship status.
 
 Rejecting Authors: Rewarded for rejecting low-quality or inappropriate edits, incentivizing vigilance in content curation.
 
@@ -57,7 +58,7 @@ Unanimous Approval Requirement: Ensures that edits align with the original inten
 
 Token Redistribution: By redistributing tokens based on approval outcomes, Choir ensures that users are compensated in proportion to their contributions, whether in approving or rejecting edits.
 
-Veto Power for Editors: Incorporating editors into the author set fosters a collaborative environment where multiple stakeholders have a say in content evolution.
+Co-authorship for Editors: Incorporating editors into the author set fosters a collaborative environment where multiple stakeholders have a say in content evolution.
 
 Benefits of Proof of Text
 
@@ -65,7 +66,7 @@ High-Quality Content: Collective curation ensures that only content meeting comm
 
 User Empowerment: Users have a tangible stake in content quality, fostering a sense of ownership and responsibility.
 
-Sustainable Token Economy: Thoughtful token distribution and decay mechanisms prevent inflation and promote long-term engagement.
+Sustainable Token Economy: Thoughtful token distribution mechanisms prevent inflation and promote long-term engagement.
 
 Decentralized Governance: Future integration of governance protocols empowers the community to influence platform directions and resource allocations, aligning platform growth with user interests.
 
@@ -83,4 +84,4 @@ Conclusion
 
 Choir's Proof of Text represents a pioneering approach to content curation in the social media landscape. By leveraging a consensus-driven edit process anchored in token-based incentives, Choir ensures that content quality is upheld collectively. This mechanism not only fosters a high-quality, collaborative environment but also aligns economic incentives with community-driven governance, paving the way for a sustainable and equitable social media ecosystem.
 
-As Choir progresses, continuous refinement of this consensus mechanism will be vital to address scalability and maintain balance between speed and quality. Nevertheless, Choir stands at the forefront of reimagining social media, where content integrity and user collaboration are seamlessly integrated through innovative blockchain technology.
+As Choir progresses towards its MVP launch on October 17, 2024, and its ambitious goal of releasing an AI model by April 27, 2025, continuous refinement of this consensus mechanism will be vital. The integration of the Authors Chat, enhanced Solana wallet functionality, and the implementation of the CHOIR token ecosystem will play crucial roles in realizing the full potential of the Proof of Text mechanism. Choir stands at the forefront of reimagining social media, where content integrity and user collaboration are seamlessly integrated through innovative blockchain technology.
