@@ -30,7 +30,7 @@ At the heart of Choir's approach lies the **Edit Proposal and Approval Process**
 - **Unanimous Rejection:** If all authors reject the edit, the tokens staked by the editor are distributed among the rejecting authors, rewarding them for maintaining content quality.
 - **Split Decision:** In cases where some authors approve and others reject the edit, the tokens intended for approvers are redirected to the Choir Treasury, while those for rejecters are distributed to the rejecting authors. This ensures that partial consensus still rewards users who contribute to content curation while preventing token inflation.
 
-### Auto-Rejection Mechanism
+### Unresolved Edit Proposals
 
 If an edit proposal remains unresolved after the 7-day review period:
 - A mix of abstentions and approvals with no rejections results in approval.
