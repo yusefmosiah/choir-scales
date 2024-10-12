@@ -7,17 +7,16 @@ After reviewing the project documentation—**Context.md**, **Blueprint.md**, **
 ## **1. Inconsistencies in Edit Proposal Outcomes**
 
 - **Question**: What is the definitive policy on unresolved edit proposals—are they automatically approved after a certain period, or are they rejected?
-- **Answer**: abstaining while others make a decision results in accepting the decision of others
+- **Answer**: A mix of abstentions and approvals with no rejections results in approval. If there are only abstentions, it results in rejection.
   - **Discussion Points**:
-    - In **ProofOfText.md**, unresolved edits are **automatically rejected** after a predetermined period.
-    - In **Whitepaper.md**, abstention is treated as an implicit **approval** after a 7-day period.
+    - This policy differs from both the automatic rejection mentioned in **ProofOfText.md** and the implicit approval after 7 days mentioned in **Whitepaper.md**.
     - **Implications**:
-      - Automatic approval could lead to unwanted changes if authors are inactive.
-      - Automatic rejection might discourage editors if their efforts are dismissed without consideration.
+      - This approach balances the need for active participation with a safeguard against unwanted changes.
+      - It encourages authors to actively review and participate in the editing process.
     - **Possible Resolutions**:
-      - Establish a clear and consistent policy across all documents.
-      - Consider implementing reminders or incentives for authors to review edit proposals promptly.
-      - Explore a middle-ground solution, such as extending the decision period or involving moderators.
+      - Update all relevant documentation to reflect this new policy consistently.
+      - Implement a clear notification system to remind authors of pending edit proposals.
+      - Consider adding a time limit for decisions to prevent indefinitely pending proposals.
 
 ---
 

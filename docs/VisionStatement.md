@@ -92,11 +92,10 @@ Choir proposes a decentralized media network where content is evaluated, curated
 
 4. **Collaborative Editing**
    - **Edit Proposals**: Users propose edits by staking tokens in an edit escrow contract.
-   - **Approval Process**: Co-authors have 7 days to approve or reject the edit; abstention counts as approval.
+   - **Approval Process**: Co-authors have 7 days to review the edit. A mix of abstentions and approvals with no rejections results in approval. If there are only abstentions, it results in rejection.
    - **Token Distribution**:
      - **Approval**: Staked tokens are transferred to the content account, and the editor becomes a co-author.
-     - **Denial**: Staked tokens are distributed to rejecting authors.
-   - **Divestment**: Authors can divest their share of tokens from the content account, receiving a proportional amount based on the number of co-authors.
+     - **Denial**: Staked tokens are distributed to rejecting authors or returned to the editor in case of abstention-only rejection.
 
 5. **Token Recapture**
    - **Mechanism**: Tokens from split edit decisions (non-unanimous outcomes) are recaptured by the Choir Treasury, sustaining future distributions.

@@ -16,7 +16,7 @@ This blueprint outlines an accelerated plan to develop and launch the **Choir** 
 - [ ] **2. Optimize Qdrant Integration for Data Storage**
 - [ ] **3. Enhance the Chorus AI System**
 - [ ] **4. Redesign the User Interface and Enhance UX**
-- [ ] **5. Implement Authors Chat Functionality**
+- [ ] **5. Implement Approval Mechanism**
 - [ ] **6. Finalize Tokenomics Integration**
 - [ ] **7. Develop and Deploy Solana Programs (Smart Contracts)**
 - [ ] **8. Implement an Email Notification System**
@@ -159,33 +159,35 @@ This blueprint outlines an accelerated plan to develop and launch the **Choir** 
 
 ---
 
-### **5. Implement Authors Chat Functionality**
+### **5. Implement Approval Mechanism**
 
-**Objective:** Develop and integrate the Authors Chat feature to facilitate collaborative editing and communication among content creators and editors.
+**Objective:** Develop logic for handling mixed abstentions and approvals, implement automatic rejection for abstention-only cases, and ensure proper token distribution based on approval outcomes.
 
 #### **Tasks:**
 
-1. **Design Authors Chat Interface:**
-   - Create a user-friendly interface for Authors Chat within chat threads.
-   - Ensure seamless integration with existing chat functionalities.
+1. **Develop Logic for Mixed Abstentions and Approvals:**
+   - Implement a system to handle mixed abstentions and approvals for edit proposals.
+   - Ensure that a mix of abstentions and approvals with no rejections results in approval.
 
-2. **Develop Communication Tools:**
-   - Implement real-time messaging capabilities for discussions.
-   - Enable threaded conversations within Authors Chat for organized communication.
+2. **Implement Automatic Rejection for Abstention-Only Cases:**
+   - Develop logic to automatically reject edit proposals that receive only abstentions.
+   - Ensure proper token distribution in case of abstention-only rejection.
 
-3. **Integrate with Tokenomics:**
-   - Link Authors Chat interactions with token distribution mechanisms.
-   - Ensure that contributions within Authors Chat influence token rewards appropriately.
+3. **Ensure Proper Token Distribution:**
+   - Implement token distribution mechanisms based on approval outcomes.
+   - Distribute tokens to rejecting authors in case of rejection.
+   - Return tokens to the editor in case of abstention-only rejection.
 
-4. **Testing and Optimization:**
-   - Conduct user testing to gather feedback on Authors Chat usability.
-   - Optimize performance for real-time interactions and scalability.
+4. **Update User Interface:**
+   - Create clear visual cues for different approval states.
+   - Implement intuitive controls for approving, rejecting, or abstaining from edit proposals.
 
 **Deliverables:**
 
-- Integrated Authors Chat feature within the Choir platform.
-- Enhanced communication tools for collaborative editing.
-- Documentation on Authors Chat usage and guidelines.
+- Implemented approval mechanism with logic for mixed abstentions and approvals.
+- Automatic rejection for abstention-only cases.
+- Proper token distribution based on approval outcomes.
+- Updated user interface for edit proposal approval.
 
 ---
 
@@ -420,7 +422,7 @@ This blueprint outlines an accelerated plan to develop and launch the **Choir** 
    - Improve accessibility features.
 
 4. **October 14, 2024 (Monday):**
-   - Implement Authors Chat functionality.
+   - Implement approval mechanism for edit proposals.
    - Finalize tokenomics integration.
    - Develop and deploy Solana programs (smart contracts).
 
@@ -539,7 +541,7 @@ The immediate next steps, as outlined in the blueprint, focus on:
    - Develop a dashboard for signed-in users
    - Integrate Authors Chat within chat threads
    - Improve accessibility
-5. Implementing Authors Chat Functionality
+5. Implementing Approval Mechanism for Edit Proposals
 6. Preparing for Tokenomics Integration
 7. Developing and Deploying Solana Programs (Smart Contracts)
 8. Implementing an Email Notification System

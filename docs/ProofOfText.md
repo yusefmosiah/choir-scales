@@ -32,7 +32,10 @@ At the heart of Choir's approach lies the **Edit Proposal and Approval Process**
 
 ### Auto-Rejection Mechanism
 
-If an edit proposal remains unresolved for a predetermined period (e.g., one week), it is automatically rejected. Tokens are then distributed accordingly, and the rejected edits are hidden from the public, visible only to authors.
+If an edit proposal remains unresolved after the 7-day review period:
+- A mix of abstentions and approvals with no rejections results in approval.
+- If there are only abstentions, the edit is automatically rejected.
+- Tokens are distributed according to the outcome (approval or rejection).
 
 ## Incentive Alignment
 
