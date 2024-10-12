@@ -277,6 +277,26 @@ After reviewing the project documentation—**Context.md**, **Blueprint.md**, **
 
 ---
 
+### Corporate Structure and Fundraising Plans
+
+- **Dual Structure**: Choir operates both as a corporate entity with stock and a decentralized community with the CHOIR token.
+- **Fundraising Initiative**:
+  - **Target Date**: Planning to raise funds by **December 19**.
+  - **Purpose**:
+    - Hire exceptional talent across various domains.
+    - Invest in AI model training and platform infrastructure.
+  - **Amount and Terms**: To be determined.
+
+- **Strategic Goals**:
+  - **Corporate Ownership of Tokens**: The corporation aims to own the CHOIR token to solidify its stake in the platform's success.
+  - **Treasury Holdings**: The Choir Treasury plans to eventually hold tokenized corporate stock, fostering a mutually beneficial relationship.
+
+- **Community and Investor Alignment**:
+  - Seeking investors who share the platform's vision and values.
+  - Ensuring that fundraising efforts enhance user experience and platform value.
+
+---
+
 ## Conclusion
 
 Addressing these questions is essential for the successful development and launch of the Choir platform. By engaging in thorough discussion and finding satisfactory answers, the project can strengthen its foundation, enhance stakeholder confidence, and pave the way for a vibrant and sustainable ecosystem.

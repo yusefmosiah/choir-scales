@@ -14,6 +14,8 @@ The rapid evolution of AI has ushered in an era where machines can perform compl
 
 **Choir** seeks to bridge this gap by creating a platform where content quality is meticulously measured and rewarded, fostering an ecosystem that not only values but also cultivates high-quality, artistically rich content. By integrating blockchain technology and innovative tokenomics, Choir incentivizes users to produce and curate content that stands out in both relevance and artistic merit.
 
+Choir operates as both a decentralized community and a corporate entity. This dual structure allows us to harness the innovative potential of decentralization while leveraging the strategic advantages of a traditional corporation. Our vision includes integrating the corporate and decentralized elements, where the corporation owns the CHOIR token, and the Choir Treasury eventually holds tokenized corporate stock.
+
 ---
 
 ## 2. The Problem: Quantitative vs. Qualitative AI Advancements
@@ -248,7 +250,47 @@ Choir's architecture is built to scale seamlessly:
 
 ---
 
-## 9.2 Post-MVP Phase (April 2025 and Beyond)
+## 8. Fundraising and Corporate Integration
+
+Recognizing the need for resources to achieve our ambitious goals, we plan to engage in fundraising activities.
+
+### 8.1 Fundraising Plans
+
+- **Purpose of Raising Funds**:
+  - **Team Expansion**: Hire exceptional talent in engineering, design, blockchain development, and more.
+  - **AI Model Development**: Invest in training advanced AI models.
+  - **Infrastructure Scaling**: Support our rapidly growing user base with robust infrastructure.
+  - **Platform Enhancement**: Accelerate the development of new features and improvements.
+
+- **Fundraising Timeline**:
+  - **Target Date**: We aim to raise funds by **December 19**, with the specific amount and terms to be determined.
+
+- **Investment Opportunities**:
+  - **Equity Offering**: Potential for investors to acquire equity in Choir Inc.
+  - **Strategic Partnerships**: Seeking investors who align with our vision and can contribute beyond capital.
+
+### 8.2 Corporate and Decentralized Synergy
+
+- **Corporate Ownership**:
+  - The corporation will hold the CHOIR token, reinforcing our commitment to the platform's success.
+  - This structure enables strategic decision-making and investment in key areas.
+
+- **Choir Treasury Holdings**:
+  - The Choir Treasury aims to own tokenized corporate stock in the future.
+  - This creates a symbiotic relationship between the corporate entity and the decentralized community.
+
+### 8.3 Commitment to Our Community
+
+- **Value Alignment**:
+  - Prioritizing long-term growth and aligning with partners who support our mission.
+  - Ensuring that fundraising efforts enhance the platform for all users.
+
+- **Community Empowerment**:
+  - Funds raised will drive engagement and value, benefiting the entire Choir ecosystem.
+
+---
+
+## 9. Post-MVP Phase (April 2025 and Beyond)
 
 1. **AI Model Release**
    - Launch the first iteration of the AI model trained using Choir's dataset.
