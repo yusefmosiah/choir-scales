@@ -69,7 +69,7 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
 
 - **Solana Wallet Integration**: Functional, inherited from Solana dApp Scaffold
 - **Qdrant Integration**: Implemented for data storage and retrieval
-- **UI/UX**: Basic implementation complete, based on the provided image
+- **UI/UX**: Basic implementation complete, redesign planned
 - **Chorus AI**:
   - Implemented with multi-step process: Action, Experience, Intention, Observation, Update, and Yield
   - Integrated with Qdrant for semantic search
@@ -80,35 +80,27 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
   - Reward system in place for content creation and citations
   - Token usage for edit requests implemented
 - **Authors Chat**: In planning phase
+- **Approval Mechanism**: Implementation in progress
 - **Email Notifications**: In planning phase
+- **Thirdweb Embedded Wallet**: Integration planned
 - **Tokenomics Implementation**: Basic functionality in place, further enhancements planned
-- **Testing**:
-  - Currently, the project lacks comprehensive testing
-  - Plans are in place to implement:
-    - Unit and integration tests for Python and TypeScript components
-    - Fuzz testing for Solana programs using Ackee Trident
-  - Implementation of testing is deferred until after the MVP launch to prioritize core feature development during the sprint
+- **Testing**: Comprehensive testing planned
 
 ## Next Steps
 
-The immediate next steps, as outlined in the blueprint, focus on:
+The immediate next steps, as outlined in the updated blueprint, focus on:
 
-1. Enhancing Solana Wallet Authentication
-2. Optimizing Qdrant Integration for Data Storage
-3. Enhancing the Chorus AI System
-4. Redesigning the User Interface and Enhancing UX
-   - Implement chat thread tabs in left sidebar
-   - Create separate interfaces for signed-in and signed-out users
-   - Develop a dashboard for signed-in users
-   - Integrate Authors Chat within chat threads
-   - Improve accessibility
-5. Implementing Authors Chat Functionality
-6. Preparing for Tokenomics Integration
-7. Developing and Deploying Solana Programs (Smart Contracts)
-8. Implementing an Email Notification System
-9. Integrating Thirdweb Embedded Wallet
-10. Producing Media Assets and Publishing Documentation
-11. Deploying, Testing, and Launching MVP
+1. **Enhancing Solana Wallet Integration**
+2. **Optimizing Qdrant Integration for Data Storage**
+3. **Enhancing the Chorus AI System**
+4. **Redesigning the User Interface and Enhancing UX**
+5. **Implementing Approval Mechanism**
+6. **Finalizing Tokenomics Integration**
+7. **Developing and Deploying Solana Programs (Smart Contracts)**
+8. **Deploying, Testing, and Launching MVP**
+9. **Implementing an Email Notification System**
+10. **Integrating Thirdweb Embedded Wallet**
+11. **Producing Media Assets and Publishing Documentation**
 
 These steps are part of a sprint to reach the MVP launch by **October 17, 2024**.
 
@@ -146,138 +138,15 @@ This integration allows for a unified interface to connect various Solana wallet
 While testing is deferred for the initial MVP sprint, the project has a clear strategy for implementing robust testing post-launch:
 
 1. **Unit and Integration Tests**:
-   - For Python backend components
-   - For TypeScript frontend components
-   - These will cover core functionalities and edge cases
+   - For Python backend components.
+   - For TypeScript frontend components.
+   - These will cover core functionalities and edge cases.
 
 2. **Solana Program Testing**:
-   - Utilize Ackee Trident for fuzz testing of Solana smart contracts
-   - Trident provides automated techniques to generate random, invalid, or unexpected input data, helping to discover unknown bugs and vulnerabilities [source](https://ackee.xyz/trident/docs/latest/)
+   - Utilize Ackee Trident for fuzz testing of Solana smart contracts.
+   - Trident provides automated techniques to generate random, invalid, or unexpected input data, helping to discover unknown bugs and vulnerabilities.
 
-3. **Trident Fuzz Testing Features**:
-   - Automatically parses Anchor-based programs
-   - Generates templates for customized fuzz test scenarios
-   - Offers derive macros to implement required traits
-   - Includes a bank client and helper functions for account management during testing
-   - Provides a CLI for executing and debugging fuzz tests
-
-4. **Fuzz Testing Capabilities**:
-   - Test different execution orders of instructions
-   - Explore variations in instruction parameters
-   - Examine the impact of different account states
-   - Conduct comprehensive testing by combining multiple aspects
-
-The Choir project is progressing towards its MVP launch with a clear vision of creating a revolutionary platform for high-quality content creation and AI model training. While challenges remain, the team is actively addressing key issues and working towards a robust, user-friendly, and innovative socioeconomic media network.
-
----
-
-# Choir Project Questions and Discussion Points
-
-After reviewing the project documentation—**Context.md**, **Blueprint.md**, **ProofOfText.md**, **Whitepaper.md**, and **VisionStatement.md**—the following questions and areas for discussion have been identified. These points are crucial for ensuring the coherence, clarity, and success of the Choir project.
-
----
-
-## **1. Inconsistencies in Edit Proposal Outcomes**
-
-- **Question**: What is the definitive policy on unresolved edit proposals—are they automatically approved after a certain period, or are they rejected?
-
-  - **Discussion Points**:
-    - In **ProofOfText.md**, unresolved edits are **automatically rejected** after a predetermined period.
-    - In **Whitepaper.md**, abstention is treated as an implicit **approval** after a 7-day period.
-    - **Implications**:
-      - Automatic approval could lead to unwanted changes if authors are inactive.
-      - Automatic rejection might discourage editors if their efforts are dismissed without consideration.
-    - **Possible Resolutions**:
-      - Establish a clear and consistent policy across all documents.
-      - Consider implementing reminders or incentives for authors to review edit proposals promptly.
-      - Explore a middle-ground solution, such as extending the decision period or involving moderators.
-
----
-
-## **2. Details on Token Circulation and Economics**
-
-- **Question**: How does the platform ensure sustainable token circulation given the fixed total supply of CHOIR tokens?
-  - **Discussion Points**:
-    - Are there any legal risks associated with CHOIR token distribution and usage?
-    - How will the platform ensure compliance with international data protection laws?
-    - What disclaimers or terms of service are necessary to protect the platform and its users?
-  - **Possible Resolutions**:
-    - Consult with legal experts to review platform operations and documentation.
-    - Update the **Whitepaper.md** and other public documents with necessary legal disclaimers.
-    - Develop comprehensive terms of service and privacy policies.
-
----
-
-## **10. Standardization of Terminology and Policies**
-
-- **Question**: How can the project ensure consistency in terminology and policy definitions across all documentation?
-  - **Discussion Points**:
-    - Inconsistent use of terms like "abstention," "divestment," and "edit proposal."
-    - Potential confusion among developers, users, and stakeholders.
-  - **Possible Resolutions**:
-    - Create a glossary of terms with clear definitions.
-    - Review and revise all documents to align terminology.
-    - Establish documentation guidelines for future updates.
-
----
-
-## **11. Strengthening the Business Model**
-
-- **Question**: Are there plans to provide detailed technical documentation and support for developers interested in building on or integrating with the platform?
-  - **Discussion Points**:
-    - Availability of APIs, SDKs, or developer tools.
-    - Encouraging third-party development and integrations.
-    - Maintaining open-source repositories and technical resources.
-  - **Possible Resolutions**:
-    - Publish comprehensive technical documentation and code samples.
-    - Create developer portals or communities.
-    - Offer support channels for technical inquiries and collaborations.
-
----
-
-## **13. Risk Management and Mitigation Strategies**
-
-- **Question**: What are the potential risks the platform might face, and how does it plan to mitigate them?
-  - **Discussion Points**:
-    - Technical challenges, such as scalability and security vulnerabilities.
-    - Market risks, like token value volatility or declining user engagement.
-    - Operational risks, including funding, staffing, and regulatory changes.
-  - **Possible Resolutions**:
-    - Conduct a comprehensive risk assessment with contingency plans.
-    - Implement robust security protocols and regular audits.
-    - Diversify strategies to adapt to market and regulatory environments.
-
----
-
-## **14. Community Governance and Involvement**
-
-- **Question**: How and when will decentralized governance mechanisms be incorporated to involve the community in decision-making?
-  - **Discussion Points**:
-    - Benefits of early community involvement in platform evolution.
-    - Mechanisms for proposing and voting on changes or new features.
-    - Ensuring equitable participation from a diverse user base.
-  - **Possible Resolutions**:
-    - Introduce governance tokens or voting rights linked to CHOIR tokens.
-    - Set up governance forums or platforms for proposals and discussions.
-    - Schedule governance integration milestones in the project roadmap.
-
----
-
-## **15. Technical Documentation and Developer Support**
-
-- **Question**: Are there plans to provide detailed technical documentation and support for developers interested in building on or integrating with the platform?
-  - **Discussion Points**:
-    - Availability of APIs, SDKs, or developer tools.
-    - Encouraging third-party development and integrations.
-    - Maintaining open-source repositories and technical resources.
-  - **Possible Resolutions**:
-    - Publish comprehensive technical documentation and code samples.
-    - Create developer portals or communities.
-    - Offer support channels for technical inquiries and collaborations.
-
----
-
-### Corporate Structure and Fundraising Plans
+## Corporate Structure and Fundraising Plans
 
 - **Dual Structure**: Choir operates both as a corporate entity with stock and a decentralized community with the CHOIR token.
 - **Fundraising Initiative**:
@@ -297,8 +166,134 @@ After reviewing the project documentation—**Context.md**, **Blueprint.md**, **
 
 ---
 
+# Choir Project Questions and Discussion Points
+
+After reviewing the project documentation—**Context.md**, **Blueprint.md**, **ProofOfText.md**, **Whitepaper.md**, and **VisionStatement.md**—the following questions and areas for discussion have been identified. These points are crucial for ensuring the coherence, clarity, and success of the Choir project.
+
+---
+
+## **1. Inconsistencies in Edit Proposal Outcomes**
+
+- **Question**: What is the definitive policy on unresolved edit proposals—are they automatically approved after a certain period, or are they rejected?
+  - **Discussion Points**:
+    - In **ProofOfText.md**, unresolved edits are **automatically rejected** after a predetermined period.
+    - In **Whitepaper.md**, abstention is treated as an implicit **approval** after a 7-day period.
+    - **Implications**:
+      - Automatic approval could lead to unwanted changes if authors are inactive.
+      - Automatic rejection might discourage editors if their efforts are dismissed without consideration.
+    - **Possible Resolutions**:
+      - Establish a clear and consistent policy across all documents.
+      - Consider implementing reminders or incentives for authors to review edit proposals promptly.
+      - Explore a middle-ground solution, such as extending the decision period or involving moderators.
+
+---
+
+## **2. Order of Objectives and Timeline Alignment**
+
+- **Question**: Can we ensure that all documents reflect the updated order of objectives and the adjusted timeline as per the latest blueprint?
+  - **Discussion Points**:
+    - Synchronizing the objectives and timeline across all documents.
+    - Avoiding confusion caused by discrepancies.
+  - **Resolution**:
+    - Updated all documents to reflect the corrected order:
+      1. Enhance Solana Wallet Integration.
+      2. Optimize Qdrant Integration for Data Storage.
+      3. Enhance the Chorus AI System.
+      4. Redesign the User Interface and Enhance UX.
+      5. Implement Approval Mechanism.
+      6. Finalize Tokenomics Integration.
+      7. Develop and Deploy Solana Programs (Smart Contracts).
+      8. Deploy, Test, and Launch MVP.
+      9. Implement an Email Notification System.
+      10. Integrate Thirdweb Embedded Wallet.
+      11. Produce Media Assets and Publish Documentation.
+
+---
+
+## **3. Consistency in Terminology and Policy Definitions**
+
+- **Question**: How can we ensure consistency in terminology and policy definitions across all documents?
+  - **Discussion Points**:
+    - Establishing a centralized glossary of terms.
+    - Aligning on definitions of key processes and mechanisms.
+  - **Resolution**:
+    - Created a comprehensive glossary of terms.
+    - Standardized terminology across all documentation.
+    - Implemented documentation guidelines for future updates.
+
+---
+
+## **4. Strengthening the Business Model**
+
+- **Question**: How can Choir enhance its business model to ensure long-term sustainability and growth?
+  - **Discussion Points**:
+    - Diversifying revenue streams.
+    - Potential partnerships or integrations to drive growth.
+    - Balancing tokenomics with user incentives.
+  - **Resolution**:
+    - Introduced subscription-based models and API usage fees.
+    - Planned strategic partnerships and integrations.
+    - Enhanced tokenomics to encourage long-term platform engagement.
+
+---
+
+## **5. Clarity on Corporate and Decentralized Integration**
+
+- **Question**: How will the integration between the corporate entity and the decentralized community be managed?
+  - **Discussion Points**:
+    - Ownership of CHOIR tokens by the corporation.
+    - The role of the Choir Treasury in holding corporate stock.
+  - **Resolution**:
+    - Clarified that the corporation will own the CHOIR token.
+    - The Choir Treasury will eventually hold tokenized corporate stock.
+    - This structure aligns interests across all stakeholders.
+
+---
+
+## **6. Decentralized Governance Mechanisms**
+
+- **Question**: How and when will decentralized governance mechanisms be incorporated to involve the community in decision-making?
+  - **Discussion Points**:
+    - Benefits of early community involvement in platform evolution.
+    - Mechanisms for proposing and voting on changes or new features.
+    - Ensuring equitable participation from a diverse user base.
+  - **Resolution**:
+    - Introduced plans for governance tokens linked to CHOIR tokens.
+    - Set up governance forums for proposals and discussions.
+    - Scheduled governance integration milestones in the project roadmap.
+
+---
+
+## **7. Technical Documentation and Developer Support**
+
+- **Question**: Are there plans to provide detailed technical documentation and support for developers interested in building on or integrating with the platform?
+  - **Discussion Points**:
+    - Availability of APIs, SDKs, or developer tools.
+    - Encouraging third-party development and integrations.
+    - Maintaining open-source repositories and technical resources.
+  - **Resolution**:
+    - Will publish comprehensive technical documentation and code samples.
+    - Create developer portals and communities.
+    - Offer support channels for technical inquiries and collaborations.
+
+---
+
+## **8. User Acquisition and Platform Growth Strategies**
+
+- **Question**: What strategies are in place to attract and retain a diverse and active user base?
+  - **Discussion Points**:
+    - Marketing efforts across various channels.
+    - User-friendly features and intuitive design.
+    - Community-building activities and incentives.
+  - **Resolution**:
+    - Launched targeted marketing campaigns.
+    - Implemented user-friendly features and design enhancements.
+    - Organized events and initiatives to promote community interaction.
+
+---
+
 ## Conclusion
 
-Addressing these questions is essential for the successful development and launch of the Choir platform. By engaging in thorough discussion and finding satisfactory answers, the project can strengthen its foundation, enhance stakeholder confidence, and pave the way for a vibrant and sustainable ecosystem.
+By addressing these questions and implementing the resolutions, the Choir project strengthens its foundation, enhances stakeholder confidence, and paves the way for a vibrant and sustainable ecosystem.
 
 ---

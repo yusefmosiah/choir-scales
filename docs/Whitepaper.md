@@ -183,7 +183,8 @@ Choir operates as both a corporate entity with stock and a decentralized communi
 
 1. **Initial Framework Development**: Design of governance structure, roles, and voting mechanisms.
 2. **Community Engagement**: Introduction of the governance model to the community, encouraging active participation.
-3. **Full DAO Integration**: Transition to a fully decentralized autonomous organization.
+3. **Governance Integration**: Implement decentralized governance mechanisms post-MVP launch.
+4. **Full DAO Integration**: Transition to a fully decentralized autonomous organization.
 
 ### Benefits
 

@@ -21,10 +21,10 @@ Post-launch plans include introducing a monthly membership plan, supporting mult
 - [ ] **5. Implement Approval Mechanism**
 - [ ] **6. Finalize Tokenomics Integration**
 - [ ] **7. Develop and Deploy Solana Programs (Smart Contracts)**
-- [ ] **8. Implement an Email Notification System**
-- [ ] **9. Integrate Thirdweb Embedded Wallet**
-- [ ] **10. Produce Media Assets and Publish Documentation**
-- [ ] **11. Deploy, Test, and Launch MVP**
+- [ ] **8. Deploy, Test, and Launch MVP**
+- [ ] **9. Implement an Email Notification System**
+- [ ] **10. Integrate Thirdweb Embedded Wallet**
+- [ ] **11. Produce Media Assets and Publish Documentation**
 
 ---
 
@@ -166,68 +166,7 @@ Post-launch plans include introducing a monthly membership plan, supporting mult
 
 ---
 
-### 8. Implement an Email Notification System
-
-**Objective:** Notify users about key platform activities via email.
-
-**Tasks:**
-
-- Choose an email service provider and configure integrations.
-- Identify events requiring notifications and set triggers.
-- Design responsive email templates.
-- Link notifications with user accounts and preferences.
-- Test and deploy the email system.
-
-**Deliverables:**
-
-- Integrated email notification system.
-- Designed email templates.
-- Documentation on configurations.
-
----
-
-### 9. Integrate Thirdweb Embedded Wallet
-
-**Objective:** Offer an alternative wallet option by integrating Thirdweb Embedded Wallet.
-
-**Tasks:**
-
-- Assess Thirdweb Wallet compatibility.
-- Plan integration workflow with fallback mechanisms.
-- Implement frontend components for the wallet.
-- Update UI to support multiple wallets.
-- Test for functionality and security.
-
-**Deliverables:**
-
-- Integrated Thirdweb Wallet.
-- Updated UI for wallet selection.
-- Documentation on usage.
-
----
-
-### 10. Produce Media Assets and Publish Documentation
-
-**Objective:** Create media assets and update documentation.
-
-**Tasks:**
-
-- Design logos, icons, and promotional materials.
-- Update existing documentation with new features.
-- Develop tutorials and guides for users and developers.
-- Organize documentation for easy access.
-- Review and revise materials for clarity.
-
-**Deliverables:**
-
-- Media assets for branding.
-- Updated documentation repository.
-- User and developer guides.
-- Promotional materials.
-
----
-
-### 11. Deploy, Test, and Launch MVP
+### 8. Deploy, Test, and Launch MVP
 
 **Objective:** Finalize deployment, conduct testing, and launch the platform.
 
@@ -248,6 +187,67 @@ Post-launch plans include introducing a monthly membership plan, supporting mult
 
 ---
 
+### 9. Implement an Email Notification System
+
+**Objective:** Notify users about key platform activities via email.
+
+**Tasks:**
+
+- Choose an email service provider and configure integrations.
+- Identify events requiring notifications and set triggers.
+- Design responsive email templates.
+- Link notifications with user accounts and preferences.
+- Test and deploy the email system.
+
+**Deliverables:**
+
+- Integrated email notification system.
+- Designed email templates.
+- Documentation on configurations.
+
+---
+
+### 10. Integrate Thirdweb Embedded Wallet
+
+**Objective:** Offer an alternative wallet option by integrating Thirdweb Embedded Wallet.
+
+**Tasks:**
+
+- Assess Thirdweb Wallet compatibility.
+- Plan integration workflow with fallback mechanisms.
+- Implement frontend components for the wallet.
+- Update UI to support multiple wallets.
+- Test for functionality and security.
+
+**Deliverables:**
+
+- Integrated Thirdweb Wallet.
+- Updated UI for wallet selection.
+- Documentation on usage.
+
+---
+
+### 11. Produce Media Assets and Publish Documentation
+
+**Objective:** Create media assets and update documentation.
+
+**Tasks:**
+
+- Design logos, icons, and promotional materials.
+- Update existing documentation with new features.
+- Develop tutorials and guides for users and developers.
+- Organize documentation for easy access.
+- Review and revise materials for clarity.
+
+**Deliverables:**
+
+- Media assets for branding.
+- Updated documentation repository.
+- User and developer guides.
+- Promotional materials.
+
+---
+
 ## Timeline and Milestones
 
 ### Accelerated Development Phase (Oct 11 - Oct 17, 2024)
@@ -265,13 +265,13 @@ Post-launch plans include introducing a monthly membership plan, supporting mult
   - Implement approval mechanism; finalize tokenomics; deploy smart contracts.
 
 - **October 15 (Tuesday):**
-  - Implement email notifications; integrate Thirdweb Wallet; produce media assets.
-
-- **October 16 (Wednesday):**
   - Conduct final testing; deploy to production; perform checks.
 
-- **October 17 (Thursday):**
+- **October 16 (Wednesday):**
   - Officially launch MVP; initiate marketing; monitor performance.
+
+- **October 17 (Thursday):**
+  - Implement email notifications; integrate Thirdweb Wallet; produce media assets.
 
 ---
 
