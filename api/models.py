@@ -5,19 +5,34 @@ from datetime import datetime
 import json
 
 class ChorusStepEnum(str, Enum):
-    # todo: merge yield and final
     ACTION = "action"
     EXPERIENCE = "experience"
     INTENTION = "intention"
     OBSERVATION = "observation"
     UPDATE = "update"
-    YIELD = "yield"
     FINAL = "final"
     ERROR = "error"
+class User(BaseModel):
+    id: str
+    public_key: str
+    created_at: str
+    vector: Optional[List[float]] = Field(default=None)
+
+class ChatThread(BaseModel):
+    id: str
+    user_id: str
+    name: str
+    created_at: str
+    messages: List[str] = Field(default_factory=list)
+    vector: Optional[List[float]] = Field(default=None)
 
 class Message(BaseModel):
-    role: str
+    id: str
+    thread_id: str  # This was already here, which is good
+    role: str  # 'user' or 'assistant'
     content: str
+    created_at: str
+    vector: Optional[List[float]] = Field(default=None)
 
 class ChorusState:
     def __init__(self):

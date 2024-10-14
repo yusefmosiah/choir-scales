@@ -1,6 +1,6 @@
 import asyncio
 from enum import Enum
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from starlette.websockets import WebSocket, WebSocketState
 from config import Config
 from database import DatabaseClient
@@ -9,6 +9,7 @@ from utils import logger, get_embedding, chat_completion, chunk_text
 from litellm import completion
 from pydantic import BaseModel
 import json
+import uuid
 from datetime import datetime
 
 class Chorus:
@@ -17,40 +18,57 @@ class Chorus:
         self.db_client = db_client
         self.state = ChorusState()
 
-    async def run(self, user_prompt: str, websocket: WebSocket, chat_history: List[Dict[str, str]]) -> List[Dict[str, str]]:
-        self.state.reset()
-        self.state.messages = chat_history + [{"role": "user", "content": user_prompt}]
+    async def run(self, user_prompt: str, websocket: WebSocket, thread_id: str):
+        self.state.thread_id = thread_id
+        self.state.messages = []  # Reset messages for each run
+        self.state.messages.append({"role": "user", "content": user_prompt})
 
-        try:
-            for step_function in [self._action, self._experience, self._intention, self._observation, self._update]:
-                if websocket.client_state != WebSocketState.CONNECTED:
-                    logger.warning("WebSocket disconnected. Stopping Chorus loop.")
-                    break
-                result = await step_function()
-                await self._send_result(websocket, result)
-                await asyncio.sleep(0.1)  # Prevent steps from bunching together
+        while True:
+            action_response = await self._action()
+            await self._commit_message("assistant", action_response.content)
+            await websocket.send_json(action_response.dict())
+            yield action_response  # Yield after each step
 
-                if step_function == self._update:
-                    if result.content.lower() == "return":
-                        final_response = await self._yield()
-                        await self._send_result(websocket, final_response)
-                        await asyncio.sleep(0.1)
-                        self.state.complete()
-                    elif result.content.lower() == "loop":
-                        self.state.loop()
-                    else:
-                        logger.error(f"Unexpected result from update step: {result.content}")
-                        final_response = await self._yield()
-                        await self._send_result(websocket, final_response)
-                        await asyncio.sleep(0.1)
-                        self.state.complete()
-        except Exception as e:
-            logger.error(f"Error in Chorus run: {str(e)}")
-            if websocket.client_state == WebSocketState.CONNECTED:
-                error_response = ChorusResponse(step=ChorusStepEnum.ERROR, content=f"An error occurred: {str(e)}")
-                await self._send_result(websocket, error_response)
+            if action_response.step == ChorusStepEnum.FINAL:
+                break
+
+            experience_response = await self._experience()
+            await self._commit_message("assistant", experience_response.content)
+            await websocket.send_json(experience_response.dict())
+            yield experience_response
+
+            reflect_response = await self._reflect()
+            await self._commit_message("assistant", reflect_response.content)
+            await websocket.send_json(reflect_response.dict())
+            yield reflect_response
+
+            update_response = await self._update()
+            await self._commit_message("assistant", update_response.content)
+            await websocket.send_json(update_response.dict())
+            yield update_response
+
+            if update_response.content.lower() == "return":
+                yield_response = await self._yield()
+                await self._commit_message("assistant", yield_response.content)
+                await websocket.send_json(yield_response.dict())
+                yield yield_response
+                break
 
         return self.state.messages
+
+    async def _commit_message(self, role: str, content: str):
+        # Get the embedding for the message content
+        embedding = await get_embedding(content, self.config.EMBEDDING_MODEL)
+
+        message = Message(
+            id=str(uuid.uuid4()),
+            thread_id=self.state.thread_id,
+            role=role,
+            content=content,
+            created_at=datetime.utcnow().isoformat(),
+            vector=embedding  # Add the embedding to the message
+        )
+        await self.db_client.save_message(message)
 
     async def _execute_step(self, step: ChorusStepEnum) -> str:
         step_function = getattr(self, f"_{step.value}")

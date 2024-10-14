@@ -15,7 +15,9 @@ class Config(BaseSettings):
     CHAT_MODEL: str = "azure/choir-gpt-4o"
     MAX_TOKENS: int = 4000
     TEMPERATURE: float = 0.7
-    COLLECTION_NAME: str = "choir"
+    MESSAGES_COLLECTION: str = "choir"
+    CHAT_THREADS_COLLECTION: str = "chat_threads"
+    USERS_COLLECTION: str = "users"
     SEARCH_LIMIT: int = 80
     CHUNK_SIZE: int = 10000
     CHUNK_OVERLAP: int = 5000

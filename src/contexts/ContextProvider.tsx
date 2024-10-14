@@ -21,19 +21,19 @@ const WalletKeyLogger: FC = () => {
   const { publicKey } = useWallet();
 
   useEffect(() => {
-    const sendPublicKeyToBackend = async (key: string) => {
-      try {
-        await axios.post('/api/log-public-key', { publicKey: key });
-        console.log('Public key sent to backend successfully.');
-      } catch (error) {
-        console.error('Error sending public key to backend:', error);
-      }
-    };
+    // const sendPublicKeyToBackend = async (key: string) => {
+    //   try {
+    //     await axios.post('/api/log-public-key', { publicKey: key });
+    //     console.log('Public key sent to backend successfully.');
+    //   } catch (error) {
+    //     console.error('Error sending public key to backend:', error);
+    //   }
+    // };
 
     if (publicKey) {
       const keyString = publicKey.toBase58();
       console.log('User Public Key:', keyString);
-      sendPublicKeyToBackend(keyString);
+    //   sendPublicKeyToBackend(keyString);
     }
   }, [publicKey]);
 
