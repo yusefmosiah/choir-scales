@@ -1,10 +1,11 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketDisconnect
 from chorus import Chorus
 from config import Config
 from database import DatabaseClient
 from utils import logger
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -23,6 +24,15 @@ app.add_middleware(
 config = Config()
 db_client = DatabaseClient(config)
 chorus = Chorus(config, db_client)
+
+class PublicKeyRequest(BaseModel):
+    publicKey: str
+
+@app.post("/log-public-key")
+async def log_public_key(request: PublicKeyRequest):
+    public_key = request.publicKey
+    logger.info(f"Received Public Key: {public_key}")
+    return {"status": "success", "message": "Public key logged successfully."}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
