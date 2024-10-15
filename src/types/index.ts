@@ -1,11 +1,40 @@
 export interface ChorusResponse {
-  step: string;
-  content: string;
+  type?: 'chorus_response';
+  step?: string;
+  content?: string;
   sources?: Source[];
   error?: string;
-  type?: string;
   messages?: Array<{ role: string; content: string }>;
 }
+
+export interface ThreadMessagesResponse {
+  type: 'thread_messages';
+  thread_id: string;
+  messages: Message[];
+}
+
+export interface NewThreadResponse {
+  type: 'new_thread';
+  chat_thread: ChatThread;
+}
+
+export interface InitResponse {
+  type: 'init';
+  user: User;
+  chat_threads: ChatThread[];
+}
+
+export interface ErrorResponse {
+  type: 'error';
+  error: string;
+}
+
+export type WebSocketResponse =
+  | ChorusResponse
+  | ThreadMessagesResponse
+  | NewThreadResponse
+  | InitResponse
+  | ErrorResponse;
 
 export interface Source {
   id: string;
@@ -28,4 +57,13 @@ export interface ChatThread {
   name: string;
   created_at: string;
   messages: string[];
+}
+
+export interface Message {
+  id: string;
+  thread_id: string;
+  role: string; // 'user', 'assistant', or 'system'
+  content: string;
+  created_at: string;
+  step?: string; // This field is now included
 }

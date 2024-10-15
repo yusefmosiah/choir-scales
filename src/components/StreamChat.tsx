@@ -3,16 +3,24 @@ import ChorusPanel from './ChorusPanel';
 import UserInput from './UserInput';
 import AIResponse from './AIResponse';
 import ReactMarkdown from 'react-markdown';
-import { Source, User, ChatThread, ChorusResponse } from '../types';
+import {
+  Source,
+  User,
+  ChatThread,
+  ChorusResponse,
+  WebSocketResponse,
+  ThreadMessagesResponse,
+  NewThreadResponse,
+  InitResponse,
+  Message,
+} from '../types';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { v4 as uuidv4 } from 'uuid';
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState('');
-  const [chatHistory, setChatHistory] = useState<
-    { type: 'user' | 'ai'; messages: { step: string; content: string }[] }[]
-  >([]);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [sources, setSources] = useState<Source[]>([]);
   const [sortOption, setSortOption] = useState<'date' | 'similarity' | 'tokens' | 'custom'>('custom');
@@ -26,282 +34,279 @@ const StreamChat: React.FC = () => {
 
   const wallet = useWallet();
 
+  // Handler functions using useCallback
+
+  const handleThreadMessages = useCallback((data: ThreadMessagesResponse) => {
+    setChatHistory(data.messages);
+  }, []);
+
+  const handleNewThread = useCallback((data: NewThreadResponse) => {
+    setChatThreads(prev => [...prev, data.chat_thread]);
+    setSelectedThread(data.chat_thread.id);
+    setChatHistory([]);
+  }, []);
+
+  const handleInit = useCallback((data: InitResponse) => {
+    setUser(data.user);
+    setChatThreads(data.chat_threads);
+    console.log('Received chat threads:', data.chat_threads);
+    if (data.chat_threads.length > 0) {
+      setSelectedThread(data.chat_threads[0].id);
+      // Request messages for the first thread
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.send(JSON.stringify({ type: 'get_thread_messages', thread_id: data.chat_threads[0].id }));
+      }
+    }
+  }, []);
+
+  const handleChorusResponse = useCallback((data: ChorusResponse) => {
+    if (data.step) {
+      if (data.step === 'experience' && Array.isArray(data.sources)) {
+        console.log('Sources received:', data.sources);
+        setSources(data.sources);
+      }
+
+      // Generate a unique id for the message
+      const newMessage: Message = {
+        id: uuidv4(),
+        thread_id: selectedThread,
+        role: 'assistant',
+        content: data.content || '',
+        created_at: new Date().toISOString(),
+        step: data.step.toLowerCase(),
+      };
+      setChatHistory(prev => [...prev, newMessage]);
+
+      if (data.step.toLowerCase() === 'final') {
+        setIsStreaming(false);
+      }
+    }
+  }, [selectedThread]);
+
   const handleWebSocketMessage = useCallback((event: MessageEvent) => {
     try {
-      const data: ChorusResponse = JSON.parse(event.data);
-      console.log('WebSocket message received:', data);
+      const data: WebSocketResponse = JSON.parse(event.data);
+      console.log('Received WebSocket message:', data);
 
-      if (data.step) {
-        if (data.step === 'experience' && Array.isArray(data.sources)) {
-          console.log('Sources received:', data.sources);
-          setSources(data.sources);
-        }
-        setChatHistory(prev => {
-          const newHistory = [...prev];
-          let content = data.content;
-          if (newHistory.length > 0 && newHistory[newHistory.length - 1].type === 'ai') {
-            newHistory[newHistory.length - 1].messages.push({ step: data.step, content });
-          } else {
-            newHistory.push({ type: 'ai', messages: [{ step: data.step, content }] });
-          }
-          return newHistory;
-        });
-        if (data.step === 'final') {
+      switch (data.type) {
+        case 'chorus_response':
+        case undefined: // If type is undefined, treat it as a ChorusResponse
+          handleChorusResponse(data as ChorusResponse);
+          break;
+        case 'thread_messages':
+          handleThreadMessages(data as ThreadMessagesResponse);
+          break;
+        case 'new_thread':
+          handleNewThread(data as NewThreadResponse);
+          break;
+        case 'init':
+          handleInit(data as InitResponse);
+          break;
+        case 'error':
+          console.error(`WebSocket error: ${data.error}`);
           setIsStreaming(false);
-        }
-      } else if (data.type === 'thread_messages' && Array.isArray(data.messages)) {
-        setChatHistory(data.messages.map((msg: { role: string; content: string }) => ({
-          type: msg.role === 'user' ? 'user' : 'ai',
-          messages: [{ step: msg.role === 'user' ? 'user' : 'final', content: msg.content }]
-        })));
-      } else if (data.error) {
-        console.error(`WebSocket error: ${data.error}`);
-        setIsStreaming(false);
+          break;
+        default:
+          console.warn('Unknown message type:', data);
       }
     } catch (error) {
       console.error('Failed to parse WebSocket message:', error);
     }
-  }, []);
+  }, [handleChorusResponse, handleThreadMessages, handleNewThread, handleInit]);
 
-  const sendMessage = useCallback((message: string, thread_id: string) => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ prompt: message, thread_id }));
-    }
-  }, []);
-
-  const initializeUser = useCallback(async (publicKey: string) => {
-    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+  // WebSocket setup
+  useEffect(() => {
+    if (!wsRef.current) {
       wsRef.current = new WebSocket('ws://localhost:8000/ws');
-      wsRef.current.onopen = () => {
-        wsRef.current?.send(JSON.stringify({ public_key: publicKey }));
-      };
 
-      wsRef.current.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data.type === 'init') {
-            setUser(data.user);
-            setChatThreads(data.chat_threads);
-            console.log("Received chat threads:", data.chat_threads);
-            if (data.chat_threads.length > 0) {
-              setSelectedThread(data.chat_threads[0].id);
-            }
-          } else if (data.type === 'new_thread') {
-            setChatThreads(prev => [...prev, data.chat_thread]);
-          } else if (data.type === 'thread_messages') {
-            setChatHistory(data.messages.map((msg: any) => ({
-              type: msg.role === 'user' ? 'user' : 'ai',
-              messages: [{ step: 'message', content: msg.content }]
-            })));
-          } else {
-            handleWebSocketMessage(event);
-          }
-        } catch (error) {
-          console.error('Failed to parse WebSocket message:', error);
+      wsRef.current.onopen = () => {
+        console.log('WebSocket connected');
+
+        // Attempt to send public key immediately
+        if (wallet.publicKey) {
+          console.log('Sending public key:', wallet.publicKey.toString());
+          wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
+        } else {
+          console.log('Public key not available on WebSocket open');
         }
       };
 
+      wsRef.current.onmessage = handleWebSocketMessage;
+
       wsRef.current.onclose = () => {
-        console.log('WebSocket connection closed');
+        console.log('WebSocket disconnected');
       };
+
+      return () => {
+        wsRef.current?.close();
+      };
+    } else if (wsRef.current.readyState === WebSocket.OPEN && wallet.publicKey) {
+      // If WebSocket is already open and public key becomes available, send it
+      console.log('Sending public key after WebSocket is open:', wallet.publicKey.toString());
+      wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
     }
-  }, [handleWebSocketMessage]);
+  }, [wallet.publicKey, handleWebSocketMessage]);
 
   useEffect(() => {
-    if (wallet.connected && wallet.publicKey) {
-      initializeUser(wallet.publicKey.toString());
-    }
-  }, [wallet.connected, wallet.publicKey, initializeUser]);
-
-  useEffect(() => {
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
+    // Scroll to bottom when chat history changes
+    chatContainerRef.current?.scrollTo(0, chatContainerRef.current.scrollHeight);
   }, [chatHistory]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
-    adjustTextareaHeight(e.target);
+    autoResizeTextarea();
   };
 
-  const adjustTextareaHeight = (element: HTMLTextAreaElement) => {
-    element.style.height = 'auto';
-    element.style.height = `${element.scrollHeight}px`;
-  };
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      adjustTextareaHeight(textareaRef.current);
+  const autoResizeTextarea = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input]);
+  };
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || !selectedThread) return;
+    if (!input.trim() || !selectedThread || !user || isStreaming) {
+      console.log('Cannot send message:', {
+        inputEmpty: !input.trim(),
+        selectedThread,
+        user,
+        isStreaming,
+      });
+      return;
+    }
 
+    // Send the prompt to the backend
+    const message = {
+      prompt: input,
+      thread_id: selectedThread,
+    };
+    wsRef.current?.send(JSON.stringify(message));
+
+    // Add the user's message to chat history
+    const userMessage: Message = {
+      id: uuidv4(),
+      thread_id: selectedThread,
+      role: 'user',
+      content: input.trim(),
+      created_at: new Date().toISOString(),
+    };
+    setChatHistory(prev => [...prev, userMessage]);
+
+    setInput('');
     setIsStreaming(true);
-    setChatHistory(prev => [...prev, { type: 'user', messages: [{ step: 'user', content: input }] }]);
-    setSources([]);
-
-    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-      wsRef.current = new WebSocket('ws://localhost:8000/ws');
-      wsRef.current.onopen = () => {
-        sendMessage(input, selectedThread);
-      };
-      wsRef.current.onmessage = handleWebSocketMessage;
-      wsRef.current.onclose = () => {
-        console.log('WebSocket connection closed');
-        setIsStreaming(false);
-      };
-    } else {
-      sendMessage(input, selectedThread);
-    }
-  }, [input, selectedThread, handleWebSocketMessage, sendMessage]);
-
-  const sortSources = (sources: Source[]) => {
-    switch (sortOption) {
-      case 'date':
-        return [...sources].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-      case 'similarity':
-        return [...sources].sort((a, b) => b.similarity - a.similarity);
-      case 'tokens':
-        return [...sources].sort((a, b) => b.token_value - a.token_value);
-      case 'custom':
-      default:
-        // Implement custom reranking algorithm here
-        return sources;
-    }
-  };
-
-  const sortedSources = sortSources(sources);
-
-  const renderChatContent = () => {
-    return chatHistory.map((chat, chatIndex) => (
-      <div key={chatIndex} className="mb-4">
-        {chat.type === 'user' && (
-          <UserInput content={chat.messages[0].content} />
-        )}
-        {chat.type === 'ai' && (
-          <AIResponse>
-            <ReactMarkdown>
-              {chat.messages.find(m => m.step === 'final')?.content ||
-               chat.messages.find(m => m.step === 'action')?.content || ''}
-            </ReactMarkdown>
-          </AIResponse>
-        )}
-      </div>
-    ));
-  };
-
-  const handleSelectThread = (thread_id: string) => {
-    setSelectedThread(thread_id);
-    // Optionally, load chat history for the selected thread
-    // This will depend on how you manage chat history storage
-    // For simplicity, we're keeping chat history in state
   };
 
   const handleCreateThread = () => {
     const threadName = `Chat ${chatThreads.length + 1}`;
-    const newThreadId = uuidv4();
-    const newThread: ChatThread = {
-      id: newThreadId,
-      user_id: user?.id || '',
-      name: threadName,
-      created_at: new Date().toISOString(),
-      messages: []
-    };
-    setChatThreads(prev => [...prev, newThread]);
-    setSelectedThread(newThreadId);
-    // Notify backend about the new thread if necessary
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      // Implement backend notification if needed
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && user?.id) {
+      wsRef.current.send(JSON.stringify({ type: 'create_thread', user_id: user.id, name: threadName }));
+    } else {
+      console.log('Cannot create thread:', {
+        wsReadyState: wsRef.current?.readyState,
+        userId: user?.id,
+      });
     }
   };
 
-  // Add this function to request messages when a thread is selected
-  const selectThread = (threadId: string) => {
+  const handleSelectThread = (threadId: string) => {
+    console.log(`Selecting thread ${threadId}`);
     setSelectedThread(threadId);
+    setChatHistory([]); // Clear previous chat history
+
+    // Request messages for the selected thread
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ type: 'get_thread_messages', thread_id: threadId }));
     }
   };
 
+  const sortedSources = sources.sort((a, b) => {
+    // Implement sorting logic based on sortOption
+    return 0; // Placeholder
+  });
+
+  const renderChatContent = () => {
+    return chatHistory
+      .filter(msg => msg.role === 'user' || (msg.role === 'assistant' && msg.step === 'final'))
+      .map((msg, index) =>
+        msg.role === 'user' ? (
+          <UserInput key={index} content={msg.content} />
+        ) : (
+          <AIResponse key={index}>
+            <ReactMarkdown>{msg.content}</ReactMarkdown>
+          </AIResponse>
+        )
+      );
+  };
+
+  useEffect(() => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && wallet.publicKey) {
+      console.log('Sending public key:', wallet.publicKey.toString());
+      wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
+    }
+  }, [wallet.publicKey]);
+
   return (
-    <div className="flex h-[calc(100vh-64px)] w-full">
-      {/* Left Sidebar for Chat Threads */}
-      <div className="hidden flex-col p-4 w-1/4 bg-gray-700 md:flex">
-        <h2 className="mb-4 text-xl font-bold text-white">Chat Threads</h2>
-        <div className="flex overflow-y-auto flex-col space-y-2">
+    <div className="flex flex-col h-screen md:flex-row">
+      {/* Sidebar */}
+      <div className="p-4 w-full bg-gray-800 md:w-1/4">
+        <h2 className="mb-4 text-xl font-semibold text-white">Chats</h2>
+        <button
+          className="px-4 py-2 mb-4 w-full font-semibold text-white bg-cyan-500 rounded"
+          onClick={handleCreateThread}
+        >
+          New Chat
+        </button>
+        <ul className="space-y-2">
           {chatThreads.map(thread => (
-            <button
+            <li
               key={thread.id}
-              className={`p-2 rounded-md text-left ${selectedThread === thread.id ? 'bg-cyan-500 text-white' : 'bg-gray-600 text-gray-200'}`}
+              className={`p-2 rounded cursor-pointer ${selectedThread === thread.id ? 'bg-gray-700' : 'bg-gray-900'}`}
               onClick={() => handleSelectThread(thread.id)}
             >
               {thread.name}
-            </button>
+            </li>
           ))}
+        </ul>
+      </div>
+      {/* Main Chat Area */}
+      <div className="flex flex-col w-full md:w-3/4">
+        <div className="overflow-y-auto flex-1 p-4" ref={chatContainerRef}>
+          {renderChatContent()}
+        </div>
+        {/* Input Area */}
+        <form onSubmit={handleSubmit} className="p-4 bg-gray-800">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={handleInputChange}
+            className="p-2 w-full text-white bg-gray-900 rounded"
+            rows={1}
+            placeholder="Type your message..."
+          />
           <button
-            className="p-2 mt-2 text-left text-white bg-green-500 rounded-md"
-            onClick={handleCreateThread}
+            type="submit"
+            className="px-4 py-2 mt-2 font-semibold text-white bg-cyan-500 rounded"
+            disabled={!input.trim() || isStreaming}
           >
-            + New Thread
+            Send
           </button>
-        </div>
+        </form>
       </div>
-
-      <div className="flex flex-col flex-grow h-full">
-        <div className="flex justify-end p-4 bg-gray-900">
-        </div>
-        <div className="overflow-y-auto flex-grow p-4 w-full" ref={chatContainerRef}>
-          <div className="mx-auto max-w-3xl">
-            {renderChatContent()}
-          </div>
-        </div>
-        <div className="p-4 mb-4 w-full bg-gray-900"> {/* Added mb-4 for bottom margin */}
-          <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
-            <div className="relative">
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={handleInputChange}
-                className="p-3 pr-24 w-full text-white bg-gray-800 rounded-lg border border-gray-700 resize-none"
-                placeholder="Enter your prompt"
-                rows={1}
-                style={{ minHeight: '2.5rem', maxHeight: '10rem' }}
-              />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 px-4 py-1 text-white bg-cyan-500 rounded-md transform -translate-y-1/2"
-                disabled={isStreaming}
-              >
-                {isStreaming ? 'Streaming...' : 'Submit'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div className={`
-        fixed md:relative md:w-1/3 lg:w-2/5 xl:w-1/2 inset-x-0 bottom-0 md:inset-y-0 md:right-0
-        bg-gray-800 transition-all duration-300 ease-in-out
-        ${isPanelVisible ? 'h-3/4 translate-y-0 md:h-full' : 'h-0 translate-y-full md:h-full md:translate-y-0'}
-        overflow-y-auto z-10
-      `}>
+      {/* Chorus Panel */}
+      <div
+        className={`absolute inset-0 md:relative transition-transform transform ${
+          isPanelVisible ? 'translate-y-0' : 'translate-y-full md:translate-y-0'
+        } md:w-1/4 bg-gray-800`}
+      >
         <ChorusPanel
-          steps={chatHistory[chatHistory.length - 1]?.type === 'ai' ? chatHistory[chatHistory.length - 1].messages : []}
+          steps={chatHistory.filter(msg => msg.role === 'assistant' && msg.step && msg.step !== 'final')}
           sources={sortedSources}
           sortOption={sortOption}
-          onSortChange={(option) => setSortOption(option as 'date' | 'similarity' | 'tokens' | 'custom')}
+          onSortChange={option =>
+            setSortOption(option as 'date' | 'similarity' | 'tokens' | 'custom')
+          }
         />
       </div>
       <button

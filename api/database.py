@@ -51,7 +51,6 @@ class DatabaseClient:
                     logger.error(f"Error processing search result: {e}")
                     continue
 
-            logger.info(f"First 10 search results: {search_results[:10]}")
             logger.info(f"Total number of search results: {len(search_results)}")
             return search_results
         except Exception as e:
@@ -82,8 +81,14 @@ class DatabaseClient:
     # New methods for 'users' collection
     async def create_user(self, public_key: str) -> User:
         user_id = self.generate_unique_id()
-        default_vector = [0.0] * 1536  # Assuming 1536-dimensional vector, adjust if needed
-        user = User(id=user_id, public_key=public_key, created_at=datetime.utcnow().isoformat(), vector=default_vector)
+        default_vector = [0.0] * 1536  # Adjust dimension if needed
+        user = User(
+            id=user_id,
+            public_key=public_key,
+            created_at=datetime.utcnow().isoformat(),
+            vector=default_vector,
+            chat_threads=[]  # Initialize as an empty list
+        )
         try:
             self.client.upsert(
                 collection_name=self.config.USERS_COLLECTION,
@@ -124,40 +129,51 @@ class DatabaseClient:
 
     async def get_chat_threads(self, user_id: str) -> List[ChatThread]:
         try:
-            # First, retrieve the user to get their chat thread IDs
-            user = self.client.retrieve(
+            logger.info(f"Retrieving chat threads for user {user_id}")
+
+            # Retrieve the user to get their chat thread IDs
+            user_records = self.client.retrieve(
                 collection_name=self.config.USERS_COLLECTION,
                 ids=[user_id]
             )
 
-            if not user:
+            if not user_records:
                 logger.error(f"User not found: {user_id}")
                 return []
 
-            thread_ids = user[0].payload.get('chat_threads', [])
+            user_payload = user_records[0].payload
+            thread_ids = user_payload.get('chat_threads', [])
 
-            # Then, retrieve the chat threads
-            threads = self.client.retrieve(
+            if not thread_ids:
+                logger.info(f"No chat threads found for user {user_id}")
+                return []
+
+            # Retrieve the chat threads using the thread IDs
+            thread_records = self.client.retrieve(
                 collection_name=self.config.CHAT_THREADS_COLLECTION,
                 ids=thread_ids
             )
 
-            return [ChatThread(**thread.payload) for thread in threads]
+            chat_threads = [ChatThread(**thread.payload) for thread in thread_records]
+            logger.info(f"Retrieved {len(chat_threads)} chat threads for user {user_id}")
+            return chat_threads
         except Exception as e:
-            logger.error(f"Error getting chat threads: {e}")
+            logger.error(f"Error getting chat threads for user {user_id}: {e}")
             return []
 
     async def create_chat_thread(self, user_id: str, name: str) -> ChatThread:
         thread_id = self.generate_unique_id()
-        default_vector = [0.0] * 1536  # Assuming 1536-dimensional vector, adjust if needed
+        default_vector = [0.0] * 1536  # Adjust dimension if needed
         thread = ChatThread(
             id=thread_id,
             user_id=user_id,
             name=name,
             created_at=datetime.utcnow().isoformat(),
-            vector=default_vector
+            vector=default_vector,
+            messages=[]
         )
         try:
+            # Upsert the new chat thread
             self.client.upsert(
                 collection_name=self.config.CHAT_THREADS_COLLECTION,
                 points=[
@@ -168,6 +184,29 @@ class DatabaseClient:
                     )
                 ]
             )
+
+            # Retrieve the existing user payload
+            user_points = self.client.retrieve(
+                collection_name=self.config.USERS_COLLECTION,
+                ids=[user_id]
+            )
+
+            if not user_points:
+                logger.error(f"User not found: {user_id}")
+                raise Exception(f"User not found: {user_id}")
+
+            user_payload = user_points[0].payload
+            chat_threads = user_payload.get('chat_threads', [])
+            chat_threads.append(thread_id)
+
+            # Update the user's payload with the new chat_threads list
+            self.client.set_payload(
+                collection_name=self.config.USERS_COLLECTION,
+                payload={"chat_threads": chat_threads},
+                points=[user_id]
+            )
+
+            logger.info(f"Successfully created new thread: {thread.id}")
             return thread
         except (ApiException, UnexpectedResponse) as e:
             logger.error(f"Error creating chat thread: {e}")
@@ -175,6 +214,7 @@ class DatabaseClient:
 
     async def save_message(self, message: Message):
         try:
+            logger.info(f"Saving message {message.id} to thread {message.thread_id}")
             # First, upsert the message into the messages collection
             self.client.upsert(
                 collection_name=self.config.MESSAGES_COLLECTION,
@@ -187,22 +227,27 @@ class DatabaseClient:
                 ]
             )
 
-            # Then, update the chat thread's message list
-            default_vector = [0.0] * 1536
-            self.client.upsert(
+            # Retrieve the existing thread payload
+            thread_records = self.client.retrieve(
                 collection_name=self.config.CHAT_THREADS_COLLECTION,
-                points=[
-                    models.PointStruct(
-                        id=message.thread_id,
-                        payload={
-                            "messages": {
-                                "$append": [message.id]
-                            }
-                        },
-                        vector=default_vector
-                    )
-                ]
+                ids=[message.thread_id]
             )
+
+            if not thread_records:
+                logger.error(f"Thread not found: {message.thread_id}")
+                raise Exception(f"Thread not found: {message.thread_id}")
+
+            thread_payload = thread_records[0].payload
+            messages_list = thread_payload.get('messages', [])
+            messages_list.append(message.id)
+
+            # Update the thread's payload with the new messages list
+            self.client.set_payload(
+                collection_name=self.config.CHAT_THREADS_COLLECTION,
+                payload={"messages": messages_list},
+                points=[message.thread_id]
+            )
+
             logger.info(f"Successfully saved message: {message.id} to thread: {message.thread_id}")
         except Exception as e:
             logger.error(f"Error saving message: {e}")
@@ -210,22 +255,30 @@ class DatabaseClient:
 
     async def get_messages_for_thread(self, thread_id: str) -> List[Message]:
         try:
-            thread = self.client.retrieve(
+            logger.info(f"Retrieving messages for thread {thread_id}")
+            thread_records = self.client.retrieve(
                 collection_name=self.config.CHAT_THREADS_COLLECTION,
                 ids=[thread_id]
             )
 
-            if not thread:
+            if not thread_records:
                 logger.error(f"Thread not found: {thread_id}")
                 return []
 
-            message_ids = thread[0].payload.get('messages', [])
+            thread_payload = thread_records[0].payload
+            message_ids = thread_payload.get('messages', [])
+            logger.info(f"Found message IDs: {message_ids}")
+
+            if not message_ids:
+                logger.info(f"No messages in thread {thread_id}")
+                return []
 
             messages = self.client.retrieve(
                 collection_name=self.config.MESSAGES_COLLECTION,
                 ids=message_ids
             )
 
+            logger.info(f"Retrieved {len(messages)} messages from collection")
             return [Message(**msg.payload) for msg in messages]
         except Exception as e:
             logger.error(f"Error getting messages for thread {thread_id}: {e}")

@@ -16,7 +16,8 @@ class User(BaseModel):
     id: str
     public_key: str
     created_at: str
-    vector: Optional[List[float]] = Field(default=None)
+    vector: Optional[List[float]] = Field(default_factory=list)
+    chat_threads: List[str] = Field(default_factory=list)
 
 class ChatThread(BaseModel):
     id: str
@@ -28,11 +29,12 @@ class ChatThread(BaseModel):
 
 class Message(BaseModel):
     id: str
-    thread_id: str  # This was already here, which is good
-    role: str  # 'user' or 'assistant'
+    thread_id: str
+    role: str  # 'user', 'assistant', or 'system'
     content: str
     created_at: str
     vector: Optional[List[float]] = Field(default=None)
+    step: Optional[str] = None  # Add this field
 
 class ChorusState:
     def __init__(self):

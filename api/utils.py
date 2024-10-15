@@ -9,14 +9,27 @@ logger = logging.getLogger(__name__)
 
 async def get_embedding(input_text: str, model: str) -> List[float]:
     try:
-        response = embedding(
-            model=f"azure/{model}",
-            input=input_text,
-            api_key=Config().AZURE_API_KEY,
-            api_base=Config().AZURE_API_BASE,
-            api_version=Config().AZURE_API_VERSION
-        )
-        return response['data'][0]['embedding']
+        # Chunk the input text
+        chunks = chunk_text(input_text, chunk_size=4000, overlap=200)
+
+        # Get embeddings for each chunk
+        chunk_embeddings = []
+        for chunk in chunks:
+            response = embedding(
+                model=f"azure/{model}",
+                input=chunk,
+                api_key=Config().AZURE_API_KEY,
+                api_base=Config().AZURE_API_BASE,
+                api_version=Config().AZURE_API_VERSION
+            )
+            chunk_embeddings.append(response['data'][0]['embedding'])
+
+        # Average the embeddings if there are multiple chunks
+        if len(chunk_embeddings) > 1:
+            averaged_embedding = [sum(x) / len(chunk_embeddings) for x in zip(*chunk_embeddings)]
+            return averaged_embedding
+        else:
+            return chunk_embeddings[0]
     except Exception as e:
         logger.error(f"Error getting embedding: {e}")
         return []

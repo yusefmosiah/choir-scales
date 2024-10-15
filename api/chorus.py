@@ -21,7 +21,10 @@ class Chorus:
     async def run(self, user_prompt: str, websocket: WebSocket, chat_history: List[Dict[str, str]], thread_id: str) -> List[Dict[str, str]]:
         self.state.reset()
         self.state.messages = chat_history + [{"role": "user", "content": user_prompt}]
-        self.state.thread_id = thread_id  # Assign the current thread ID
+        self.state.thread_id = thread_id
+
+        # Save the user prompt
+        await self._commit_message("user", user_prompt, step=ChorusStepEnum.ACTION.value)
 
         try:
             for step_function in [self._action, self._experience, self._intention, self._observation, self._update]:
@@ -52,54 +55,7 @@ class Chorus:
                 error_response = ChorusResponse(step=ChorusStepEnum.ERROR, content=f"An error occurred: {str(e)}")
                 await self._send_result(websocket, error_response)
 
-        # Save final chat history to Qdrant
-        logger.info(f"Saving final chat history to Qdrant: {self.state.messages}")
-        for message in self.state.messages:
-            if message.get('role') and message.get('content'):
-                await self._commit_message(message['role'], message['content'])
-
         return self.state.messages
-
-    async def _commit_message(self, role: str, content: str, embedding: Optional[List[float]] = None):
-        if embedding is None:
-            embedding = await get_embedding(content, self.config.EMBEDDING_MODEL)
-
-        if not embedding:
-            logger.error("Failed to generate embedding for the message.")
-            return
-
-        message = Message(
-            id=str(uuid.uuid4()),
-            thread_id=self.state.thread_id,  # This is already correct
-            role=role,
-            content=content,
-            created_at=datetime.utcnow().isoformat(),
-            vector=embedding
-        )
-        await self.db_client.save_message(message)
-
-    async def _execute_step(self, step: ChorusStepEnum) -> str:
-        step_function = getattr(self, f"_{step.value}")
-        return await step_function()
-
-    async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
-        if websocket.client_state == WebSocketState.CONNECTED:
-            try:
-                response_data = json.loads(response.to_json())
-                response_data['isStreaming'] = self.state.current_step != ChorusStepEnum.FINAL
-                await websocket.send_json(response_data)
-                logger.info(f"Sent {response.step} result to client.")
-            except Exception as e:
-                logger.error(f"Error sending result to client: {e}")
-        else:
-            logger.warning("WebSocket is not connected. Skipping message send.")
-
-    async def _handle_interrupt(self, websocket: WebSocket):
-        await websocket.send_json({"status": "interrupted"})
-        self.state.clear_interrupt()
-
-    def _get_next_step(self) -> ChorusStepEnum:
-        return ChorusStepEnum(self.state.current_step)
 
     async def _action(self) -> ChorusResponse:
         action_prompt = """
@@ -109,10 +65,12 @@ class Chorus:
         This is step 1, Action: Provide an initial response to the user's prompt to the best of your ability.
         Return your response.
         """
-        self.state.messages.append({"role": "system", "content": action_prompt})
-        result = await self._structured_chat_completion(self.state.messages)
+        result = await self._structured_chat_completion(self.state.messages + [{"role": "system", "content": action_prompt}])
         logger.info(f"Action step result: {result}")
-        self.state.messages.append({"role": "assistant", "content": result.content})
+
+        # Save the assistant's response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.ACTION.value)
+
         return ChorusResponse(step=ChorusStepEnum.ACTION, content=result.content)
 
     async def _experience(self) -> ChorusResponse:
@@ -125,76 +83,68 @@ class Chorus:
         search_results = await self.db_client.search(embedding)
         search_results_str = "\n".join([result['content'] for result in search_results])
 
-        # Convert search_results to list of Source instances
-        sources = []
-        for result in search_results:
-            sources.append(
-                Source(
-                    id=result['id'],
-                    content=result['content'],
-                    created_at=result.get('created_at'),  # Pass raw value
-                    agent=result.get('agent'),
-                    token_value=result.get('token_value', 0),
-                    similarity=result.get('similarity', 0.0)
-                )
-            )
-
-        # Log the first 10 search results
-        for i, result in enumerate(search_results[:10], 1):
-            logger.info(f"Search result {i}: {result['content'][:100]}...")  # Log first 100 characters of each result
+        sources = [
+            Source(
+                id=result['id'],
+                content=result['content'],
+                created_at=result.get('created_at'),
+                agent=result.get('agent'),
+                token_value=result.get('token_value', 0),
+                similarity=result.get('similarity', 0.0)
+            ) for result in search_results
+        ]
 
         reranked_prompt = f"{prompt}\n\nSearch Results:\n{search_results_str}\n\nRefined Response:"
 
-        self.state.messages.append({"role": "system", "content": experience_prompt})
-        self.state.messages.append({"role": "user", "content": reranked_prompt})
-        result = await self._structured_chat_completion(self.state.messages)
+        result = await self._structured_chat_completion(self.state.messages + [
+            {"role": "system", "content": experience_prompt},
+            {"role": "user", "content": reranked_prompt}
+        ])
 
-        # Ensure sources are included
-        self.state.messages.append({"role": "assistant", "content": result.content})
+        # Save the assistant's response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.EXPERIENCE.value)
+
         return ChorusResponse(step=ChorusStepEnum.EXPERIENCE, content=result.content, sources=sources)
 
     async def _intention(self) -> ChorusResponse:
         intention_prompt = """
-        This is step 3 of the Chorus Loop, Intention: Impute the user's intention,
-        reflecting on whether the query can be satisfactorily responded to based on
-        the priors recalled in the Experience step.
-        Return your response containing your reflection.
+        This is step 3 of the Chorus Loop, Intention: Analyze your planned actions and consider potential consequences.
+        Return your response containing your analysis and intentions.
         """
-        intention_message = f"{self.state.messages[-1]['content']}\n\nReflection on goal satisfiability:"
-        self.state.messages.append({"role": "system", "content": intention_prompt})
-        self.state.messages.append({"role": "user", "content": intention_message})
-        result = await self._structured_chat_completion(self.state.messages)
-        self.state.messages.append({"role": "assistant", "content": result.content})
+        result = await self._structured_chat_completion(self.state.messages + [{"role": "system", "content": intention_prompt}])
+        logger.info(f"Intention step result: {result}")
+
+        # Save the assistant's response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.INTENTION.value)
+
         return ChorusResponse(step=ChorusStepEnum.INTENTION, content=result.content)
 
     async def _observation(self) -> ChorusResponse:
         observation_prompt = """
-        This is step 4 of the Chorus Loop, Observation: Note key insights from the iteration.
-        Return your response containing your key insights.
+        This is step 4 of the Chorus Loop, Observation: Reflect on your analysis and intentions.
+        Identify any gaps in your knowledge or potential biases.
+        Return your response containing your observations and reflections.
         """
-        observation_message = f"{self.state.messages[-1]['content']}\n\nKey Insights:"
-        self.state.messages.append({"role": "system", "content": observation_prompt})
-        self.state.messages.append({"role": "user", "content": observation_message})
-        result = await self._structured_chat_completion(self.state.messages)
+        result = await self._structured_chat_completion(self.state.messages + [{"role": "system", "content": observation_prompt}])
+        logger.info(f"Observation step result: {result}")
 
-        # Ensure the content is a string
-        if isinstance(result.content, dict) and 'key_insights' in result.content:
-            content = "\n".join(result.content['key_insights'])
-        else:
-            content = str(result.content)
+        # Save the assistant's response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.OBSERVATION.value)
 
-        self.state.messages.append({"role": "assistant", "content": content})
-        return ChorusResponse(step=ChorusStepEnum.OBSERVATION, content=content)
+        return ChorusResponse(step=ChorusStepEnum.OBSERVATION, content=result.content)
 
     async def _update(self) -> ChorusResponse:
         update_prompt = """
-        This is step 5 of the Chorus Loop, Update: Decide whether to loop or finalize the response.
-        Return your decision as a JSON object with 'step' set to 'update' and 'content' containing either 'LOOP' or 'RETURN'.
+        This is step 5 of the Chorus Loop, Update: Based on your observations,
+        decide whether to proceed with your current plan or loop back for further refinement.
+        If you believe your response is ready, return "RETURN". If you need another iteration, return "LOOP".
         """
-        self.state.messages.append({"role": "system", "content": update_prompt})
-        self.state.messages.append({"role": "user", "content": "Make your decision (LOOP or RETURN):"})
-        result = await self._structured_chat_completion(self.state.messages)
-        self.state.messages.append({"role": "assistant", "content": result.content})
+        result = await self._structured_chat_completion(self.state.messages + [{"role": "system", "content": update_prompt}])
+        logger.info(f"Update step result: {result}")
+
+        # Save the assistant's response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.UPDATE.value)
+
         return ChorusResponse(step=ChorusStepEnum.UPDATE, content=result.content)
 
     async def _yield(self) -> ChorusResponse:
@@ -203,12 +153,48 @@ class Chorus:
         from all iterations and provide a final response that comprehensively addresses
         the user's original prompt. Return your response containing your synthesized response.
         """
-        self.state.messages.append({"role": "system", "content": yield_prompt})
-        self.state.messages.append({"role": "user", "content": "Write a final response to the user's prompt:"})
-        result = await self._structured_chat_completion(self.state.messages)
+        result = await self._structured_chat_completion(self.state.messages + [
+            {"role": "system", "content": yield_prompt},
+            {"role": "user", "content": "Write a final response to the user's prompt:"}
+        ])
         logger.info(f"Yield step result: {result}")
-        self.state.messages.append({"role": "assistant", "content": result.content})
+
+        # Save the assistant's final response
+        await self._commit_message("assistant", result.content, step=ChorusStepEnum.FINAL.value)
+
         return ChorusResponse(step=ChorusStepEnum.FINAL, content=result.content)
+
+    async def _commit_message(self, role: str, content: str, step: str, embedding: Optional[List[float]] = None):
+        if embedding is None:
+            embedding = await get_embedding(content, self.config.EMBEDDING_MODEL)
+
+        if not embedding:
+            logger.error("Failed to generate embedding for the message.")
+            return
+
+        message = Message(
+            id=str(uuid.uuid4()),
+            thread_id=self.state.thread_id,
+            role=role,
+            content=content,
+            created_at=datetime.utcnow().isoformat(),
+            vector=embedding,
+            step=step
+        )
+        self.state.messages.append({"role": role, "content": content, "step": step})
+        await self.db_client.save_message(message)
+
+    async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
+        if websocket.client_state == WebSocketState.CONNECTED:
+            try:
+                response_data = json.loads(response.to_json())
+                response_data['isStreaming'] = self.state.current_step != ChorusStepEnum.FINAL
+                await websocket.send_json(response_data)
+                logger.info(f"Sent {response.step} result to client.")
+            except Exception as e:
+                logger.error(f"Error sending result to client: {e}")
+        else:
+            logger.warning("WebSocket is not connected. Skipping message send.")
 
     async def _structured_chat_completion(self, messages: List[Dict[str, str]], response_format: BaseModel = None) -> ChorusResponse:
         try:
