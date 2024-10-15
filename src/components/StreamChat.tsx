@@ -31,6 +31,7 @@ const StreamChat: React.FC = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const pendingPublicKeyRef = useRef<string | null>(null);
 
   const wallet = useWallet();
 
@@ -112,40 +113,56 @@ const StreamChat: React.FC = () => {
     } catch (error) {
       console.error('Failed to parse WebSocket message:', error);
     }
-  }, [handleChorusResponse, handleThreadMessages, handleNewThread, handleInit]);
+  }, []); // Empty array if there are no dependencies
 
-  // WebSocket setup
+  // WebSocket setup (runs once on component mount)
   useEffect(() => {
-    if (!wsRef.current) {
-      wsRef.current = new WebSocket('ws://localhost:8000/ws');
+    wsRef.current = new WebSocket('ws://localhost:8000/ws');
 
-      wsRef.current.onopen = () => {
-        console.log('WebSocket connected');
+    wsRef.current.onopen = () => {
+      console.log('WebSocket connected');
 
-        // Attempt to send public key immediately
-        if (wallet.publicKey) {
-          console.log('Sending public key:', wallet.publicKey.toString());
-          wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
-        } else {
-          console.log('Public key not available on WebSocket open');
-        }
-      };
+      // Send pending public key if available
+      if (pendingPublicKeyRef.current) {
+        console.log('Sending pending public key after connection:', pendingPublicKeyRef.current);
+        wsRef.current?.send(JSON.stringify({ public_key: pendingPublicKeyRef.current }));
+        pendingPublicKeyRef.current = null; // Clear the pending public key
+      }
+    };
 
-      wsRef.current.onmessage = handleWebSocketMessage;
+    wsRef.current.onmessage = (event) => {
+      console.log('WebSocket message received:', event.data);
+      handleWebSocketMessage(event);
+    };
 
-      wsRef.current.onclose = () => {
-        console.log('WebSocket disconnected');
-      };
+    wsRef.current.onclose = () => {
+      console.log('WebSocket disconnected');
+    };
 
-      return () => {
-        wsRef.current?.close();
-      };
-    } else if (wsRef.current.readyState === WebSocket.OPEN && wallet.publicKey) {
-      // If WebSocket is already open and public key becomes available, send it
-      console.log('Sending public key after WebSocket is open:', wallet.publicKey.toString());
-      wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
+    wsRef.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    // Cleanup function to close the WebSocket on unmount
+    return () => {
+      wsRef.current?.close();
+      wsRef.current = null;
+    };
+  }, []); // Empty dependency array
+
+  // Send public key when it becomes available
+  useEffect(() => {
+    console.log('Wallet publicKey changed:', wallet.publicKey?.toString());
+    if (wallet.publicKey) {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        console.log('Sending public key:', wallet.publicKey.toString());
+        wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
+      } else {
+        // Store the public key to send it once the WebSocket is open
+        pendingPublicKeyRef.current = wallet.publicKey.toString();
+      }
     }
-  }, [wallet.publicKey, handleWebSocketMessage]);
+  }, [wallet.publicKey]);
 
   useEffect(() => {
     // Scroll to bottom when chat history changes
@@ -166,6 +183,7 @@ const StreamChat: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log('handleSubmit called');
     e.preventDefault();
     if (!input.trim() || !selectedThread || !user || isStreaming) {
       console.log('Cannot send message:', {
@@ -199,6 +217,7 @@ const StreamChat: React.FC = () => {
   };
 
   const handleCreateThread = () => {
+    console.log('handleCreateThread called');
     const threadName = `Chat ${chatThreads.length + 1}`;
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && user?.id) {
       wsRef.current.send(JSON.stringify({ type: 'create_thread', user_id: user.id, name: threadName }));
@@ -239,13 +258,6 @@ const StreamChat: React.FC = () => {
         )
       );
   };
-
-  useEffect(() => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && wallet.publicKey) {
-      console.log('Sending public key:', wallet.publicKey.toString());
-      wsRef.current.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
-    }
-  }, [wallet.publicKey]);
 
   return (
     <div className="flex flex-col h-screen md:flex-row">

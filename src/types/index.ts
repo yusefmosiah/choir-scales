@@ -49,6 +49,7 @@ export interface User {
   id: string;
   public_key: string;
   created_at: string;
+  chat_threads: string[]; // Add this if it's in models.py
 }
 
 export interface ChatThread {
@@ -65,5 +66,5 @@ export interface Message {
   role: string; // 'user', 'assistant', or 'system'
   content: string;
   created_at: string;
-  step?: string; // This field is now included
+  step?: string;
 }
