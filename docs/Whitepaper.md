@@ -334,16 +334,16 @@ As more users join and contribute to Choir, the platform benefits from positive 
 Choir's architecture is built to scale seamlessly:
 
 1. **MVP Development and Deployment (October 2024)**
-   - Implement Solana Wallet Authentication enhancements.
-   - Further integrate Qdrant for efficient data storage and retrieval.
-   - Enhance the Chorus AI System, including merging `final_response` and `yield` steps.
-   - Redesign the User Interface and improve UX, including chat thread tabs and Authors Chat integration.
-   - Implement Authors Chat functionality.
-   - Prepare for full Tokenomics integration.
-   - Develop and deploy initial Solana Programs (Smart Contracts).
+   - Enhance Solana Wallet Integration (completed).
+   - Optimize Qdrant Integration for Data Storage (completed).
+   - Enhance the Chorus AI System, including adding inline citations.
+   - Redesign the User Interface and improve UX, including integration with v0 (AI Frontend Generator).
+   - Implement Approval Mechanism.
+   - Finalize Tokenomics Integration.
+   - Develop and deploy Solana Programs (Smart Contracts).
    - Implement an Email Notification System.
    - Integrate Thirdweb Embedded Wallet.
-   - Launch the Choir platform with core functionalities by October 17, 2024.
+   - Launch the Choir platform with core functionalities by October 19, 2024.
 
 2. **User Onboarding and Growth**
    - Implement marketing strategies to attract a diverse user base.
@@ -357,23 +357,23 @@ Choir's architecture is built to scale seamlessly:
    - Begin preliminary RL training using the token-scored dataset.
    - Iterate on model design based on early training results.
 
-### 9.2 Post-MVP Phase (April 2025 and Beyond)
+### 9.2 Post-MVP Phase (October 2024 - April 2025)
 
-1. **AI Model Release**
-   - Launch the first iteration of the AI model trained using Choir's dataset.
-   - Open-source the model to foster community contributions and further improvements.
-
-2. **Platform Expansion**
+1. **Platform Expansion**
    - Introduce additional features based on user feedback and platform needs.
    - Scale infrastructure to support a growing user base and dataset.
 
-3. **Governance Integration**
+2. **Governance Integration**
    - Implement decentralized governance mechanisms to allow community-driven decision-making.
    - Enable token holders to propose and vote on platform changes and economic policies.
 
-4. **Advanced AI Training**
+3. **Advanced AI Training**
    - Continue refining the AI model with expanded datasets and improved training methodologies.
    - Explore integrations with other platforms and technologies to enhance AI capabilities.
+
+4. **AI Model Release**
+   - Launch the first iteration of the AI model trained using Choir's dataset by April 2025.
+   - Open-source the model to foster community contributions and further improvements.
 
 ## Conclusion
 

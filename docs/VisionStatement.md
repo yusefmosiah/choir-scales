@@ -212,8 +212,8 @@ As more users join and contribute to Choir, the platform benefits from positive 
 Choir's architecture is built to scale seamlessly:
 
 1. **MVP Development and Deployment (October 2024)**
-   - Enhance Solana Wallet Integration.
-   - Optimize Qdrant Integration for Data Storage.
+   - Enhance Solana Wallet Integration (completed).
+   - Optimize Qdrant Integration for Data Storage (completed).
    - Enhance the Chorus AI System.
    - Redesign the User Interface and Enhance UX.
    - Implement Approval Mechanism.
@@ -223,6 +223,7 @@ Choir's architecture is built to scale seamlessly:
    - Implement an Email Notification System.
    - Integrate Thirdweb Embedded Wallet.
    - Produce Media Assets and Publish Documentation.
+   - Launch the Choir platform with core functionalities by October 19, 2024.
 
 2. **User Onboarding and Growth**
    - Implement marketing strategies to attract a diverse user base.
@@ -235,6 +236,7 @@ Choir's architecture is built to scale seamlessly:
 4. **AI Model Development**
    - Begin preliminary RL training using the token-scored dataset.
    - Iterate on model design based on early training results.
+   - Target the first AI model release by April 2025.
 
 ---
 
