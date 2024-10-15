@@ -52,10 +52,13 @@ const StreamChat: React.FC = () => {
     setChatThreads(data.chat_threads);
     console.log('Received chat threads:', data.chat_threads);
     if (data.chat_threads.length > 0) {
-      setSelectedThread(data.chat_threads[0].id);
-      // Request messages for the first thread
+      const lastSelectedThread = localStorage.getItem('lastSelectedThread');
+      const threadToSelect = lastSelectedThread && data.chat_threads.find(thread => thread.id === lastSelectedThread)
+        ? lastSelectedThread
+        : data.chat_threads[0].id;
+      setSelectedThread(threadToSelect);
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        wsRef.current.send(JSON.stringify({ type: 'get_thread_messages', thread_id: data.chat_threads[0].id }));
+        wsRef.current.send(JSON.stringify({ type: 'get_thread_messages', thread_id: threadToSelect }));
       }
     }
   }, []);
@@ -113,42 +116,46 @@ const StreamChat: React.FC = () => {
     } catch (error) {
       console.error('Failed to parse WebSocket message:', error);
     }
-  }, []); // Empty array if there are no dependencies
+  }, [handleChorusResponse, handleInit, handleNewThread, handleThreadMessages]); // Add dependencies if necessary
 
-  // WebSocket setup (runs once on component mount)
-  useEffect(() => {
+  const connectWebSocket = useCallback(() => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      console.log('WebSocket already connected');
+      return;
+    }
+
     wsRef.current = new WebSocket('ws://localhost:8000/ws');
 
     wsRef.current.onopen = () => {
       console.log('WebSocket connected');
-
-      // Send pending public key if available
-      if (pendingPublicKeyRef.current) {
-        console.log('Sending pending public key after connection:', pendingPublicKeyRef.current);
-        wsRef.current?.send(JSON.stringify({ public_key: pendingPublicKeyRef.current }));
-        pendingPublicKeyRef.current = null; // Clear the pending public key
+      if (wallet.publicKey) {
+        console.log('Sending public key after connection:', wallet.publicKey.toString());
+        wsRef.current?.send(JSON.stringify({ public_key: wallet.publicKey.toString() }));
       }
     };
 
-    wsRef.current.onmessage = (event) => {
-      console.log('WebSocket message received:', event.data);
-      handleWebSocketMessage(event);
-    };
+    wsRef.current.onmessage = handleWebSocketMessage;
 
-    wsRef.current.onclose = () => {
-      console.log('WebSocket disconnected');
+    wsRef.current.onclose = (event) => {
+      console.log('WebSocket disconnected:', event.reason);
+      // Attempt to reconnect after a short delay
+      setTimeout(connectWebSocket, 3000);
     };
 
     wsRef.current.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
+  }, [wallet.publicKey, handleWebSocketMessage]);
 
-    // Cleanup function to close the WebSocket on unmount
+  useEffect(() => {
+    connectWebSocket();
+
     return () => {
-      wsRef.current?.close();
-      wsRef.current = null;
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
     };
-  }, []); // Empty dependency array
+  }, [connectWebSocket]);
 
   // Send public key when it becomes available
   useEffect(() => {
@@ -229,16 +236,19 @@ const StreamChat: React.FC = () => {
     }
   };
 
-  const handleSelectThread = (threadId: string) => {
+  const handleSelectThread = useCallback((threadId: string) => {
     console.log(`Selecting thread ${threadId}`);
     setSelectedThread(threadId);
+    localStorage.setItem('lastSelectedThread', threadId);
     setChatHistory([]); // Clear previous chat history
 
     // Request messages for the selected thread
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ type: 'get_thread_messages', thread_id: threadId }));
+    } else {
+      console.error('WebSocket is not open. Unable to request thread messages.');
     }
-  };
+  }, []);
 
   const sortedSources = sources.sort((a, b) => {
     // Implement sorting logic based on sortOption
