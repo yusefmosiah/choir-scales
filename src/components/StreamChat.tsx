@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ChorusPanel from './ChorusPanel';
 import UserInput from './UserInput';
 import AIResponse from './AIResponse';
@@ -26,13 +26,50 @@ const StreamChat: React.FC = () => {
 
   const wallet = useWallet();
 
-  useEffect(() => {
-    if (wallet.connected && wallet.publicKey) {
-      initializeUser(wallet.publicKey.toString());
-    }
-  }, [wallet.connected, wallet.publicKey]);
+  const handleWebSocketMessage = useCallback((event: MessageEvent) => {
+    try {
+      const data: ChorusResponse = JSON.parse(event.data);
+      console.log('WebSocket message received:', data);
 
-  const initializeUser = async (publicKey: string) => {
+      if (data.step) {
+        if (data.step === 'experience' && Array.isArray(data.sources)) {
+          console.log('Sources received:', data.sources);
+          setSources(data.sources);
+        }
+        setChatHistory(prev => {
+          const newHistory = [...prev];
+          let content = data.content;
+          if (newHistory.length > 0 && newHistory[newHistory.length - 1].type === 'ai') {
+            newHistory[newHistory.length - 1].messages.push({ step: data.step, content });
+          } else {
+            newHistory.push({ type: 'ai', messages: [{ step: data.step, content }] });
+          }
+          return newHistory;
+        });
+        if (data.step === 'final') {
+          setIsStreaming(false);
+        }
+      } else if (data.type === 'thread_messages' && Array.isArray(data.messages)) {
+        setChatHistory(data.messages.map((msg: { role: string; content: string }) => ({
+          type: msg.role === 'user' ? 'user' : 'ai',
+          messages: [{ step: msg.role === 'user' ? 'user' : 'final', content: msg.content }]
+        })));
+      } else if (data.error) {
+        console.error(`WebSocket error: ${data.error}`);
+        setIsStreaming(false);
+      }
+    } catch (error) {
+      console.error('Failed to parse WebSocket message:', error);
+    }
+  }, []);
+
+  const sendMessage = useCallback((message: string, thread_id: string) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ prompt: message, thread_id }));
+    }
+  }, []);
+
+  const initializeUser = useCallback(async (publicKey: string) => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
       wsRef.current = new WebSocket('ws://localhost:8000/ws');
       wsRef.current.onopen = () => {
@@ -45,7 +82,7 @@ const StreamChat: React.FC = () => {
           if (data.type === 'init') {
             setUser(data.user);
             setChatThreads(data.chat_threads);
-            console.log("Received chat threads:", data.chat_threads); // Add this line
+            console.log("Received chat threads:", data.chat_threads);
             if (data.chat_threads.length > 0) {
               setSelectedThread(data.chat_threads[0].id);
             }
@@ -68,7 +105,13 @@ const StreamChat: React.FC = () => {
         console.log('WebSocket connection closed');
       };
     }
-  };
+  }, [handleWebSocketMessage]);
+
+  useEffect(() => {
+    if (wallet.connected && wallet.publicKey) {
+      initializeUser(wallet.publicKey.toString());
+    }
+  }, [wallet.connected, wallet.publicKey, initializeUser]);
 
   useEffect(() => {
     return () => {
@@ -101,7 +144,7 @@ const StreamChat: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || !selectedThread) return;
 
@@ -114,9 +157,7 @@ const StreamChat: React.FC = () => {
       wsRef.current.onopen = () => {
         sendMessage(input, selectedThread);
       };
-      wsRef.current.onmessage = (event) => {
-        handleWebSocketMessage(event);
-      };
+      wsRef.current.onmessage = handleWebSocketMessage;
       wsRef.current.onclose = () => {
         console.log('WebSocket connection closed');
         setIsStreaming(false);
@@ -124,50 +165,7 @@ const StreamChat: React.FC = () => {
     } else {
       sendMessage(input, selectedThread);
     }
-  };
-
-  const sendMessage = (message: string, thread_id: string) => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ prompt: message, thread_id }));
-    }
-  };
-
-  const handleWebSocketMessage = (event: MessageEvent) => {
-    try {
-      const data: ChorusResponse = JSON.parse(event.data);
-      console.log('WebSocket message received:', data);
-      if (data.step) {
-        if (data.step === 'experience' && Array.isArray(data.sources)) {
-          console.log('Sources received:', data.sources);
-          setSources(data.sources);
-        }
-        setChatHistory(prev => {
-          const newHistory = [...prev];
-          let content = data.content;
-          if (newHistory.length > 0 && newHistory[newHistory.length - 1].type === 'ai') {
-            newHistory[newHistory.length - 1].messages.push({ step: data.step, content });
-          } else {
-            newHistory.push({ type: 'ai', messages: [{ step: data.step, content }] });
-          }
-          return newHistory;
-        });
-        if (data.step === 'final') {
-          setIsStreaming(false);
-        }
-      } else if (data.type === 'thread_messages') {
-        // Handle received thread messages
-        setChatHistory(data.messages.map((msg: any) => ({
-          type: msg.role === 'user' ? 'user' : 'ai',
-          messages: [{ step: msg.role === 'user' ? 'user' : 'final', content: msg.content }]
-        })));
-      } else if (data.error) {
-        console.error(`WebSocket error: ${data.error}`);
-        setIsStreaming(false);
-      }
-    } catch (error) {
-      console.error('Failed to parse WebSocket message:', error);
-    }
-  };
+  }, [input, selectedThread, handleWebSocketMessage, sendMessage]);
 
   const sortSources = (sources: Source[]) => {
     switch (sortOption) {

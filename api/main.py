@@ -61,9 +61,8 @@ async def websocket_endpoint(websocket: WebSocket):
             elif 'prompt' in data:
                 user_prompt = data['prompt']
                 thread_id = data['thread_id']
-                async for response in chorus.run(user_prompt, websocket, thread_id):
-                    # Optionally handle each response if needed
-                    pass  # Responses are already sent via WebSocket
+                chat_history = await db_client.get_messages_for_thread(thread_id)
+                await chorus.run(user_prompt, websocket, chat_history, thread_id)
     except WebSocketDisconnect:
         logger.info("WebSocket disconnected")
     except Exception as e:
