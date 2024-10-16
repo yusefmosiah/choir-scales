@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import ChorusPanel from "./ChorusPanel";
 import UserInput from "./UserInput";
 import AIResponse from "./AIResponse";
@@ -16,6 +16,7 @@ import {
 } from "../types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
+import { debounce } from 'lodash'; // Make sure to install lodash if not already present
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState("");
@@ -33,6 +34,9 @@ const StreamChat: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const pendingPublicKeyRef = useRef<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isCreatingThread, setIsCreatingThread] = useState(false);
 
   const wallet = useWallet();
 
@@ -42,11 +46,47 @@ const StreamChat: React.FC = () => {
     setChatHistory(data.messages);
   }, []);
 
-  const handleNewThread = useCallback((data: NewThreadResponse) => {
-    setChatThreads((prev) => [...prev, data.chat_thread]);
-    setSelectedThread(data.chat_thread.id);
-    setChatHistory([]);
-  }, []);
+  const handleSelectThread = useCallback(
+    (threadId: string) => {
+      console.log(`Selecting thread ${threadId}`);
+      setSelectedThread(threadId);
+      localStorage.setItem("lastSelectedThread", threadId);
+      setChatHistory([]); // Clear previous chat history
+
+      // Request messages for the selected thread
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.send(
+          JSON.stringify({ type: "get_thread_messages", thread_id: threadId })
+        );
+      } else {
+        console.error(
+          "WebSocket is not open. Unable to request thread messages."
+        );
+      }
+
+      // Focus on the input box
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    },
+    [wsRef, textareaRef] // Added textareaRef to dependencies
+  );
+
+  const handleNewThread = useCallback(
+    (data: NewThreadResponse) => {
+      setChatThreads((prev) => {
+        const updatedThreads = [...prev, data.chat_thread];
+        console.log("Updated chat threads:", updatedThreads);
+        return updatedThreads;
+      });
+      setIsCreatingThread(false);
+      console.log("New thread created and selected:", data.chat_thread.id);
+
+      // Select the new thread and focus input
+      handleSelectThread(data.chat_thread.id);
+    },
+    [handleSelectThread]
+  );
 
   const handleInit = useCallback((data: InitResponse) => {
     setUser(data.user);
@@ -147,9 +187,12 @@ const StreamChat: React.FC = () => {
           "Sending public key after connection:",
           wallet.publicKey.toString()
         );
-        wsRef.current?.send(
-          JSON.stringify({ public_key: wallet.publicKey.toString() })
-        );
+        // Add a small delay before sending the public key
+        setTimeout(() => {
+          wsRef.current?.send(
+            JSON.stringify({ public_key: wallet.publicKey?.toString() })
+          );
+        }, 100);
       }
     };
 
@@ -163,6 +206,8 @@ const StreamChat: React.FC = () => {
 
     wsRef.current.onerror = (error) => {
       console.error("WebSocket error:", error);
+      // Attempt to reconnect after a short delay
+      setTimeout(connectWebSocket, 3000);
     };
   }, [wallet.publicKey, handleWebSocketMessage]);
 
@@ -247,14 +292,17 @@ const StreamChat: React.FC = () => {
     setIsStreaming(true);
   };
 
-  const handleCreateThread = () => {
+  const handleCreateThread = useCallback(() => {
     console.log("handleCreateThread called");
+    if (!user?.id) {
+      console.log("Cannot create thread: User not available");
+      setError("Failed to create new chat. Please try again after connecting your wallet.");
+      return;
+    }
+    setIsCreatingThread(true);
+    setError(null);
     const threadName = `Chat ${chatThreads.length + 1}`;
-    if (
-      wsRef.current &&
-      wsRef.current.readyState === WebSocket.OPEN &&
-      user?.id
-    ) {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(
         JSON.stringify({
           type: "create_thread",
@@ -267,31 +315,35 @@ const StreamChat: React.FC = () => {
         wsReadyState: wsRef.current?.readyState,
         userId: user?.id,
       });
+      setError("Failed to create new chat. Please try again.");
+      setIsCreatingThread(false);
+      // If WebSocket is not open, try to reconnect
+      if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+        connectWebSocket();
+      }
     }
-  };
+  }, [user, chatThreads.length, connectWebSocket]);
 
-  const handleSelectThread = useCallback((threadId: string) => {
-    console.log(`Selecting thread ${threadId}`);
-    setSelectedThread(threadId);
-    localStorage.setItem("lastSelectedThread", threadId);
-    setChatHistory([]); // Clear previous chat history
+  const debouncedCreateThread = useMemo(
+    () => debounce(handleCreateThread, 300),
+    [handleCreateThread]
+  );
 
-    // Request messages for the selected thread
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      wsRef.current.send(
-        JSON.stringify({ type: "get_thread_messages", thread_id: threadId })
-      );
-    } else {
-      console.error(
-        "WebSocket is not open. Unable to request thread messages."
-      );
-    }
-  }, []);
-
-  const sortedSources = sources.sort((a, b) => {
-    // Implement sorting logic based on sortOption
-    return 0; // Placeholder
-  });
+  const sortedSources = useMemo(() => {
+    return sources.sort((a, b) => {
+      // Implement sorting logic based on sortOption
+      if (sortOption === 'date') {
+        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+      }
+      if (sortOption === 'similarity') {
+        return (b.similarity || 0) - (a.similarity || 0);
+      }
+      if (sortOption === 'tokens') {
+        return (b.token_value || 0) - (a.token_value || 0);
+      }
+      return 0; // Default for 'custom' or any other option
+    });
+  }, [sources, sortOption]);
 
   const renderChatContent = () => {
     return chatHistory
@@ -312,21 +364,26 @@ const StreamChat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)]"> {/* Adjust height to account for navbar */}
-      <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-5rem)]">
+      {" "}
+      {/* Adjust height to account for navbar */}
+      <div className="flex overflow-hidden flex-1">
         {/* Sidebar */}
-        <div className="hidden w-1/4 p-4 bg-gray-800 overflow-y-auto md:block">
+        <div className="hidden overflow-y-auto p-4 w-1/4 bg-gray-800 md:block">
           <h2 className="mb-4 text-xl font-semibold text-white">Chats</h2>
           <button
-            className="px-4 py-2 mb-4 w-full font-semibold text-white bg-cyan-500 rounded"
-            onClick={handleCreateThread}
+            className="px-4 py-2 mb-4 w-full font-semibold text-white bg-cyan-500 rounded disabled:bg-gray-400"
+            onClick={debouncedCreateThread}
+            disabled={isCreatingThread || !user}
           >
-            New Chat
+            {isCreatingThread ? "Creating..." : "New Chat"}
           </button>
+          {error && <p className="mb-2 text-sm text-red-500">{error}</p>}
           <ul className="space-y-2">
             {chatThreads.map((thread) => (
               <li
                 key={thread.id}
+                id={`thread-${thread.id}`}
                 className={`p-2 rounded cursor-pointer ${
                   selectedThread === thread.id ? "bg-gray-700" : "bg-gray-900"
                 }`}
@@ -339,8 +396,8 @@ const StreamChat: React.FC = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex flex-col flex-1 overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-4" ref={chatContainerRef}>
+        <div className="flex overflow-hidden flex-col flex-1">
+          <div className="overflow-y-auto flex-1 p-4" ref={chatContainerRef}>
             {renderChatContent()}
           </div>
           {/* Input Area */}
@@ -366,9 +423,11 @@ const StreamChat: React.FC = () => {
         </div>
 
         {/* Chorus Panel */}
-        <div className={`w-1/4 bg-gray-800 overflow-y-auto transition-transform transform
+        <div
+          className={`w-1/4 bg-gray-800 overflow-y-auto transition-transform transform
           ${isPanelVisible ? "translate-x-0" : "translate-x-full"}
-          fixed top-0 right-0 bottom-0 md:relative md:translate-x-0`}>
+          fixed top-0 right-0 bottom-0 md:relative md:translate-x-0`}
+        >
           <ChorusPanel
             steps={chatHistory.filter(
               (msg) =>
@@ -377,12 +436,13 @@ const StreamChat: React.FC = () => {
             sources={sortedSources}
             sortOption={sortOption}
             onSortChange={(option) =>
-              setSortOption(option as "date" | "similarity" | "tokens" | "custom")
+              setSortOption(
+                option as "date" | "similarity" | "tokens" | "custom"
+              )
             }
           />
         </div>
       </div>
-
       {/* Toggle button for mobile */}
       <button
         className="fixed right-4 bottom-20 z-50 p-4 text-2xl text-white bg-cyan-500 rounded-full shadow-lg md:hidden"
