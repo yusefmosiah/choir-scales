@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import ChorusPanel from "./ChorusPanel";
 import UserInput from "./UserInput";
 import AIResponse from "./AIResponse";
+import ChatThreadList from "./ChatThreadList";
 import ReactMarkdown from "react-markdown";
 import {
   Source,
@@ -365,35 +366,16 @@ const StreamChat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)]">
-      {" "}
-      {/* Adjust height to account for navbar */}
       <div className="flex overflow-hidden flex-1">
-        {/* Sidebar */}
-        <div className="hidden overflow-y-auto p-4 w-1/4 bg-gray-800 md:block">
-          <h2 className="mb-4 text-xl font-semibold text-white">Chats</h2>
-          <button
-            className="px-4 py-2 mb-4 w-full font-semibold text-white bg-cyan-500 rounded disabled:bg-gray-400"
-            onClick={debouncedCreateThread}
-            disabled={isCreatingThread || !user}
-          >
-            {isCreatingThread ? "Creating..." : "New Chat"}
-          </button>
-          {error && <p className="mb-2 text-sm text-red-500">{error}</p>}
-          <ul className="space-y-2">
-            {chatThreads.map((thread) => (
-              <li
-                key={thread.id}
-                id={`thread-${thread.id}`}
-                className={`p-2 rounded cursor-pointer ${
-                  selectedThread === thread.id ? "bg-gray-700" : "bg-gray-900"
-                }`}
-                onClick={() => handleSelectThread(thread.id)}
-              >
-                {thread.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Chat Thread List */}
+        <ChatThreadList
+          chatThreads={chatThreads}
+          selectedThread={selectedThread}
+          onSelectThread={handleSelectThread}
+          onCreateThread={debouncedCreateThread}
+          isCreatingThread={isCreatingThread}
+          error={error}
+        />
 
         {/* Main Chat Area */}
         <div className="flex overflow-hidden flex-col flex-1">
