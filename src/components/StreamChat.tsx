@@ -312,10 +312,10 @@ const StreamChat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex overflow-hidden flex-1">
+    <div className="flex flex-col h-[calc(100vh-5rem)]"> {/* Adjust height to account for navbar */}
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="hidden overflow-y-auto p-4 w-1/4 bg-gray-800 md:block">
+        <div className="hidden w-1/4 p-4 bg-gray-800 overflow-y-auto md:block">
           <h2 className="mb-4 text-xl font-semibold text-white">Chats</h2>
           <button
             className="px-4 py-2 mb-4 w-full font-semibold text-white bg-cyan-500 rounded"
@@ -339,28 +339,30 @@ const StreamChat: React.FC = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex overflow-hidden flex-col flex-1">
-          <div className="overflow-y-auto flex-1 p-4" ref={chatContainerRef}>
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-4" ref={chatContainerRef}>
             {renderChatContent()}
           </div>
           {/* Input Area */}
-          <form onSubmit={handleSubmit} className="p-4 bg-gray-800">
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={handleInputChange}
-              className="p-2 w-full text-white bg-gray-900 rounded"
-              rows={1}
-              placeholder="Type your message..."
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 mt-2 font-semibold text-white bg-cyan-500 rounded"
-              disabled={!input.trim() || isStreaming}
-            >
-              Send
-            </button>
-          </form>
+          <div className="p-4 bg-gray-800">
+            <form onSubmit={handleSubmit} className="flex items-end">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInputChange}
+                className="flex-1 p-2 text-white bg-gray-900 rounded resize-none"
+                rows={1}
+                placeholder="Type your message..."
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 ml-2 font-semibold text-white bg-cyan-500 rounded h-[38px]"
+                disabled={!input.trim() || isStreaming}
+              >
+                Send
+              </button>
+            </form>
+          </div>
         </div>
 
         {/* Chorus Panel */}
