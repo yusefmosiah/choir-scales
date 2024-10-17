@@ -22,11 +22,9 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
   sortOption,
   onSortChange,
 }) => {
-  const [sortOptionState, setSortOptionState] = useState<SortOption>('similarity');
-
   const sortedSources = useMemo(() => {
     return [...sources].sort((a, b) => {
-      switch (sortOptionState) {
+      switch (sortOption) {
         case 'similarity':
           return b.similarity - a.similarity;
         case 'created_at':
@@ -41,7 +39,7 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
           return 0;
       }
     });
-  }, [sources, sortOptionState]);
+  }, [sources, sortOption]);
 
   return (
     <div className="p-2 mb-4 bg-gray-800 rounded-lg border border-gray-700">

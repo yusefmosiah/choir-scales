@@ -1,23 +1,23 @@
 import React from 'react';
 import ChorusStep from './ChorusStep';
-import { Message, Source } from '../types';
+import { Step, Source } from '../types';
 
 interface ChorusPanelProps {
-  steps: Message[];
+  steps?: Step[];
   sources: Source[];
   sortOption: string;
   onSortChange: (option: string) => void;
 }
 
-const ChorusPanel: React.FC<ChorusPanelProps> = ({ steps, sources, sortOption, onSortChange }) => {
+const ChorusPanel: React.FC<ChorusPanelProps> = ({ steps = [], sources, sortOption, onSortChange }) => {
   return (
     <div className="p-4">
-      {steps.map((stepMessage, index) => (
+      {steps.map((step, index) => (
         <ChorusStep
           key={index}
-          step={stepMessage.step || ''}
-          content={stepMessage.content}
-          isExperience={stepMessage.step === 'experience'}
+          step={step.step}
+          content={step.content}
+          isExperience={step.step === 'experience'}
           sources={sources}
           sortOption={sortOption}
           onSortChange={onSortChange}

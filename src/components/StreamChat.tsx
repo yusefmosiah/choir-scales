@@ -20,6 +20,7 @@ import {
   NewThreadResponse,
   InitResponse,
   Message,
+  Step,
 } from "../types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
@@ -379,9 +380,11 @@ const StreamChat: React.FC = () => {
         } else {
           // For assistant messages
           return (
-            <AIResponse key={msg.id}>
-              <ReactMarkdown>{msg.content}</ReactMarkdown>
-            </AIResponse>
+            <AIResponse
+              key={msg.id}
+              message={msg}
+              sources={sources}
+            />
           );
         }
       })
@@ -391,9 +394,11 @@ const StreamChat: React.FC = () => {
           !chatHistory.some(
             (msg) => msg.role === "assistant" && msg.step === "final"
           ) ? (
-          <AIResponse key={lastActionMessage.id}>
-            <ReactMarkdown>{lastActionMessage.content}</ReactMarkdown>
-          </AIResponse>
+          <AIResponse
+            key={lastActionMessage.id}
+            message={lastActionMessage}
+            sources={sources}
+          />
         ) : null
       );
   };
@@ -453,10 +458,12 @@ const StreamChat: React.FC = () => {
           fixed top-0 right-0 bottom-0 md:relative md:translate-x-0`}
         >
           <ChorusPanel
-            steps={chatHistory.filter(
-              (msg) =>
-                msg.role === "assistant" && msg.step && msg.step !== "final"
-            )}
+            steps={chatHistory
+              .filter(
+                (msg) =>
+                  msg.role === "assistant" && msg.step && msg.step !== "final"
+              )
+              .map((msg): Step => ({ step: msg.step || 'response', content: msg.content }))}
             sources={sortedSources}
             sortOption={sortOption}
             onSortChange={(option) =>

@@ -36,8 +36,14 @@ export type WebSocketResponse =
   | InitResponse
   | ErrorResponse;
 
-export interface Source extends Message {
+export interface Source {
+  id: string;
   similarity: number;
+  content: string;
+  role: 'user' | 'assistant' | 'system';
+  created_at: string;
+  token_value?: number;
+  thread_id: string;
 }
 
 export interface User {
@@ -57,10 +63,14 @@ export interface ChatThread {
 
 export interface Message {
   id: string;
-  thread_id: string;
   role: 'user' | 'assistant' | 'system';
   content: string;
-  created_at: string;
   step?: string;
-  token_value?: number;
+  created_at: string;
+  thread_id: string;
+}
+
+export interface Step {
+  step: string;
+  content: string;
 }
