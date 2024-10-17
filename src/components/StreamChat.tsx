@@ -18,6 +18,7 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
 import { debounce } from 'lodash'; // Make sure to install lodash if not already present
+import { useRouter } from 'next/navigation';
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState("");
@@ -40,6 +41,7 @@ const StreamChat: React.FC = () => {
   const [isCreatingThread, setIsCreatingThread] = useState(false);
 
   const wallet = useWallet();
+  const router = useRouter();
 
   // Handler functions using useCallback
 
@@ -379,6 +381,52 @@ const StreamChat: React.FC = () => {
       );
   };
 
+  const handleNewChat = useCallback(async () => {
+    if (!user?.id) {
+      setError("Please connect your wallet to create a new chat.");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Check if there is an existing empty chat thread
+      const emptyChatThread = chatThreads.find(thread => thread.messages.length === 0);
+
+      if (emptyChatThread) {
+        // Use the existing empty chat thread
+        handleSelectThread(emptyChatThread.id);
+      } else {
+        // Create a new chat thread
+        const threadName = `Chat ${chatThreads.length + 1}`;
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          wsRef.current.send(
+            JSON.stringify({
+              type: "create_thread",
+              user_id: user.id,
+              name: threadName,
+            })
+          );
+        } else {
+          throw new Error("WebSocket is not connected");
+        }
+      }
+    } catch (error) {
+      console.error("Failed to create new chat:", error);
+      setError("Failed to create new chat. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user, chatThreads, handleSelectThread]);
+
+  useEffect(() => {
+    // When a new thread is created, select it
+    if (chatThreads.length > 0 && !selectedThread) {
+      handleSelectThread(chatThreads[chatThreads.length - 1].id);
+    }
+  }, [chatThreads, selectedThread, handleSelectThread]);
+
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)]">
       <div className="flex overflow-hidden flex-1">
@@ -416,6 +464,14 @@ const StreamChat: React.FC = () => {
                 Send
               </button>
             </form>
+            <button
+              onClick={handleNewChat}
+              className="mt-2 px-4 py-2 font-semibold text-white bg-cyan-500 rounded"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating..." : "New Chat"}
+            </button>
+            {error && <p className="mt-2 text-red-500">{error}</p>}
           </div>
         </div>
 
