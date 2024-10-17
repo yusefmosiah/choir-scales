@@ -494,13 +494,6 @@ const StreamChat: React.FC = () => {
                 Send
               </button>
             </form>
-            <button
-              onClick={handleNewChat}
-              className="px-4 py-2 mt-2 font-semibold text-white bg-cyan-500 rounded"
-              disabled={isLoading}
-            >
-              {isLoading ? "Creating..." : "New Chat"}
-            </button>
             {error && <p className="mt-2 text-red-500">{error}</p>}
           </div>
         </div>

@@ -7,6 +7,8 @@ from config import Config
 from utils import logger
 import json
 from models import User, ChatThread, Message
+from itertools import groupby
+from operator import itemgetter
 
 class DatabaseClient:
     def __init__(self, config: Config):
@@ -15,18 +17,6 @@ class DatabaseClient:
 
     def generate_unique_id(self) -> str:
         return str(uuid.uuid4())
-
-    def deduplicate_search_results(self, search_results: List[Dict[str, Any]]) -> List[str]:
-        unique_contents = set()
-        deduplicated_results = []
-        for result in search_results:
-            content = result['payload'].get('content', None)
-            if content and content not in unique_contents:
-                unique_contents.add(content)
-                deduplicated_results.append(content)
-
-        logger.info(f"Deduplicated {len(search_results)} search results to {len(deduplicated_results)} unique results")
-        return deduplicated_results
 
     async def search(self, query_embedding: List[float]) -> List[Dict[str, Any]]:
         try:
@@ -46,7 +36,7 @@ class DatabaseClient:
                         "thread_id": result.payload.get('thread_id', ''),
                         "content": result.payload.get('content', ''),
                         "created_at": result.payload.get('created_at', ''),
-                        "role": result.payload.get('role', ''),  # Changed from 'agent' to 'role'
+                        "role": result.payload.get('role', ''),
                         "token_value": result.payload.get('token_value', 0),
                         "step": result.payload.get('step', ''),
                         "similarity": result.score
@@ -57,10 +47,27 @@ class DatabaseClient:
                     continue
 
             logger.info(f"Processed {len(search_results)} search results")
-            return search_results
+
+            # Deduplicate search results
+            deduplicated_results = self._deduplicate_search_results(search_results)
+            logger.info(f"Deduplicated to {len(deduplicated_results)} results")
+
+            return deduplicated_results
         except Exception as e:
             logger.error(f"Error during search operation: {e}")
             return []
+
+    def _deduplicate_search_results(self, search_results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        # Sort the results by content and created_at
+        sorted_results = sorted(search_results, key=lambda x: (x['content'], x['created_at']))
+
+        # Group by content
+        grouped = groupby(sorted_results, key=itemgetter('content'))
+
+        # Keep the earliest result for each unique content
+        deduplicated = [next(group) for _, group in grouped]
+
+        return deduplicated
 
     async def upsert(self, content: str, embedding: List[float], is_human_generated: bool) -> None:
         try:
