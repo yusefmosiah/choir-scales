@@ -347,20 +347,35 @@ const StreamChat: React.FC = () => {
   }, [sources, sortOption]);
 
   const renderChatContent = () => {
+    let lastActionMessage: Message | null = null;
+
     return chatHistory
-      .filter(
-        (msg) =>
-          msg.role === "user" ||
-          (msg.role === "assistant" && msg.step === "final")
-      )
-      .map((msg, index) =>
-        msg.role === "user" ? (
-          <UserInput key={index} content={msg.content} />
-        ) : (
-          <AIResponse key={index}>
-            <ReactMarkdown>{msg.content}</ReactMarkdown>
+      .filter((msg) => {
+        if (msg.role === "assistant" && msg.step === "action") {
+          lastActionMessage = msg;
+          return false; // Don't render action messages directly
+        }
+        return msg.role === "user" || (msg.role === "assistant" && msg.step === "final");
+      })
+      .map((msg, index) => {
+        if (msg.role === "user") {
+          return <UserInput key={msg.id} content={msg.content} />;
+        } else {
+          // For assistant messages
+          return (
+            <AIResponse key={msg.id}>
+              <ReactMarkdown>{msg.content}</ReactMarkdown>
+            </AIResponse>
+          );
+        }
+      })
+      .concat(
+        // Add the last action message if there's no final response yet
+        lastActionMessage && !chatHistory.some(msg => msg.role === "assistant" && msg.step === "final") ? (
+          <AIResponse key={lastActionMessage.id}>
+            <ReactMarkdown>{lastActionMessage.content}</ReactMarkdown>
           </AIResponse>
-        )
+        ) : null
       );
   };
 
