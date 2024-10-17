@@ -1,5 +1,5 @@
 # Choir Scales Directory Structure
-## Output of > (venv)  choir-scales [main] ⚡  tree -I 'venv|node_modules'
+## Output of $ tree -I 'venv|node_modules' | pbcopy
 
 .
 ├── Dockerfile
@@ -48,7 +48,6 @@
 ├── scaffold-desktop.png
 ├── scaffold-mobile.png
 ├── src
-│   ├── __tests__
 │   ├── components
 │   │   ├── AIResponse.tsx
 │   │   ├── AppBar.tsx
@@ -64,6 +63,7 @@
 │   │   ├── SendTransaction.tsx
 │   │   ├── SendVersionedTransaction.tsx
 │   │   ├── SignMessage.tsx
+│   │   ├── SourceCard.tsx
 │   │   ├── SourcesList.tsx
 │   │   ├── StreamChat.tsx
 │   │   ├── Text
@@ -110,4 +110,4 @@
 ├── tailwind.config.js
 └── tsconfig.json
 
-23 directories, 86 files
+22 directories, 86 files
