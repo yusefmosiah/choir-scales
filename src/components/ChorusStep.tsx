@@ -57,7 +57,7 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
               id="sort-select"
               value={sortOption}
               onChange={(e) => onSortChange(e.target.value as SortOption)}
-              className="bg-gray-700 text-white rounded p-1"
+              className="p-1 text-white bg-gray-700 rounded"
             >
               <option value="similarity">Similarity</option>
               <option value="created_at">Date Created</option>

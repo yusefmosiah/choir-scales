@@ -9,36 +9,12 @@ import { AutoConnectProvider, useAutoConnect } from './AutoConnectProvider';
 import { notify } from "../utils/notifications";
 import { NetworkConfigurationProvider, useNetworkConfiguration } from './NetworkConfigurationProvider';
 import dynamic from "next/dynamic";
-import axios from 'axios'; // Import Axios for HTTP requests
 
 const ReactUIWalletModalProviderDynamic = dynamic(
   async () =>
     (await import("@solana/wallet-adapter-react-ui")).WalletModalProvider,
   { ssr: false }
 );
-
-const WalletKeyLogger: FC = () => {
-  const { publicKey } = useWallet();
-
-  useEffect(() => {
-    // const sendPublicKeyToBackend = async (key: string) => {
-    //   try {
-    //     await axios.post('/api/log-public-key', { publicKey: key });
-    //     console.log('Public key sent to backend successfully.');
-    //   } catch (error) {
-    //     console.error('Error sending public key to backend:', error);
-    //   }
-    // };
-
-    if (publicKey) {
-      const keyString = publicKey.toBase58();
-      console.log('User Public Key:', keyString);
-    //   sendPublicKeyToBackend(keyString);
-    }
-  }, [publicKey]);
-
-  return null;
-};
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { autoConnect } = useAutoConnect();
@@ -66,7 +42,6 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} onError={onError} autoConnect={autoConnect}>
                 <ReactUIWalletModalProviderDynamic>
-                    <WalletKeyLogger />
                     {children}
                 </ReactUIWalletModalProviderDynamic>
 			</WalletProvider>
