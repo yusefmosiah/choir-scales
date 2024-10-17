@@ -1,6 +1,6 @@
 import asyncio
 from enum import Enum
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Callable
 from starlette.websockets import WebSocket, WebSocketState
 from config import Config
 from database import DatabaseClient
@@ -10,13 +10,33 @@ from litellm import completion
 from pydantic import BaseModel, ValidationError
 import json
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
+import traceback
 
 class Chorus:
+    """
+    The Chorus class implements the Chorus Loop, a decision-making model.
+    It processes user prompts through a series of steps to generate refined responses.
+    """
+
     def __init__(self, config: Config, db_client: DatabaseClient):
+        """
+        Initialize the Chorus instance.
+
+        Args:
+            config (Config): Configuration settings.
+            db_client (DatabaseClient): Database client for storing and retrieving messages.
+        """
         self.config = config
         self.db_client = db_client
         self.state = ChorusState()
+        self.step_functions: List[Callable[[], asyncio.coroutine[ChorusResponse]]] = [
+            self._action,
+            self._experience,
+            self._intention,
+            self._observation,
+            self._update,
+        ]
 
     async def run(self, user_prompt: str, websocket: WebSocket, chat_history: List[Dict[str, str]], thread_id: str) -> List[Dict[str, str]]:
         self.state.reset()
@@ -27,7 +47,7 @@ class Chorus:
         await self._commit_message("user", user_prompt, step=ChorusStepEnum.ACTION.value)
 
         try:
-            for step_function in [self._action, self._experience, self._intention, self._observation, self._update]:
+            for step_function in self.step_functions:
                 if websocket.client_state != WebSocketState.CONNECTED:
                     logger.warning("WebSocket disconnected. Stopping Chorus loop.")
                     break
@@ -50,7 +70,8 @@ class Chorus:
                         await asyncio.sleep(0.1)
                         self.state.complete()
         except Exception as e:
-            logger.error(f"Error in Chorus run: {str(e)}")
+            error_msg = f"Error in Chorus run: {str(e)}\n{traceback.format_exc()}"
+            logger.error(error_msg)
             if websocket.client_state == WebSocketState.CONNECTED:
                 error_response = ChorusResponse(step=ChorusStepEnum.ERROR, content=f"An error occurred: {str(e)}")
                 await self._send_result(websocket, error_response)

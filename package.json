@@ -10,7 +10,10 @@
         "fastapi-dev": "cd api && source venv/bin/activate && pip install -r requirements.txt && uvicorn main:app --reload",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint && eslint .",
+        "lint:fix": "next lint --fix && eslint . --fix",
+        "test": "jest",
+        "test:watch": "jest --watch"
     },
     "dependencies": {
         "@heroicons/react": "^1.0.5",

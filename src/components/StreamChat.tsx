@@ -24,8 +24,7 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
 import { debounce } from "lodash"; // Make sure to install lodash if not already present
-import { useRouter } from "next/navigation";
-import SourceCard from './SourceCard';
+import SourceCard from "./SourceCard";
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState("");
@@ -48,7 +47,6 @@ const StreamChat: React.FC = () => {
   const [isCreatingThread, setIsCreatingThread] = useState(false);
 
   const wallet = useWallet();
-  const router = useRouter();
 
   // Handler functions using useCallback
 
@@ -131,10 +129,12 @@ const StreamChat: React.FC = () => {
 
         // Generate a unique id for the message
         const newMessage: Message = {
-          id: data.messages?.[0]?.id || uuidv4(),  // Use id from data if available, otherwise generate new
+          id: data.messages?.[0]?.id || uuidv4(), // Use id from data if available, otherwise generate new
           thread_id: selectedThread,
-          role: (data.messages?.[0]?.role as 'user' | 'assistant' | 'system') || 'assistant',
-          content: data.content || '',
+          role:
+            (data.messages?.[0]?.role as "user" | "assistant" | "system") ||
+            "assistant",
+          content: data.content || "",
           created_at: new Date().toISOString(),
           step: data.step?.toLowerCase(),
         };
@@ -216,20 +216,19 @@ const StreamChat: React.FC = () => {
 
     wsRef.current.onerror = (error) => {
       console.error("WebSocket error:", error);
-      // Attempt to reconnect after a short delay
-      setTimeout(connectWebSocket, 3000);
+      // Only attempt reconnection if not manually closed
+      if (wsRef.current && wsRef.current.readyState !== WebSocket.CLOSED) {
+        setTimeout(connectWebSocket, 3000);
+      }
     };
-  }, [wallet.publicKey, handleWebSocketMessage]);
+  }, [handleWebSocketMessage]);
 
   useEffect(() => {
     connectWebSocket();
-
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
+      wsRef.current?.close();
     };
-  }, [connectWebSocket]);
+  }, []); // Removed dependencies to prevent multiple connections
 
   // Send public key when it becomes available
   useEffect(() => {
@@ -374,7 +373,7 @@ const StreamChat: React.FC = () => {
           (msg.role === "assistant" && msg.step === "final")
         );
       })
-      .map((msg, index) => {
+      .map((msg) => {
         if (msg.role === "user") {
           return <UserInput key={msg.id} content={msg.content} />;
         } else {
@@ -399,63 +398,12 @@ const StreamChat: React.FC = () => {
       );
   };
 
-  const handleNewChat = useCallback(async () => {
-    if (!user?.id) {
-      setError("Please connect your wallet to create a new chat.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // Check if there is an existing empty chat thread
-      const emptyChatThread = chatThreads.find(
-        (thread) => thread.messages.length === 0
-      );
-
-      if (emptyChatThread) {
-        // Use the existing empty chat thread
-        handleSelectThread(emptyChatThread.id);
-      } else {
-        // Create a new chat thread
-        const threadName = `Chat ${chatThreads.length + 1}`;
-        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-          wsRef.current.send(
-            JSON.stringify({
-              type: "create_thread",
-              user_id: user.id,
-              name: threadName,
-            })
-          );
-        } else {
-          throw new Error("WebSocket is not connected");
-        }
-      }
-    } catch (error) {
-      console.error("Failed to create new chat:", error);
-      setError("Failed to create new chat. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user, chatThreads, handleSelectThread]);
-
   useEffect(() => {
     // When a new thread is created, select it
     if (chatThreads.length > 0 && !selectedThread) {
       handleSelectThread(chatThreads[chatThreads.length - 1].id);
     }
   }, [chatThreads, selectedThread, handleSelectThread]);
-
-  const renderSources = (sources: Source[]) => {
-    return (
-      <div className="sources-list">
-        {sources.map((source) => (
-          <SourceCard key={source.id} source={source} />   // Use id as key
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)]">
