@@ -1,74 +1,73 @@
-# Choir Proof of Text
+# Choir Proof of Text: Ensuring Content Quality Through Collaborative Chat
 
-## Creating a Proof of Text
+---
 
-In the evolving landscape of social media, maintaining high-quality content while fostering genuine user engagement remains a significant challenge. Traditional platforms often grapple with issues like content moderation, echo chambers, and the monetization paradox, where content creators are incentivized more by quantity than quality. **Choir** addresses these challenges by introducing a novel consensus mechanism known as **Proof of Text**. This mechanism ensures content integrity, fosters collaboration, and aligns incentives within its socioeconomic ecosystem.
+## Introduction
+
+In the evolving landscape of digital communication, maintaining high-quality content while fostering genuine user engagement remains a significant challenge. Traditional platforms often grapple with issues like content moderation, spam, and lack of incentive alignment. **Choir** addresses these challenges by introducing a novel consensus mechanism known as **Proof of Text** within a chat-based platform. This mechanism ensures content integrity, fosters collaboration, and aligns incentives within its decentralized ecosystem.
+
+---
 
 ## Understanding the Importance of Text in Content Quality
 
-Text is the fundamental building block of digital communication. In the context of Choir, it implies that content is created, curated, and validated through textual contributions. This shared validation process ensures that content meets quality standards agreed upon by the community, thereby enhancing its reliability and value.
+Text-based communication forms the backbone of meaningful discourse online. By focusing on textual interactions, Choir emphasizes clarity, depth, and substance in conversations. The Proof of Text mechanism leverages collaborative message approvals to maintain high standards of content quality.
 
-## Choir's Consensus Mechanism
+---
 
-At the heart of Choir's approach lies the **Edit Proposal and Approval Process**, embodying the Proof of Text mechanism. This process involves several steps:
+## The Proof of Text Mechanism
 
-### Content Creation and Token Minting
+### 1. Message Contribution and Staking
 
-- **Content Submission:** Users create content by submitting text, images, or files.
-- **Embedding and Storage:** Upon submission, the content is embedded using OpenAI's API and stored in the Qdrant vector database.
-- **Token Minting:** **CHOIR** tokens are minted and distributed to the content creator and any cited sources, incentivizing original creation and proper referencing.
+- **Staking Requirement**: Users stake a predefined amount of **CHOIR** tokens to submit messages to threads where they are not co-authors.
+- **Purpose**: Discourages spam and ensures contributors have a vested interest in the thread's quality.
 
-### Proposing Edits
+### 2. Collaborative Message Approval
 
-- **Edit Proposals:** Users can propose edits to existing content by staking a certain amount of CHOIR tokens.
-- **Staking Requirement:** This requirement ensures that edit proposals are meaningful and discourages frivolous changes.
-- **Collaboration:** The proposed edit is displayed in the Authors Chat, allowing for collaborative discussion.
+- **Co-author Review**: Co-authors have a 7-day window to approve or deny the submitted message.
+- **Unanimous Approval**: All co-authors approve, the message is published, and the contributor becomes a co-author.
+- **Denial**: Any co-author rejects, the message is denied, and staked tokens are distributed among rejecting co-authors.
+- **Split Decision**: Mixed approvals result in the message being denied, with tokens intended for approvers returning to the Choir Treasury.
 
-### Consensus Building through Approval and Rejection
+### 3. Co-authorship Dynamics
 
-- **Unanimous Approval:** If all authors of the original content approve the edit, the proposed changes are applied. The tokens staked by the editor are added to the content's token balance, making it more likely to be cited in the future. Additionally, the editor gains co-authorship status.
-- **Unanimous Rejection:** If all authors reject the edit, the tokens staked by the editor are distributed among the rejecting authors, rewarding them for maintaining content quality.
-- **Split Decision:** In cases where some authors approve and others reject the edit, the tokens intended for approvers are redirected to the Choir Treasury, while those for rejecters are distributed to the rejecting authors. This ensures that partial consensus still rewards users who contribute to content curation while preventing token inflation.
+- **Rights and Responsibilities**: Co-authors share in the thread's token balance and participate in future approvals.
+- **Divestment Option**: Co-authors can choose to divest their token share from a thread at any time.
 
-### Unresolved Edit Proposals
-
-If an edit proposal remains unresolved after the 7-day review period:
-- A mix of abstentions and approvals with no rejections results in approval.
-- If there are only abstentions, the edit is automatically rejected.
-- Tokens are distributed according to the outcome (approval or rejection).
-
-## Incentive Alignment
-
-The Proof of Text mechanism relies heavily on aligning incentives to promote high-quality content and responsible curation:
-
-- **Content Creators and Citing Authors:** Earn tokens for their contributions, encouraging original and well-referenced content.
-- **Editors:** Motivated to propose meaningful edits that enhance content quality, as successful edits can accrue tokens to the content and confer co-authorship status.
-- **Rejecting Authors:** Rewarded for rejecting low-quality or inappropriate edits, incentivizing vigilance in content curation.
-- **Choir Treasury:** Accumulates tokens from split decisions and fees, supporting platform development and governance, ensuring sustainability.
-
-## Ensuring Fairness and Decentralization
-
-Choir's consensus mechanism is designed to be fair and decentralized:
-
-- **Unanimous Approval Requirement:** Ensures that edits align with the original intent and quality standards, preventing unilateral changes that could degrade content.
-- **Token Redistribution:** By redistributing tokens based on approval outcomes, Choir ensures that users are compensated in proportion to their contributions, whether in approving or rejecting edits.
-- **Co-authorship for Editors:** Incorporating editors into the author set fosters a collaborative environment where multiple stakeholders have a say in content evolution.
+---
 
 ## Benefits of Proof of Text
 
-- **High-Quality Content:** Collective curation ensures that only content meeting community standards persists, enhancing the overall quality of the platform.
-- **User Empowerment:** Users have a tangible stake in content quality, fostering a sense of ownership and responsibility.
-- **Sustainable Token Economy:** Thoughtful token distribution mechanisms prevent inflation and promote long-term engagement.
-- **Decentralized Governance:** Future integration of governance protocols empowers the community to influence platform directions and resource allocations, aligning platform growth with user interests.
+- **Content Quality Assurance**: Collaborative approvals ensure only high-quality messages are published.
+- **Incentivized Participation**: Token staking and distribution align user incentives with platform goals.
+- **Spam Reduction**: Staking requirement deters low-quality or spam submissions.
+- **Community Building**: Co-authorship fosters a sense of ownership and responsibility among users.
+
+---
+
+## AI-Generated Summaries and Source Linking
+
+- **Accessibility**: Non-co-authors can access AI-generated summaries of threads, promoting transparency.
+- **Citation Notifications**: When messages are cited elsewhere, a special notification appears in the original thread.
+- **Source Linking**: Cited messages include links to their original chat thread, enhancing interconnectivity.
+
+---
 
 ## Challenges and Considerations
 
-While the Proof of Text presents a robust framework, it comes with challenges:
+- **Approval Delays**: Implementing reasonable time frames (e.g., 24-hour windows) and notifications can mitigate delays.
+- **Staking Amounts**: Balancing accessibility and deterrence of spam requires careful adjustment of staking requirements.
+- **Scalability**: Ensuring the platform can handle increased activity without compromising performance.
 
-- **Consensus Bottlenecks:** Requiring unanimous approval might slow down content updates, especially in large author sets. Balancing speed and quality is crucial.
-- **Token Distribution Complexity:** Ensuring fair and transparent token distribution, especially in split decisions, requires meticulous design to prevent manipulation.
-- **Scalability:** As the platform grows, maintaining efficient consensus mechanisms without compromising decentralization or performance is essential.
+---
 
 ## Conclusion
 
-The Proof of Text mechanism is integral to **Choir**'s mission to foster a high-quality, collaborative content ecosystem. By leveraging blockchain technology and tokenomics, Choir ensures that content creation and curation are both rewarding and aligned with community standards. This approach not only enhances the reliability and value of content but also lays a solid foundation for the platform's sustainability and growth.
+The Proof of Text mechanism is integral to **Choir**'s mission to foster a high-quality, collaborative content ecosystem through chat-based interactions. By leveraging blockchain technology and tokenomics, Choir ensures that content creation and curation are both rewarding and aligned with community standards. This approach not only enhances the reliability and value of content but also lays a solid foundation for the platform's sustainability and growth.
+
+---
+
+**Join the Conversation**
+
+Experience the evolution of digital communication with Choir. Engage in meaningful discussions, contribute to high-quality content, and be part of a community that values collaboration and excellence.
+
+---

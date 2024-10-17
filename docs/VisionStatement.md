@@ -4,7 +4,7 @@
 
 ## Abstract
 
-As artificial intelligence (AI) continues to advance, the focus has predominantly been on quantitative and technical improvements. However, qualitative aspects—such as stylistic nuance, artistic expression, and the ability to generate high-signal, meaningful content—remain areas ripe for innovation. **Choir** envisions a transformative approach to AI development by leveraging a decentralized, token-driven socioeconomic media network. Through its unique tokenomics and collaborative content curation mechanisms, Choir aims to create the world's highest signal human dataset. This dataset will serve as the foundation for training AI models that excel not only in technical prowess but also in qualitative, stylistic, and artistic dimensions. Our chief objective is to develop the first iteration of an AI model, utilizing reinforcement learning (RL) with this token-scored data, by **April 27, 2025**.
+As artificial intelligence (AI) continues to advance, the focus has predominantly been on quantitative and technical improvements. However, qualitative aspects—such as stylistic nuance, artistic expression, and the ability to generate high-signal, meaningful content—remain areas ripe for innovation. **Choir** envisions a transformative approach to AI development by leveraging a decentralized, token-driven socioeconomic chat platform. Through its unique tokenomics and collaborative message approval mechanisms, Choir aims to create the world's highest signal human dataset. This dataset will serve as the foundation for training AI models that excel not only in technical prowess but also in qualitative, stylistic, and artistic dimensions. Our chief objective is to develop the first iteration of an AI model, utilizing reinforcement learning (RL) with this token-scored data, by **April 27, 2025**.
 
 ---
 
@@ -38,273 +38,92 @@ There is a pressing need to develop AI models that not only comprehend and gener
 
 ## 3. Choir's Solution
 
-Choir proposes a decentralized media network where content is evaluated, curated, and rewarded based on its qualitative attributes. By harnessing blockchain technology and a robust tokenomics framework, Choir creates an environment where high-quality content is both incentivized and recognized.
+Choir proposes a decentralized chat-based platform where users engage in collaborative discussions, and messages are curated through a collective approval mechanism. This approach ensures that only high-quality content is published, fostering an environment of meaningful dialogue and collaboration. By integrating blockchain technology and a robust tokenomics framework, Choir creates an ecosystem where contributors are incentivized to produce valuable content.
 
 ### 3.1 Key Innovations
 
-- **Token-Scored Content**: Each piece of content is assigned a token score based on its quality, relevance, and potential to spur discourse.
-- **Collaborative Editing**: Users can propose and approve edits, ensuring that content evolves through collective intelligence and maintains high standards.
-- **Semantic Sparsity Rewards**: Content that occupies a unique position in the semantic space receives higher rewards, promoting originality and discouraging redundancy.
-- **Economic Gamification**: Treating content as a buyable and sellable asset encourages active participation and investment in quality content.
+1. **Collaborative Message Approval**
+
+   - **Consensus Mechanism**: Messages require unanimous approval from co-authors to be published.
+   - **Token Staking**: Users stake CHOIR tokens when contributing messages to threads where they are not co-authors.
+   - **Co-authorship**: Approved contributors become co-authors, sharing in the thread's token balance and governance rights.
+
+2. **CHOIR Token Dynamics**
+
+   - **Incentivization**: Tokens are distributed to reward high-quality contributions and engagement.
+   - **Economic Alignment**: The token model aligns user incentives with the platform's goal of fostering high-quality content.
+
+3. **AI-Generated Summaries**
+
+   - **Accessibility**: Non-co-authors can access AI-generated summaries of chat threads.
+   - **Privacy Protection**: Summaries convey key points without revealing sensitive information.
+   - **Co-author Oversight**: Co-authors can review and approve summaries to ensure accuracy.
 
 ---
 
-## 4. How Choir Works
+## 4. Tokenomics and Incentive Structures
 
-### 4.1 Ecosystem Components
+### 4.1 Token Flow Mechanics
 
-1. **Chorus AI System**
-   - **Role**: Core AI system for content analysis and generation.
-   - **Function**: Implements a multi-step process (Action, Experience, Intention, Observation, Update, and Yield) for AI-driven interactions.
+- **Message Contribution and Staking**
 
-2. **Choir Treasury**
-   - **Role**: Centralized repository holding the initial supply of 10 billion CHOIR tokens.
-   - **Function**: Distributes tokens to users as rewards for content creation and automatic citations; recaptures tokens from split edit decisions.
+  - Users stake CHOIR tokens to contribute messages to threads where they are not co-authors.
+  - Staked tokens are held in escrow during the approval process.
 
-3. **Users**
-   - **Role**: Content creators, editors, and curators.
-   - **Function**: Earn tokens through content creation, citations, and collaborative editing; invest tokens into content accounts; divest tokens by relinquishing authorship.
+- **Approval Process**
 
-4. **Edit Escrow Contracts**
-   - **Role**: Temporary holding of tokens during the edit proposal process.
-   - **Function**: Manage the staking and distribution of tokens based on edit approval or denial outcomes.
+  - **Unanimous Approval**: All co-authors approve; the message is published, and the contributor becomes a co-author.
+  - **Denial**: Any co-author rejects; the message is denied, and staked tokens are distributed among rejecting co-authors.
+  - **Split Decision**: Mixed approvals result in tokens intended for approvers being returned to the Choir Treasury; the message is denied.
 
-5. **Content Accounts**
-   - **Role**: Blockchain accounts representing individual pieces of content.
-   - **Function**: Store the token score of content; maintain records of co-authors and their token shares; accumulate tokens to enhance content visibility.
+- **Co-authorship Dynamics**
 
-6. **Qdrant Vector Database**
-   - **Role**: Storage and retrieval of content and embeddings.
-   - **Function**: Enables semantic search and efficient content management.
+  - Co-authors share in the thread's token balance and have the power to approve or deny future messages.
+  - Co-authors can divest their token share from a thread at any time.
 
-### 4.2 Token Flow Mechanics
+### 4.2 Preventing Token Inflation
 
-1. **Initial Allocation**
-   - **Minting**: 10 billion CHOIR tokens are minted to the Choir Treasury at platform inception.
-   - **Distribution**: Tokens flow from the Treasury to users as rewards for content creation and citations.
-
-2. **Content Creation**
-   - **Rewards**: Users receive tokens based on the uniqueness and quality of their content.
-   - **Investment**: Tokens are also allocated to the content account to enhance visibility and attract collaboration.
-
-3. **Automatic Citation**
-   - **Mechanism**: When content cites existing works, tokens are automatically distributed to the authors of the cited content.
-
-4. **Collaborative Editing**
-   - **Edit Proposals**: Users propose edits by staking tokens in an edit escrow contract.
-   - **Approval Process**: Co-authors have 7 days to review the edit. A mix of approvals and abstentions (with no rejections) results in approval. If there are only abstentions, the edit is rejected.
-   - **Token Distribution**:
-     - **Approval**: Staked tokens are transferred to the content account, and the editor becomes a co-author.
-     - **Denial**: Staked tokens are distributed to rejecting authors or returned to the editor in case of abstention-only rejection.
-
-5. **Token Recapture**
-   - **Mechanism**: Tokens from split edit decisions (non-unanimous outcomes) are recaptured by the Choir Treasury, sustaining future distributions.
-
-### 4.3 Divestment Mechanism
-
-- **Process**: Authors can choose to divest their share of tokens from a content account at any time.
-- **Token Retrieval Formula**:
-
-  \[
-  \text{Tokens Received} = \frac{\text{Content Account Tokens}}{n - 1}
-  \]
-
-  - \( n \): Total number of co-authors.
-
-- **Examples**:
-  - **7 Authors**: Divesting author receives \( \frac{\text{Content Tokens}}{6} \).
-  - **2 Authors**: Divesting author receives all tokens, leaving the remaining author with an empty account.
-
-### 4.4 Economic Gamification
-
-- **Buyable Assets**: Content can be invested in through collaborative editing, representing shared ownership.
-- **Sellable Assets**: Authors can divest their share, transferring control to those who value the content's future.
-- **Hot Potato Dynamics**: Encourages active investment and discourages passive ownership, promoting a dynamic content ecosystem.
+- **Fixed Supply**: A hard cap of 10 billion CHOIR tokens ensures scarcity.
+- **Token Recapture**: Tokens from split decisions are returned to the Choir Treasury to sustain future distributions.
+- **Dynamic Staking Requirements**: Adjustments based on platform activity maintain accessibility and discourage spam.
 
 ---
 
-## 5. Tokenomics: Distribution Lifecycle and Scaling
+## 5. AI Integration: Leveraging the Token-Scored Dataset
 
-### 5.1 Initial Token Supply
+### 5.1 Dataset Creation
 
-- **Total Supply**: 10 billion CHOIR tokens.
-- **Allocation**: Entirely held by the Choir Treasury at genesis.
+- The approval mechanism ensures only high-quality messages are published.
+- The collected dataset represents high-signal human interactions, ideal for training advanced AI models.
 
-### 5.2 Token Distribution Actions
+### 5.2 AI Model Development
 
-1. **Content Creation**
-   - **Reward**: Variable tokens based on semantic sparsity.
-   - **Allocation**:
-     - **Creator**: Receives tokens for creating unique content.
-     - **Content Account**: Accumulates tokens to enhance visibility.
-
-2. **Automatic Citation**
-   - **Reward**: Tokens distributed to authors of cited content.
-   - **Allocation**:
-     - **Cited Authors**: Receive tokens proportional to relevance.
-
-3. **Edit Proposals**
-   - **Cost**: Editors stake tokens to propose edits.
-   - **Escrow**: Tokens held in edit escrow contracts during the proposal period.
-
-4. **Edit Approvals**
-   - **Outcome**: Approved edits transfer staked tokens to content accounts; editors become co-authors.
-   - **Allocation**:
-     - **Content Account**: Receives staked tokens.
-     - **Editor**: Gains co-authorship and veto power.
-
-5. **Edit Denials**
-   - **Outcome**: Rejected edits distribute staked tokens to rejecting authors.
-   - **Allocation**:
-     - **Rejecting Authors**: Receive tokens as rewards.
-
-### 5.3 Scaling and Token Supply Management
-
-- **Hard Cap Enforcement**: The total supply of CHOIR tokens is strictly capped at 10 billion, ensuring scarcity and preventing inflation.
-- **Token Circulation**:
-  - **From Treasury to Users**: Through rewards for content creation and citations.
-  - **From Users to Content Accounts**: Via edit proposals and collaborative editing.
-  - **No In-Protocol Burning**: Tokens remain within the ecosystem, either in content accounts or held by users.
-- **Token Recapture**: Tokens from split edit decisions are recaptured by the Choir Treasury, sustaining future distributions.
+- **Target Release**: First iteration by **April 27, 2025**.
+- **Training Approach**: Utilize reinforcement learning with the token-scored dataset to develop models that excel in qualitative aspects.
 
 ---
 
-## 6. AI Integration: Leveraging Token-Scored Data for RL Training
+## 6. Roadmap and Milestones
 
-### 6.1 The AI Challenge
+### **MVP Development and Deployment (October 2024)**
 
-While AI models, especially LLMs, have shown impressive quantitative improvements, they often lag in qualitative aspects such as stylistic nuance, artistic expression, and the ability to generate high-signal, meaningful content. Choir addresses this by creating a dataset enriched with token scores that reflect content quality, relevance, and potential to spur discourse.
+- Launch the chat-based platform with core functionalities.
+- Integrate Solana wallet and implement tokenomics mechanisms.
+- Deploy smart contracts for token transactions.
 
-### 6.2 RL Training with Token-Scored Data
+### **Post-MVP Phase (October 2024 - April 2025)**
 
-- **Objective**: Train AI models to prioritize qualitative attributes in content generation by using token scores as reinforcement signals.
-- **Mechanism**:
-  - **Data Utilization**: Use the token-scored dataset from Choir as the foundation for RL training.
-  - **Reward Function**: Integrate token scores into the reward function, guiding the AI to generate content that is likely to receive high token scores and, consequently, high visibility and engagement.
-  - **Outcome**: AI models that not only generate technically accurate content but also excel in style, artistry, and meaningful discourse.
-
-### 6.3 Visionary Goal
-
-By **April 27, 2025**, Choir aims to develop and release the first iteration of an AI model trained using this token-scored dataset. This model will represent a significant leap in AI's ability to produce high-quality, artistically rich, and highly relevant content.
+- **Platform Expansion**: Add features based on user feedback, support multimedia content.
+- **Governance Integration**: Implement decentralized governance mechanisms.
+- **AI Training**: Begin training AI models using the high-quality dataset.
 
 ---
 
-## 7. Rapid Usage Growth and Scaling
+## 7. Conclusion
 
-### 7.1 User Incentives
+By transitioning to a chat-based platform with collaborative message approvals and integrated tokenomics, Choir is set to foster an engaged community that values meaningful contributions. This innovative approach not only enhances content quality but also accelerates the development of AI models that embody the stylistic and artistic nuances of human expression.
 
-Choir's tokenomics are designed to align user incentives with platform goals, driving rapid adoption and engagement:
-
-- **Rewards for Quality**: Users are motivated to create and curate high-quality content to earn tokens.
-- **Collaborative Benefits**: Editors and curators benefit from investing tokens into content, fostering a collaborative environment.
-- **Ownership and Control**: Divestment mechanisms empower users to manage their investments, promoting active participation.
-
-### 7.2 Network Effects
-
-As more users join and contribute to Choir, the platform benefits from positive network effects:
-
-- **Content Diversity**: Increased content creation leads to a richer dataset, enhancing the platform's value.
-- **Enhanced AI Training**: A vast, high-signal dataset accelerates the development of superior AI models.
-- **Community Growth**: Active participation and token incentives attract more users, creating a self-sustaining ecosystem.
-
-### 7.3 Scalability Mechanisms
-
-Choir's architecture is built to scale seamlessly:
-
-1. **MVP Development and Deployment (October 2024)**
-   - Enhance Solana Wallet Integration (completed).
-   - Optimize Qdrant Integration for Data Storage (completed).
-   - Enhance the Chorus AI System.
-   - Redesign the User Interface and Enhance UX.
-   - Implement Approval Mechanism.
-   - Finalize Tokenomics Integration.
-   - Develop and Deploy Solana Programs (Smart Contracts).
-   - Deploy, Test, and Launch MVP.
-   - Implement an Email Notification System.
-   - Integrate Thirdweb Embedded Wallet.
-   - Produce Media Assets and Publish Documentation.
-   - Launch the Choir platform with core functionalities by October 19, 2024.
-
-2. **User Onboarding and Growth**
-   - Implement marketing strategies to attract a diverse user base.
-   - Foster community engagement through incentives and transparent governance.
-
-3. **Dataset Accumulation**
-   - Encourage high-quality content creation and collaborative editing.
-   - Ensure the accumulation of a high-signal dataset for AI training.
-
-4. **AI Model Development**
-   - Begin preliminary RL training using the token-scored dataset.
-   - Iterate on model design based on early training results.
-   - Target the first AI model release by April 2025.
-
----
-
-## 8. Fundraising and Corporate Integration
-
-Recognizing the need for resources to achieve our ambitious goals, we plan to engage in fundraising activities.
-
-### 8.1 Fundraising Plans
-
-- **Purpose of Raising Funds**:
-  - **Team Expansion**: Hire exceptional talent in engineering, design, blockchain development, and more.
-  - **AI Model Development**: Invest in training advanced AI models.
-  - **Infrastructure Scaling**: Support our rapidly growing user base with robust infrastructure.
-  - **Platform Enhancement**: Accelerate the development of new features and improvements.
-
-- **Fundraising Timeline**:
-  - **Target Date**: We aim to raise funds by **December 19**, with the specific amount and terms to be determined.
-
-- **Investment Opportunities**:
-  - **Equity Offering**: Potential for investors to acquire equity in Choir Inc.
-  - **Strategic Partnerships**: Seeking investors who align with our vision and can contribute beyond capital.
-
-### 8.2 Corporate and Decentralized Synergy
-
-- **Corporate Ownership**:
-  - The corporation will hold the CHOIR token, reinforcing our commitment to the platform's success.
-  - This structure enables strategic decision-making and investment in key areas.
-
-- **Choir Treasury Holdings**:
-  - The Choir Treasury aims to own tokenized corporate stock in the future.
-  - This creates a symbiotic relationship between the corporate entity and the decentralized community.
-
-### 8.3 Commitment to Our Community
-
-- **Value Alignment**:
-  - Prioritizing long-term growth and aligning with partners who support our mission.
-  - Ensuring that fundraising efforts enhance the platform for all users.
-
-- **Community Empowerment**:
-  - Funds raised will drive engagement and value, benefiting the entire Choir ecosystem.
-
----
-
-## 9. Post-MVP Phase (October 18, 2024 and Beyond)
-
-1. **Platform Expansion**
-   - Introduce additional features based on user feedback and platform needs.
-   - Scale infrastructure to support a growing user base and dataset.
-
-2. **Governance Integration**
-   - Implement decentralized governance mechanisms to allow community-driven decision-making.
-   - Enable token holders to propose and vote on platform changes and economic policies.
-
-3. **Advanced AI Training**
-   - Continue refining the AI model with expanded datasets and improved training methodologies.
-   - Explore integrations with other platforms and technologies to enhance AI capabilities.
-
-4. **AI Model Release**
-   - Launch the first iteration of the AI model trained using Choir's dataset by April 27, 2025.
-   - Open-source the model to foster community contributions and further improvements.
-
----
-
-## Conclusion
-
-By accelerating development to launch the Choir MVP by **October 17, 2024**, we aim to establish a robust, user-centric platform that leverages blockchain and AI technologies to foster high-quality content creation and collaboration. This sets the stage for achieving long-term goals, including the development of an advanced AI model by **April 27, 2025**, and building a sustainable, engaged community.
-
-Choir stands at the forefront of a paradigm shift in AI development and content curation. By intertwining blockchain-based tokenomics with a commitment to quality and collaboration, Choir is poised to create a thriving ecosystem that not only rewards meaningful contributions but also lays the groundwork for the next generation of AI models. These models will transcend technical proficiency, embodying the stylistic and artistic nuances that elevate content from mere information to impactful discourse.
+Choir stands at the forefront of a paradigm shift in AI development and content curation. By intertwining blockchain-based tokenomics with a commitment to quality and collaboration, we aim to revolutionize the way AI models are trained and how communities interact in the digital space.
 
 ---
 
