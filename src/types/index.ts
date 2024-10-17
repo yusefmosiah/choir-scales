@@ -44,7 +44,7 @@ export interface User {
   id: string;
   public_key: string;
   created_at: string;
-  chat_threads: string[]; // Add this if it's in models.py
+  chat_threads: string[];
 }
 
 export interface ChatThread {
@@ -56,11 +56,11 @@ export interface ChatThread {
 }
 
 export interface Message {
-  id: string;                  // Changed from message_id to id
+  id: string;
   thread_id: string;
-  role: string;                // 'user', 'assistant', or 'system' (mapped from agent)
+  role: 'user' | 'assistant' | 'system';
   content: string;
   created_at: string;
   step?: string;
-  token_value?: number;        // Made optional
+  token_value?: number;
 }

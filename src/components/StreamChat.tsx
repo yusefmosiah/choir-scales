@@ -133,7 +133,7 @@ const StreamChat: React.FC = () => {
         const newMessage: Message = {
           id: data.messages?.[0]?.id || uuidv4(),  // Use id from data if available, otherwise generate new
           thread_id: selectedThread,
-          role: data.messages?.[0]?.role || 'assistant',
+          role: (data.messages?.[0]?.role as 'user' | 'assistant' | 'system') || 'assistant',
           content: data.content || '',
           created_at: new Date().toISOString(),
           step: data.step?.toLowerCase(),

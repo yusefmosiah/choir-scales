@@ -7,14 +7,13 @@ interface SourceCardProps {
 
 const SourceCard: React.FC<SourceCardProps> = ({ source }) => {
   return (
-    <div className="source-card">
-      <h3>Message ID: {source.id}</h3>
-      <p>{source.content}</p>
-      <div className="metadata">
+    <div className="p-4 mb-4 bg-gray-700 rounded-lg shadow-md">
+      <h3 className="mb-2 text-lg font-semibold text-cyan-300">Message ID: {source.id}</h3>
+      <p className="mb-3 text-white">{source.content}</p>
+      <div className="grid grid-cols-2 gap-2 text-sm text-gray-300">
         <span>Thread ID: {source.thread_id}</span>
         <span>Role: {source.role}</span>
-        <span>Created At: {new Date(source.created_at).toLocaleString()}</span>
-        {/* Only display token_value if it's available */}
+        <span>Created: {new Date(source.created_at).toLocaleString()}</span>
         {source.token_value !== undefined && (
           <span>Token Value: {source.token_value}</span>
         )}

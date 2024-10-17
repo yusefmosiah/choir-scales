@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import SourcesList from './SourcesList';
+import SourceCard from './SourceCard';
 import { Source } from '../types';
 
 interface ChorusStepProps {
@@ -8,8 +8,6 @@ interface ChorusStepProps {
   content: string;
   isExperience: boolean;
   sources: Source[];
-  sortOption: string;
-  onSortChange: (option: string) => void;
 }
 
 const ChorusStep: React.FC<ChorusStepProps> = ({
@@ -17,8 +15,6 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
   content,
   isExperience,
   sources,
-  sortOption,
-  onSortChange,
 }) => {
   return (
     <div className="p-2 mb-4 bg-gray-800 rounded-lg border border-gray-700">
@@ -27,11 +23,11 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
       {isExperience && (
-        <SourcesList
-          sources={sources}
-          sortOption={sortOption}
-          onSortChange={onSortChange}
-        />
+        <div className="sources-list">
+          {sources.map((source) => (
+            <SourceCard key={source.id} source={source} />
+          ))}
+        </div>
       )}
     </div>
   );
