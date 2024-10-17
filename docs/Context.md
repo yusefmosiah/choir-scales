@@ -2,7 +2,7 @@
 
 ## Overview
 
-Choir is an innovative socioeconomic media network that leverages blockchain technology to redefine content creation, curation, and collaboration. The platform aims to create the world's highest signal human dataset, which will serve as the foundation for training AI models that excel in both technical prowess and qualitative, stylistic, and artistic dimensions.
+**Choir** is an innovative socioeconomic media network that leverages blockchain technology to redefine collaborative communication and content curation. The platform has transitioned to a chat-based application, **choir.chat**, where users engage in collaborative discussions, and co-authors collectively manage the approval of messages. This approach aims to create the world's highest signal human dataset, serving as the foundation for training AI models that excel in both technical prowess and qualitative, stylistic, and artistic dimensions.
 
 ## Current State
 
@@ -12,40 +12,48 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
    - Implemented in `chorus.py`
    - Uses a multi-step process: Action, Experience, Intention, Observation, Update, and Yield
    - Integrates with Qdrant vector database for semantic search
-   - Planned enhancements include adding inline citations and revising the "objective" step to cite sources
+   - Enhancements:
+     - Inclusion of inline citations
+     - Revision of the "objective" step to cite sources
+     - Update of the final response to display citations as links
 
-2. **Frontend Components**
+2. **Chat-Based Interface**
+   - Users write chat messages/responses within threads.
+   - Co-authors of a thread collectively decide to approve or deny messages.
+     - **Approved messages**: Published and visible within the thread.
+     - **Denied messages**: Not published; rejecting co-authors split the tokens staked on the message.
+   - Users must stake CHOIR tokens to contribute to threads they are not co-authors of.
+     - If approved, tokens go to the thread's token balance.
+     - If rejected, staked tokens are distributed among rejecting co-authors.
+     - In split decisions, tokens intended for approving co-authors are returned to the Choir Treasury.
+
+3. **Thread Accessibility**
+   - All chat threads are accessible at `choir.chat/stream/<thread_id>`.
+   - **Co-authors**: See the full content of the thread.
+   - **Other users**: See AI-generated summaries of the thread.
+   - When messages are cited as sources elsewhere:
+     - Include a link to the original chat thread.
+     - A special message appears in the original thread indicating the citation.
+
+4. **Frontend Components**
    - React-based components for user interaction
    - Key components include StreamChat, ChorusStep, ChorusPanel, SourcesList, UserInput, and AIResponse
-   - Planned enhancements:
-     - Integrate the UI into v0 (AI Frontend Generator)
-     - Fix UI bugs and warnings
-     - Refactor components into self-documenting abstractions
-     - Build the homepage using AI to select and generate content
-     - Calculate vectors for chat threads and users (eigenvectors)
+   - Enhancements:
+     - Integration into v0 (AI Frontend Generator)
+     - UI bug fixes and warnings addressed
+     - Components refactored into self-documenting abstractions
+     - Homepage built using AI to select and generate content
+     - Calculations of vectors for chat threads and users (eigenvectors)
 
-3. **Blockchain Integration**
+5. **Blockchain Integration**
    - Solana wallet integration (functional)
-   - User accounts defined by Solana wallet public keys are now saved and loaded
-   - Components for wallet connection and transactions (SignMessage, SendTransaction)
-   - Plans to integrate Thirdweb Embedded Wallet as an alternative option
-
-4. **User Interface**
-   - Dark-themed interface with a chat-like layout
-   - Responsive design using Tailwind CSS
-   - Main components:
-     - Left sidebar with chat thread tabs
-     - Chat window for user-AI interaction
-     - Chorus Panel displaying AI steps and sources
-     - User input area with submit button
-   - Planned enhancements:
-     - Integrate into v0 (AI Frontend Generator)
-     - Fix UI bugs and warnings
-     - Refactor components into self-documenting abstractions
+   - User accounts defined by Solana wallet public keys
+   - Token transactions managed through smart contracts
+   - Users stake and receive CHOIR tokens as part of message approval mechanics
 
 ### Database and Configuration
 
-- Qdrant vector database integration for storing and retrieving content
+- Qdrant vector database integration for storing and retrieving chat messages
 - Users own chat threads containing messages, all stored on Qdrant
 - Configuration management using environment variables and Pydantic
 - Utility functions for embeddings and chat completions using Azure OpenAI
@@ -53,256 +61,127 @@ Choir is an innovative socioeconomic media network that leverages blockchain tec
 ### Tokenomics
 
 - CHOIR token defined with a total supply of 10 billion
-- Token distribution mechanisms outlined in the whitepaper
-- Implementation of token flow mechanics in progress:
-  - Content creation rewards
-  - Automatic citation rewards
-  - Collaborative editing and token investment
-  - Divestment mechanism
+- Token mechanics:
+  - Users stake tokens to contribute to threads they are not co-authors of.
+  - Approved messages result in tokens being added to the thread's token balance.
+  - Denied messages result in staked tokens being distributed among rejecting co-authors.
+  - Split decisions return tokens intended for approvers to the Choir Treasury.
+- Co-authorship dynamics:
+  - Authors of approved messages become co-authors of the thread.
+  - Co-authors share in the thread's token balance and have approval rights.
 
 ### AI Model Development
 
-- Target date for the first AI model release: April 27, 2025
+- Target date for the first AI model release: April 2025
 - Plan to use Reinforcement Learning with the token-scored dataset
 - Focus on enhancing qualitative aspects such as stylistic nuance and artistic expression
 
 ## Development Status
 
-- **Solana Wallet Integration**: Functional, inherited from Solana dApp Scaffold
-- **Qdrant Integration**: Implemented for data storage and retrieval
-- **UI/UX**: Basic implementation complete, redesign planned
+- **Solana Wallet Integration**: Functional
+- **Qdrant Integration**: Implemented for chat message storage and retrieval
+- **UI/UX**: Redesigned to reflect the chat-based interface
 - **Chorus AI**:
-  - Implemented with multi-step process: Action, Experience, Intention, Observation, Update, and Yield
-  - Integrated with Qdrant for semantic search
-  - Planned enhancements include merging `final_response` and `yield` steps, and including inline citations
-- **CHOIR Token**:
-  - Token defined with a total supply of 10 billion
-  - Minting functionality implemented
-  - Reward system in place for content creation and citations
-  - Token usage for edit requests implemented
-- **Authors Chat**: In planning phase
-- **Approval Mechanism**: Implementation in progress
-- **Email Notifications**: In planning phase
+  - Enhanced with inline citations
+  - Revised steps to include source citations
+  - Final responses display citations as links
+- **CHOIR Token Mechanics**:
+  - Staking and distribution integrated into message approval process
+  - Token flow aligns with the chat-based interaction model
+- **Message Approval Mechanism**: Implemented
+- **Citation Notifications**: Special messages appear when a message is cited elsewhere
+- **Email Notifications**: Implementation in progress
 - **Thirdweb Embedded Wallet**: Integration planned
-- **Tokenomics Implementation**: Basic functionality in place, further enhancements planned
-- **Testing**: Comprehensive testing planned
+- **Testing**: Comprehensive testing ongoing
 
 ## Next Steps
 
-The immediate next steps, as outlined in the updated blueprint, focus on:
+1. **Finalize Tokenomics Integration**
+   - Ensure all token mechanics are robust and secure
+   - Implement divestment mechanisms for co-authors
 
-1. **Enhancing the Chorus AI System**
-   - Modify the Chorus system to include inline citations
-   - Revise the "objective" step to cite sources
-   - Update the final response to display citations as links
+2. **Develop and Deploy Solana Programs (Smart Contracts)**
+   - Complete development of secure smart contracts for token transactions
+   - Deploy contracts to the Solana mainnet
 
-2. **Redesigning the User Interface and Enhancing UX**
-   - Integrate the UI into v0 (AI Frontend Generator)
-   - Fix UI bugs and warnings
-   - Refactor components into self-documenting abstractions
-   - Build the homepage using AI to select and generate content
-   - Calculate vectors for chat threads and users (eigenvectors)
+3. **Implement Email Notification System**
+   - Integrate with an email service provider
+   - Design responsive email templates for notifications
 
-3. **Implementing Approval Mechanism**
-4. **Finalizing Tokenomics Integration**
-5. **Developing and Deploying Solana Programs (Smart Contracts)**
-6. **Deploying, Testing, and Launching MVP**
-7. **Implementing an Email Notification System**
-8. **Integrating Thirdweb Embedded Wallet**
-9. **Producing Media Assets and Publishing Documentation**
+4. **Integrate Thirdweb Embedded Wallet**
+   - Assess compatibility and implement integration
 
-These steps are part of a sprint to reach the MVP launch by **October 19, 2024**.
+5. **Produce Media Assets and Publish Documentation**
+   - Update documentation to reflect the chat-based model
+   - Design logos, icons, and promotional materials
 
 ## Key Challenges and Considerations
 
-The Choir project utilizes the Solana Wallet Adapter for seamless integration with Solana wallets. Here's how it's implemented in the codebase:
-
-1. **Setup**:
-   - The wallet adapter is set up in `ContextProvider.tsx`.
-   - It uses `ConnectionProvider` and `WalletProvider` from `@solana/wallet-adapter-react`.
-
-2. **Wallet Connection**:
-   - The `useWallet` hook from `@solana/wallet-adapter-react` is used to access wallet functions.
-   - `useConnection` hook provides access to the Solana network connection.
-
-3. **Transaction Handling**:
-   - Transactions are created using `@solana/web3.js` library.
-   - The wallet's `sendTransaction` method is used to sign and send transactions.
-
-4. **UI Components**:
-   - `WalletMultiButton` from `@solana/wallet-adapter-react-ui` is used for wallet connection UI.
-
-5. **Custom Components**:
-   - `SendTransaction.tsx` and `SendVersionedTransaction.tsx` demonstrate how to create and send transactions.
-   - `SignMessage.tsx` shows how to sign messages using the connected wallet.
-
-6. **State Management**:
-   - Wallet connection state is managed by the wallet adapter context.
-   - Custom hooks like `useUserSOLBalanceStore` interact with the wallet to fetch balances.
-
-This integration allows for a unified interface to connect various Solana wallets and interact with the Solana blockchain, providing a seamless experience for users to authenticate and perform blockchain operations within the Choir application.
+- **User Onboarding**: Simplifying the process for new users to join and understand the platform
+- **Co-author Coordination**: Ensuring efficient communication among co-authors for message approvals
+- **Scalability**: Optimizing the platform to handle increased user activity and data volume
+- **Security**: Maintaining robust security measures for token transactions and message integrity
+- **AI Summarization**: Implementing accurate and meaningful AI-generated summaries for public threads
 
 ## Testing Strategy
 
-While testing is deferred for the initial MVP sprint, the project has a clear strategy for implementing robust testing post-launch:
-
-1. **Unit and Integration Tests**:
-   - For Python backend components.
-   - For TypeScript frontend components.
-   - These will cover core functionalities and edge cases.
-
-2. **Solana Program Testing**:
-   - Utilize Ackee Trident for fuzz testing of Solana smart contracts.
-   - Trident provides automated techniques to generate random, invalid, or unexpected input data, helping to discover unknown bugs and vulnerabilities.
+- **Unit and Integration Tests**:
+  - Python backend components
+  - TypeScript frontend components
+- **Solana Program Testing**:
+  - Utilize Ackee Trident for fuzz testing of Solana smart contracts
+- **End-to-End Testing**:
+  - Simulate user interactions with message approvals and token transactions
+  - Validate AI summarization and citation features
 
 ## Corporate Structure and Fundraising Plans
 
-- **Dual Structure**: Choir operates both as a corporate entity with stock and a decentralized community with the CHOIR token.
+- **Dual Structure**: Choir operates both as a corporate entity with stock and a decentralized community with the CHOIR token
 - **Fundraising Initiative**:
-  - **Target Date**: Planning to raise funds by **December 19**.
+  - **Target Date**: December
   - **Purpose**:
-    - Hire exceptional talent across various domains.
-    - Invest in AI model training and platform infrastructure.
-  - **Amount and Terms**: To be determined.
-
-- **Strategic Goals**:
-  - **Corporate Ownership of Tokens**: The corporation aims to own the CHOIR token to solidify its stake in the platform's success.
-  - **Treasury Holdings**: The Choir Treasury plans to eventually hold tokenized corporate stock, fostering a mutually beneficial relationship.
-
-- **Community and Investor Alignment**:
-  - Seeking investors who share the platform's vision and values.
-  - Ensuring that fundraising efforts enhance user experience and platform value.
+    - Hire talent across various domains
+    - Invest in AI model training and platform infrastructure
+  - **Strategic Goals**:
+    - Corporate ownership of CHOIR tokens
+    - Choir Treasury to eventually hold tokenized corporate stock
 
 ---
 
-# Choir Project Questions and Discussion Points
+## Choir Project Questions and Discussion Points
 
-After reviewing the project documentation—**Context.md**, **Blueprint.md**, **ProofOfText.md**, **Whitepaper.md**, and **VisionStatement.md**—the following questions and areas for discussion have been identified. These points are crucial for ensuring the coherence, clarity, and success of the Choir project.
+### 1. Implementation of Message Approval Mechanism
 
----
-
-## **1. Inconsistencies in Edit Proposal Outcomes**
-
-- **Question**: What is the definitive policy on unresolved edit proposals—are they automatically approved after a certain period, or are they rejected?
+- **Question**: How should the approval process be streamlined to ensure timely publishing of messages?
   - **Discussion Points**:
-    - In **ProofOfText.md**, unresolved edits are **automatically rejected** after a predetermined period.
-    - In **Whitepaper.md**, abstention is treated as an implicit **approval** after a 7-day period.
-    - **Implications**:
-      - Automatic approval could lead to unwanted changes if authors are inactive.
-      - Automatic rejection might discourage editors if their efforts are dismissed without consideration.
-    - **Possible Resolutions**:
-      - Establish a clear and consistent policy across all documents.
-      - Consider implementing reminders or incentives for authors to review edit proposals promptly.
-      - Explore a middle-ground solution, such as extending the decision period or involving moderators.
-
----
-
-## **2. Order of Objectives and Timeline Alignment**
-
-- **Question**: Can we ensure that all documents reflect the updated order of objectives and the adjusted timeline as per the latest blueprint?
-  - **Discussion Points**:
-    - Synchronizing the objectives and timeline across all documents.
-    - Avoiding confusion caused by discrepancies.
+    - Setting reasonable time frames for co-authors to approve or deny messages
+    - Implementing notifications to prompt co-authors to take action
   - **Resolution**:
-    - Updated all documents to reflect the corrected order:
-      1. Enhance Solana Wallet Integration.
-      2. Optimize Qdrant Integration for Data Storage.
-      3. Enhance the Chorus AI System.
-      4. Redesign the User Interface and Enhance UX.
-      5. Implement Approval Mechanism.
-      6. Finalize Tokenomics Integration.
-      7. Develop and Deploy Solana Programs (Smart Contracts).
-      8. Deploy, Test, and Launch MVP.
-      9. Implement an Email Notification System.
-      10. Integrate Thirdweb Embedded Wallet.
-      11. Produce Media Assets and Publish Documentation.
+    - Establish a 24-hour window for approvals
+    - Implement email and in-app notifications for pending approvals
 
----
+### 2. Token Staking Requirements
 
-## **3. Consistency in Terminology and Policy Definitions**
-
-- **Question**: How can we ensure consistency in terminology and policy definitions across all documents?
+- **Question**: What is the appropriate amount of CHOIR tokens required to stake when contributing to threads?
   - **Discussion Points**:
-    - Establishing a centralized glossary of terms.
-    - Aligning on definitions of key processes and mechanisms.
+    - Balancing accessibility for users and discouraging spam
+    - Adjusting staking amounts based on thread activity or importance
   - **Resolution**:
-    - Created a comprehensive glossary of terms.
-    - Standardized terminology across all documentation.
-    - Implemented documentation guidelines for future updates.
+    - Define a base staking amount with potential adjustments for high-traffic threads
+    - Implement dynamic staking requirements as the platform evolves
 
----
+### 3. AI-Generated Summaries
 
-## **4. Strengthening the Business Model**
-
-- **Question**: How can Choir enhance its business model to ensure long-term sustainability and growth?
+- **Question**: How can we ensure that AI-generated summaries of threads are accurate and respectful of user privacy?
   - **Discussion Points**:
-    - Diversifying revenue streams.
-    - Potential partnerships or integrations to drive growth.
-    - Balancing tokenomics with user incentives.
+    - Using summarization models that emphasize key points without disclosing sensitive information
+    - Allowing co-authors to approve AI summaries before publication
   - **Resolution**:
-    - Introduced subscription-based models and API usage fees.
-    - Planned strategic partnerships and integrations.
-    - Enhanced tokenomics to encourage long-term platform engagement.
-
----
-
-## **5. Clarity on Corporate and Decentralized Integration**
-
-- **Question**: How will the integration between the corporate entity and the decentralized community be managed?
-  - **Discussion Points**:
-    - Ownership of CHOIR tokens by the corporation.
-    - The role of the Choir Treasury in holding corporate stock.
-  - **Resolution**:
-    - Clarified that the corporation will own the CHOIR token.
-    - The Choir Treasury will eventually hold tokenized corporate stock.
-    - This structure aligns interests across all stakeholders.
-
----
-
-## **6. Decentralized Governance Mechanisms**
-
-- **Question**: How and when will decentralized governance mechanisms be incorporated to involve the community in decision-making?
-  - **Discussion Points**:
-    - Benefits of early community involvement in platform evolution.
-    - Mechanisms for proposing and voting on changes or new features.
-    - Ensuring equitable participation from a diverse user base.
-  - **Resolution**:
-    - Introduced plans for governance tokens linked to CHOIR tokens.
-    - Set up governance forums for proposals and discussions.
-    - Scheduled governance integration milestones in the project roadmap.
-
----
-
-## **7. Technical Documentation and Developer Support**
-
-- **Question**: Are there plans to provide detailed technical documentation and support for developers interested in building on or integrating with the platform?
-  - **Discussion Points**:
-    - Availability of APIs, SDKs, or developer tools.
-    - Encouraging third-party development and integrations.
-    - Maintaining open-source repositories and technical resources.
-  - **Resolution**:
-    - Will publish comprehensive technical documentation and code samples.
-    - Create developer portals and communities.
-    - Offer support channels for technical inquiries and collaborations.
-
----
-
-## **8. User Acquisition and Platform Growth Strategies**
-
-- **Question**: What strategies are in place to attract and retain a diverse and active user base?
-  - **Discussion Points**:
-    - Marketing efforts across various channels.
-    - User-friendly features and intuitive design.
-    - Community-building activities and incentives.
-  - **Resolution**:
-    - Launched targeted marketing campaigns.
-    - Implemented user-friendly features and design enhancements.
-    - Organized events and initiatives to promote community interaction.
+    - Implement an AI summarization process with co-author oversight
+    - Provide options for co-authors to exclude certain messages from summaries
 
 ---
 
 ## Conclusion
 
-By addressing these questions and implementing the resolutions, the Choir project strengthens its foundation, enhances stakeholder confidence, and paves the way for a vibrant and sustainable ecosystem.
-
----
+By transitioning to a chat-based platform with collaborative message approvals and integrated tokenomics, Choir enhances user engagement and maintains its goal of fostering high-quality content creation. This shift aligns with the original vision while adapting to a more interactive and accessible format. Continued development will focus on refining these mechanics, ensuring scalability, and preparing for the AI model release in April 2025.
