@@ -28,22 +28,27 @@ class DatabaseClient:
         logger.info(f"Deduplicated {len(search_results)} search results to {len(deduplicated_results)} unique results")
         return deduplicated_results
 
-    async def search(self, embedding: List[float]) -> List[Dict[str, Any]]:
+    async def search(self, query_embedding: List[float]) -> List[Dict[str, Any]]:
         try:
+            logger.info(f"Searching with query embedding of length {len(query_embedding)}, limit={self.config.SEARCH_LIMIT}")
             results = self.client.search(
                 collection_name=self.config.MESSAGES_COLLECTION,
-                query_vector=embedding,
+                query_vector=query_embedding,
                 limit=self.config.SEARCH_LIMIT
             )
+            logger.info(f"Search returned {len(results)} results")
+
             search_results = []
             for result in results:
                 try:
                     search_result = {
                         "id": str(result.id),
+                        "thread_id": result.payload.get('thread_id', ''),
                         "content": result.payload.get('content', ''),
                         "created_at": result.payload.get('created_at', ''),
-                        "agent": result.payload.get('agent', ''),
+                        "role": result.payload.get('role', ''),  # Changed from 'agent' to 'role'
                         "token_value": result.payload.get('token_value', 0),
+                        "step": result.payload.get('step', ''),
                         "similarity": result.score
                     }
                     search_results.append(search_result)
@@ -51,7 +56,7 @@ class DatabaseClient:
                     logger.error(f"Error processing search result: {e}")
                     continue
 
-            logger.info(f"Total number of search results: {len(search_results)}")
+            logger.info(f"Processed {len(search_results)} search results")
             return search_results
         except Exception as e:
             logger.error(f"Error during search operation: {e}")

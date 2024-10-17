@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import ChorusPanel from "./ChorusPanel";
 import UserInput from "./UserInput";
 import AIResponse from "./AIResponse";
@@ -17,8 +23,9 @@ import {
 } from "../types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
-import { debounce } from 'lodash'; // Make sure to install lodash if not already present
-import { useRouter } from 'next/navigation';
+import { debounce } from "lodash"; // Make sure to install lodash if not already present
+import { useRouter } from "next/navigation";
+import SourceCard from './SourceCard';
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState("");
@@ -124,12 +131,12 @@ const StreamChat: React.FC = () => {
 
         // Generate a unique id for the message
         const newMessage: Message = {
-          id: uuidv4(),
+          id: data.messages?.[0]?.id || uuidv4(),  // Use id from data if available, otherwise generate new
           thread_id: selectedThread,
-          role: "assistant",
-          content: data.content || "",
+          role: data.messages?.[0]?.role || 'assistant',
+          content: data.content || '',
           created_at: new Date().toISOString(),
-          step: data.step.toLowerCase(),
+          step: data.step?.toLowerCase(),
         };
         setChatHistory((prev) => [...prev, newMessage]);
 
@@ -299,7 +306,9 @@ const StreamChat: React.FC = () => {
     console.log("handleCreateThread called");
     if (!user?.id) {
       console.log("Cannot create thread: User not available");
-      setError("Failed to create new chat. Please try again after connecting your wallet.");
+      setError(
+        "Failed to create new chat. Please try again after connecting your wallet."
+      );
       return;
     }
     setIsCreatingThread(true);
@@ -335,13 +344,16 @@ const StreamChat: React.FC = () => {
   const sortedSources = useMemo(() => {
     return sources.sort((a, b) => {
       // Implement sorting logic based on sortOption
-      if (sortOption === 'date') {
-        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+      if (sortOption === "date") {
+        return (
+          new Date(b.created_at || 0).getTime() -
+          new Date(a.created_at || 0).getTime()
+        );
       }
-      if (sortOption === 'similarity') {
+      if (sortOption === "similarity") {
         return (b.similarity || 0) - (a.similarity || 0);
       }
-      if (sortOption === 'tokens') {
+      if (sortOption === "tokens") {
         return (b.token_value || 0) - (a.token_value || 0);
       }
       return 0; // Default for 'custom' or any other option
@@ -357,7 +369,10 @@ const StreamChat: React.FC = () => {
           lastActionMessage = msg;
           return false; // Don't render action messages directly
         }
-        return msg.role === "user" || (msg.role === "assistant" && msg.step === "final");
+        return (
+          msg.role === "user" ||
+          (msg.role === "assistant" && msg.step === "final")
+        );
       })
       .map((msg, index) => {
         if (msg.role === "user") {
@@ -373,7 +388,10 @@ const StreamChat: React.FC = () => {
       })
       .concat(
         // Add the last action message if there's no final response yet
-        lastActionMessage && !chatHistory.some(msg => msg.role === "assistant" && msg.step === "final") ? (
+        lastActionMessage &&
+          !chatHistory.some(
+            (msg) => msg.role === "assistant" && msg.step === "final"
+          ) ? (
           <AIResponse key={lastActionMessage.id}>
             <ReactMarkdown>{lastActionMessage.content}</ReactMarkdown>
           </AIResponse>
@@ -392,7 +410,9 @@ const StreamChat: React.FC = () => {
 
     try {
       // Check if there is an existing empty chat thread
-      const emptyChatThread = chatThreads.find(thread => thread.messages.length === 0);
+      const emptyChatThread = chatThreads.find(
+        (thread) => thread.messages.length === 0
+      );
 
       if (emptyChatThread) {
         // Use the existing empty chat thread
@@ -426,6 +446,16 @@ const StreamChat: React.FC = () => {
       handleSelectThread(chatThreads[chatThreads.length - 1].id);
     }
   }, [chatThreads, selectedThread, handleSelectThread]);
+
+  const renderSources = (sources: Source[]) => {
+    return (
+      <div className="sources-list">
+        {sources.map((source) => (
+          <SourceCard key={source.id} source={source} />   // Use id as key
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)]">
@@ -466,7 +496,7 @@ const StreamChat: React.FC = () => {
             </form>
             <button
               onClick={handleNewChat}
-              className="mt-2 px-4 py-2 font-semibold text-white bg-cyan-500 rounded"
+              className="px-4 py-2 mt-2 font-semibold text-white bg-cyan-500 rounded"
               disabled={isLoading}
             >
               {isLoading ? "Creating..." : "New Chat"}

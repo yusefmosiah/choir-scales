@@ -28,13 +28,14 @@ class ChatThread(BaseModel):
     vector: Optional[List[float]] = Field(default=None)
 
 class Message(BaseModel):
-    id: str
+    id: str                   # Changed from message_id to id
     thread_id: str
-    role: str  # 'user', 'assistant', or 'system'
+    role: str                 # 'user', 'assistant', or 'system'
     content: str
     created_at: str
-    vector: Optional[List[float]] = Field(default=None)
-    step: Optional[str] = None  # Add this field
+    step: Optional[str] = None
+    token_value: Optional[float] = None
+    vector: Optional[List[float]] = None  # Include if you're storing vectors
 
 class ChorusState:
     def __init__(self):
@@ -60,24 +61,12 @@ class ChorusState:
 
 class Source(BaseModel):
     id: str
+    thread_id: Optional[str] = None  # Make thread_id optional
     content: str
-    created_at: Optional[datetime] = None
-    agent: Optional[str] = None
-    token_value: Optional[int] = 0
-    similarity: Optional[float] = 0.0
-
-    @field_validator('created_at', mode='before')
-    def parse_created_at(cls, value):
-        if value in (None, ''):
-            return None
-        if isinstance(value, datetime):
-            return value
-        if isinstance(value, str):
-            try:
-                return datetime.fromisoformat(value)
-            except ValueError:
-                return None
-        return None
+    created_at: Optional[str] = None
+    role: Optional[str] = None
+    token_value: Optional[float] = None
+    similarity: float
 
     model_config = {
         "json_encoders": {

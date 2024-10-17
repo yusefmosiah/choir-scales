@@ -4,7 +4,7 @@ export interface ChorusResponse {
   content?: string;
   sources?: Source[];
   error?: string;
-  messages?: Array<{ role: string; content: string }>;
+  messages?: Array<{ id?: string; role: string; content: string }>;
 }
 
 export interface ThreadMessagesResponse {
@@ -36,13 +36,8 @@ export type WebSocketResponse =
   | InitResponse
   | ErrorResponse;
 
-export interface Source {
-  id: string;
-  content: string;
-  created_at?: string;
-  agent?: string;
-  token_value?: number;
-  similarity?: number;
+export interface Source extends Message {
+  similarity: number;
 }
 
 export interface User {
@@ -61,10 +56,11 @@ export interface ChatThread {
 }
 
 export interface Message {
-  id: string;
+  id: string;                  // Changed from message_id to id
   thread_id: string;
-  role: string; // 'user', 'assistant', or 'system'
+  role: string;                // 'user', 'assistant', or 'system' (mapped from agent)
   content: string;
   created_at: string;
   step?: string;
+  token_value?: number;        // Made optional
 }

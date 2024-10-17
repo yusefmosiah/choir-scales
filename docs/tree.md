@@ -96,7 +96,6 @@
 │   ├── styles
 │   │   └── globals.css
 │   ├── types
-│   │   ├── Source.ts
 │   │   └── index.ts
 │   ├── utils
 │   │   ├── explorer.ts

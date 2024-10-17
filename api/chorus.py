@@ -7,7 +7,7 @@ from database import DatabaseClient
 from models import Message, ChorusState, ChorusStepEnum, ChorusResponse, Source
 from utils import logger, get_embedding, chat_completion, chunk_text
 from litellm import completion
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 import json
 import uuid
 from datetime import datetime
@@ -83,17 +83,24 @@ class Chorus:
         search_results = await self.db_client.search(embedding)
         search_results_str = "\n".join([result['content'] for result in search_results])
 
-        sources = [
-            Source(
-                id=result['id'],
-                content=result['content'],
-                created_at=result.get('created_at'),
-                agent=result.get('agent'),
-                token_value=result.get('token_value', 0),
-                similarity=result.get('similarity', 0.0)
-            ) for result in search_results
-        ]
+        sources = []
+        for result in search_results:
+            try:
+                source = Source(
+                    id=result['id'],
+                    thread_id=result.get('thread_id', self.state.thread_id),  # Use current thread_id if not provided
+                    content=result['content'],
+                    created_at=result.get('created_at'),
+                    role=result.get('role'),
+                    token_value=result.get('token_value', 0),
+                    similarity=result.get('similarity', 0.0)
+                )
+                sources.append(source)
+            except ValidationError as e:
+                logger.error(f"Error creating Source from search result: {e}")
+                continue  # Skip this result and continue with the next one
 
+        logger.info(f"sources: {sources}")
         reranked_prompt = f"{prompt}\n\nSearch Results:\n{search_results_str}\n\nRefined Response:"
 
         result = await self._structured_chat_completion(self.state.messages + [
