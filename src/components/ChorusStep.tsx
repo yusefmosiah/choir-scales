@@ -8,6 +8,8 @@ interface ChorusStepProps {
   content: string;
   isExperience: boolean;
   sources: Source[];
+  sortOption: string;
+  onSortChange: (option: string) => void;
 }
 
 type SortOption = 'similarity' | 'created_at' | 'token_value' | 'role' | 'thread_id';
@@ -17,12 +19,14 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
   content,
   isExperience,
   sources,
+  sortOption,
+  onSortChange,
 }) => {
-  const [sortOption, setSortOption] = useState<SortOption>('similarity');
+  const [sortOptionState, setSortOptionState] = useState<SortOption>('similarity');
 
   const sortedSources = useMemo(() => {
     return [...sources].sort((a, b) => {
-      switch (sortOption) {
+      switch (sortOptionState) {
         case 'similarity':
           return b.similarity - a.similarity;
         case 'created_at':
@@ -37,7 +41,7 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
           return 0;
       }
     });
-  }, [sources, sortOption]);
+  }, [sources, sortOptionState]);
 
   return (
     <div className="p-2 mb-4 bg-gray-800 rounded-lg border border-gray-700">
@@ -52,7 +56,7 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
             <select
               id="sort-select"
               value={sortOption}
-              onChange={(e) => setSortOption(e.target.value as SortOption)}
+              onChange={(e) => onSortChange(e.target.value as SortOption)}
               className="bg-gray-700 text-white rounded p-1"
             >
               <option value="similarity">Similarity</option>

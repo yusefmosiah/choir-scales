@@ -50,7 +50,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
         () => [
             new UnsafeBurnerWalletAdapter(),
         ],
-        [network]
+        [] // Removed 'network' from here
     );
 
     const onError = useCallback(
