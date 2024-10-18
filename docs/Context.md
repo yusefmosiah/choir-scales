@@ -8,48 +8,39 @@
 
 ### Core Components
 
-1. **Chorus AI System**
-   - Implemented in `chorus.py`
-   - Uses a multi-step process: Action, Experience, Intention, Observation, Update, and Yield
-   - Integrates with Qdrant vector database for semantic search
-   - Enhancements:
-     - Inclusion of inline citations
-     - Revision of the "objective" step to cite sources
-     - Update of the final response to display citations as links
+1. **Ownership and Co-authorship**
+   - Users own the messages they submit.
+   - Threads are owned collectively by the creators of the messages within them (co-authors).
+   - The initial thread creator is the first co-author.
 
 2. **Chat-Based Interface**
    - Users write chat messages/responses within threads.
    - Co-authors of a thread collectively decide to approve or deny messages.
-     - **Approved messages**: Published and visible within the thread.
-     - **Denied messages**: Not published; rejecting co-authors split the tokens staked on the message.
-   - Users must stake CHOIR tokens to contribute to threads they are not co-authors of.
-     - If approved, tokens go to the thread's token balance.
-     - If rejected, staked tokens are distributed among rejecting co-authors.
-     - In split decisions, tokens intended for approving co-authors are returned to the Choir Treasury.
+   - Non-co-authors can submit speculative responses ("specs") by staking CHOIR tokens.
+   - **Approved specs**: Published and the contributor becomes a co-author.
+   - **Denied specs**: Not published; rejecting co-authors split the staked tokens.
 
 3. **Thread Accessibility**
    - All chat threads are accessible at `choir.chat/stream/<thread_id>`.
-   - **Co-authors**: See the full content of the thread.
+   - **Co-authors**: Have full read-write access to the thread.
    - **Other users**: See AI-generated summaries of the thread.
    - When messages are cited as sources elsewhere:
      - Include a link to the original chat thread.
      - A special message appears in the original thread indicating the citation.
 
-4. **Frontend Components**
-   - React-based components for user interaction
-   - Key components include StreamChat, ChorusStep, ChorusPanel, SourcesList, UserInput, and AIResponse
-   - Enhancements:
-     - Integration into v0 (AI Frontend Generator)
-     - UI bug fixes and warnings addressed
-     - Components refactored into self-documenting abstractions
-     - Homepage built using AI to select and generate content
-     - Calculations of vectors for chat threads and users (eigenvectors)
+4. **Token Mechanics**
+   - CHOIR tokens are used for staking and rewards.
+   - Threads have Solana accounts that store CHOIR tokens.
+   - When a new message is approved, staked tokens go to the thread's token balance.
+   - When a message is denied:
+     - Rejecting co-authors split the staked tokens.
+     - Any approvers get nothing.
+     - Remaining tokens go to the Choir Treasury.
 
-5. **Blockchain Integration**
-   - Solana wallet integration (functional)
-   - User accounts defined by Solana wallet public keys
-   - Token transactions managed through smart contracts
-   - Users stake and receive CHOIR tokens as part of message approval mechanics
+5. **AI-Generated Summaries**
+   - Designed to create interest and stimulate engagement.
+   - Compress content to tease the full discussion.
+   - Will improve over time but are not intended as strict privacy measures.
 
 ### Database and Configuration
 
@@ -61,14 +52,11 @@
 ### Tokenomics
 
 - CHOIR token defined with a total supply of 10 billion
-- Token mechanics:
-  - Users stake tokens to contribute to threads they are not co-authors of.
-  - Approved messages result in tokens being added to the thread's token balance.
-  - Denied messages result in staked tokens being distributed among rejecting co-authors.
-  - Split decisions return tokens intended for approvers to the Choir Treasury.
+- Token mechanics integrated into message approval and thread economics
 - Co-authorship dynamics:
   - Authors of approved messages become co-authors of the thread.
   - Co-authors share in the thread's token balance and have approval rights.
+  - Co-authors can divest their token share at any time, taking a (1 / n - 1) share of the thread's tokens.
 
 ### AI Model Development
 
@@ -88,7 +76,7 @@
 - **CHOIR Token Mechanics**:
   - Staking and distribution integrated into message approval process
   - Token flow aligns with the chat-based interaction model
-- **Message Approval Mechanism**: Implemented
+- **Message Approval Mechanism**: Implemented as "spec" submission and approval process
 - **Citation Notifications**: Special messages appear when a message is cited elsewhere
 - **Email Notifications**: Implementation in progress
 - **Thirdweb Embedded Wallet**: Integration planned
@@ -145,42 +133,6 @@
   - **Strategic Goals**:
     - Corporate ownership of CHOIR tokens
     - Choir Treasury to eventually hold tokenized corporate stock
-
----
-
-## Choir Project Questions and Discussion Points
-
-### 1. Implementation of Message Approval Mechanism
-
-- **Question**: How should the approval process be streamlined to ensure timely publishing of messages?
-  - **Discussion Points**:
-    - Setting reasonable time frames for co-authors to approve or deny messages
-    - Implementing notifications to prompt co-authors to take action
-  - **Resolution**:
-    - Establish a 24-hour window for approvals
-    - Implement email and in-app notifications for pending approvals
-
-### 2. Token Staking Requirements
-
-- **Question**: What is the appropriate amount of CHOIR tokens required to stake when contributing to threads?
-  - **Discussion Points**:
-    - Balancing accessibility for users and discouraging spam
-    - Adjusting staking amounts based on thread activity or importance
-  - **Resolution**:
-    - Define a base staking amount with potential adjustments for high-traffic threads
-    - Implement dynamic staking requirements as the platform evolves
-
-### 3. AI-Generated Summaries
-
-- **Question**: How can we ensure that AI-generated summaries of threads are accurate and respectful of user privacy?
-  - **Discussion Points**:
-    - Using summarization models that emphasize key points without disclosing sensitive information
-    - Allowing co-authors to approve AI summaries before publication
-  - **Resolution**:
-    - Implement an AI summarization process with co-author oversight
-    - Provide options for co-authors to exclude certain messages from summaries
-
----
 
 ## Conclusion
 

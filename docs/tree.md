@@ -34,6 +34,8 @@
 │   ├── VisionStatement.md
 │   ├── Whitepaper.md
 │   └── tree.md
+├── jest.config.js
+├── jest.setup.js
 ├── next-env.d.ts
 ├── next.config.js
 ├── notebooks
@@ -52,6 +54,7 @@
 │   │   ├── AIResponse.tsx
 │   │   ├── AppBar.tsx
 │   │   ├── ChatThreadList.tsx
+│   │   ├── ChatWindow.tsx
 │   │   ├── ChorusPanel.tsx
 │   │   ├── ChorusStep.tsx
 │   │   ├── ContentContainer.tsx
@@ -110,4 +113,5 @@
 ├── tailwind.config.js
 └── tsconfig.json
 
-22 directories, 86 files
+22 directories, 89 files
+

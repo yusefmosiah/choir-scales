@@ -1,101 +1,69 @@
-# **Choir Project Questions and Discussion Points**
+# Choir Project Questions and Discussion Points
 
-After reviewing the updated project documentation—**Context.md**, **Blueprint.md**, **ProofOfText.md**, **Whitepaper.md**, and **VisionStatement.md**—the following questions and areas for discussion have been identified. Addressing these points is crucial for ensuring the coherence, clarity, and success of the Choir project.
-
----
-
-## **1. Implementation of Message Approval Mechanism**
-
-- **Question**: How can the approval process be optimized to ensure timely publishing of messages without compromising the collaborative decision-making?
-
-- **Discussion Points**:
-
-  - **Approval Time Frame**: What is a reasonable duration for co-authors to review and respond to message submissions?
-  - **Notification System**: How will co-authors be alerted to pending approvals?
-  - **Automated Actions**: Should there be automation in cases where co-authors are unresponsive?
-
-- **Resolution**:
-
-  - Establish a **24-hour window** for message approvals.
-  - Implement **email and in-app notifications** to prompt co-authors.
-  - Introduce a policy where lack of response within the time frame counts as an approval to prevent bottlenecks.
+After reviewing the updated project documentation and recent clarifications, the following questions and areas for discussion have been addressed:
 
 ---
 
-## **2. Token Staking Requirements**
+## 1. Thread Ownership and Co-authorship
 
-- **Question**: How should the staking amount be determined to balance accessibility and discourage low-quality contributions?
-
-- **Discussion Points**:
-
-  - **Base Staking Amount**: What is an appropriate starting point for staking?
-  - **Dynamic Adjustments**: Should staking amounts vary based on thread activity or user reputation?
-  - **Economics**: How to ensure staking requirements do not become prohibitive for new users?
-
-- **Resolution**:
-
-  - Define a **base staking amount** accessible to most users.
-  - Implement **dynamic staking** where active, high-quality contributors may have reduced staking requirements.
-  - Regularly review and adjust staking amounts based on platform data and user feedback.
+- **Question**: How does the concept of "co-authors" align with the initial thread creator?
+- **Answer**: The initial thread creator is the first co-author. Every message is owned by its creator, and threads are owned by the creators of the messages within them. This simplifies the ownership model and aligns with the collaborative nature of the platform.
 
 ---
 
-## **3. AI-Generated Summaries and Privacy**
+## 2. Message Approval Process
 
-- **Question**: How can we balance the need for accessible summaries with respecting co-authors' privacy?
-
-- **Discussion Points**:
-
-  - **Consent Mechanism**: Should co-authors have the ability to approve or edit summaries before publication?
-  - **Anonymization**: How to ensure sensitive information is not disclosed in summaries?
-  - **Opt-Out Options**: Allowing threads or messages to be excluded from summarization.
-
-- **Resolution**:
-
-  - Implement a **co-author approval** process for summaries.
-  - Use AI models trained to **exclude sensitive data** and focus on key discussion points.
-  - Provide **opt-out settings** for threads or specific messages.
+- **Question**: How does the "spec" (speculative response) mechanism work in relation to the existing approval process?
+- **Answer**: The "spec" mechanism replaces the existing approval process on a 1-to-1 basis. This streamlines the contribution process while maintaining the quality control aspect of the platform.
 
 ---
 
-## **4. Managing Co-author Dynamics**
+## 3. Co-author Limitations
 
-- **Question**: How will the platform handle situations where the number of co-authors becomes large, potentially slowing down the approval process?
-
-- **Discussion Points**:
-
-  - **Scaling Mechanisms**: Introducing tiers or sub-groups within co-authors.
-  - **Delegated Approvals**: Allowing co-authors to delegate their approval rights.
-  - **Consensus Thresholds**: Adjusting the requirement from unanimous to supermajority approvals.
-
-- **Resolution**:
-
-  - For threads with a large number of co-authors, implement a **supermajority approval** system.
-  - Allow for **delegated authority** where co-authors can entrust their approval rights to others.
-  - Regularly assess and adjust approval mechanisms to balance efficiency and fairness.
+- **Question**: Are there any limitations on the number of co-authors a thread can have?
+- **Answer**: There are no limitations on the number of co-authors a thread can have. This allows for organic growth of collaborative discussions.
 
 ---
 
-## **5. Handling Disputes and Moderation**
+## 4. Token Distribution
 
-- **Question**: What processes are in place to handle disputes between co-authors or address malicious behavior?
+- **Question**: How are token rewards distributed when a new message is approved or when their thread is cited?
+- **Answer**: When a new message is approved, the tokens go to the THREAD, not individual messages. Threads have Solana accounts which store CHOIR tokens. This approach treats threads as entities that manifest connections between people.
 
-- **Discussion Points**:
-
-  - **Dispute Resolution**: Establishing protocols for resolving conflicts.
-  - **Moderation Tools**: Providing tools to manage spam or harassment.
-  - **Governance Participation**: Encouraging community involvement in policy-making.
-
-- **Resolution**:
-
-  - Create a **dispute resolution mechanism**, possibly involving neutral third-party mediators.
-  - Implement **reporting and moderation tools** accessible to co-authors.
-  - Encourage participation in **governance forums** to shape platform policies.
+- When a new message is denied:
+  - Deniers split the tokens bid
+  - Any approvers get nothing
+  - Remaining tokens go to the Choir Treasury
 
 ---
 
-## **Conclusion**
+## 5. Co-authorship Management
 
-By addressing these questions and implementing the resolutions, the Choir project strengthens its foundation, enhances stakeholder confidence, and paves the way for a vibrant and sustainable ecosystem. Continuous dialogue and adaptation are essential as the platform evolves and the community grows.
+- **Question**: Is there a mechanism for removing co-authorship or transferring ownership of threads?
+- **Answer**: Users can leave a thread at any time through divestment, taking a (1 / n - 1) share of the CHOIR tokens in the thread. Post-MVP, other mechanisms will be explored. The system is designed to establish trust naturally, as users have an incentive to reject low-quality responses.
 
 ---
+
+## 6. AI-Generated Summaries
+
+- **Question**: How does the AI-generated summary feature ensure privacy and accuracy?
+- **Answer**: The AI-generated summaries will improve over time. They are not intended as a strong privacy wall but rather as a teaser to stimulate discourse. By compressing content to tweet-length, they create demand and encourage engagement with the full thread.
+
+---
+
+## 7. Reputation System
+
+- **Question**: Are there any plans to implement a reputation system based on user contributions and co-authorship?
+- **Answer**: No, there are currently no plans to implement a reputation system. The focus is on the quality of contributions and collaborative dynamics within threads.
+
+---
+
+## Future Considerations
+
+- Post-MVP, threads could potentially hold SOL, stablecoins, or DeFi assets.
+- AI-enabled group chats may manage these assets in the future.
+- Further mechanisms for thread management and token distribution may be explored as the platform evolves.
+
+---
+
+These clarifications provide a clearer picture of Choir's ownership model, token distribution, and future directions. The focus on simplicity in ownership, combined with the innovative use of threads as token-holding entities, sets a foundation for a unique and engaging collaborative platform.

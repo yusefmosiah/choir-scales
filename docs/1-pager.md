@@ -18,57 +18,78 @@ Traditional AI models demonstrate impressive technical capabilities but lack the
 
 ### Key Features
 
-- **Collaborative Message Approval**
+- **Collaborative Message Ownership and Approval**
 
-  - Users contribute messages by staking CHOIR tokens.
+  - Users own the messages they submit.
+  - Threads are owned collectively by the creators of the messages within them (co-authors).
   - Messages require unanimous approval from co-authors to be published.
-  - Approved contributors become co-authors, gaining rights and token shares.
+  - Non-co-authors can pay CHOIR tokens to submit a speculative response ("spec"), which can be accepted or denied by co-authors.
+
+- **Access Control and Incentivization**
+
+  - Co-authors have read-write access to their threads.
+  - Non-co-authors can view AI-generated summaries of threads.
+  - Ownership enables access control and distribution of CHOIR token rewards.
+  - The ownership model is essential for distributing rewards to message creators and authors of cited sources.
 
 - **CHOIR Token Mechanics**
 
   - Tokens are used for staking, rewarding contributions, and aligning incentives.
   - A fixed supply ensures scarcity and value preservation.
+  - When a new message is approved, staked tokens go to the thread's token balance.
+  - When a message is denied, rejecting co-authors split the staked tokens.
+  - Threads have Solana accounts that store CHOIR tokens.
 
 - **AI-Generated Summaries**
 
   - Non-co-authors access AI-generated summaries of threads.
-  - Summaries are co-author approved to ensure accuracy and privacy.
+  - Summaries are designed to create interest and stimulate engagement.
+  - AI summaries will improve over time and are not intended as strict privacy measures.
 
 ---
 
 ## How It Works
 
-1. **Message Contribution**
+1. **Message Contribution and Ownership**
 
-   - Users stake CHOIR tokens to submit messages to threads where they are not co-authors.
-   - Staked tokens are held in escrow during the approval process.
+   - Users submit messages to threads, becoming owners of their messages.
+   - The initial thread creator is the first co-author.
+   - Threads are owned by the co-authors (message creators) within them.
 
-2. **Approval Mechanism**
+2. **Speculative Responses ("Specs")**
 
-   - Co-authors have a 7-day window to approve or deny messages.
-   - **Unanimous Approval**: Message is published; the contributor becomes a co-author.
-   - **Denial**: Message is rejected; staked tokens are distributed among rejecting co-authors.
-   - **Split Decision**: Message is denied; tokens intended for approvers return to the Choir Treasury.
+   - Non-co-authors can pay CHOIR tokens to submit a "spec" to a thread.
+   - Co-authors have a 7-day window to approve or deny the spec.
+   - **Unanimous Approval**: Spec is published; the contributor becomes a co-author.
+   - **Denial**: Spec is rejected; rejecting co-authors split the staked tokens.
 
-3. **Co-authorship and Token Dynamics**
+3. **Token Distribution and Thread Economics**
 
-   - Co-authors share in the thread's token balance and have approval rights.
-   - Co-authors can divest their token share at any time.
+   - Approved messages result in staked tokens being added to the thread's token balance.
+   - Threads act as entities manifesting connections between people.
+   - Co-authors share ownership and can divest their token share at any time.
+
+4. **Access and AI Summaries**
+
+   - **Co-authors**: Full read-write access to the thread.
+   - **Non-co-authors**: Access to AI-generated summaries to encourage engagement.
+   - Summaries compress content to tease the full discussion and stimulate interest.
 
 ---
 
 ## The Benefits
 
-- **High-Quality Content**: The approval mechanism ensures only valuable messages are published.
+- **High-Quality Content**: Ownership and approval mechanisms ensure valuable messages are published.
 - **Incentivized Collaboration**: Tokenomics align user incentives with platform goals.
+- **Secure and Controlled Access**: Ownership structures provide control over thread participation and content visibility.
 - **AI Advancement**: The curated dataset serves as ideal training data for advanced AI models.
-- **Community Empowerment**: Users have direct influence over content and platform evolution.
+- **Community Engagement**: Encourages meaningful interactions and fosters trust among users.
 
 ---
 
 ## Roadmap Highlights
 
-- **October 2024**: Launch of the MVP with core functionalities.
+- **October 2024**: Launch of the MVP with core functionalities, including ownership and access control features.
 - **April 2025**: Release of the first AI model trained on the token-scored dataset.
 - **Beyond**: Expansion of platform features, governance integration, and continuous AI development.
 
