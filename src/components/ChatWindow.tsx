@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { Message } from '../types';
-import UserInput from './UserInput';
 import AIResponse from './AIResponse';
 
 interface ChatWindowProps {
@@ -15,12 +13,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatHistory, chatContainerRef }
       {/* Render chat messages */}
       {chatHistory.map((msg) => {
         if (msg.role === 'user') {
-          return <UserInput key={msg.id} content={msg.content} />;
+          return (
+            <div key={msg.id} className="user-message">
+              {msg.content}
+            </div>
+          );
         } else {
           return (
-            <AIResponse key={msg.id}>
-              <ReactMarkdown>{msg.content}</ReactMarkdown>
-            </AIResponse>
+            <AIResponse
+              key={msg.id}
+              message={msg}
+              sources={[]} // Add appropriate sources if available
+              steps={[]}   // Add appropriate steps if available
+            />
           );
         }
       })}

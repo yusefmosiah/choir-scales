@@ -19,12 +19,13 @@ const numberToCurrencyString = (number: number) =>
  * Example: limit the output of this computation to between 0 and 255
  * (x * 255).clamp(0, 255)
  *
- * @param {Number} min The lower boundary of the output range
- * @param {Number} max The upper boundary of the output range
- * @returns A number in the range [min, max]
- * @type Number
+ * @param {number} current The number to clamp
+ * @param {number} min The lower boundary of the output range
+ * @param {number} max The upper boundary of the output range
+ * @returns {number} A number in the range [min, max]
  */
-const clamp = (current, min, max) => Math.min(Math.max(current, min), max);
+const clamp = (current: number, min: number, max: number): number =>
+    Math.min(Math.max(current, min), max);
 
 export {
     cn,

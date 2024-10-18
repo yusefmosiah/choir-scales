@@ -24,6 +24,7 @@ type TextProps = {
  * Pre-defined styling, according to agreed-upon design-system.
  */
 const variants = {
+    'big-heading': 'text-4xl font-bold', // Added big-heading variant
     heading: 'text-3xl font-medium',
     'sub-heading': 'text-2xl font-medium',
     'nav-heading': 'text-lg font-medium sm:text-xl',
