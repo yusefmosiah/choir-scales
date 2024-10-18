@@ -1,7 +1,6 @@
-import { FC } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React from "react";
 import { useAutoConnect } from "../contexts/AutoConnectProvider";
 import NetworkSwitcher from "./NetworkSwitcher";
 import NavElement from "./nav-element";
@@ -14,37 +13,25 @@ const WalletMultiButtonDynamic = dynamic(
 
 export const AppBar: React.FC = () => {
   const { autoConnect, setAutoConnect } = useAutoConnect();
-  const [isNavOpen, setIsNavOpen] = useState(false);
+
   return (
-    <div className="flex flex-row h-20 bg-gray-900 border-b border-gray-800 shadow-lg navbar md:mb-2 text-neutral-content">
+    <nav className="flex flex-row h-20 bg-gray-900 border-b border-gray-800 shadow-lg navbar md:mb-2 text-neutral-content">
       <div className="navbar-start align-items-center">
-        <div className="hidden ml-10 sm:inline w-22 h-22 md:p-2">
-          <Link
-            href="/"
-            className="font-mono text-2xl font-bold text-cyan-500 hover:text-cyan-400"
-          >
-            CHOIR
-          </Link>
-        </div>
+        <Link
+          href="/"
+          className="hidden ml-10 font-mono text-2xl font-bold text-cyan-500 sm:inline w-22 h-22 md:p-2 hover:text-cyan-400"
+        >
+          CHOIR
+        </Link>
       </div>
 
-      {/* Nav Links */}
       <div className="navbar-center">
         <div className="hidden gap-6 md:inline-flex align-items-center justify-items">
-          <NavElement
-            label="Home"
-            href="/"
-            navigationStarts={() => setIsNavOpen(false)}
-          />
-          <NavElement
-            label="Basics"
-            href="/basics"
-            navigationStarts={() => setIsNavOpen(false)}
-          />
+          <NavElement label="Home" href="/" />
+          <NavElement label="Basics" href="/basics" />
         </div>
       </div>
 
-      {/* Wallet & Settings */}
       <div className="navbar-end">
         <WalletMultiButtonDynamic className="mr-6 text-lg text-cyan-500 bg-gray-800 btn-ghost btn-sm rounded-btn hover:bg-gray-700" />
         <div className="dropdown dropdown-end">
@@ -80,7 +67,7 @@ export const AppBar: React.FC = () => {
             <li>
               <div className="form-control">
                 <label className="cursor-pointer label">
-                  <a>Autoconnect</a>
+                  <span>Autoconnect</span>
                   <input
                     type="checkbox"
                     checked={autoConnect}
@@ -96,6 +83,6 @@ export const AppBar: React.FC = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };

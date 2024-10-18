@@ -33,13 +33,15 @@ The digital communication landscape often faces challenges related to content qu
 - **Functionality**:
   - Stake tokens to contribute messages to threads where they are not co-authors.
   - Become co-authors upon approval of their messages, gaining rights and token shares.
+  - Submit speculative responses ("specs") to threads they're not co-authors of.
 
 ### 3. Chat Threads
 
 - **Description**: Collaborative spaces where users engage in discussions.
 - **Functionality**:
-  - Managed by co-authors who approve or deny incoming messages.
+  - Managed by co-authors who approve or deny incoming messages and specs.
   - Accumulate tokens through contributions and approvals.
+  - Have dedicated Solana accounts for token storage.
 
 ### 4. Message Approval Mechanism
 

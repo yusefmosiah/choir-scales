@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
+import { useEffect } from 'react'
 import {
   CheckCircleIcon,
   InformationCircleIcon,
@@ -6,8 +7,6 @@ import {
 } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
 import useNotificationStore from '../stores/useNotificationStore'
-import { useConnection } from '@solana/wallet-adapter-react';
-import { getExplorerUrl } from '../utils/explorer'
 import { useNetworkConfiguration } from 'contexts/NetworkConfigurationProvider';
 
 const NotificationList = () => {
@@ -25,17 +24,20 @@ const NotificationList = () => {
         {reversedNotifications.map((n, idx) => (
           <Notification
             key={`${n.message}${idx}`}
-            type={n.type}
+            type={n.type as 'success' | 'error' | 'info'}
             message={n.message}
             description={n.description}
             txid={n.txid}
             onHide={() => {
-              setNotificationStore((state: any) => {
+              setNotificationStore((state: { notifications: NotificationProps[] }) => {
                 const reversedIndex = reversedNotifications.length - 1 - idx;
-                state.notifications = [
-                  ...notifications.slice(0, reversedIndex),
-                  ...notifications.slice(reversedIndex + 1),
-                ];
+                return {
+                  ...state,
+                  notifications: [
+                    ...notifications.slice(0, reversedIndex),
+                    ...notifications.slice(reversedIndex + 1),
+                  ],
+                };
               });
             }}
           />
@@ -45,14 +47,22 @@ const NotificationList = () => {
   );
 }
 
-const Notification = ({ type, message, description, txid, onHide }) => {
-  const { connection } = useConnection();
+interface NotificationProps {
+  type: 'success' | 'error' | 'info';
+  message: string;
+  description?: string;
+  txid?: string;
+  onHide: () => void;
+}
+
+export const Notification: React.FC<NotificationProps> = ({
+  type,
+  message,
+  description,
+  txid,
+  onHide
+}) => {
   const { networkConfiguration } = useNetworkConfiguration();
-
-  // TODO: we dont have access to the network or endpoint here.. 
-  // getExplorerUrl(connection., txid, 'tx')
-  // Either a provider, context, and or wallet adapter related pro/contx need updated
-
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -60,7 +70,7 @@ const Notification = ({ type, message, description, txid, onHide }) => {
     }, 8000);
 
     return () => {
-      clearInterval(id);
+      clearTimeout(id);
     };
   }, [onHide]);
 
@@ -86,9 +96,8 @@ const Notification = ({ type, message, description, txid, onHide }) => {
             ) : null}
             {txid ? (
               <div className="flex flex-row">
-         
                 <a
-                  href={'https://explorer.solana.com/tx/' + txid + `?cluster=${networkConfiguration}`}
+                  href={`https://explorer.solana.com/tx/${txid}?cluster=${networkConfiguration}`}
                   target="_blank"
                   rel="noreferrer"
                   className="flex flex-row link link-accent text-emerald-200"

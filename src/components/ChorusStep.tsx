@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SourceCard from './SourceCard';
 import { Source } from '../types';
@@ -65,7 +65,7 @@ const ChorusStep: React.FC<ChorusStepProps> = ({
             </select>
           </div>
           <div className="sources-list">
-            {sortedSources.map((source) => (
+            {sortedSources.map((source: Source) => (
               <SourceCard key={source.id} source={source} />
             ))}
           </div>

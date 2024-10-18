@@ -58,11 +58,26 @@ After reviewing the updated project documentation and recent clarifications, the
 
 ---
 
+## 8. Solana Integration
+
+- **Question**: How will Solana be integrated into the Choir platform?
+- **Answer**: Solana will be used for managing thread token accounts. Each thread will have its own Solana account for storing CHOIR tokens. This integration will handle token staking, distribution, and divestment processes.
+
+---
+
+## 9. Speculative Response ("Spec") Process
+
+- **Question**: Can you elaborate on the speculative response process?
+- **Answer**: Non-co-authors can submit a "spec" to a thread by staking CHOIR tokens. Co-authors have a 7-day window to approve or deny the spec. If unanimously approved, the spec is published, and the contributor becomes a co-author. If denied, the spec is rejected, and rejecting co-authors split the staked tokens.
+
+---
+
 ## Future Considerations
 
 - Post-MVP, threads could potentially hold SOL, stablecoins, or DeFi assets.
 - AI-enabled group chats may manage these assets in the future.
 - Further mechanisms for thread management and token distribution may be explored as the platform evolves.
+- Governance mechanisms for adjusting token economics and platform rules will be developed.
 
 ---
 

@@ -27,8 +27,8 @@ Choir is a decentralized, chat-based platform that aims to create the world's hi
 
 5. **Solana Integration**
    - Wallet connectivity
-   - Smart contracts for token transactions
-   - Thread token storage
+   - Smart contracts for token transactions and thread ownership
+   - Thread token storage in Solana accounts
 
 6. **Vector Database (Qdrant)**
    - Storage and retrieval of chat messages
@@ -61,16 +61,17 @@ Choir is a decentralized, chat-based platform that aims to create the world's hi
 ## Development Roadmap
 
 ### Phase 1: MVP Development (Current)
-- Implement core chat functionality
+- Implement core chat functionality with ownership model
 - Integrate Solana wallet and basic token mechanics
-- Develop and test collaborative approval system
-- Implement AI-generated summaries
+- Develop and test collaborative approval system for messages and specs
+- Implement AI-generated summaries for non-co-authors
 
 ### Phase 2: Enhanced Features (Q4 2023 - Q2 2024)
 - Refine tokenomics and implement advanced token distribution
-- Develop and deploy Solana smart contracts
-- Implement email notification system
+- Develop and deploy Solana smart contracts for thread ownership and token management
+- Implement email notification system for co-authors
 - Integrate Thirdweb Embedded Wallet
+- Develop speculative response ("spec") submission and approval process
 
 ### Phase 3: AI Model Development (Q3 2024 - Q2 2025)
 - Collect and curate token-scored dataset
@@ -103,6 +104,10 @@ Choir is a decentralized, chat-based platform that aims to create the world's hi
 5. **AI Model Quality**
    - Continuous refinement of the dataset
    - Iterative model training and evaluation
+
+6. **Co-authorship Management**
+   - Develop efficient systems for tracking and updating co-authorship status
+   - Implement secure divestment processes for co-authors
 
 ## Conclusion
 

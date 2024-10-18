@@ -28,7 +28,9 @@
 ├── docs
 │   ├── 1-pager.md
 │   ├── Blueprint.md
+│   ├── ChorusDevPlan.md
 │   ├── Context.md
+│   ├── OwnershipModel.md
 │   ├── ProofOfText.md
 │   ├── Q&A.md
 │   ├── VisionStatement.md
@@ -113,5 +115,5 @@
 ├── tailwind.config.js
 └── tsconfig.json
 
-22 directories, 89 files
+22 directories, 91 files
 

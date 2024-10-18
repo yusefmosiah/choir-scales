@@ -18,12 +18,12 @@ Text-based communication forms the backbone of meaningful discourse online. By f
 
 ### 1. Message Contribution and Staking
 
-- **Staking Requirement**: Users stake a predefined amount of **CHOIR** tokens to submit messages to threads where they are not co-authors.
+- **Staking Requirement**: Users stake a predefined amount of **CHOIR** tokens to submit messages or speculative responses ("specs") to threads where they are not co-authors.
 - **Purpose**: Discourages spam and ensures contributors have a vested interest in the thread's quality.
 
 ### 2. Collaborative Message Approval
 
-- **Co-author Review**: Co-authors have a 7-day window to approve or deny the submitted message.
+- **Co-author Review**: Co-authors have a 7-day window to approve or deny the submitted message or spec.
 - **Unanimous Approval**: All co-authors approve, the message is published, and the contributor becomes a co-author.
 - **Denial**: Any co-author rejects, the message is denied, and staked tokens are distributed among rejecting co-authors.
 - **Split Decision**: Mixed approvals result in the message being denied, with tokens intended for approvers returning to the Choir Treasury.
@@ -31,7 +31,7 @@ Text-based communication forms the backbone of meaningful discourse online. By f
 ### 3. Co-authorship Dynamics
 
 - **Rights and Responsibilities**: Co-authors share in the thread's token balance and participate in future approvals.
-- **Divestment Option**: Co-authors can choose to divest their token share from a thread at any time.
+- **Divestment Option**: Co-authors can choose to divest their token share from a thread at any time, receiving a proportional share of the thread's tokens.
 
 ---
 
@@ -54,9 +54,10 @@ Text-based communication forms the backbone of meaningful discourse online. By f
 
 ## Challenges and Considerations
 
-- **Approval Delays**: Implementing reasonable time frames (e.g., 24-hour windows) and notifications can mitigate delays.
+- **Approval Delays**: Implementing reasonable time frames (e.g., 7-day windows) and notifications can mitigate delays.
 - **Staking Amounts**: Balancing accessibility and deterrence of spam requires careful adjustment of staking requirements.
-- **Scalability**: Ensuring the platform can handle increased activity without compromising performance.
+- **Scalability**: Ensuring the platform can handle increased activity without compromising performance, especially with Solana integration for token management.
+- **Co-authorship Management**: Developing efficient systems for tracking and updating co-authorship status, including divestment processes.
 
 ---
 

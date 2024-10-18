@@ -68,19 +68,19 @@
 
 - **Solana Wallet Integration**: Functional
 - **Qdrant Integration**: Implemented for chat message storage and retrieval
-- **UI/UX**: Redesigned to reflect the chat-based interface
+- **UI/UX**: Redesigned to reflect the chat-based interface and ownership model
 - **Chorus AI**:
   - Enhanced with inline citations
-  - Revised steps to include source citations
+  - Revised steps to include source citations and co-authorship considerations
   - Final responses display citations as links
 - **CHOIR Token Mechanics**:
   - Staking and distribution integrated into message approval process
-  - Token flow aligns with the chat-based interaction model
+  - Token flow aligns with the chat-based interaction model and thread ownership
 - **Message Approval Mechanism**: Implemented as "spec" submission and approval process
 - **Citation Notifications**: Special messages appear when a message is cited elsewhere
-- **Email Notifications**: Implementation in progress
+- **Email Notifications**: Implementation in progress for co-author notifications
 - **Thirdweb Embedded Wallet**: Integration planned
-- **Testing**: Comprehensive testing ongoing
+- **Testing**: Comprehensive testing ongoing, including ownership and token mechanics
 
 ## Next Steps
 

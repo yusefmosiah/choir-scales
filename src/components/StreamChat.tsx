@@ -9,7 +9,6 @@ import ChorusPanel from "./ChorusPanel";
 import UserInput from "./UserInput";
 import AIResponse from "./AIResponse";
 import ChatThreadList from "./ChatThreadList";
-import ReactMarkdown from "react-markdown";
 import {
   Source,
   User,
@@ -24,8 +23,7 @@ import {
 } from "../types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { v4 as uuidv4 } from "uuid";
-import { debounce } from "lodash"; // Make sure to install lodash if not already present
-import SourceCard from "./SourceCard";
+import { debounce } from "lodash";
 
 const StreamChat: React.FC = () => {
   const [input, setInput] = useState("");
@@ -43,7 +41,6 @@ const StreamChat: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const pendingPublicKeyRef = useRef<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isCreatingThread, setIsCreatingThread] = useState(false);
 
@@ -222,14 +219,14 @@ const StreamChat: React.FC = () => {
         setTimeout(connectWebSocket, 3000);
       }
     };
-  }, [handleWebSocketMessage]);
+  }, [handleWebSocketMessage, wallet.publicKey]);
 
   useEffect(() => {
     connectWebSocket();
     return () => {
       wsRef.current?.close();
     };
-  }, []); // Removed dependencies to prevent multiple connections
+  }, [connectWebSocket]);
 
   // Send public key when it becomes available
   useEffect(() => {

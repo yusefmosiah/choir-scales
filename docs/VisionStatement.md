@@ -10,27 +10,27 @@ To create the world's highest signal human dataset by leveraging a decentralized
 
 ## Core Values
 
-1. **Collaboration**: We believe in the power of collective intelligence and foster an environment where diverse voices contribute to shared knowledge.
+1. **Collaboration**: We believe in the power of collective intelligence and foster an environment where diverse voices contribute to shared knowledge through our co-authorship model.
 
-2. **Quality**: We prioritize high-quality content and interactions, incentivizing thoughtful contributions over quantity.
+2. **Quality**: We prioritize high-quality content and interactions, incentivizing thoughtful contributions over quantity through our token-based approval system.
 
-3. **Innovation**: We continuously push the boundaries of what's possible in AI and blockchain technology.
+3. **Innovation**: We continuously push the boundaries of what's possible in AI and blockchain technology, integrating cutting-edge solutions like Solana for token management.
 
-4. **Transparency**: We maintain open communication about our processes, challenges, and progress.
+4. **Transparency**: We maintain open communication about our processes, challenges, and progress, reflected in our AI-generated summaries for non-co-authors.
 
-5. **Empowerment**: We aim to empower users by giving them ownership of their contributions and a stake in the platform's success.
+5. **Empowerment**: We aim to empower users by giving them ownership of their contributions and a stake in the platform's success through our unique tokenomics model.
 
 ## Strategic Goals
 
-1. Develop a robust, user-friendly chat platform that encourages high-quality discussions and content creation.
+1. Develop a robust, user-friendly chat platform that encourages high-quality discussions and content creation through collaborative ownership and approval mechanisms.
 
-2. Implement an innovative tokenomics model that aligns user incentives with the goal of producing valuable content.
+2. Implement an innovative tokenomics model that aligns user incentives with the goal of producing valuable content, leveraging Solana blockchain for efficient token management.
 
-3. Create AI models that can understand and generate content with enhanced qualitative, stylistic, and artistic dimensions.
+3. Create AI models that can understand and generate content with enhanced qualitative, stylistic, and artistic dimensions, trained on our curated, token-scored dataset.
 
-4. Foster a vibrant community of contributors, developers, and AI enthusiasts around the Choir platform.
+4. Foster a vibrant community of contributors, developers, and AI enthusiasts around the Choir platform, encouraging active participation through our co-authorship model.
 
-5. Continuously improve our AI capabilities, setting new standards for natural language processing and generation.
+5. Continuously improve our AI capabilities, setting new standards for natural language processing and generation, with a focus on context-aware and stylistically nuanced content.
 
 ## Long-term Vision
 

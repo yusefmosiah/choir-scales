@@ -19,21 +19,18 @@ Traditional AI models demonstrate impressive technical capabilities but lack the
 ### Key Features
 
 - **Collaborative Message Ownership and Approval**
-
   - Users own the messages they submit.
   - Threads are owned collectively by the creators of the messages within them (co-authors).
   - Messages require unanimous approval from co-authors to be published.
-  - Non-co-authors can pay CHOIR tokens to submit a speculative response ("spec"), which can be accepted or denied by co-authors.
+  - Non-co-authors can pay CHOIR tokens to submit a speculative response ("spec"), which can be accepted or denied by co-authors within a 7-day window.
 
 - **Access Control and Incentivization**
-
   - Co-authors have read-write access to their threads.
   - Non-co-authors can view AI-generated summaries of threads.
   - Ownership enables access control and distribution of CHOIR token rewards.
   - The ownership model is essential for distributing rewards to message creators and authors of cited sources.
 
 - **CHOIR Token Mechanics**
-
   - Tokens are used for staking, rewarding contributions, and aligning incentives.
   - A fixed supply ensures scarcity and value preservation.
   - When a new message is approved, staked tokens go to the thread's token balance.
@@ -41,7 +38,6 @@ Traditional AI models demonstrate impressive technical capabilities but lack the
   - Threads have Solana accounts that store CHOIR tokens.
 
 - **AI-Generated Summaries**
-
   - Non-co-authors access AI-generated summaries of threads.
   - Summaries are designed to create interest and stimulate engagement.
   - AI summaries will improve over time and are not intended as strict privacy measures.
