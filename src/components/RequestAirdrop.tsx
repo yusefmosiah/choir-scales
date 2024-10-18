@@ -22,14 +22,14 @@ export const RequestAirdrop: FC = () => {
             signature = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL);
 
             // Get the lates block hash to use on our transaction and confirmation
-            let latestBlockhash = await connection.getLatestBlockhash()
+            const latestBlockhash = await connection.getLatestBlockhash();
             await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
 
             notify({ type: 'success', message: 'Airdrop successful!', txid: signature });
 
             getUserSOLBalance(publicKey, connection);
-        } catch (error: any) {
-            notify({ type: 'error', message: `Airdrop failed!`, description: error?.message, txid: signature });
+        } catch (error: unknown) {
+            notify({ type: 'error', message: 'Airdrop failed!', description: (error as Error).message });
             console.log('error', `Airdrop failed! ${error?.message}`, signature);
         }
     }, [publicKey, connection, getUserSOLBalance]);

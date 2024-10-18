@@ -21,11 +21,10 @@ export const SignMessage: FC = () => {
             // Verify that the bytes were signed using the private key that matches the known public key
             if (!verify(signature, message, publicKey.toBytes())) throw new Error('Invalid signature!');
             notify({ type: 'success', message: 'Sign message successful!', txid: bs58.encode(signature) });
-        } catch (error: any) {
-            notify({ type: 'error', message: `Sign Message failed!`, description: error?.message });
-            console.log('error', `Sign Message failed! ${error?.message}`);
+        } catch (error: unknown) {
+            notify({ type: 'error', message: 'Sign message failed!', description: (error as Error).message });
         }
-    }, [publicKey, notify, signMessage]);
+    }, [publicKey, signMessage]);
 
     return (
         <div className="flex flex-row justify-center">

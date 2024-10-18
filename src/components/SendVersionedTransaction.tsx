@@ -27,7 +27,7 @@ export const SendVersionedTransaction: FC = () => {
             ];
 
             // Get the lates block hash to use on our transaction and confirmation
-            let latestBlockhash = await connection.getLatestBlockhash()
+            const latestBlockhash = await connection.getLatestBlockhash()
 
             // Create a new TransactionMessage with version and compile it to version 0
             const messageV0 = new TransactionMessage({
@@ -47,12 +47,12 @@ export const SendVersionedTransaction: FC = () => {
 
             console.log(signature);
             notify({ type: 'success', message: 'Transaction successful!', txid: signature });
-        } catch (error: any) {
-            notify({ type: 'error', message: `Transaction failed!`, description: error?.message, txid: signature });
+        } catch (error: unknown) {
+            notify({ type: 'error', message: 'Transaction failed!', description: (error as Error).message });
             console.log('error', `Transaction failed! ${error?.message}`, signature);
             return;
         }
-    }, [publicKey, notify, connection, sendTransaction]);
+    }, [publicKey, connection, sendTransaction]);
 
     return (
         <div className="flex flex-row justify-center">
