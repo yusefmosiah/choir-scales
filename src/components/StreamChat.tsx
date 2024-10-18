@@ -361,46 +361,33 @@ const StreamChat: React.FC = () => {
   }, [sources, sortOption]);
 
   const renderChatContent = () => {
-    let lastActionMessage: Message | null = null;
+    let currentSteps: Step[] = [];
 
-    return chatHistory
-      .filter((msg) => {
-        if (msg.role === "assistant" && msg.step === "action") {
-          lastActionMessage = msg;
-          return false; // Don't render action messages directly
+    return chatHistory.map((msg) => {
+      if (msg.role === "user") {
+        // Reset steps for new user message
+        currentSteps = [];
+        return <UserInput key={msg.id} content={msg.content} />;
+      } else {
+        // For assistant messages
+        if (msg.step && msg.step !== "final") {
+          currentSteps.push({ step: msg.step, content: msg.content });
         }
-        return (
-          msg.role === "user" ||
-          (msg.role === "assistant" && msg.step === "final")
-        );
-      })
-      .map((msg) => {
-        if (msg.role === "user") {
-          return <UserInput key={msg.id} content={msg.content} />;
-        } else {
-          // For assistant messages
+        if (msg.step === "final" || !msg.step) {
+          const stepsToRender = [...currentSteps, { step: msg.step || "final", content: msg.content }];
+          currentSteps = []; // Reset steps for next message
           return (
             <AIResponse
               key={msg.id}
               message={msg}
               sources={sources}
+              steps={stepsToRender}
             />
           );
         }
-      })
-      .concat(
-        // Add the last action message if there's no final response yet
-        lastActionMessage &&
-          !chatHistory.some(
-            (msg) => msg.role === "assistant" && msg.step === "final"
-          ) ? (
-          <AIResponse
-            key={lastActionMessage.id}
-            message={lastActionMessage}
-            sources={sources}
-          />
-        ) : null
-      );
+        return null; // Don't render intermediate steps
+      }
+    }).filter(Boolean); // Remove null values
   };
 
   useEffect(() => {
