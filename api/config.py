@@ -21,6 +21,7 @@ class Config(BaseSettings):
     SEARCH_LIMIT: int = 80
     CHUNK_SIZE: int = 10000
     CHUNK_OVERLAP: int = 5000
+    API_URL: str = os.getenv('API_URL', 'http://localhost:8000')
 
     class Config:
         env_file = ".env"

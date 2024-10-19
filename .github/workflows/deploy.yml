@@ -1,0 +1,40 @@
+name: Build and Deploy Container
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
+      with:
+        login-server: choir.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    - run: |
+        docker build . -t choir.azurecr.io/choir-scales:${{ github.sha }}
+        docker push choir.azurecr.io/choir-scales:${{ github.sha }}
+
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: Choir
+        dns-name-label: choir-scales
+        image: choir.azurecr.io/choir-scales:${{ github.sha }}
+        registry-login-server: choir.azurecr.io
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: choir-scales
+        location: 'eastus'
+        ports: 80 3000 8000

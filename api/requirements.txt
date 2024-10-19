@@ -7,3 +7,4 @@ openai
 qdrant-client
 pydantic
 pydantic-settings
+tiktoken==0.5.1

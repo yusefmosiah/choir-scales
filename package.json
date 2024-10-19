@@ -13,7 +13,10 @@
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "start:docker": "concurrently \"npm run next-start\" \"npm run fastapi-prod\"",
+        "next-start": "node .next/standalone/server.js",
+        "fastapi-prod": "cd api && python3 -m uvicorn main:app --host 0.0.0.0 --port 8000"
     },
     "dependencies": {
         "@heroicons/react": "^1.0.5",
