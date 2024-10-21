@@ -16,7 +16,7 @@ jobs:
         node-version: '18'
 
     - name: 'Build and push image'
-      uses: azure/docker-login@v1
+      uses: azure/docker-login@v2
       with:
         login-server: choir.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
