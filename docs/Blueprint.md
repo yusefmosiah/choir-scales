@@ -1,80 +1,114 @@
-# Choir Project Blueprint (30-Day MVP Focus)
+# Choir Project Blueprint
 
 ## Overview
 
-This blueprint outlines the key components and architecture for the Choir MVP, to be developed and launched within a 30-day timeframe.
+Choir is a decentralized, chat-based platform that aims to create the world's highest signal human dataset through collaborative discussions and innovative tokenomics. This blueprint outlines the key components, architecture, and development roadmap for the Choir project.
 
-## Core Components (MVP)
+## Core Components
 
 1. **Chat-Based Interface**
    - Real-time messaging system
    - Thread-based conversations
-   - Simplified message ownership and co-authorship model
+   - Message ownership and co-authorship model
 
-2. **Tokenomics (Mock CHOIR Token)**
-   - Simplified token system for MVP
-   - Basic staking and reward mechanisms
+2. **Tokenomics (CHOIR Token)**
+   - Solana-based token
+   - Used for staking, rewards, and governance
+   - Total supply: 10 billion CHOIR tokens
 
 3. **Collaborative Approval Mechanism**
-   - Simplified speculative response ("spec") submission
-   - Basic co-author approval process
+   - Speculative response ("spec") submission
+   - Co-author approval process
+   - Token distribution based on approvals/denials
 
 4. **AI-Generated Summaries**
-   - Basic summaries for non-co-authors
+   - Compressed thread summaries for non-co-authors
+   - Designed to stimulate engagement and interest
 
 5. **Solana Integration**
-   - Basic wallet connectivity
-   - Simplified token transactions (potentially mocked)
+   - Wallet connectivity
+   - Smart contracts for token transactions and thread ownership
+   - Thread token storage in Solana accounts
 
 6. **Vector Database (Qdrant)**
-   - Basic integration for chat message storage
+   - Storage and retrieval of chat messages
+   - Efficient similarity search for AI training
 
-7. **Chorus Loop**
-   - Implementation of all steps (AEIOU(Y))
-   - Focus on essential functionality
+7. **AI Model Development**
+   - Training on curated, token-scored dataset
+   - Focus on qualitative, stylistic, and artistic improvements
 
-## MVP Architecture
+## Architecture
 
 ### Frontend
 - Next.js-based web application
 - React components for UI elements
-- Basic Solana wallet integration
+- Web3 integration for Solana wallet connectivity
 
 ### Backend
 - FastAPI (Python) for API endpoints
 - WebSocket support for real-time chat
-- Basic integration with Qdrant
+- Integration with Qdrant for vector storage
 
 ### Blockchain Layer
-- Simplified Solana integration
-- Mock token system for MVP
+- Solana blockchain for token transactions and storage
+- Custom smart contracts for thread token management
 
 ### AI Layer
-- Basic AI model integration for summaries
+- Azure OpenAI for embeddings and completions
+- Custom AI model development (target: April 2025)
 
-## Development Roadmap (30 Days)
+## Development Roadmap
 
-### Week 1: Core Setup and Basic Functionality
-- Project setup with create-solana-dapp
-- Basic chat implementation
-- Simplified Chorus Loop
+### Phase 1: MVP Development (Current)
+- Implement core chat functionality with ownership model
+- Integrate Solana wallet and basic token mechanics
+- Develop and test collaborative approval system for messages and specs
+- Implement AI-generated summaries for non-co-authors
 
-### Week 2: Ownership Model and Enhanced Chorus Loop
-- Core ownership features
-- Full Chorus Loop implementation
+### Phase 2: Enhanced Features (Q4 2023 - Q2 2024)
+- Refine tokenomics and implement advanced token distribution
+- Develop and deploy Solana smart contracts for thread ownership and token management
+- Implement email notification system for co-authors
+- Integrate Thirdweb Embedded Wallet
+- Develop speculative response ("spec") submission and approval process
 
-### Week 3: Tokenomics and Solana Integration
-- Mock token system
-- Basic Solana integration
+### Phase 3: AI Model Development (Q3 2024 - Q2 2025)
+- Collect and curate token-scored dataset
+- Develop and train custom AI model
+- Implement AI model integration with the platform
 
-### Week 4: Refinement and Launch Preparation
-- Testing and UI/UX refinement
-- Final preparations and deployment
+### Phase 4: Platform Expansion (Q3 2025 onwards)
+- Implement governance features
+- Explore additional use cases for the CHOIR token
+- Continuous improvement of AI capabilities
 
-## Post-MVP Plans
-- Full Solana integration
-- Enhanced AI capabilities
-- Governance mechanism development
-- Continuous improvement based on user feedback
+## Key Challenges and Solutions
 
-This blueprint provides a high-level overview of the Choir MVP project structure and development plan. It will be updated as the project evolves during the 30-day development sprint.
+1. **User Onboarding**
+   - Develop intuitive UI/UX
+   - Create comprehensive documentation and tutorials
+
+2. **Co-author Coordination**
+   - Implement efficient notification systems
+   - Develop tools for co-author communication
+
+3. **Scalability**
+   - Optimize database queries and caching
+   - Implement load balancing and horizontal scaling
+
+4. **Security**
+   - Regular security audits
+   - Implement best practices for smart contract development
+
+5. **AI Model Quality**
+   - Continuous refinement of the dataset
+   - Iterative model training and evaluation
+
+6. **Co-authorship Management**
+   - Develop efficient systems for tracking and updating co-authorship status
+   - Implement secure divestment processes for co-authors
+
+## Conclusion
+
+This blueprint provides a high-level overview of the Choir project's structure and development plan. As the project evolves, this document will be updated to reflect new insights, challenges, and solutions.
