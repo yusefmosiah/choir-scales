@@ -7,41 +7,58 @@ This document outlines the development plan for enhancing the Chorus loop, focus
 ## Chorus Loop Steps
 
 ### 1. Action Step
-
-- Remains unchanged
 - User input initiates the process
+- Provide an initial response with "beginner's mind"/emptiness
 
 ### 2. Experience Step
-
 - Retrieve the full list of sources from the database
 - Pass the complete source list to the LLM along with the user's input
 - LLM processes this information for subsequent steps
 - Include user's co-authorship status for relevant threads
 
 ### 3. Intention Step
-
 - Receive full source list and user input from the Experience step
 - For each source, determine relevance and flag as "relevant" or "not relevant"
 - Return a list of sources with their relevance flags
 - Consider co-authorship status when determining relevance
 
 ### 4. Observation Step
-
 - Select the most valuable sources from the set of relevant sources identified in the Intention step
 - Determine which sources will be used in the final response
 - Ensure selected sources align with the user's access rights based on co-authorship
 
 ### 5. Update Step
-
-- Implement as previously defined
+- Decide whether to proceed with the current plan or loop back for further refinement
 - Include token staking mechanism for non-co-authors submitting speculative responses ("specs")
 
-### 6. Yield Step (previously Final Response)
-
+### 6. Yield Step
 - Compose the final response, weaving in valuable sources identified in the Observation step
 - Create source references as links to original chat threads
 - For non-co-authors of a source thread, display source content between two short AI-generated summaries of the content before and after it
 - Include information about token distribution for approved messages and specs
+
+## Implementation Timeline
+
+### Week 1 (Oct 20-26): Basic Chorus Loop
+- Implement Action and Experience steps
+- Set up basic source retrieval
+
+### Week 2 (Oct 27-Nov 2): Enhanced Chorus Loop
+- Implement Intention, Observation, and Update steps
+- Integrate with ownership model
+
+### Week 3 (Nov 3-9): Yield Step and Tokenomics
+- Implement Yield step with source weaving
+- Integrate mock token system
+
+### Week 4 (Nov 10-16): Refinement and Testing
+- Comprehensive testing of entire Chorus loop
+- Refinement based on test results
+
+## Future Enhancements
+- Implement caching for frequently accessed sources
+- Develop more sophisticated AI summarization techniques
+- Integrate full Solana token system
 
 ## Implementation Details
 

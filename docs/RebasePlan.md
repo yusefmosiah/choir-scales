@@ -1,87 +1,66 @@
-# Rebase Plan for Choir Scales
+# Choir Rebase Plan
 
 ## Objective
-Rebase the current Choir Scales project from the outdated solana-dapp-scaffold to the more stable and up-to-date create-solana-dapp foundation.
+Rebase the current Choir project to a new foundation using create-solana-dapp, implementing core features for the MVP launch on November 17th.
 
-## Steps
+## Development Roadmap
+
+### Week 1 (Oct 20-26): New Project Setup and Core Functionality
+- Set up new project with create-solana-dapp
+- Implement basic chat functionality and WebSocket connections
+- Implement basic Chorus loop in Python backend
+- Deploy to Azure and set up DNS
+
+### Week 2 (Oct 27-Nov 2): Ownership Model and Enhanced Chorus Loop
+- Implement core ownership model features
+- Enhance Chorus loop with all steps
+- Integrate frontend with enhanced backend features
+
+### Week 3 (Nov 3-9): Tokenomics and Solana Integration
+- Implement mock CHOIR token system
+- Begin Solana integration
+- Refine UI/UX for token-related features
+
+### Week 4 (Nov 10-16): Testing, Refinement, and Pre-launch
+- Comprehensive testing
+- UI/UX refinement
+- Documentation and final touches
+- Final deployment and pre-launch checks
+
+### Launch Day (Nov 17): MVP Release
+
+## Key Steps
 
 1. Create New Project
-   - Run `npx create-solana-dapp@latest choir-scales-new`
+   - Run `npx create-solana-dapp@latest choir-new`
    - Choose Next.js as the frontend framework
    - Select Tailwind CSS for styling
-   - Opt for Anchor if using it for Solana programs
 
-2. Review New Project Structure
-   - Compare the new structure with the current one (refer to `tree.md`)
-   - Identify differences and plan for necessary adjustments
-
-3. Port Next.js Code
-   - Copy custom components from `src/components` to the new project
+2. Port Essential Components
+   - Transfer and adapt key components like StreamChat.tsx
    - Update imports and paths as needed
-   - Special attention to `StreamChat.tsx` and other complex components
-   - Ensure all TypeScript types are correctly transferred or updated
 
-4. Port Python Backend
-   - Create an `api` directory in the new project root
-   - Copy all Python files from the current `api` directory
-   - Transfer `requirements.txt` to the new `api` directory
+3. Implement Backend
+   - Set up FastAPI backend with WebSocket support
+   - Integrate Qdrant for vector storage
+   - Implement basic Chorus loop functionality
 
-5. Update Configuration Files
-   - Merge `next.config.js` contents, keeping new project's base configuration
-   - Update `package.json`:
-     - Add scripts for running Python backend
-     - Include `concurrently` for running frontend and backend simultaneously
-   - Transfer and update `tsconfig.json` as needed
+4. Solana Integration
+   - Set up Solana wallet connection in frontend
+   - Implement mock token system initially
 
-6. Update Dockerfile
-   - Copy the existing Dockerfile to the new project
-   - Update paths and commands based on the new structure
-   - Ensure it includes steps for both frontend and backend builds
+5. Testing and Refinement
+   - Develop comprehensive test suites
+   - Conduct thorough testing of all features
+   - Refine UI/UX based on testing feedback
 
-7. Update GitHub Actions
-   - Copy `.github/workflows/deploy.yml` and `.github/workflows/frontend.yml`
-   - Update steps in `deploy.yml` for the new project structure:
-     - Adjust build and push commands
-     - Update Azure deployment steps if necessary
-   - Modify `frontend.yml`:
-     - Update Node.js version to 20
-     - Adjust cache paths and build commands
-
-8. Transfer Additional Files
-   - Copy `docs` directory to maintain project documentation
-   - Transfer `public` directory contents
-   - Move any custom hooks from `src/hooks`
-   - Copy and update context providers from `src/contexts`
-
-9. Update Dependencies
-   - Review `package.json` and update dependencies as needed
-   - Ensure compatibility with the new create-solana-dapp structure
-
-10. Testing
-    - Thoroughly test all ported components and functionality
-    - Pay special attention to Solana wallet integration and WebSocket connections
-    - Verify that the Python backend works correctly with the new frontend
-
-11. Documentation Update
-    - Update `README.md` with new setup instructions
-    - Revise any project-specific documentation in the `docs` folder
-    - Update `tree.md` to reflect the new project structure
-
-12. Clean Up
-    - Remove any unused files or dependencies from the new project
-    - Ensure all imports are correctly updated across the project
-
-13. Version Control
-    - Initialize a new git repository in the new project
-    - Commit the initial state of the new project
-    - Carefully merge in changes from the old repository, resolving conflicts
-
-14. Final Testing and Deployment
-    - Conduct a final round of testing on all features
-    - Update deployment scripts or configurations if necessary
-    - Deploy the new version and verify functionality in the production environment
+6. Documentation and Deployment
+   - Update all project documentation
+   - Prepare for MVP launch
+   - Deploy to production environment
 
 ## Notes
-- Throughout the process, maintain frequent commits to easily track changes and revert if necessary.
-- Consider setting up a staging environment to test the rebased application before full deployment.
-- Keep the old project accessible for reference until the rebase is complete and verified.
+- Prioritize core features essential for MVP
+- Use rapid prototyping techniques
+- Implement a simplified version of the ownership model initially
+- Focus on a manageable set of features for the initial release
