@@ -26,14 +26,54 @@
 │   └── utils.py
 ├── docs
 │   ├── 1-pager.md
+│   ├── AIFormalMethods.md
+│   ├── APIPatterns.md
+│   ├── AccessibilityPrinciples.md
 │   ├── Blueprint.md
+│   ├── BusinessModel.md
+│   ├── ChoirComprehensive.md
 │   ├── ChorusDevPlan.md
+│   ├── ConceptualBridges.md
+│   ├── ConsistencyModel.md
 │   ├── Context.md
+│   ├── CoreInvariants.md
+│   ├── CoreTypes.md
+│   ├── DensityAnalysis.md
+│   ├── Diagrams.md
+│   ├── DocEvolution.md
+│   ├── DocumentNetwork.md
+│   ├── EconomicModel.md
+│   ├── EmergenceDocumentation.md
+│   ├── EmergenceRing.md
+│   ├── EmergentAlgebra.md
+│   ├── Glossary.md
+│   ├── Guide.md
+│   ├── ImplementationStrategy.md
+│   ├── Index.md
+│   ├── IntegrationPatterns.md
+│   ├── InversePrivateEquity.md
+│   ├── MessageLifecycle.md
+│   ├── MetaDocumentation.md
+│   ├── MetastableStates.md
 │   ├── OwnershipModel.md
+│   ├── PrivacyModel.md
 │   ├── ProofOfText.md
+│   ├── PseudocodeConventions.md
 │   ├── Q&A.md
+│   ├── QuantumSemantics.md
 │   ├── RebasePlan.md
+│   ├── RecursiveEmergence.md
+│   ├── SecurityModel.md
+│   ├── StateAlgebra.md
+│   ├── StateAlgebraExplained.md
+│   ├── StateMachine.md
+│   ├── StateManagement.md
+│   ├── StateSpaceTopology.md
+│   ├── StateTransitions.md
+│   ├── ThreadAssetEvolution.md
+│   ├── VersioningAndBestPractices.md
 │   ├── VisionStatement.md
+│   ├── WebSocketProtocol.md
 │   ├── Whitepaper.md
 │   └── tree.md
 ├── jest.config.js
@@ -44,6 +84,7 @@
 │   └── create_collections.ipynb
 ├── package-lock.json
 ├── package.json
+├── pnpm-lock.yaml
 ├── postcss.config.js
 ├── public
 │   ├── favicon.ico
@@ -95,6 +136,12 @@
 │   │   ├── basics.tsx
 │   │   ├── index.tsx
 │   │   └── stream.tsx
+│   ├── program
+│   │   ├── constants.rs
+│   │   ├── error.rs
+│   │   ├── lib.rs
+│   │   ├── thread.rs
+│   │   └── validation.rs
 │   ├── stores
 │   │   ├── useNotificationStore.tsx
 │   │   └── useUserSOLBalanceStore.tsx
@@ -113,6 +160,17 @@
 │       │   └── index.tsx
 │       └── index.tsx
 ├── tailwind.config.js
+├── tests
+│   ├── bankrun
+│   │   ├── thread_test.rs
+│   │   └── token_test.rs
+│   ├── common
+│   │   ├── fixtures.rs
+│   │   └── mod.rs
+│   └── thread_operations.rs
+├── trident-tests
+│   └── fuzz_tests
+│       └── thread_fuzzer.rs
 └── tsconfig.json
 
-22 directories, 91 files
+28 directories, 143 files
