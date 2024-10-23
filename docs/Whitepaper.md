@@ -177,11 +177,9 @@ The digital communication landscape often faces challenges related to content qu
   - The resulting dataset is rich in valuable human interactions.
 
 ### AI Model Training
-
 - **Reinforcement Learning**:
-  - Use the token-scored dataset to train AI models that understand and generate high-quality, contextually relevant content.
-- **Target Release**:
-  - First iteration of the AI model by April 2025.
+  - Use the token-scored dataset to train AI models
+  - Target Release: April 2025
 
 ## Conclusion
 

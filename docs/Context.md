@@ -59,7 +59,6 @@
   - Co-authors can divest their token share at any time, taking a (1 / n - 1) share of the thread's tokens.
 
 ### AI Model Development
-
 - Target date for the first AI model release: April 2025
 - Plan to use Reinforcement Learning with the token-scored dataset
 - Focus on enhancing qualitative aspects such as stylistic nuance and artistic expression

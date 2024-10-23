@@ -84,10 +84,9 @@ Traditional AI models demonstrate impressive technical capabilities but lack the
 ---
 
 ## Roadmap Highlights
-
-- **October 2024**: Launch of the MVP with core functionalities, including ownership and access control features.
-- **April 2025**: Release of the first AI model trained on the token-scored dataset.
-- **Beyond**: Expansion of platform features, governance integration, and continuous AI development.
+- **October 2023**: Launch of the MVP with core functionalities
+- **April 2025**: Release of the first AI model trained on the token-scored dataset
+- **Beyond**: Expansion of platform features, governance integration, and continuous AI development
 
 ---
 

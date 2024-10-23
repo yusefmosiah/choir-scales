@@ -12,18 +12,21 @@ spl-associated-token-account = "2.2"
 ## Guiding Principles
 
 1. **Correctness First**
+
    - All state transitions must be valid and verified
    - Full account validation using Anchor constraints
    - Comprehensive error handling
    - Explicit security checks
 
 2. **Code Clarity**
+
    - Self-documenting code structure
    - Clear naming conventions
    - Explicit rather than implicit behavior
    - Comprehensive documentation
 
 3. **Maintainability**
+
    - Modular design
    - Single responsibility principle
    - Clear upgrade paths
@@ -37,12 +40,14 @@ spl-associated-token-account = "2.2"
 ## Security Requirements
 
 1. Account Validation
+
    - Owner checks on all accounts
    - Signer verification for all state changes
    - PDA seed validation
    - Rent/balance verification
 
 2. Access Control
+
    - Thread ownership verification
    - Co-author status validation
    - Operation-specific authorization
@@ -57,12 +62,14 @@ spl-associated-token-account = "2.2"
 ## Development Standards
 
 1. Code Organization
+
    - Modular file structure
    - Clear separation of concerns
    - Consistent naming conventions
    - Comprehensive documentation
 
 2. Testing Requirements
+
    - Unit tests for all functions
    - Integration tests for workflows
    - Security-focused test cases
@@ -77,6 +84,7 @@ spl-associated-token-account = "2.2"
 ## Account Structure Guidelines
 
 1. Space Management
+
    - Fixed account sizes
    - Explicit space calculations
    - Buffer for future expansion
@@ -91,6 +99,7 @@ spl-associated-token-account = "2.2"
 ## Transaction Flow
 
 1. Instruction Design
+
    - Atomic operations
    - Clear preconditions
    - Explicit validation
@@ -105,6 +114,7 @@ spl-associated-token-account = "2.2"
 ## Deployment and Upgrades
 
 1. Deployment Process
+
    - Security review
    - Test environment validation
    - Staged rollout
@@ -119,10 +129,11 @@ spl-associated-token-account = "2.2"
 ## Version Control
 
 1. Branch Strategy
+
    - main: production code
    - develop: integration branch
-   - feature/*: feature development
-   - release/*: release preparation
+   - feature/\*: feature development
+   - release/\*: release preparation
 
 2. Release Process
    - Version tagging
@@ -133,6 +144,7 @@ spl-associated-token-account = "2.2"
 ## Monitoring and Maintenance
 
 1. Runtime Monitoring
+
    - Transaction success rate
    - Error frequency
    - Performance metrics
@@ -147,6 +159,7 @@ spl-associated-token-account = "2.2"
 ## Documentation Requirements
 
 1. Code Documentation
+
    - Function documentation
    - State transitions
    - Security considerations
@@ -160,7 +173,8 @@ spl-associated-token-account = "2.2"
 
 ## Version History
 
-Version 0.1.0 (March 2024)
+Version 0.1.0 (October 2024)
+
 - Initial implementation
 - Core thread functionality
 - Basic message handling
@@ -169,11 +183,13 @@ Version 0.1.0 (March 2024)
 ## Future Considerations
 
 1. Scaling
+
    - Message compression
    - Transaction optimization
    - State management improvements
 
 2. Features
+
    - Advanced token mechanics
    - Enhanced privacy features
    - Cross-program integration
@@ -188,25 +204,25 @@ Version 0.1.0 (March 2024)
 ### Test Environment Setup
 
 1. **Local Testing Stack**
+
    - Bankrun for fast, lightweight tests
    - Anchor testing framework for integration tests
-   - Jest for test orchestration   ```toml
-   [dev-dependencies]
-   anchor-bankrun = "0.5.0"
-   solana-program-test = "1.17"   ```
+   - Jest for test orchestration `toml
+[dev-dependencies]
+anchor-bankrun = "0.5.0"
+solana-program-test = "1.17"   `
 
-2. **Test Organization**   ```
-   tests/
-   ├── bankrun/           # Fast unit tests using Bankrun
-   │   ├── thread.rs      # Thread operations
-   │   ├── message.rs     # Message handling
-   │   └── token.rs       # Token operations
-   ├── integration/       # Full program integration tests
-   │   ├── workflow.rs    # End-to-end workflows
-   │   └── security.rs    # Security scenarios
-   └── common/           # Shared test utilities
-       ├── mod.rs        # Common setup and helpers
-       └── fixtures.rs   # Test data and states   ```
+2. **Test Organization** `tests/
+├── bankrun/           # Fast unit tests using Bankrun
+│   ├── thread.rs      # Thread operations
+│   ├── message.rs     # Message handling
+│   └── token.rs       # Token operations
+├── integration/       # Full program integration tests
+│   ├── workflow.rs    # End-to-end workflows
+│   └── security.rs    # Security scenarios
+└── common/           # Shared test utilities
+    ├── mod.rs        # Common setup and helpers
+    └── fixtures.rs   # Test data and states  `
 
 3. **Test Configuration**
    - Disable parallel tests with `--runInBand`
@@ -216,23 +232,26 @@ Version 0.1.0 (March 2024)
 ### Testing Patterns
 
 1. **Unit Testing with Bankrun**
+
    - Fast, lightweight tests for individual instructions
    - Direct state manipulation for edge cases
-   - Time travel for temporal logic testing   ```rust
-   #[tokio::test]
-   async fn test_thread_operations() {
-       let context = await start_anchor(".", [], []);
-       let provider = new BankrunProvider(context);
-       // Test logic...
-   }   ```
+   - Time travel for temporal logic testing `rust
+#[tokio::test]
+async fn test_thread_operations() {
+    let context = await start_anchor(".", [], []);
+    let provider = new BankrunProvider(context);
+    // Test logic...
+}   `
 
 2. **State Management Tests**
+
    - Account creation and initialization
    - State transitions and validation
    - Error conditions and recovery
    - Edge cases and boundaries
 
 3. **Security Testing**
+
    - Permission checks
    - Invalid signatures
    - Account validation
@@ -248,15 +267,16 @@ Version 0.1.0 (March 2024)
 ### Test Data Management
 
 1. **Fixture Generation**
+
    - Deterministic test accounts
    - Reproducible states
-   - Clear test scenarios   ```rust
-   pub async fn create_test_thread(
-       context: &mut ProgramTestContext,
-       author: &Keypair,
-   ) -> Thread {
-       // Create consistent test state
-   }   ```
+   - Clear test scenarios `rust
+pub async fn create_test_thread(
+    context: &mut ProgramTestContext,
+    author: &Keypair,
+) -> Thread {
+    // Create consistent test state
+}   `
 
 2. **State Verification**
    - Account state validation
@@ -267,13 +287,14 @@ Version 0.1.0 (March 2024)
 ### Performance Testing
 
 1. **Transaction Cost Analysis**
+
    - Compute unit consumption
    - Account space utilization
-   - Transaction size optimization   ```rust
-   #[test]
-   fn analyze_compute_units() {
-       // Measure compute units used
-   }   ```
+   - Transaction size optimization `rust
+#[test]
+fn analyze_compute_units() {
+    // Measure compute units used
+}   `
 
 2. **Scalability Testing**
    - Maximum message capacity
@@ -282,21 +303,21 @@ Version 0.1.0 (March 2024)
 
 ### Test Documentation
 
-1. **Test Case Documentation**   ```rust
-   /// Test thread initialization
-   ///
-   /// # Setup
-   /// - Create new keypair for thread owner
-   /// - Initialize thread with test parameters
-   ///
-   /// # Verification
-   /// - Check thread state
-   /// - Verify owner permissions
-   /// - Validate account data
-   #[tokio::test]
-   async fn test_initialize_thread() {
-       // Test implementation
-   }   ```
+1. **Test Case Documentation** `rust
+/// Test thread initialization
+///
+/// # Setup
+/// - Create new keypair for thread owner
+/// - Initialize thread with test parameters
+///
+/// # Verification
+/// - Check thread state
+/// - Verify owner permissions
+/// - Validate account data
+#[tokio::test]
+async fn test_initialize_thread() {
+    // Test implementation
+}   `
 
 2. **Test Coverage Requirements**
    - 100% instruction coverage
@@ -306,13 +327,13 @@ Version 0.1.0 (March 2024)
 
 ### Continuous Integration
 
-1. **CI Pipeline**   ```yaml
-   test:
-     steps:
-       - cargo test-bpf
-       - RUST_LOG= jest --runInBand
-       - cargo clippy
-       - cargo fmt --check   ```
+1. **CI Pipeline** `yaml
+test:
+  steps:
+    - cargo test-bpf
+    - RUST_LOG= jest --runInBand
+    - cargo clippy
+    - cargo fmt --check   `
 
 2. **Test Environment Management**
    - Clean state between tests
@@ -322,6 +343,7 @@ Version 0.1.0 (March 2024)
 ### Testing Tools
 
 1. **Bankrun Features**
+
    - Time manipulation
    - State inspection
    - Transaction simulation
@@ -336,6 +358,7 @@ Version 0.1.0 (March 2024)
 ### Test Maintenance
 
 1. **Test Hygiene**
+
    - Regular test cleanup
    - Deprecated test removal
    - Test documentation updates
@@ -351,66 +374,68 @@ Version 0.1.0 (March 2024)
 
 ### Trident Integration
 
-1. **Setup and Configuration**   ```toml
+1. **Setup and Configuration** ```toml
    [dependencies]
    trident-fuzz = "0.8.0"
 
    [fuzz]
    fuzzing_with_stats = true
-   allow_duplicate_txs = false   ```
+   allow_duplicate_txs = false ```
 
-2. **Directory Structure**   ```
-   trident-tests/
-   ├── fuzz_tests/           # Fuzz test implementations
-   │   ├── fuzz_0/          # Thread operations fuzzing
-   │   ├── fuzz_1/          # Message approval fuzzing
-   │   └── fuzz_2/          # Token operations fuzzing
-   └── Cargo.toml           # Fuzzing dependencies   ```
+2. **Directory Structure** `trident-tests/
+├── fuzz_tests/           # Fuzz test implementations
+│   ├── fuzz_0/          # Thread operations fuzzing
+│   ├── fuzz_1/          # Message approval fuzzing
+│   └── fuzz_2/          # Token operations fuzzing
+└── Cargo.toml           # Fuzzing dependencies  `
 
 ### Fuzz Test Implementation
 
-1. **Account Snapshots**   ```rust
-   #[derive(Accounts, AccountsSnapshots)]
-   pub struct ThreadContext<'info> {
-       #[account(mut)]
-       pub thread: Account<'info, Thread>,
-       #[account(mut)]
-       pub author: Signer<'info>,
-       pub system_program: Program<'info, System>,
-   }   ```
+1.  **Account Snapshots** `rust
+#[derive(Accounts, AccountsSnapshots)]
+pub struct ThreadContext<'info> {
+    #[account(mut)]
+    pub thread: Account<'info, Thread>,
+    #[account(mut)]
+    pub author: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}   `
 
-2. **Account Storage Configuration**   ```rust
-   #[derive(Default)]
-   pub struct FuzzAccounts {
-       author: AccountsStorage<Keypair>,
-       thread: AccountsStorage<PdaStore>,
-       token_account: AccountsStorage<TokenStore>,
-   }   ```
+2.  **Account Storage Configuration** `rust
+#[derive(Default)]
+pub struct FuzzAccounts {
+    author: AccountsStorage<Keypair>,
+    thread: AccountsStorage<PdaStore>,
+    token_account: AccountsStorage<TokenStore>,
+}   `
 
-3. **Instruction Fuzzing**   ```rust
-   impl FuzzInstruction {
-       fn get_accounts(&self) -> Result<Vec<AccountMeta>> {
-           // Account validation and meta generation
-       }
+3.  **Instruction Fuzzing** ```rust
+    impl FuzzInstruction {
+    fn get_accounts(&self) -> Result<Vec<AccountMeta>> {
+    // Account validation and meta generation
+    }
 
-       fn get_data(&self) -> Result<Vec<u8>> {
-           // Instruction data generation
-       }
+        fn get_data(&self) -> Result<Vec<u8>> {
+            // Instruction data generation
+        }
 
-       fn check(&self, pre_state: &ThreadState, post_state: &ThreadState) -> Result<()> {
-           // State transition validation
-       }
-   }   ```
+        fn check(&self, pre_state: &ThreadState, post_state: &ThreadState) -> Result<()> {
+            // State transition validation
+        }
+
+    } ```
 
 ### Fuzzing Strategies
 
 1. **State Coverage**
+
    - Thread initialization variations
    - Message submission sequences
    - Approval combinations
    - Token operation permutations
 
 2. **Security Scenarios**
+
    - Authority validation
    - Account ownership checks
    - PDA derivation
@@ -424,17 +449,18 @@ Version 0.1.0 (March 2024)
 
 ### Invariant Checks
 
-1. **Thread Invariants**   ```rust
-   fn check_thread_invariants(
-       pre_ix: &ThreadSnapshot,
-       post_ix: &ThreadSnapshot
-   ) -> Result<()> {
-       // Verify co-author list integrity
-       // Check message count consistency
-       // Validate token balances
-   }   ```
+1. **Thread Invariants** `rust
+fn check_thread_invariants(
+    pre_ix: &ThreadSnapshot,
+    post_ix: &ThreadSnapshot
+) -> Result<()> {
+    // Verify co-author list integrity
+    // Check message count consistency
+    // Validate token balances
+}   `
 
 2. **Message Invariants**
+
    - Content hash uniqueness
    - Approval state consistency
    - Publication status validity
@@ -448,13 +474,13 @@ Version 0.1.0 (March 2024)
 
 ### Fuzzing Configuration
 
-1. **Runtime Parameters**   ```toml
-   [honggfuzz]
-   timeout = 10
-   iterations = 1000000
-   threads = 16
-   exit_upon_crash = true
-   mutations_per_run = 6   ```
+1. **Runtime Parameters** `toml
+[honggfuzz]
+timeout = 10
+iterations = 1000000
+threads = 16
+exit_upon_crash = true
+mutations_per_run = 6   `
 
 2. **Coverage Goals**
    - Instruction permutations
@@ -464,18 +490,18 @@ Version 0.1.0 (March 2024)
 
 ### Error Handling
 
-1. **Custom Error Handlers**   ```rust
-   fn tx_error_handler(
-       &self,
-       error: FuzzClientError,
-       ix_data: &InstructionData,
-   ) -> Result<()> {
-       match error {
-           // Handle expected errors
-           // Log unexpected conditions
-           // Continue or abort based on severity
-       }
-   }   ```
+1. **Custom Error Handlers** `rust
+fn tx_error_handler(
+    &self,
+    error: FuzzClientError,
+    ix_data: &InstructionData,
+) -> Result<()> {
+    match error {
+        // Handle expected errors
+        // Log unexpected conditions
+        // Continue or abort based on severity
+    }
+}   `
 
 2. **Error Analysis**
    - Pattern recognition
@@ -486,6 +512,7 @@ Version 0.1.0 (March 2024)
 ### Monitoring and Analysis
 
 1. **Fuzzing Statistics**
+
    - Instruction coverage
    - Error frequency
    - State transition paths
@@ -499,12 +526,12 @@ Version 0.1.0 (March 2024)
 
 ### Continuous Fuzzing
 
-1. **CI Integration**   ```yaml
-   fuzz:
-     steps:
-       - trident fuzz run-hfuzz fuzz_0
-       - trident fuzz run-hfuzz fuzz_1
-       - trident fuzz analyze-coverage   ```
+1. **CI Integration** `yaml
+fuzz:
+  steps:
+    - trident fuzz run-hfuzz fuzz_0
+    - trident fuzz run-hfuzz fuzz_1
+    - trident fuzz analyze-coverage   `
 
 2. **Maintenance**
    - Regular seed updates
@@ -515,6 +542,7 @@ Version 0.1.0 (March 2024)
 ### Security Considerations
 
 1. **Attack Surface**
+
    - Authority bypass attempts
    - State manipulation
    - Token security
@@ -529,6 +557,7 @@ Version 0.1.0 (March 2024)
 ### Best Practices
 
 1. **Test Design**
+
    - Focus on critical paths
    - Isolate components
    - Clear documentation

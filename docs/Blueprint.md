@@ -61,19 +61,20 @@ Choir is a decentralized, chat-based platform that aims to create the world's hi
 ## Development Roadmap
 
 ### Phase 1: MVP Development (Current)
-- Implement core chat functionality with ownership model
-- Integrate Solana wallet and basic token mechanics
-- Develop and test collaborative approval system for messages and specs
-- Implement AI-generated summaries for non-co-authors
+- Infrastructure setup and Solana program development (Oct 23-24)
+- Backend and frontend implementation (Oct 25-26)
+- Testing and soft launch (Oct 27)
+- System improvements and refinement (Oct 28-30)
+- Public launch (Oct 31)
 
 ### Phase 2: Enhanced Features (Q4 2023 - Q2 2024)
+- Launch Swift (iOS and beyond), Android, Solana Mobile
 - Refine tokenomics and implement advanced token distribution
-- Develop and deploy Solana smart contracts for thread ownership and token management
 - Implement email notification system for co-authors
-- Integrate Thirdweb Embedded Wallet
+- Enhance wallet integration features
 - Develop speculative response ("spec") submission and approval process
 
-### Phase 3: AI Model Development (Q3 2024 - Q2 2025)
+### Phase 3: AI Model Development (Q3 2024 - April 2025)
 - Collect and curate token-scored dataset
 - Develop and train custom AI model
 - Implement AI model integration with the platform
