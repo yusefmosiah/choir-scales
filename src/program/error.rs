@@ -47,4 +47,24 @@ pub enum ChoirError {
     /// Each co-author may vote only once
     #[msg("Already voted on this message")]
     AlreadyVoted,
+
+    /// Duplicate content hash detected
+    #[msg("Content hash already exists in thread")]
+    DuplicateContent,
+
+    /// Invalid thread configuration
+    #[msg("Thread configuration is invalid")]
+    InvalidThreadConfig,
+
+    /// Thread is locked for maintenance
+    #[msg("Thread is temporarily locked")]
+    ThreadLocked,
+
+    /// Operation timeout
+    #[msg("Operation timed out")]
+    OperationTimeout,
+
+    /// Invalid token operation
+    #[msg("Invalid token operation")]
+    InvalidTokenOperation,
 }
