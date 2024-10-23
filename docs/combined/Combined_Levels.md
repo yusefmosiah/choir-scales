@@ -1,12 +1,10 @@
 # Level Documentation - Understanding Progression
-Generated: 2024-10-23 15:27 EDT
 
 
 
 
 ==
 Level0_SystemOverview
-2024-10-23 15:27 EDT
 ==
 
 
@@ -42,7 +40,6 @@ This multi-level coherence isn't designed - it emerges from a few simple rules a
 
 ==
 Level1_BasicMechanics
-2024-10-23 15:27 EDT
 ==
 
 
@@ -104,7 +101,6 @@ The beauty of Choir is that while these mechanics are simple to understand, they
 
 ==
 Level2_CoreMechanics
-2024-10-23 15:27 EDT
 ==
 
 
@@ -160,7 +156,6 @@ Understanding this level reveals why each feature is essential and why modifying
 
 ==
 Level3_ValueCreation
-2024-10-23 15:27 EDT
 ==
 
 
@@ -214,7 +209,6 @@ Understanding this level reveals why Choir can't be easily replicated by adding 
 
 ==
 Level4_MetastableEmergence
-2024-10-23 15:27 EDT
 ==
 
 
@@ -268,7 +262,6 @@ Understanding this level helps explain why Choir feels different from other plat
 
 ==
 Level5_QuantumSemantics
-2024-10-23 15:27 EDT
 ==
 
 
