@@ -39,6 +39,7 @@
 │   ├── Core_StateTransitions.md
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
+│   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
 │   ├── Dev_Plan.md
 │   ├── Dev_Pseudocode.md
@@ -86,10 +87,17 @@
 │   ├── Model_Ring.md
 │   ├── Model_ThreadEvolution.md
 │   ├── Theory_Algebra.md
+│   ├── Theory_GameMechanics.md
+│   ├── Theory_GameMechanicsAdversarial.md
+│   ├── Theory_GameMechanicsSparsity.md
+│   ├── Theory_Integration.md
+│   ├── Theory_SemanticGameTopology.md
 │   ├── Theory_Semantics.md
+│   ├── Theory_SemanticsExplained.md
 │   ├── Theory_StateAlgebra.md
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
+│   ├── Theory_TopologyExplained.md
 │   ├── combined
 │   │   ├── Combined_Core.md
 │   │   ├── Combined_Dev.md
@@ -200,4 +208,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-30 directories, 168 files
+30 directories, 176 files
