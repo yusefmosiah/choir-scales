@@ -87,13 +87,18 @@
 │   ├── Model_Ring.md
 │   ├── Model_ThreadEvolution.md
 │   ├── Theory_Algebra.md
+│   ├── Theory_ApprovalMeasurement.md
+│   ├── Theory_ChorusQuantum.md
 │   ├── Theory_GameMechanics.md
 │   ├── Theory_GameMechanicsAdversarial.md
 │   ├── Theory_GameMechanicsSparsity.md
+│   ├── Theory_Implementation.md
 │   ├── Theory_Integration.md
+│   ├── Theory_QuantumProtocol.md
 │   ├── Theory_SemanticGameTopology.md
 │   ├── Theory_Semantics.md
 │   ├── Theory_SemanticsExplained.md
+│   ├── Theory_StakeEntanglement.md
 │   ├── Theory_StateAlgebra.md
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
@@ -208,4 +213,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-30 directories, 176 files
+30 directories, 181 files

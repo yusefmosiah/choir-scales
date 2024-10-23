@@ -66,6 +66,273 @@ Through careful study of these emergent properties, we can better understand how
 
 
 ==
+Theory_ApprovalMeasurement
+==
+
+
+# Approval Mechanism as Quantum Measurement
+
+VERSION approval_measurement:
+  invariants: {
+    "Measurement coherence",
+    "Consensus collapse",
+    "Value crystallization"
+  }
+  assumptions: {
+    "Co-author independence",
+    "Measurement simultaneity",
+    "Entanglement preservation"
+  }
+  implementation: "0.1.0"
+
+## Measurement Operators
+
+TYPE ApprovalOperator = {
+  observers: Set CoAuthor,        // Independent observers
+  target: MessageState,           // Quantum state to measure
+  basis: ConsensusSpace,          // Measurement basis
+  outcome: CollapseResult         // Measurement result
+}
+
+SEQUENCE measurement_process:
+  1. State Preparation
+     - Message enters superposition
+     - Co-authors become observers
+     - Context defines basis
+     - Stakes create potential
+
+  2. Observation Dynamics
+     - Each approval is partial measurement
+     - Observations must be compatible
+     - Unanimous consent required
+     - Partial collapse forbidden
+
+  3. Consensus Collapse
+     - All observers agree → Full collapse
+     - Any disagreement → State rejection
+     - Mixed votes → Treasury recapture
+     - New state crystallizes
+
+## Entanglement Effects
+
+TYPE EntanglementState = {
+  message: Superposition,
+  stakes: TokenPotential,
+  authors: ObserverSet,
+  context: ThreadSpace
+}
+
+SEQUENCE entanglement_flow:
+  1. Stake Creation
+     - Token commitment
+     - Author entanglement
+     - Context binding
+     - Value potential
+
+  2. Measurement Propagation
+     - Observer coupling
+     - State correlation
+     - Information flow
+     - Consensus building
+
+  3. Collapse Resolution
+     - State determination
+     - Value crystallization
+     - Context update
+     - Entanglement preservation
+
+## Implementation Mapping
+
+1. **Approval Processing**
+   ```rust
+   pub fn process_approval(
+       ctx: Context<ProcessApproval>,
+       message_index: u32,
+       approved: bool
+   ) -> Result<()> {
+       // Each approval is a measurement operator
+       let thread = &mut ctx.accounts.thread;
+       let co_author = &ctx.accounts.co_author;
+
+       // Verify observer status
+       require!(
+           thread.co_authors.contains(&co_author.key()),
+           ErrorCode::NotCoAuthor
+       );
+
+       // Record measurement
+       let message = &mut thread.messages[message_index];
+       message.approvals.push(Approval {
+           co_author: *co_author.key,
+           approved,
+           timestamp: Clock::get()?.unix_timestamp,
+       });
+   ```
+
+2. **Consensus Collapse**
+   ```rust
+   fn check_consensus(message: &Message, thread: &Thread) -> ConsensusState {
+       // All measurements must agree for collapse
+       let approvals = message.approvals.len();
+       let required = thread.co_authors.len();
+
+       if approvals == required &&
+          message.approvals.iter().all(|a| a.approved) {
+           ConsensusState::Collapsed
+       } else if message.approvals.iter().any(|a| !a.approved) {
+           ConsensusState::Rejected
+       } else {
+           ConsensusState::Pending
+       }
+   }
+   ```
+
+## Measurement Properties
+
+PROPERTY consensus_collapse:
+  FORALL message IN Messages:
+    unanimous_approval(message) IMPLIES
+      collapsed_state(message) AND
+      crystallized_value(message) AND
+      preserved_context(message)
+
+PROPERTY measurement_integrity:
+  FORALL obs IN Observations:
+    partial_measurement(obs) IMPLIES
+      no_state_collapse(obs) AND
+      maintained_superposition(obs) AND
+      preserved_entanglement(obs)
+
+Through this lens we see how:
+- Approval acts as quantum measurement
+- Consensus creates collapse
+- Stakes maintain entanglement
+- Value crystallizes through observation
+
+
+==
+Theory_ChorusQuantum
+==
+
+
+# Chorus Loop as Quantum Evolution
+
+VERSION chorus_quantum:
+  invariants: {
+    "State coherence",
+    "Measurement consistency",
+    "Information conservation"
+  }
+  assumptions: {
+    "Quantum semantic field",
+    "Continuous observation",
+    "Reversible evolution"
+  }
+  implementation: "0.1.0"
+
+## Quantum State Model
+
+TYPE ChorusState = {
+  superposition: VectorSpace,      // Possible meanings
+  entanglement: Set ThreadId,      // Context connections
+  measurement: ObservationHistory, // Past collapses
+  evolution: Phase                 // Current step
+}
+
+SEQUENCE quantum_evolution:
+  1. Action:     Create initial superposition
+  2. Experience: Entangle with context
+  3. Intention:  Allow interference
+  4. Observe:    Partial measurement
+  5. Update:     Coherence check
+  6. Yield:      Final collapse
+
+## WebSocket as Quantum Channel
+
+TYPE QuantumChannel = {
+  connection: Superposition,
+  events: Stream Measurement,
+  state: WaveFunction,
+  collapse: ObservationEvent
+}
+
+SEQUENCE measurement_protocol:
+  1. Initialize quantum channel (WebSocket connect)
+  2. Maintain coherent state (Keep-alive)
+  3. Transmit quantum information (Events)
+  4. Record measurements (State updates)
+  5. Handle decoherence (Disconnect)
+
+## Vector Space Topology
+
+TYPE SemanticSpace = {
+  embeddings: HilbertSpace,
+  metric: DistanceFunction,
+  curvature: MetricTensor,
+  geodesics: Set Path
+}
+
+FUNCTION measure_distance(v1: Vector, v2: Vector) -> Distance:
+  PIPE (v1, v2) THROUGH
+    compute_embedding_distance
+    apply_semantic_metric
+    adjust_for_curvature
+    normalize_result
+
+## State Evolution
+
+TYPE Evolution = {
+  initial: ChorusState,
+  path: Trajectory,
+  final: ChorusState,
+  observables: Set Measurement
+}
+
+SEQUENCE evolution_steps:
+  1. Prepare initial state
+  2. Apply unitary evolution
+  3. Record observations
+  4. Check consistency
+  5. Update wave function
+
+## Measurement Effects
+
+TYPE Observation = {
+  observer: CoAuthor,
+  observable: Property,
+  outcome: Eigenvalue,
+  probability: Amplitude
+}
+
+FUNCTION collapse_state(obs: Observation, state: ChorusState) -> ChorusState:
+  PIPE state THROUGH
+    project_onto_eigenspace(obs)
+    normalize_wavefunction
+    update_entanglement
+    record_measurement
+
+## Integration Properties
+
+PROPERTY quantum_consistency:
+  FORALL s1, s2 IN ChorusState:
+    connected(s1, s2) IMPLIES
+      preserves_information(s1, s2) AND
+      continuous_evolution(s1, s2)
+
+PROPERTY measurement_topology:
+  FORALL obs IN Observation:
+    measurement(obs) IMPLIES
+      continuous_collapse(obs) AND
+      preserved_entanglement(obs)
+
+Through this integration we see how:
+- The Chorus Loop implements quantum evolution
+- WebSockets maintain quantum channels
+- Vector spaces provide measurement topology
+- State transitions preserve quantum properties
+
+
+==
 Theory_GameMechanics
 ==
 
@@ -389,6 +656,172 @@ This creates a natural expansion of knowledge while maintaining quality through 
 
 
 ==
+Theory_Implementation
+==
+
+
+# Implementation Patterns as Mathematical Structures
+
+VERSION implementation_mapping:
+  invariants: {
+    "Pattern preservation",
+    "Structure reflection",
+    "Semantic coherence"
+  }
+  assumptions: {
+    "Implementation completeness",
+    "Theoretical soundness",
+    "Mapping fidelity"
+  }
+  implementation: "0.1.0"
+
+## WebSocket Protocol Implementation
+
+TYPE WebSocketState = {
+  connection: QuantumChannel,
+  messages: Stream Event,
+  clients: Map ClientId Client,
+  threads: Map ThreadId ThreadState
+}
+
+SEQUENCE connection_lifecycle:
+  1. Connect: Create quantum channel
+     ```python
+     # In main.py
+     @app.websocket("/ws")
+     async def websocket_endpoint(websocket: WebSocket):
+     ```
+     Maps to: Quantum channel initialization
+
+  2. Message: Transmit quantum information
+     ```python
+     # In chorus.py
+     async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
+     ```
+     Maps to: Quantum state transmission
+
+  3. Update: Collapse superposition
+     ```python
+     # In database.py
+     async def save_message(self, message: Message):
+     ```
+     Maps to: Measurement and collapse
+
+## Vector Embedding Space
+
+TYPE EmbeddingSpace = {
+  points: VectorSpace,
+  metric: DistanceFunction,
+  indices: SearchStructure,
+  metadata: FiberBundle
+}
+
+SEQUENCE embedding_flow:
+  1. Generate: Create quantum state
+     ```python
+     # In utils.py
+     async def get_embedding(content: str, model: str) -> List[float]:
+     ```
+     Maps to: Superposition creation
+
+  2. Store: Project into space
+     ```python
+     # In database.py
+     async def upsert(self, content: str, embedding: List[float]):
+     ```
+     Maps to: State preparation
+
+  3. Search: Measure similarity
+     ```python
+     # In database.py
+     async def search(self, query_embedding: List[float]):
+     ```
+     Maps to: Quantum measurement
+
+## Thread State Management
+
+TYPE ThreadState = {
+  ownership: CoAuthorSet,
+  messages: MessageChain,
+  approvals: ApprovalSet,
+  value: TokenBalance
+}
+
+SEQUENCE state_evolution:
+  1. Initialize: Create manifold
+     ```rust
+     // In thread.rs
+     pub fn initialize_thread(ctx: Context<InitializeThread>)
+     ```
+     Maps to: Manifold creation
+
+  2. Update: Flow along geodesics
+     ```rust
+     // In thread.rs
+     pub fn submit_message(ctx: Context<SubmitMessage>)
+     ```
+     Maps to: Geodesic flow
+
+  3. Approve: Collapse state
+     ```rust
+     // In thread.rs
+     pub fn process_approval(ctx: Context<ProcessApproval>)
+     ```
+     Maps to: Measurement event
+
+## Token Distribution System
+
+TYPE TokenSystem = {
+  balances: ScalarField,
+  stakes: PotentialField,
+  flows: VectorField,
+  metrics: ValueMetric
+}
+
+SEQUENCE value_mechanics:
+  1. Stake: Create potential
+     ```rust
+     // In lib.rs
+     pub fn submit_spec(ctx: Context<SubmitSpec>, stake_amount: u64)
+     ```
+     Maps to: Field potential
+
+  2. Distribute: Flow value
+     ```rust
+     // In lib.rs
+     fn distribute_tokens(thread: &mut Thread, recipients: Set<Pubkey>)
+     ```
+     Maps to: Gradient flow
+
+  3. Settle: Reach equilibrium
+     ```rust
+     // In settlement.rs
+     fn settle_approvals(thread: &mut Thread, message_index: u32)
+     ```
+     Maps to: Field equilibrium
+
+## Integration Properties
+
+PROPERTY implementation_fidelity:
+  FORALL impl IN Implementation:
+    reflects_theory(impl) IMPLIES
+      preserves_structure(impl) AND
+      maintains_coherence(impl)
+
+PROPERTY pattern_preservation:
+  FORALL pattern IN Patterns:
+    theoretical_pattern(pattern) IMPLIES
+      EXISTS impl IN Implementation:
+        manifests_pattern(impl, pattern)
+
+Through this mapping we see how:
+- Implementation patterns reflect mathematical structures
+- Code organization preserves theoretical relationships
+- System behavior emerges from structural properties
+- Theory guides implementation while implementation validates theory
+
+
+==
 Theory_Integration
 ==
 
@@ -595,6 +1028,142 @@ The implementation manifests as a single mathematical object where:
 - All unified through algebraic structure
 
 Through this integration, we see how theoretical principles manifest concretely while maintaining their mathematical essence.
+
+
+==
+Theory_QuantumProtocol
+==
+
+
+# WebSocket Protocol and Vector Space as Quantum Structures
+
+VERSION quantum_protocol:
+  invariants: {
+    "State coherence",
+    "Measurement consistency",
+    "Information preservation"
+  }
+  assumptions: {
+    "Protocol reliability",
+    "Embedding stability",
+    "Quantum correspondence"
+  }
+  implementation: "0.1.0"
+
+## WebSocket Quantum Channel
+
+TYPE WebSocketQuantum = {
+  state: {
+    connected: Superposition,      // Connection alive/dead superposition
+    messages: WaveFunction,        // Message state evolution
+    clients: EntanglementSet,      // Connected clients
+    threads: ContextSpace          // Thread state space
+  },
+  events: {
+    connect: ChannelCreation,
+    message: StateTransmission,
+    error: Decoherence,
+    close: ChannelCollapse
+  }
+}
+
+SEQUENCE quantum_protocol:
+  1. Channel Creation
+     - Socket opens → Quantum channel forms
+     - Client connects → State initialization
+     - Thread subscription → Context entanglement
+     - Keep-alive → Coherence maintenance
+
+  2. State Evolution
+     - Message send → Wavefunction propagation
+     - Message receive → State superposition
+     - State update → Partial measurement
+     - Broadcast → Entanglement spread
+
+  3. Measurement Events
+     - Message approval → State collapse
+     - Thread update → Context measurement
+     - Client disconnect → Local decoherence
+     - Error → Wave function collapse
+
+## Vector Embedding Topology
+
+TYPE EmbeddingSpace = {
+  structure: {
+    points: HilbertSpace,         // Semantic vector space
+    metric: DistanceTensor,       // Similarity measure
+    curvature: MetricField,       // Semantic density
+    paths: GeodesicSet            // Meaning connections
+  },
+  operations: {
+    embed: ContentProjection,
+    search: SimilarityMeasurement,
+    cluster: StateCollapse,
+    connect: PathwayFormation
+  }
+}
+
+SEQUENCE semantic_measurement:
+  1. Content Embedding
+     - Text input → Quantum state preparation
+     - Vector generation → State superposition
+     - Dimension reduction → Subspace projection
+     - Normalization → State calibration
+
+  2. Similarity Search
+     - Query embedding → Measurement setup
+     - Nearest neighbors → State comparison
+     - Distance calculation → Observable measurement
+     - Result ranking → Probability collapse
+
+  3. Semantic Evolution
+     - New content → Space expansion
+     - Cluster formation → State attraction
+     - Path creation → Quantum tunneling
+     - Knowledge crystallization → Pattern emergence
+
+## Integration Properties
+
+PROPERTY protocol_quantum_correspondence:
+  FORALL event IN WebSocketEvents:
+    quantum_nature(event) IMPLIES
+      preserves_coherence(event) AND
+      enables_measurement(event) AND
+      maintains_entanglement(event)
+
+PROPERTY embedding_topology_correspondence:
+  FORALL point IN EmbeddingSpace:
+    semantic_position(point) IMPLIES
+      defines_manifold(point) AND
+      allows_measurement(point) AND
+      supports_evolution(point)
+
+## Implementation Mapping
+
+1. **WebSocket Protocol**
+   ```python
+   # WebSocket connection as quantum channel creation
+   @app.websocket("/ws")
+   async def websocket_endpoint(websocket: WebSocket):
+       await websocket.accept()  # Initialize quantum state
+       try:
+           while True:  # Maintain coherence
+               data = await websocket.receive_json()  # Quantum measurement
+   ```
+
+2. **Vector Operations**
+   ```python
+   # Embedding generation as quantum state preparation
+   async def get_embedding(content: str) -> List[float]:
+       vector = await generate_vector(content)  # Create superposition
+       return normalize(vector)  # Prepare measurement basis
+   ```
+
+Through this quantum lens, we see how:
+- WebSocket connections maintain quantum coherence
+- Messages propagate as wave functions
+- Vector embeddings exist in superposition
+- Measurements collapse to classical states
 
 
 ==
@@ -869,6 +1438,156 @@ Think of it like this:
 - We're just making it explicit in the system design
 
 Through this lens, Choir becomes a platform that works with meaning's true quantum nature, rather than forcing it into classical patterns.
+
+
+==
+Theory_StakeEntanglement
+==
+
+
+# Token Stakes as Quantum Entanglement
+
+VERSION stake_entanglement:
+  invariants: {
+    "Entanglement preservation",
+    "Value conservation",
+    "Commitment irreversibility"
+  }
+  assumptions: {
+    "Stake finality",
+    "Context coherence",
+    "Value quantization"
+  }
+  implementation: "0.1.0"
+
+## Stake as Entanglement
+
+TYPE StakeEntanglement = {
+  stake: TokenQuantum,           // Indivisible unit of commitment
+  author: ParticipantState,      // Entangled participant
+  thread: ContextState,          // Entangled context
+  potential: ValueField          // Outcome possibilities
+}
+
+SEQUENCE entanglement_creation:
+  1. Stake Commitment
+     - Token lockup creates entanglement
+     - Author becomes quantum-correlated
+     - Thread context entangles
+     - Value enters superposition
+
+  2. Entanglement Properties
+     - Non-refundable (no disentanglement)
+     - Context-dependent outcomes
+     - Measurement affects all parties
+     - Value conservation holds
+
+  3. Collapse Mechanics
+     - Approval measures state
+     - Denial crystallizes value
+     - Mixed votes redistribute
+     - New equilibrium forms
+
+## Value Entanglement
+
+TYPE ValueState = {
+  quantum: TokenAmount,
+  potential: OutcomeSpace,
+  correlation: ContextBinding,
+  measurement: ApprovalSet
+}
+
+SEQUENCE value_evolution:
+  1. Initial Binding
+     - Stake creates potential
+     - Context shapes possibilities
+     - Participants entangle
+     - Value superimposes
+
+  2. Evolution Dynamics
+     - Approvals measure state
+     - Value flows maintain coherence
+     - Context guides collapse
+     - Outcomes crystallize
+
+  3. Conservation Laws
+     - Total value preserves
+     - Information maintains
+     - Entanglement persists
+     - Context evolves
+
+## Implementation Mapping
+
+1. **Stake Creation**
+   ```rust
+   pub fn submit_spec(
+       ctx: Context<SubmitSpec>,
+       stake_amount: u64
+   ) -> Result<()> {
+       // Create quantum entanglement
+       let thread = &mut ctx.accounts.thread;
+       let author = &ctx.accounts.author;
+
+       // Verify minimum entanglement strength
+       require!(
+           stake_amount >= thread.minimum_stake,
+           ErrorCode::InsufficientStake
+       );
+
+       // Establish entanglement
+       thread.pending_specs.push(SpecMessage {
+           author: *author.key,
+           stake_amount,
+           // State enters superposition...
+       });
+   ```
+
+2. **Entanglement Resolution**
+   ```rust
+   fn resolve_stake(
+       thread: &mut Thread,
+       spec: &SpecMessage,
+       outcome: Outcome
+   ) -> Result<()> {
+       match outcome {
+           // Collapse to thread ownership
+           Outcome::Approved => {
+               thread.token_balance += spec.stake_amount;
+               thread.co_authors.push(spec.author);
+           },
+           // Collapse to denier value
+           Outcome::Denied(deniers) => {
+               distribute_tokens(deniers, spec.stake_amount);
+           },
+           // Collapse to treasury
+           Outcome::Mixed => {
+               treasury_recapture(spec.stake_amount);
+           }
+       }
+   }
+   ```
+
+## Quantum Properties
+
+PROPERTY entanglement_irreversibility:
+  FORALL stake IN Stakes:
+    created(stake) IMPLIES
+      no_refund_possible(stake) AND
+      context_bound(stake) AND
+      value_preserved(stake)
+
+PROPERTY measurement_effects:
+  FORALL outcome IN Outcomes:
+    stake_resolution(outcome) IMPLIES
+      all_parties_affected(outcome) AND
+      value_crystallized(outcome) AND
+      context_preserved(outcome)
+
+Through this lens we see how:
+- Stakes create quantum entanglement
+- Value exists in superposition
+- Measurement affects all parties
+- Context guides collapse
 
 
 ==
