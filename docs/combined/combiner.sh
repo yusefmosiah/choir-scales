@@ -22,7 +22,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Levels.md
+} > docs/combined/Combined_Levels.md
 
 {
     echo "# Core Documentation - Fundamental Concepts"
@@ -32,7 +32,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Core.md
+} > docs/combined/Combined_Core.md
 
 {
     echo "# Meta Documentation - Documentation About Documentation"
@@ -42,7 +42,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Meta.md
+} > docs/combined/Combined_Meta.md
 
 {
     echo "# Theory Documentation - Mathematical Foundations"
@@ -52,7 +52,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Theory.md
+} > docs/combined/Combined_Theory.md
 
 {
     echo "# Model Documentation - System Patterns"
@@ -62,7 +62,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Model.md
+} > docs/combined/Combined_Model.md
 
 {
     echo "# Implementation Documentation - Technical Details"
@@ -72,7 +72,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Impl.md
+} > docs/combined/Combined_Impl.md
 
 {
     echo "# Entry Documentation - Getting Started"
@@ -82,7 +82,7 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Entry.md
+} > docs/combined/Combined_Entry.md
 
 {
     echo "# Development Documentation - Building Choir"
@@ -92,6 +92,6 @@ add_separator() {
         add_separator "$(basename "$file" .md)"
         cat "$file"
     done
-} > docs/Combined_Dev.md
+} > docs/combined/Combined_Dev.md
 
 echo "Created 8 combined documentation files with formatted separators"
