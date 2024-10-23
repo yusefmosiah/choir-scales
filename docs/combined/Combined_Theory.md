@@ -232,97 +232,155 @@ VERSION chorus_quantum:
 
 ## Quantum State Model
 
-TYPE ChorusState = {
-  superposition: VectorSpace,      // Possible meanings
-  entanglement: Set ThreadId,      // Context connections
-  measurement: ObservationHistory, // Past collapses
-  evolution: Phase                 // Current step
+TYPE ChorusState<T> = {
+  superposition: VectorSpace<T>,          // Possible meanings
+  entanglement: EntanglementSet<ThreadId>, // Context connections
+  measurement: ObservationHistory<T>,     // Past collapses
+  evolution: Phase<T>                     // Current step
 }
 
-SEQUENCE quantum_evolution:
-  1. Action:     Create initial superposition
-  2. Experience: Entangle with context
-  3. Intention:  Allow interference
-  4. Observe:    Partial measurement
-  5. Update:     Coherence check
-  6. Yield:      Final collapse
+SEQUENCE quantum_evolution<T>:
+  1. Action Phase
+     ```
+     create_initial : Message → Result<Superposition<T>>
+     establish_basis : Superposition<T> → Result<SemanticBasis>
+     prepare_state : SemanticBasis → Result<ChorusState<T>>
+     ```
+
+  2. Experience Phase
+     ```
+     entangle_context : ChorusState<T> → Set<ThreadId> → Result<EntanglementSet<ThreadId>>
+     correlate_history : EntanglementSet<ThreadId> → Result<ContextState<T>>
+     maintain_coherence : ContextState<T> → Result<WaveFunction<T>>
+     ```
+
+  3. Intention Phase
+     ```
+     allow_interference : WaveFunction<T> → Result<Superposition<T>>
+     compute_amplitudes : Superposition<T> → Result<ProbabilityField>
+     shape_potential : ProbabilityField → Result<ValueField<T>>
+     ```
+
+  4. Observation Phase
+     ```
+     partial_measure : ValueField<T> → Result<ObservationEvent<T>>
+     record_measurement : ObservationEvent<T> → Result<ObservationHistory<T>>
+     update_state : ObservationHistory<T> → Result<ChorusState<T>>
+     ```
+
+  5. Update Phase
+     ```
+     verify_coherence : ChorusState<T> → Result<Consistency>
+     resolve_conflicts : Consistency → Result<Resolution>
+     prepare_collapse : Resolution → Result<CollapseReady<T>>
+     ```
+
+  6. Yield Phase
+     ```
+     final_collapse : CollapseReady<T> → Result<Collapsed<T>>
+     crystallize_value : Collapsed<T> → Result<Response>
+     emit_result : Response → Result<Output>
+     ```
 
 ## WebSocket as Quantum Channel
 
-TYPE QuantumChannel = {
-  connection: Superposition,
-  events: Stream Measurement,
-  state: WaveFunction,
-  collapse: ObservationEvent
+TYPE QuantumChannel<T> = {
+  connection: Superposition<Connection>,
+  events: Stream<Measurement<T>>,
+  state: WaveFunction<T>,
+  collapse: ObservationEvent<T>
 }
 
-SEQUENCE measurement_protocol:
-  1. Initialize quantum channel (WebSocket connect)
-  2. Maintain coherent state (Keep-alive)
-  3. Transmit quantum information (Events)
-  4. Record measurements (State updates)
-  5. Handle decoherence (Disconnect)
+SEQUENCE measurement_protocol<T>:
+  1. Initialize Channel
+     ```
+     establish_connection : () → Result<QuantumChannel<T>>
+     prepare_measurement : QuantumChannel<T> → Result<MeasurementBasis>
+     setup_observers : MeasurementBasis → Result<ObserverSet>
+     ```
+
+  2. Maintain Coherence
+     ```
+     send_heartbeat : QuantumChannel<T> → Result<Alive>
+     verify_response : Alive → Result<Coherence>
+     handle_decoherence : Decoherence → Result<Recovery>
+     ```
+
+  3. Process Events
+     ```
+     receive_quantum : QuantumChannel<T> → Result<Event<T>>
+     evolve_state : Event<T> → Result<StateChange<T>>
+     broadcast_collapse : StateChange<T> → Result<Notification>
+     ```
 
 ## Vector Space Topology
 
-TYPE SemanticSpace = {
-  embeddings: HilbertSpace,
-  metric: DistanceFunction,
-  curvature: MetricTensor,
-  geodesics: Set Path
+TYPE SemanticSpace<T> = {
+  embeddings: HilbertSpace<T>,
+  metric: DistanceFunction<T>,
+  curvature: MetricTensor<T>,
+  geodesics: Set<Path>
 }
 
-FUNCTION measure_distance(v1: Vector, v2: Vector) -> Distance:
-  PIPE (v1, v2) THROUGH
-    compute_embedding_distance
-    apply_semantic_metric
-    adjust_for_curvature
+FUNCTION measure_distance<T>(
+  v1: Vector<T>,
+  v2: Vector<T>
+) -> Result<Distance> =
+  pipe(
+    compute_embedding_distance(v1, v2),
+    apply_semantic_metric,
+    adjust_for_curvature,
     normalize_result
+  )
 
 ## State Evolution
 
-TYPE Evolution = {
-  initial: ChorusState,
-  path: Trajectory,
-  final: ChorusState,
-  observables: Set Measurement
+TYPE Evolution<T> = {
+  initial: ChorusState<T>,
+  path: Trajectory<T>,
+  final: ChorusState<T>,
+  observables: Set<Measurement<T>>
 }
 
-SEQUENCE evolution_steps:
-  1. Prepare initial state
-  2. Apply unitary evolution
-  3. Record observations
-  4. Check consistency
-  5. Update wave function
+SEQUENCE evolution_steps<T>:
+  1. prepare_initial : Message → Result<ChorusState<T>>
+  2. apply_unitary : ChorusState<T> → Result<Evolution<T>>
+  3. record_observations : Evolution<T> → Result<ObservationSet>
+  4. verify_consistency : ObservationSet → Result<Validation>
+  5. update_wavefunction : Validation → Result<WaveFunction<T>>
 
 ## Measurement Effects
 
-TYPE Observation = {
+TYPE Observation<T> = {
   observer: CoAuthor,
-  observable: Property,
+  observable: Property<T>,
   outcome: Eigenvalue,
   probability: Amplitude
 }
 
-FUNCTION collapse_state(obs: Observation, state: ChorusState) -> ChorusState:
-  PIPE state THROUGH
-    project_onto_eigenspace(obs)
-    normalize_wavefunction
-    update_entanglement
+FUNCTION collapse_state<T>(
+  obs: Observation<T>,
+  state: ChorusState<T>
+) -> Result<ChorusState<T>> =
+  pipe(
+    project_onto_eigenspace(obs),
+    normalize_wavefunction,
+    update_entanglement,
     record_measurement
+  )
 
 ## Integration Properties
 
-PROPERTY quantum_consistency:
-  FORALL s1, s2 IN ChorusState:
-    connected(s1, s2) IMPLIES
-      preserves_information(s1, s2) AND
+PROPERTY quantum_consistency<T>:
+  FORALL s1 s2: ChorusState<T>.
+    connected(s1, s2) ⟹
+      preserves_information(s1, s2) ∧
       continuous_evolution(s1, s2)
 
-PROPERTY measurement_topology:
-  FORALL obs IN Observation:
-    measurement(obs) IMPLIES
-      continuous_collapse(obs) AND
+PROPERTY measurement_topology<T>:
+  FORALL obs: Observation<T>.
+    measurement(obs) ⟹
+      continuous_collapse(obs) ∧
       preserved_entanglement(obs)
 
 Through this integration we see how:
@@ -845,52 +903,45 @@ VERSION integration_system:
 
 1. **Vector Embeddings as Quantum States**
 
-   TYPE SemanticState =
-     | Superposition Vector    // Before observation
-     | Collapsed Content       // After consensus
-     | Entangled [ThreadId]   // Cross-thread reference
+   TYPE SemanticState<T> =
+     | Superposition(Vector)    // Before observation
+     | Collapsed(T)            // After consensus
+     | Entangled(Set<ThreadId>) // Cross-thread reference
 
    PROPERTY quantum_measurement:
-     FORALL state: SemanticState:
-       measure(state) IMPLIES
-         no_further_superposition(state)
+     FORALL s: SemanticState<T>.
+       measure(s) >>= λr →
+         MATCH r:
+           Collapsed(_) → no_further_superposition(s)
+           _ → maintains_coherence(s)
 
 2. **Chorus Loop as Quantum Evolution**
 
-   TYPE ChorusState = {
-     messages: List Message,
-     context: SemanticState,
-     sources: List Source,
+   TYPE ChorusState<T> = {
+     messages: List<Message>,
+     context: SemanticState<T>,
+     sources: List<Source>,
      step: Step
    }
 
    SEQUENCE chorus_evolution:
-     1. Create initial superposition from message
-     2. Entangle with historical context
-     3. Allow quantum interference
-     4. Perform partial observation
-     5. Collapse if coherent
-     6. Yield observable result
-
-   FUNCTION evolve(message, state) -> ChorusState:
-     PIPE message THROUGH
-       create_superposition
-       entangle_with(state)
-       allow_interference
-       partial_observe
-       maybe_collapse
-       prepare_output
+     1. prepare_state : Message → Result<SemanticState<T>>
+     2. entangle_context : SemanticState<T> → State → Result<SemanticState<T>>
+     3. allow_interference : SemanticState<T> → Result<SemanticState<T>>
+     4. partial_observe : SemanticState<T> → Result<SemanticState<T>>
+     5. maybe_collapse : SemanticState<T> → Result<T>
+     6. prepare_output : T → Result<Response>
 
 3. **WebSocket Protocol as Measurement**
 
-   TYPE Connection = Quantum Channel
-   TYPE Event = Quantum Information
+   TYPE Connection = Quantum<Channel>
+   TYPE Event = Quantum<Information>
 
    SEQUENCE measurement_protocol:
-     1. Establish quantum channel (connection)
-     2. Transmit quantum information (events)
-     3. Perform measurements (state updates)
-     4. Handle decoherence (disconnection)
+     1. establish : () → Result<Connection>
+     2. transmit : Connection → Event → Result<()>
+     3. measure : Connection → Result<State>
+     4. handle_decoherence : Connection → Error → Result<()>
 
 ## Topological Manifestation
 
@@ -898,126 +949,94 @@ VERSION integration_system:
 
    TYPE ThreadSpace = {
      state: ManifoldPoint,
-     messages: VectorField,
-     value: ScalarField,
-     connections: FiberBundle
+     messages: VectorField<Message>,
+     value: ScalarField<TokenAmount>,
+     connections: FiberBundle<ThreadId>
    }
 
    SEQUENCE value_flow:
-     1. Message creates local curvature
-     2. Token stake forms potential well
-     3. Quality consensus deepens well
-     4. Value flows along gradients
-     5. New messages respond to field
+     1. create_curvature : Message → Result<LocalCurvature>
+     2. form_potential : TokenAmount → Result<PotentialWell>
+     3. deepen_well : Set<Approval> → Result<PotentialWell>
+     4. flow_value : PotentialWell → Result<ValueFlow>
+     5. respond_field : ValueFlow → Result<Message>
 
 2. **Value Field Gradients**
 
-   FUNCTION compute_gradient(point: ManifoldPoint) -> Field:
-     PIPE point THROUGH
-       measure_local_density
-       calculate_token_pressure
-       add_quality_weights
-       normalize_field
+   FUNCTION compute_gradient(point: ManifoldPoint) -> Result<Field> =
+     point
+       |> measure_local_density
+       |> calculate_token_pressure
+       |> add_quality_weights
+       |> normalize_field
 
    PROPERTY gradient_flow:
-     FORALL p1, p2 IN ThreadSpace:
-       connected(p1, p2) IMPLIES
+     FORALL p1 p2: ManifoldPoint.
+       connected(p1, p2) ⟹
          continuous_value_flow(p1, p2)
 
 3. **Database as Manifold Chart**
 
    TYPE DatabaseChart = {
-     embeddings: VectorSpace,
-     metadata: FiberBundle,
-     indices: Atlas
+     embeddings: VectorSpace<Embedding>,
+     metadata: FiberBundle<Metadata>,
+     indices: Atlas<ThreadId>
    }
 
-   FUNCTION chart_transition(from: Chart, to: Chart) -> Mapping:
+   FUNCTION chart_transition(
+     from: Chart,
+     to: Chart
+   ) -> Result<Mapping> =
      REQUIRE compatible_overlap(from, to)
      RETURN smooth_transition_map(from, to)
 
-## Game Theoretic Implementation
-
-1. **Strategy Space**
-
-   TYPE Strategy = ThreadState -> Action
-   TYPE Payoff = TokenValue
-
-   FUNCTION evaluate_strategy(s: Strategy, state: ThreadState) -> Payoff:
-     PIPE state THROUGH
-       apply_strategy(s)
-       compute_value_flow
-       measure_token_return
-
-2. **Sparsity as Strategic Pressure**
-
-   FUNCTION compute_reward(message: Message, thread: Thread) -> TokenValue:
-     PIPE message THROUGH
-       measure_semantic_distance(thread)
-       scale_by_innovation
-       adjust_for_quality
-       apply_sparsity_bonus
-
-3. **Security Through Topology**
-
-   TYPE SecurityProperty = ThreadSpace -> Bool
-
-   FUNCTION verify_security(space: ThreadSpace) -> Result:
-     PIPE space THROUGH
-       check_local_invariants
-       verify_global_properties
-       validate_value_flows
-       ensure_token_conservation
-
-## Algebraic Structure
+## Implementation Mapping
 
 1. **State Transitions**
 
-   TYPE StateTransition = ThreadState -> Action -> Result
+   TYPE StateTransition<A> = ThreadState → Action → Result<A>
 
-   FUNCTION validate_transition(t: StateTransition) -> Bool:
-     PIPE t THROUGH
-       check_invariant_preservation
-       verify_token_conservation
-       ensure_coherence
-       validate_causality
+   FUNCTION validate_transition(t: StateTransition<A>) -> Result<Bool> =
+     t |> check_invariant_preservation
+       |> verify_token_conservation
+       |> ensure_coherence
+       |> validate_causality
 
    PROPERTY transition_composition:
-     FORALL t1, t2: StateTransition:
-       compose(t1, t2) IMPLIES
-         preserves_properties(t1) AND
+     FORALL t1 t2: StateTransition<A>.
+       compose(t1, t2) ⟹
+         preserves_properties(t1) ∧
          preserves_properties(t2)
 
 2. **Compositional Properties**
 
-   TYPE ThreadOperation = {
+   TYPE ThreadOperation<A> = {
      action: Action,
      pre_state: ThreadState,
      post_state: ThreadState,
-     invariants: Set Property
+     invariants: Set<Property>
    }
 
    SEQUENCE operation_composition:
-     1. Verify pre-conditions
-     2. Apply operation
-     3. Check invariants
-     4. Update state
-     5. Emit events
+     1. verify_pre : ThreadOperation<A> → Result<()>
+     2. apply_op : ThreadOperation<A> → Result<A>
+     3. check_inv : ThreadOperation<A> → Result<()>
+     4. update : ThreadOperation<A> → Result<State>
+     5. emit : ThreadOperation<A> → Result<Event>
 
-3. **Implementation Mapping**
+3. **Implementation Verification**
 
-   TYPE Implementation = {
+   TYPE Implementation<A> = {
      theoretical: Property,
-     practical: Verification,
-     mapping: Theory -> Practice
+     practical: Verification<A>,
+     mapping: Theory → Practice
    }
 
-   FUNCTION verify_implementation(impl: Implementation) -> Bool:
-     PIPE impl THROUGH
-       map_theoretical_to_practical
-       verify_preservation
-       check_completeness
-       validate_coherence
+   FUNCTION verify_implementation<A>(impl: Implementation<A>) -> Result<Bool> =
+     impl |> map_theoretical_to_practical
+          |> verify_preservation
+          |> check_completeness
+          |> validate_coherence
 
 ## Unified View
 
@@ -1052,111 +1071,130 @@ VERSION quantum_protocol:
 
 ## WebSocket Quantum Channel
 
-TYPE WebSocketQuantum = {
+TYPE WebSocketQuantum<T> = {
   state: {
-    connected: Superposition,      // Connection alive/dead superposition
-    messages: WaveFunction,        // Message state evolution
-    clients: EntanglementSet,      // Connected clients
-    threads: ContextSpace          // Thread state space
+    connected: Superposition<Bool>,      // Connection alive/dead superposition
+    messages: WaveFunction<T>,           // Message state evolution
+    clients: EntanglementSet<ClientId>,  // Connected clients
+    threads: ContextSpace<ThreadId>      // Thread state space
   },
   events: {
-    connect: ChannelCreation,
-    message: StateTransmission,
-    error: Decoherence,
-    close: ChannelCollapse
+    connect: ChannelCreation → Result<Connection>,
+    message: StateTransmission<T> → Result<()>,
+    error: Decoherence → Result<Recovery>,
+    close: ChannelCollapse → Result<()>
   }
 }
 
-SEQUENCE quantum_protocol:
+SEQUENCE quantum_protocol<T>:
   1. Channel Creation
-     - Socket opens → Quantum channel forms
-     - Client connects → State initialization
-     - Thread subscription → Context entanglement
-     - Keep-alive → Coherence maintenance
+     ```
+     establish_channel : () → Result<WebSocketQuantum<T>>
+     subscribe_thread : ThreadId → Result<EntanglementSet<ClientId>>
+     maintain_coherence : Connection → Result<()>
+     ```
 
   2. State Evolution
-     - Message send → Wavefunction propagation
-     - Message receive → State superposition
-     - State update → Partial measurement
-     - Broadcast → Entanglement spread
+     ```
+     transmit : Message → WaveFunction<T> → Result<()>
+     receive : WaveFunction<T> → Result<Superposition<T>>
+     update : Superposition<T> → Result<StateM<T>>
+     broadcast : StateM<T> → Result<EntanglementSet<ClientId>>
+     ```
 
   3. Measurement Events
-     - Message approval → State collapse
-     - Thread update → Context measurement
-     - Client disconnect → Local decoherence
-     - Error → Wave function collapse
+     ```
+     approve : Hash → Set<Author> → Result<Collapsed<T>>
+     update_thread : ThreadId → Result<ContextSpace<ThreadId>>
+     handle_disconnect : ClientId → Result<Decoherence>
+     recover_error : Error → Result<Recovery>
+     ```
 
 ## Vector Embedding Topology
 
-TYPE EmbeddingSpace = {
+TYPE EmbeddingSpace<T> = {
   structure: {
-    points: HilbertSpace,         // Semantic vector space
-    metric: DistanceTensor,       // Similarity measure
-    curvature: MetricField,       // Semantic density
-    paths: GeodesicSet            // Meaning connections
+    points: HilbertSpace<T>,           // Semantic vector space
+    metric: DistanceTensor<T>,         // Similarity measure
+    curvature: MetricField<T>,         // Semantic density
+    paths: GeodesicSet<ThreadId>       // Meaning connections
   },
   operations: {
-    embed: ContentProjection,
-    search: SimilarityMeasurement,
-    cluster: StateCollapse,
-    connect: PathwayFormation
+    embed: Content → Result<Vector>,
+    search: Vector → Result<Set<Vector>>,
+    cluster: Set<Vector> → Result<Collapsed<T>>,
+    connect: ThreadId → ThreadId → Result<Geodesic>
   }
 }
 
-SEQUENCE semantic_measurement:
+SEQUENCE semantic_measurement<T>:
   1. Content Embedding
-     - Text input → Quantum state preparation
-     - Vector generation → State superposition
-     - Dimension reduction → Subspace projection
-     - Normalization → State calibration
+     ```
+     prepare_state : Content → Result<Superposition<T>>
+     generate_vector : Superposition<T> → Result<Vector>
+     project_subspace : Vector → Result<Vector>
+     normalize_state : Vector → Result<Vector>
+     ```
 
   2. Similarity Search
-     - Query embedding → Measurement setup
-     - Nearest neighbors → State comparison
-     - Distance calculation → Observable measurement
-     - Result ranking → Probability collapse
+     ```
+     query_space : Vector → Result<SearchSpace<T>>
+     find_neighbors : SearchSpace<T> → Result<Set<Vector>>
+     compute_distance : Set<Vector> → Result<DistanceMetric>
+     rank_results : DistanceMetric → Result<Collapsed<T>>
+     ```
 
   3. Semantic Evolution
-     - New content → Space expansion
-     - Cluster formation → State attraction
-     - Path creation → Quantum tunneling
-     - Knowledge crystallization → Pattern emergence
+     ```
+     expand_space : Content → Result<HilbertSpace<T>>
+     form_clusters : Set<Vector> → Result<Set<Cluster>>
+     create_paths : Set<Cluster> → Result<GeodesicSet<ThreadId>>
+     crystallize : GeodesicSet<ThreadId> → Result<Pattern>
+     ```
 
 ## Integration Properties
 
-PROPERTY protocol_quantum_correspondence:
-  FORALL event IN WebSocketEvents:
-    quantum_nature(event) IMPLIES
-      preserves_coherence(event) AND
-      enables_measurement(event) AND
+PROPERTY protocol_quantum_correspondence<T>:
+  FORALL event: WebSocketQuantum<T>.events.
+    quantum_nature(event) ⟹
+      preserves_coherence(event) ∧
+      enables_measurement(event) ∧
       maintains_entanglement(event)
 
-PROPERTY embedding_topology_correspondence:
-  FORALL point IN EmbeddingSpace:
-    semantic_position(point) IMPLIES
-      defines_manifold(point) AND
-      allows_measurement(point) AND
+PROPERTY embedding_topology_correspondence<T>:
+  FORALL point: EmbeddingSpace<T>.structure.points.
+    semantic_position(point) ⟹
+      defines_manifold(point) ∧
+      allows_measurement(point) ∧
       supports_evolution(point)
 
 ## Implementation Mapping
 
 1. **WebSocket Protocol**
-   ```python
-   # WebSocket connection as quantum channel creation
-   @app.websocket("/ws")
-   async def websocket_endpoint(websocket: WebSocket):
-       await websocket.accept()  # Initialize quantum state
-       try:
-           while True:  # Maintain coherence
-               data = await websocket.receive_json()  # Quantum measurement
+   ```typescript
+   // WebSocket connection as quantum channel creation
+   async function establishQuantumChannel<T>(): Result<WebSocketQuantum<T>> {
+     return pipe(
+       await initConnection(),
+       establishSuperposition,
+       maintainCoherence,
+       handleDecoherence
+     )
+   }
    ```
 
 2. **Vector Operations**
-   ```python
-   # Embedding generation as quantum state preparation
-   async def get_embedding(content: str) -> List[float]:
-       vector = await generate_vector(content)  # Create superposition
-       return normalize(vector)  # Prepare measurement basis
+   ```typescript
+   // Embedding generation as quantum state preparation
+   async function prepareQuantumState<T>(
+     content: Content
+   ): Result<Superposition<T>> {
+     return pipe(
+       await generateVector(content),
+       normalizeState,
+       establishSuperposition
+     )
+   }
    ```
 
 Through this quantum lens, we see how:
@@ -1164,6 +1202,8 @@ Through this quantum lens, we see how:
 - Messages propagate as wave functions
 - Vector embeddings exist in superposition
 - Measurements collapse to classical states
+
+The protocol preserves quantum properties while enabling practical implementation.
 
 
 ==
@@ -1188,119 +1228,133 @@ VERSION semantic_game_topology:
 
 ## Semantic Field Dynamics
 
-TYPE SemanticField = {
-  embeddings: VectorSpace,
-  strategies: StrategyManifold,
-  value: ScalarField,
-  measurement: ObservationMetric
+TYPE SemanticField<T> = {
+  embeddings: VectorSpace<T>,
+  strategies: StrategyManifold<T>,
+  value: ScalarField<TokenAmount>,
+  measurement: ObservationMetric<T>
 }
 
-SEQUENCE field_evolution:
-  1. Message creates quantum state
-  2. Strategies form potential gradients
-  3. Value flows along geodesics
-  4. Measurement collapses possibilities
-  5. New equilibrium emerges
+SEQUENCE field_evolution<T>:
+  1. create_state : Message → Result<Superposition<T>>
+  2. form_gradient : Superposition<T> → Result<PotentialField<T>>
+  3. flow_value : PotentialField<T> → Result<ValueFlow>
+  4. measure_state : ValueFlow → Result<Collapsed<T>>
+  5. reach_equilibrium : Collapsed<T> → Result<Pattern>
 
 ## Strategic Topology
 
-TYPE StrategySpace = {
-  actions: VectorField,
-  payoffs: ScalarField,
-  connections: FiberBundle,
-  sparsity: DensityMetric
+TYPE StrategySpace<T> = {
+  actions: VectorField<Action>,
+  payoffs: ScalarField<TokenAmount>,
+  connections: FiberBundle<ThreadId>,
+  sparsity: DensityMetric<T>
 }
 
-FUNCTION compute_sparsity_pressure(point: StrategySpace) -> Force:
-  PIPE point THROUGH
-    measure_semantic_density
-    calculate_innovation_gradient
-    apply_quality_weighting
-    normalize_force_field
+FUNCTION compute_sparsity_pressure<T>(
+  point: StrategySpace<T>
+) -> Result<Force> =
+  point
+    |> measure_semantic_density
+    |> calculate_innovation_gradient
+    |> add_quality_weighting
+    |> normalize_force_field
 
-PROPERTY strategic_continuity:
-  FORALL s1, s2 IN StrategySpace:
-    connected(s1, s2) IMPLIES
-      continuous_payoff_flow(s1, s2)
+PROPERTY strategic_continuity<T>:
+  FORALL s1 s2: StrategySpace<T>.
+    connected(s1, s2) ⟹
+      continuous_payoff_flow(s1, s2) ∧
+      preserves_topology(s1, s2)
 
 ## Measurement Mechanics
 
-TYPE ObservationEvent = {
+TYPE ObservationEvent<T> = {
   observer: CoAuthor,
-  target: SemanticState,
+  target: SemanticState<T>,
   context: ThreadSpace,
-  outcome: Collapsed
+  outcome: Collapsed<T>
 }
 
-SEQUENCE approval_collapse:
-  1. Spec enters superposition
-  2. Co-authors entangle with state
-  3. Approval votes create measurement
-  4. Unanimous consent collapses state
-  5. Value crystallizes in thread
+SEQUENCE approval_collapse<T>:
+  1. enter_superposition : Message → Result<Superposition<T>>
+  2. entangle_observers : Set<CoAuthor> → Result<EntanglementSet<CoAuthor>>
+  3. collect_votes : EntanglementSet<CoAuthor> → Result<VoteSet>
+  4. collapse_state : VoteSet → Result<Collapsed<T>>
+  5. crystallize_value : Collapsed<T> → Result<TokenAmount>
 
 ## Value Flow Topology
 
-TYPE ValueManifold = {
-  potential: ScalarField,
-  flow: VectorField,
-  curvature: MetricTensor,
-  singularities: Set Point
+TYPE ValueManifold<T> = {
+  potential: ScalarField<TokenAmount>,
+  flow: VectorField<ValueFlow>,
+  curvature: MetricTensor<T>,
+  singularities: Set<CriticalPoint>
 }
 
-FUNCTION trace_value_flow(start: Point, end: Point) -> Geodesic:
+FUNCTION trace_value_flow<T>(
+  start: Point<T>,
+  end: Point<T>
+) -> Result<Geodesic> =
   REQUIRE connected(start, end)
-  PIPE (start, end) THROUGH
-    compute_potential_difference
-    find_minimal_path
-    verify_continuity
+  RETURN pipe(
+    compute_potential_difference(start, end),
+    find_minimal_path,
+    verify_continuity,
     ensure_conservation
+  )
 
 ## Sparsity as Curvature
 
-TYPE SparsityMetric = ThreadSpace -> Curvature
+TYPE SparsityMetric<T> = ThreadSpace → Result<Curvature>
 
-FUNCTION compute_curvature(message: Message, space: ThreadSpace) -> Curvature:
-  PIPE message THROUGH
-    embed_in_space(space)
-    measure_local_density
-    calculate_semantic_distance
+FUNCTION compute_curvature<T>(
+  message: Message,
+  space: ThreadSpace
+) -> Result<Curvature> =
+  pipe(
+    embed_in_space(message, space),
+    measure_local_density,
+    calculate_semantic_distance,
     derive_curvature_tensor
+  )
 
 PROPERTY curvature_incentive:
-  FORALL m IN Messages:
-    high_curvature(m) IMPLIES
-      high_reward_potential(m)
+  FORALL m: Message.
+    high_curvature(m) ⟹
+      high_reward_potential(m) ∧
+      innovation_aligned(m)
 
 ## Quantum Game Dynamics
 
-TYPE GameState = {
-  quantum: SuperPosition,
+TYPE GameState<T> = {
+  quantum: Superposition<Strategy>,
   classical: Strategy,
-  measurement: Observation,
-  payoff: Value
+  measurement: ObservationEvent<T>,
+  payoff: TokenAmount
 }
 
-SEQUENCE strategic_evolution:
-  1. Strategy creates superposition
-  2. Value field shapes possibilities
-  3. Observation collapses choices
-  4. Payoffs crystallize
-  5. New strategies emerge
+SEQUENCE strategic_evolution<T>:
+  1. create_superposition : Strategy → Result<Superposition<Strategy>>
+  2. shape_possibilities : ValueField<T> → Result<WaveFunction<Strategy>>
+  3. observe_choices : WaveFunction<Strategy> → Result<Collapsed<Strategy>>
+  4. crystallize_payoffs : Collapsed<Strategy> → Result<TokenAmount>
+  5. evolve_strategies : TokenAmount → Result<Strategy>
 
 ## Integration Properties
 
-PROPERTY semantic_game_duality:
-  FORALL thread IN ThreadSpace:
-    optimal_strategy(thread) IMPLIES
-      minimal_semantic_distance(thread) AND
-      maximal_value_flow(thread)
+PROPERTY semantic_game_duality<T>:
+  FORALL thread: ThreadSpace.
+    optimal_strategy(thread) ⟹
+      minimal_semantic_distance(thread) ∧
+      maximal_value_flow(thread) ∧
+      preserves_coherence(thread)
 
-PROPERTY measurement_topology:
-  FORALL obs IN Observations:
-    measurement_collapse(obs) IMPLIES
-      continuous_value_transfer(obs) AND
-      preserved_fiber_structure(obs)
+PROPERTY measurement_topology<T>:
+  FORALL obs: ObservationEvent<T>.
+    measurement_collapse(obs) ⟹
+      continuous_value_transfer(obs) ∧
+      preserved_fiber_structure(obs) ∧
+      maintains_entanglement(obs)
 
 Through this integration we see how:
 - Semantic fields shape strategic spaces
@@ -1462,125 +1516,119 @@ VERSION stake_entanglement:
 
 ## Stake as Entanglement
 
-TYPE StakeEntanglement = {
-  stake: TokenQuantum,           // Indivisible unit of commitment
-  author: ParticipantState,      // Entangled participant
-  thread: ContextState,          // Entangled context
-  potential: ValueField          // Outcome possibilities
+TYPE StakeEntanglement<T> = {
+  stake: TokenQuantum,                    // Indivisible unit of commitment
+  author: ParticipantState<T>,           // Entangled participant
+  thread: ContextState<T>,               // Entangled context
+  potential: ValueField<TokenAmount>      // Outcome possibilities
 }
 
-SEQUENCE entanglement_creation:
+SEQUENCE entanglement_creation<T>:
   1. Stake Commitment
-     - Token lockup creates entanglement
-     - Author becomes quantum-correlated
-     - Thread context entangles
-     - Value enters superposition
+     ```
+     create_stake : TokenAmount → Result<TokenQuantum>
+     entangle_author : ParticipantState<T> → Result<EntanglementSet<Author>>
+     entangle_context : ContextState<T> → Result<EntanglementSet<ThreadId>>
+     form_superposition : EntanglementSet<_> → Result<Superposition<T>>
+     ```
 
   2. Entanglement Properties
-     - Non-refundable (no disentanglement)
-     - Context-dependent outcomes
-     - Measurement affects all parties
-     - Value conservation holds
+     ```
+     verify_irreversibility : StakeEntanglement<T> → Result<()>
+     compute_outcomes : StakeEntanglement<T> → Result<Set<Outcome>>
+     measure_effects : Outcome → Result<StateChange<T>>
+     conserve_value : StateChange<T> → Result<TokenAmount>
+     ```
 
   3. Collapse Mechanics
-     - Approval measures state
-     - Denial crystallizes value
-     - Mixed votes redistribute
-     - New equilibrium forms
+     ```
+     process_approval : Hash → Result<Collapsed<T>>
+     crystallize_denial : Hash → Result<Distribution>
+     handle_mixed : Hash → Result<Treasury>
+     establish_equilibrium : ThreadState → Result<Pattern>
+     ```
 
 ## Value Entanglement
 
-TYPE ValueState = {
-  quantum: TokenAmount,
-  potential: OutcomeSpace,
-  correlation: ContextBinding,
-  measurement: ApprovalSet
+TYPE ValueState<T> = {
+  quantum: TokenQuantum,
+  potential: OutcomeSpace<T>,
+  correlation: ContextBinding<ThreadId>,
+  measurement: ApprovalSet<CoAuthor>
 }
 
-SEQUENCE value_evolution:
+SEQUENCE value_evolution<T>:
   1. Initial Binding
-     - Stake creates potential
-     - Context shapes possibilities
-     - Participants entangle
-     - Value superimposes
+     ```
+     create_potential : TokenQuantum → Result<PotentialField<T>>
+     shape_possibilities : PotentialField<T> → Result<OutcomeSpace<T>>
+     entangle_participants : Set<Author> → Result<EntanglementSet<Author>>
+     superimpose_values : EntanglementSet<Author> → Result<Superposition<T>>
+     ```
 
   2. Evolution Dynamics
-     - Approvals measure state
-     - Value flows maintain coherence
-     - Context guides collapse
-     - Outcomes crystallize
+     ```
+     collect_approvals : ThreadId → Result<ApprovalSet<CoAuthor>>
+     maintain_coherence : ApprovalSet<CoAuthor> → Result<WaveFunction<T>>
+     guide_collapse : WaveFunction<T> → Result<Collapsed<T>>
+     crystallize_outcomes : Collapsed<T> → Result<Distribution>
+     ```
 
   3. Conservation Laws
-     - Total value preserves
-     - Information maintains
-     - Entanglement persists
-     - Context evolves
+     ```
+     verify_value : TokenAmount → Result<Conservation>
+     preserve_information : ThreadState → Result<Entropy>
+     maintain_entanglement : EntanglementSet<_> → Result<Stability>
+     evolve_context : ContextState<T> → Result<Pattern>
+     ```
 
 ## Implementation Mapping
 
 1. **Stake Creation**
-   ```rust
-   pub fn submit_spec(
-       ctx: Context<SubmitSpec>,
-       stake_amount: u64
-   ) -> Result<()> {
-       // Create quantum entanglement
-       let thread = &mut ctx.accounts.thread;
-       let author = &ctx.accounts.author;
-
-       // Verify minimum entanglement strength
-       require!(
-           stake_amount >= thread.minimum_stake,
-           ErrorCode::InsufficientStake
-       );
-
-       // Establish entanglement
-       thread.pending_specs.push(SpecMessage {
-           author: *author.key,
-           stake_amount,
-           // State enters superposition...
-       });
+   ```typescript
+   async function createEntanglement<T>(
+     stake: TokenAmount,
+     thread: ThreadId,
+     author: Author
+   ): Result<StakeEntanglement<T>> {
+     return pipe(
+       await verifyStakeAmount(stake),
+       createQuantum,
+       entangleParticipants(author, thread),
+       establishSuperposition
+     )
+   }
    ```
 
 2. **Entanglement Resolution**
-   ```rust
-   fn resolve_stake(
-       thread: &mut Thread,
-       spec: &SpecMessage,
-       outcome: Outcome
-   ) -> Result<()> {
-       match outcome {
-           // Collapse to thread ownership
-           Outcome::Approved => {
-               thread.token_balance += spec.stake_amount;
-               thread.co_authors.push(spec.author);
-           },
-           // Collapse to denier value
-           Outcome::Denied(deniers) => {
-               distribute_tokens(deniers, spec.stake_amount);
-           },
-           // Collapse to treasury
-           Outcome::Mixed => {
-               treasury_recapture(spec.stake_amount);
-           }
-       }
+   ```typescript
+   async function resolveEntanglement<T>(
+     stake: StakeEntanglement<T>,
+     outcome: Outcome
+   ): Result<Distribution> {
+     return pipe(
+       await measureState(stake),
+       processOutcome(outcome),
+       conserveValue,
+       distributeTokens
+     )
    }
    ```
 
 ## Quantum Properties
 
-PROPERTY entanglement_irreversibility:
-  FORALL stake IN Stakes:
-    created(stake) IMPLIES
-      no_refund_possible(stake) AND
-      context_bound(stake) AND
+PROPERTY entanglement_irreversibility<T>:
+  FORALL stake: StakeEntanglement<T>.
+    created(stake) ⟹
+      no_refund_possible(stake) ∧
+      context_bound(stake) ∧
       value_preserved(stake)
 
-PROPERTY measurement_effects:
-  FORALL outcome IN Outcomes:
-    stake_resolution(outcome) IMPLIES
-      all_parties_affected(outcome) AND
-      value_crystallized(outcome) AND
+PROPERTY measurement_effects<T>:
+  FORALL outcome: Outcome.
+    stake_resolution(outcome) ⟹
+      all_parties_affected(outcome) ∧
+      value_crystallized(outcome) ∧
       context_preserved(outcome)
 
 Through this lens we see how:
@@ -1588,6 +1636,9 @@ Through this lens we see how:
 - Value exists in superposition
 - Measurement affects all parties
 - Context guides collapse
+- Conservation laws hold
+
+The entanglement model provides a rigorous foundation for understanding stake mechanics while preserving quantum properties.
 
 
 ==
@@ -1624,7 +1675,7 @@ ASSUMPTION state_transitions:
 
 TYPE State = Thread × Token × Content
   WHERE
-    Thread = Set Author × Time × Hash
+    Thread = Set<Author> × Time × Hash
     Token = Balance × Stake × Distribution
     Content = Message × Embedding × Privacy
 
@@ -1632,53 +1683,55 @@ TYPE State = Thread × Token × Content
 
 1. **Creation Algebra**
 
-   CREATE : Author → ThreadId → State
-   CREATE(a)(t) = (
+   CREATE : Author → ThreadId → Result<State>
+   CREATE(a)(t) = Ok((
      {a},           // initial co-author set
      (0, ∅, ∅),    // token state
      (∅, ∅, public) // content state
-   )
+   ))
 
 2. **Submission Algebra**
 
-   SUBMIT : Message → State → State
+   SUBMIT : Message → State → Result<State>
    SUBMIT(m)(s) = MATCH s.authors:
      m.author ∈ s.authors →
        ADD_CONTENT(m)(s)
      _ →
-       ADD_SPEC(m, STAKE)(s)
+       VERIFY_STAKE(m.stake) >>=
+       ADD_SPEC(m)(s)
 
 3. **Approval Algebra**
 
-   APPROVE : Set Author → Hash → State → State
+   APPROVE : Set<Author> → Hash → State → Result<State>
    APPROVE(A)(h)(s) =
      LET votes = COUNT(A)
      IN  votes = |s.authors| →
            FINALIZE(h)(s)
          votes > 0 →
            DISTRIBUTE(A)(s.stakes[h])(s)
-         _ → s
+         _ →
+           Ok(s)
 
 ## Monadic Operations
 
 1. **State Monad**
    ```
-   TYPE StateM a = State → (a × State)
+   TYPE StateM<A> = State → Result<(A, State)>
 
-   RETURN : a → StateM a
-   RETURN x = λs → (x, s)
+   RETURN : A → StateM<A>
+   RETURN x = λs → Ok((x, s))
 
-   BIND : StateM a → (a → StateM b) → StateM b
+   BIND : StateM<A> → (A → StateM<B>) → StateM<B>
    BIND m f = λs →
-     LET (x, s') = m(s)
-     IN  f(x)(s')
+     m(s) >>= λ(x, s') →
+     f(x)(s')
    ```
 
 2. **Thread Operations**
    ```
-   ADD_AUTHOR : Author → StateM Unit
-   REMOVE_AUTHOR : Author → StateM Unit
-   UPDATE_BALANCE : Amount → StateM Unit
+   ADD_AUTHOR : Author → StateM<Unit>
+   REMOVE_AUTHOR : Author → StateM<Unit>
+   UPDATE_BALANCE : Amount → StateM<Unit>
    ```
 
 ## Invariant Preservation
@@ -1708,13 +1761,13 @@ TYPE State = Thread × Token × Content
 
 1. **Sequential Composition**
    ```
-   (f ∘ g)(s) = f(g(s))
+   (f >=> g)(s) = f(s) >>= g
    ```
 
 2. **Parallel Independence**
    ```
    ∀f g. independent(f, g) ⟹
-     f(g(s)) = g(f(s))
+     f(s) >>= g = g(s) >>= f
    ```
 
 3. **State Transitions**
@@ -1726,35 +1779,34 @@ TYPE State = Thread × Token × Content
 
 1. **Access Control**
    ```
-   CAN_ACCESS : Author → Content → Bool
+   CAN_ACCESS : Author → Content → Result<Bool>
    CAN_ACCESS(a)(c) =
-     a ∈ c.thread.authors ∨
-     c.privacy = public
+     Ok(a ∈ c.thread.authors ∨ c.privacy = public)
    ```
 
 2. **View Transformation**
    ```
-   VIEW : Author → State → State
-   VIEW(a)(s) = {
+   VIEW : Author → State → Result<State>
+   VIEW(a)(s) = Ok({
      authors: s.authors,
      tokens: IF a ∈ s.authors THEN s.tokens ELSE ∅,
      content: FILTER(CAN_ACCESS(a))(s.content)
-   }
+   })
    ```
 
 ## Distribution Laws
 
 1. **Token Distribution**
    ```
-   DISTRIBUTE : Set Author → Amount → State → State
+   DISTRIBUTE : Set<Author> → Amount → State → Result<State>
    DISTRIBUTE(A)(amt)(s) =
      LET share = amt / |A|
-     IN  FOLD(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
+     IN  FOLD_M(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
    ```
 
 2. **Stake Resolution**
    ```
-   RESOLVE : Hash → Decision → State → State
+   RESOLVE : Hash → Decision → State → Result<State>
    RESOLVE(h)(d)(s) = MATCH d:
      Approve → ADD_TO_THREAD(h)(s)
      Deny → DISTRIBUTE_STAKE(h)(s)
@@ -1763,19 +1815,19 @@ TYPE State = Thread × Token × Content
 ## System Properties
 
 1. **Completeness**
-   - Every valid state is reachable
-   - All operations preserve invariants
-   - System is deadlock-free
+   - Every valid state is reachable through legal transitions
+   - All operations preserve system invariants
+   - System is deadlock-free and live
 
 2. **Safety**
-   - Token conservation
-   - Ownership integrity
-   - Temporal consistency
+   - Token conservation is maintained
+   - Ownership integrity is preserved
+   - Temporal consistency is guaranteed
 
 3. **Liveness**
-   - Message processing termination
-   - Approval resolution
-   - State convergence
+   - Message processing eventually terminates
+   - Approval resolution completes
+   - State converges to valid configurations
 
 
 ==

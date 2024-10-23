@@ -15,111 +15,130 @@ VERSION quantum_protocol:
 
 ## WebSocket Quantum Channel
 
-TYPE WebSocketQuantum = {
+TYPE WebSocketQuantum<T> = {
   state: {
-    connected: Superposition,      // Connection alive/dead superposition
-    messages: WaveFunction,        // Message state evolution
-    clients: EntanglementSet,      // Connected clients
-    threads: ContextSpace          // Thread state space
+    connected: Superposition<Bool>,      // Connection alive/dead superposition
+    messages: WaveFunction<T>,           // Message state evolution
+    clients: EntanglementSet<ClientId>,  // Connected clients
+    threads: ContextSpace<ThreadId>      // Thread state space
   },
   events: {
-    connect: ChannelCreation,
-    message: StateTransmission,
-    error: Decoherence,
-    close: ChannelCollapse
+    connect: ChannelCreation → Result<Connection>,
+    message: StateTransmission<T> → Result<()>,
+    error: Decoherence → Result<Recovery>,
+    close: ChannelCollapse → Result<()>
   }
 }
 
-SEQUENCE quantum_protocol:
+SEQUENCE quantum_protocol<T>:
   1. Channel Creation
-     - Socket opens → Quantum channel forms
-     - Client connects → State initialization
-     - Thread subscription → Context entanglement
-     - Keep-alive → Coherence maintenance
+     ```
+     establish_channel : () → Result<WebSocketQuantum<T>>
+     subscribe_thread : ThreadId → Result<EntanglementSet<ClientId>>
+     maintain_coherence : Connection → Result<()>
+     ```
 
   2. State Evolution
-     - Message send → Wavefunction propagation
-     - Message receive → State superposition
-     - State update → Partial measurement
-     - Broadcast → Entanglement spread
+     ```
+     transmit : Message → WaveFunction<T> → Result<()>
+     receive : WaveFunction<T> → Result<Superposition<T>>
+     update : Superposition<T> → Result<StateM<T>>
+     broadcast : StateM<T> → Result<EntanglementSet<ClientId>>
+     ```
 
   3. Measurement Events
-     - Message approval → State collapse
-     - Thread update → Context measurement
-     - Client disconnect → Local decoherence
-     - Error → Wave function collapse
+     ```
+     approve : Hash → Set<Author> → Result<Collapsed<T>>
+     update_thread : ThreadId → Result<ContextSpace<ThreadId>>
+     handle_disconnect : ClientId → Result<Decoherence>
+     recover_error : Error → Result<Recovery>
+     ```
 
 ## Vector Embedding Topology
 
-TYPE EmbeddingSpace = {
+TYPE EmbeddingSpace<T> = {
   structure: {
-    points: HilbertSpace,         // Semantic vector space
-    metric: DistanceTensor,       // Similarity measure
-    curvature: MetricField,       // Semantic density
-    paths: GeodesicSet            // Meaning connections
+    points: HilbertSpace<T>,           // Semantic vector space
+    metric: DistanceTensor<T>,         // Similarity measure
+    curvature: MetricField<T>,         // Semantic density
+    paths: GeodesicSet<ThreadId>       // Meaning connections
   },
   operations: {
-    embed: ContentProjection,
-    search: SimilarityMeasurement,
-    cluster: StateCollapse,
-    connect: PathwayFormation
+    embed: Content → Result<Vector>,
+    search: Vector → Result<Set<Vector>>,
+    cluster: Set<Vector> → Result<Collapsed<T>>,
+    connect: ThreadId → ThreadId → Result<Geodesic>
   }
 }
 
-SEQUENCE semantic_measurement:
+SEQUENCE semantic_measurement<T>:
   1. Content Embedding
-     - Text input → Quantum state preparation
-     - Vector generation → State superposition
-     - Dimension reduction → Subspace projection
-     - Normalization → State calibration
+     ```
+     prepare_state : Content → Result<Superposition<T>>
+     generate_vector : Superposition<T> → Result<Vector>
+     project_subspace : Vector → Result<Vector>
+     normalize_state : Vector → Result<Vector>
+     ```
 
   2. Similarity Search
-     - Query embedding → Measurement setup
-     - Nearest neighbors → State comparison
-     - Distance calculation → Observable measurement
-     - Result ranking → Probability collapse
+     ```
+     query_space : Vector → Result<SearchSpace<T>>
+     find_neighbors : SearchSpace<T> → Result<Set<Vector>>
+     compute_distance : Set<Vector> → Result<DistanceMetric>
+     rank_results : DistanceMetric → Result<Collapsed<T>>
+     ```
 
   3. Semantic Evolution
-     - New content → Space expansion
-     - Cluster formation → State attraction
-     - Path creation → Quantum tunneling
-     - Knowledge crystallization → Pattern emergence
+     ```
+     expand_space : Content → Result<HilbertSpace<T>>
+     form_clusters : Set<Vector> → Result<Set<Cluster>>
+     create_paths : Set<Cluster> → Result<GeodesicSet<ThreadId>>
+     crystallize : GeodesicSet<ThreadId> → Result<Pattern>
+     ```
 
 ## Integration Properties
 
-PROPERTY protocol_quantum_correspondence:
-  FORALL event IN WebSocketEvents:
-    quantum_nature(event) IMPLIES
-      preserves_coherence(event) AND
-      enables_measurement(event) AND
+PROPERTY protocol_quantum_correspondence<T>:
+  FORALL event: WebSocketQuantum<T>.events.
+    quantum_nature(event) ⟹
+      preserves_coherence(event) ∧
+      enables_measurement(event) ∧
       maintains_entanglement(event)
 
-PROPERTY embedding_topology_correspondence:
-  FORALL point IN EmbeddingSpace:
-    semantic_position(point) IMPLIES
-      defines_manifold(point) AND
-      allows_measurement(point) AND
+PROPERTY embedding_topology_correspondence<T>:
+  FORALL point: EmbeddingSpace<T>.structure.points.
+    semantic_position(point) ⟹
+      defines_manifold(point) ∧
+      allows_measurement(point) ∧
       supports_evolution(point)
 
 ## Implementation Mapping
 
 1. **WebSocket Protocol**
-   ```python
-   # WebSocket connection as quantum channel creation
-   @app.websocket("/ws")
-   async def websocket_endpoint(websocket: WebSocket):
-       await websocket.accept()  # Initialize quantum state
-       try:
-           while True:  # Maintain coherence
-               data = await websocket.receive_json()  # Quantum measurement
+   ```typescript
+   // WebSocket connection as quantum channel creation
+   async function establishQuantumChannel<T>(): Result<WebSocketQuantum<T>> {
+     return pipe(
+       await initConnection(),
+       establishSuperposition,
+       maintainCoherence,
+       handleDecoherence
+     )
+   }
    ```
 
 2. **Vector Operations**
-   ```python
-   # Embedding generation as quantum state preparation
-   async def get_embedding(content: str) -> List[float]:
-       vector = await generate_vector(content)  # Create superposition
-       return normalize(vector)  # Prepare measurement basis
+   ```typescript
+   // Embedding generation as quantum state preparation
+   async function prepareQuantumState<T>(
+     content: Content
+   ): Result<Superposition<T>> {
+     return pipe(
+       await generateVector(content),
+       normalizeState,
+       establishSuperposition
+     )
+   }
    ```
 
 Through this quantum lens, we see how:
@@ -127,3 +146,5 @@ Through this quantum lens, we see how:
 - Messages propagate as wave functions
 - Vector embeddings exist in superposition
 - Measurements collapse to classical states
+
+The protocol preserves quantum properties while enabling practical implementation.

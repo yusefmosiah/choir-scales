@@ -27,7 +27,7 @@ ASSUMPTION state_transitions:
 
 TYPE State = Thread × Token × Content
   WHERE
-    Thread = Set Author × Time × Hash
+    Thread = Set<Author> × Time × Hash
     Token = Balance × Stake × Distribution
     Content = Message × Embedding × Privacy
 
@@ -35,53 +35,55 @@ TYPE State = Thread × Token × Content
 
 1. **Creation Algebra**
 
-   CREATE : Author → ThreadId → State
-   CREATE(a)(t) = (
+   CREATE : Author → ThreadId → Result<State>
+   CREATE(a)(t) = Ok((
      {a},           // initial co-author set
      (0, ∅, ∅),    // token state
      (∅, ∅, public) // content state
-   )
+   ))
 
 2. **Submission Algebra**
 
-   SUBMIT : Message → State → State
+   SUBMIT : Message → State → Result<State>
    SUBMIT(m)(s) = MATCH s.authors:
      m.author ∈ s.authors →
        ADD_CONTENT(m)(s)
      _ →
-       ADD_SPEC(m, STAKE)(s)
+       VERIFY_STAKE(m.stake) >>=
+       ADD_SPEC(m)(s)
 
 3. **Approval Algebra**
 
-   APPROVE : Set Author → Hash → State → State
+   APPROVE : Set<Author> → Hash → State → Result<State>
    APPROVE(A)(h)(s) =
      LET votes = COUNT(A)
      IN  votes = |s.authors| →
            FINALIZE(h)(s)
          votes > 0 →
            DISTRIBUTE(A)(s.stakes[h])(s)
-         _ → s
+         _ →
+           Ok(s)
 
 ## Monadic Operations
 
 1. **State Monad**
    ```
-   TYPE StateM a = State → (a × State)
+   TYPE StateM<A> = State → Result<(A, State)>
 
-   RETURN : a → StateM a
-   RETURN x = λs → (x, s)
+   RETURN : A → StateM<A>
+   RETURN x = λs → Ok((x, s))
 
-   BIND : StateM a → (a → StateM b) → StateM b
+   BIND : StateM<A> → (A → StateM<B>) → StateM<B>
    BIND m f = λs →
-     LET (x, s') = m(s)
-     IN  f(x)(s')
+     m(s) >>= λ(x, s') →
+     f(x)(s')
    ```
 
 2. **Thread Operations**
    ```
-   ADD_AUTHOR : Author → StateM Unit
-   REMOVE_AUTHOR : Author → StateM Unit
-   UPDATE_BALANCE : Amount → StateM Unit
+   ADD_AUTHOR : Author → StateM<Unit>
+   REMOVE_AUTHOR : Author → StateM<Unit>
+   UPDATE_BALANCE : Amount → StateM<Unit>
    ```
 
 ## Invariant Preservation
@@ -111,13 +113,13 @@ TYPE State = Thread × Token × Content
 
 1. **Sequential Composition**
    ```
-   (f ∘ g)(s) = f(g(s))
+   (f >=> g)(s) = f(s) >>= g
    ```
 
 2. **Parallel Independence**
    ```
    ∀f g. independent(f, g) ⟹
-     f(g(s)) = g(f(s))
+     f(s) >>= g = g(s) >>= f
    ```
 
 3. **State Transitions**
@@ -129,35 +131,34 @@ TYPE State = Thread × Token × Content
 
 1. **Access Control**
    ```
-   CAN_ACCESS : Author → Content → Bool
+   CAN_ACCESS : Author → Content → Result<Bool>
    CAN_ACCESS(a)(c) =
-     a ∈ c.thread.authors ∨
-     c.privacy = public
+     Ok(a ∈ c.thread.authors ∨ c.privacy = public)
    ```
 
 2. **View Transformation**
    ```
-   VIEW : Author → State → State
-   VIEW(a)(s) = {
+   VIEW : Author → State → Result<State>
+   VIEW(a)(s) = Ok({
      authors: s.authors,
      tokens: IF a ∈ s.authors THEN s.tokens ELSE ∅,
      content: FILTER(CAN_ACCESS(a))(s.content)
-   }
+   })
    ```
 
 ## Distribution Laws
 
 1. **Token Distribution**
    ```
-   DISTRIBUTE : Set Author → Amount → State → State
+   DISTRIBUTE : Set<Author> → Amount → State → Result<State>
    DISTRIBUTE(A)(amt)(s) =
      LET share = amt / |A|
-     IN  FOLD(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
+     IN  FOLD_M(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
    ```
 
 2. **Stake Resolution**
    ```
-   RESOLVE : Hash → Decision → State → State
+   RESOLVE : Hash → Decision → State → Result<State>
    RESOLVE(h)(d)(s) = MATCH d:
      Approve → ADD_TO_THREAD(h)(s)
      Deny → DISTRIBUTE_STAKE(h)(s)
@@ -166,16 +167,16 @@ TYPE State = Thread × Token × Content
 ## System Properties
 
 1. **Completeness**
-   - Every valid state is reachable
-   - All operations preserve invariants
-   - System is deadlock-free
+   - Every valid state is reachable through legal transitions
+   - All operations preserve system invariants
+   - System is deadlock-free and live
 
 2. **Safety**
-   - Token conservation
-   - Ownership integrity
-   - Temporal consistency
+   - Token conservation is maintained
+   - Ownership integrity is preserved
+   - Temporal consistency is guaranteed
 
 3. **Liveness**
-   - Message processing termination
-   - Approval resolution
-   - State convergence
+   - Message processing eventually terminates
+   - Approval resolution completes
+   - State converges to valid configurations

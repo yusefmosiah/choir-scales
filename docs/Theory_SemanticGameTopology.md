@@ -15,119 +15,133 @@ VERSION semantic_game_topology:
 
 ## Semantic Field Dynamics
 
-TYPE SemanticField = {
-  embeddings: VectorSpace,
-  strategies: StrategyManifold,
-  value: ScalarField,
-  measurement: ObservationMetric
+TYPE SemanticField<T> = {
+  embeddings: VectorSpace<T>,
+  strategies: StrategyManifold<T>,
+  value: ScalarField<TokenAmount>,
+  measurement: ObservationMetric<T>
 }
 
-SEQUENCE field_evolution:
-  1. Message creates quantum state
-  2. Strategies form potential gradients
-  3. Value flows along geodesics
-  4. Measurement collapses possibilities
-  5. New equilibrium emerges
+SEQUENCE field_evolution<T>:
+  1. create_state : Message → Result<Superposition<T>>
+  2. form_gradient : Superposition<T> → Result<PotentialField<T>>
+  3. flow_value : PotentialField<T> → Result<ValueFlow>
+  4. measure_state : ValueFlow → Result<Collapsed<T>>
+  5. reach_equilibrium : Collapsed<T> → Result<Pattern>
 
 ## Strategic Topology
 
-TYPE StrategySpace = {
-  actions: VectorField,
-  payoffs: ScalarField,
-  connections: FiberBundle,
-  sparsity: DensityMetric
+TYPE StrategySpace<T> = {
+  actions: VectorField<Action>,
+  payoffs: ScalarField<TokenAmount>,
+  connections: FiberBundle<ThreadId>,
+  sparsity: DensityMetric<T>
 }
 
-FUNCTION compute_sparsity_pressure(point: StrategySpace) -> Force:
-  PIPE point THROUGH
-    measure_semantic_density
-    calculate_innovation_gradient
-    apply_quality_weighting
-    normalize_force_field
+FUNCTION compute_sparsity_pressure<T>(
+  point: StrategySpace<T>
+) -> Result<Force> =
+  point
+    |> measure_semantic_density
+    |> calculate_innovation_gradient
+    |> add_quality_weighting
+    |> normalize_force_field
 
-PROPERTY strategic_continuity:
-  FORALL s1, s2 IN StrategySpace:
-    connected(s1, s2) IMPLIES
-      continuous_payoff_flow(s1, s2)
+PROPERTY strategic_continuity<T>:
+  FORALL s1 s2: StrategySpace<T>.
+    connected(s1, s2) ⟹
+      continuous_payoff_flow(s1, s2) ∧
+      preserves_topology(s1, s2)
 
 ## Measurement Mechanics
 
-TYPE ObservationEvent = {
+TYPE ObservationEvent<T> = {
   observer: CoAuthor,
-  target: SemanticState,
+  target: SemanticState<T>,
   context: ThreadSpace,
-  outcome: Collapsed
+  outcome: Collapsed<T>
 }
 
-SEQUENCE approval_collapse:
-  1. Spec enters superposition
-  2. Co-authors entangle with state
-  3. Approval votes create measurement
-  4. Unanimous consent collapses state
-  5. Value crystallizes in thread
+SEQUENCE approval_collapse<T>:
+  1. enter_superposition : Message → Result<Superposition<T>>
+  2. entangle_observers : Set<CoAuthor> → Result<EntanglementSet<CoAuthor>>
+  3. collect_votes : EntanglementSet<CoAuthor> → Result<VoteSet>
+  4. collapse_state : VoteSet → Result<Collapsed<T>>
+  5. crystallize_value : Collapsed<T> → Result<TokenAmount>
 
 ## Value Flow Topology
 
-TYPE ValueManifold = {
-  potential: ScalarField,
-  flow: VectorField,
-  curvature: MetricTensor,
-  singularities: Set Point
+TYPE ValueManifold<T> = {
+  potential: ScalarField<TokenAmount>,
+  flow: VectorField<ValueFlow>,
+  curvature: MetricTensor<T>,
+  singularities: Set<CriticalPoint>
 }
 
-FUNCTION trace_value_flow(start: Point, end: Point) -> Geodesic:
+FUNCTION trace_value_flow<T>(
+  start: Point<T>,
+  end: Point<T>
+) -> Result<Geodesic> =
   REQUIRE connected(start, end)
-  PIPE (start, end) THROUGH
-    compute_potential_difference
-    find_minimal_path
-    verify_continuity
+  RETURN pipe(
+    compute_potential_difference(start, end),
+    find_minimal_path,
+    verify_continuity,
     ensure_conservation
+  )
 
 ## Sparsity as Curvature
 
-TYPE SparsityMetric = ThreadSpace -> Curvature
+TYPE SparsityMetric<T> = ThreadSpace → Result<Curvature>
 
-FUNCTION compute_curvature(message: Message, space: ThreadSpace) -> Curvature:
-  PIPE message THROUGH
-    embed_in_space(space)
-    measure_local_density
-    calculate_semantic_distance
+FUNCTION compute_curvature<T>(
+  message: Message,
+  space: ThreadSpace
+) -> Result<Curvature> =
+  pipe(
+    embed_in_space(message, space),
+    measure_local_density,
+    calculate_semantic_distance,
     derive_curvature_tensor
+  )
 
 PROPERTY curvature_incentive:
-  FORALL m IN Messages:
-    high_curvature(m) IMPLIES
-      high_reward_potential(m)
+  FORALL m: Message.
+    high_curvature(m) ⟹
+      high_reward_potential(m) ∧
+      innovation_aligned(m)
 
 ## Quantum Game Dynamics
 
-TYPE GameState = {
-  quantum: SuperPosition,
+TYPE GameState<T> = {
+  quantum: Superposition<Strategy>,
   classical: Strategy,
-  measurement: Observation,
-  payoff: Value
+  measurement: ObservationEvent<T>,
+  payoff: TokenAmount
 }
 
-SEQUENCE strategic_evolution:
-  1. Strategy creates superposition
-  2. Value field shapes possibilities
-  3. Observation collapses choices
-  4. Payoffs crystallize
-  5. New strategies emerge
+SEQUENCE strategic_evolution<T>:
+  1. create_superposition : Strategy → Result<Superposition<Strategy>>
+  2. shape_possibilities : ValueField<T> → Result<WaveFunction<Strategy>>
+  3. observe_choices : WaveFunction<Strategy> → Result<Collapsed<Strategy>>
+  4. crystallize_payoffs : Collapsed<Strategy> → Result<TokenAmount>
+  5. evolve_strategies : TokenAmount → Result<Strategy>
 
 ## Integration Properties
 
-PROPERTY semantic_game_duality:
-  FORALL thread IN ThreadSpace:
-    optimal_strategy(thread) IMPLIES
-      minimal_semantic_distance(thread) AND
-      maximal_value_flow(thread)
+PROPERTY semantic_game_duality<T>:
+  FORALL thread: ThreadSpace.
+    optimal_strategy(thread) ⟹
+      minimal_semantic_distance(thread) ∧
+      maximal_value_flow(thread) ∧
+      preserves_coherence(thread)
 
-PROPERTY measurement_topology:
-  FORALL obs IN Observations:
-    measurement_collapse(obs) IMPLIES
-      continuous_value_transfer(obs) AND
-      preserved_fiber_structure(obs)
+PROPERTY measurement_topology<T>:
+  FORALL obs: ObservationEvent<T>.
+    measurement_collapse(obs) ⟹
+      continuous_value_transfer(obs) ∧
+      preserved_fiber_structure(obs) ∧
+      maintains_entanglement(obs)
 
 Through this integration we see how:
 - Semantic fields shape strategic spaces

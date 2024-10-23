@@ -17,52 +17,45 @@ VERSION integration_system:
 
 1. **Vector Embeddings as Quantum States**
 
-   TYPE SemanticState =
-     | Superposition Vector    // Before observation
-     | Collapsed Content       // After consensus
-     | Entangled [ThreadId]   // Cross-thread reference
+   TYPE SemanticState<T> =
+     | Superposition(Vector)    // Before observation
+     | Collapsed(T)            // After consensus
+     | Entangled(Set<ThreadId>) // Cross-thread reference
 
    PROPERTY quantum_measurement:
-     FORALL state: SemanticState:
-       measure(state) IMPLIES
-         no_further_superposition(state)
+     FORALL s: SemanticState<T>.
+       measure(s) >>= λr →
+         MATCH r:
+           Collapsed(_) → no_further_superposition(s)
+           _ → maintains_coherence(s)
 
 2. **Chorus Loop as Quantum Evolution**
 
-   TYPE ChorusState = {
-     messages: List Message,
-     context: SemanticState,
-     sources: List Source,
+   TYPE ChorusState<T> = {
+     messages: List<Message>,
+     context: SemanticState<T>,
+     sources: List<Source>,
      step: Step
    }
 
    SEQUENCE chorus_evolution:
-     1. Create initial superposition from message
-     2. Entangle with historical context
-     3. Allow quantum interference
-     4. Perform partial observation
-     5. Collapse if coherent
-     6. Yield observable result
-
-   FUNCTION evolve(message, state) -> ChorusState:
-     PIPE message THROUGH
-       create_superposition
-       entangle_with(state)
-       allow_interference
-       partial_observe
-       maybe_collapse
-       prepare_output
+     1. prepare_state : Message → Result<SemanticState<T>>
+     2. entangle_context : SemanticState<T> → State → Result<SemanticState<T>>
+     3. allow_interference : SemanticState<T> → Result<SemanticState<T>>
+     4. partial_observe : SemanticState<T> → Result<SemanticState<T>>
+     5. maybe_collapse : SemanticState<T> → Result<T>
+     6. prepare_output : T → Result<Response>
 
 3. **WebSocket Protocol as Measurement**
 
-   TYPE Connection = Quantum Channel
-   TYPE Event = Quantum Information
+   TYPE Connection = Quantum<Channel>
+   TYPE Event = Quantum<Information>
 
    SEQUENCE measurement_protocol:
-     1. Establish quantum channel (connection)
-     2. Transmit quantum information (events)
-     3. Perform measurements (state updates)
-     4. Handle decoherence (disconnection)
+     1. establish : () → Result<Connection>
+     2. transmit : Connection → Event → Result<()>
+     3. measure : Connection → Result<State>
+     4. handle_decoherence : Connection → Error → Result<()>
 
 ## Topological Manifestation
 
@@ -70,126 +63,94 @@ VERSION integration_system:
 
    TYPE ThreadSpace = {
      state: ManifoldPoint,
-     messages: VectorField,
-     value: ScalarField,
-     connections: FiberBundle
+     messages: VectorField<Message>,
+     value: ScalarField<TokenAmount>,
+     connections: FiberBundle<ThreadId>
    }
 
    SEQUENCE value_flow:
-     1. Message creates local curvature
-     2. Token stake forms potential well
-     3. Quality consensus deepens well
-     4. Value flows along gradients
-     5. New messages respond to field
+     1. create_curvature : Message → Result<LocalCurvature>
+     2. form_potential : TokenAmount → Result<PotentialWell>
+     3. deepen_well : Set<Approval> → Result<PotentialWell>
+     4. flow_value : PotentialWell → Result<ValueFlow>
+     5. respond_field : ValueFlow → Result<Message>
 
 2. **Value Field Gradients**
 
-   FUNCTION compute_gradient(point: ManifoldPoint) -> Field:
-     PIPE point THROUGH
-       measure_local_density
-       calculate_token_pressure
-       add_quality_weights
-       normalize_field
+   FUNCTION compute_gradient(point: ManifoldPoint) -> Result<Field> =
+     point
+       |> measure_local_density
+       |> calculate_token_pressure
+       |> add_quality_weights
+       |> normalize_field
 
    PROPERTY gradient_flow:
-     FORALL p1, p2 IN ThreadSpace:
-       connected(p1, p2) IMPLIES
+     FORALL p1 p2: ManifoldPoint.
+       connected(p1, p2) ⟹
          continuous_value_flow(p1, p2)
 
 3. **Database as Manifold Chart**
 
    TYPE DatabaseChart = {
-     embeddings: VectorSpace,
-     metadata: FiberBundle,
-     indices: Atlas
+     embeddings: VectorSpace<Embedding>,
+     metadata: FiberBundle<Metadata>,
+     indices: Atlas<ThreadId>
    }
 
-   FUNCTION chart_transition(from: Chart, to: Chart) -> Mapping:
+   FUNCTION chart_transition(
+     from: Chart,
+     to: Chart
+   ) -> Result<Mapping> =
      REQUIRE compatible_overlap(from, to)
      RETURN smooth_transition_map(from, to)
 
-## Game Theoretic Implementation
-
-1. **Strategy Space**
-
-   TYPE Strategy = ThreadState -> Action
-   TYPE Payoff = TokenValue
-
-   FUNCTION evaluate_strategy(s: Strategy, state: ThreadState) -> Payoff:
-     PIPE state THROUGH
-       apply_strategy(s)
-       compute_value_flow
-       measure_token_return
-
-2. **Sparsity as Strategic Pressure**
-
-   FUNCTION compute_reward(message: Message, thread: Thread) -> TokenValue:
-     PIPE message THROUGH
-       measure_semantic_distance(thread)
-       scale_by_innovation
-       adjust_for_quality
-       apply_sparsity_bonus
-
-3. **Security Through Topology**
-
-   TYPE SecurityProperty = ThreadSpace -> Bool
-
-   FUNCTION verify_security(space: ThreadSpace) -> Result:
-     PIPE space THROUGH
-       check_local_invariants
-       verify_global_properties
-       validate_value_flows
-       ensure_token_conservation
-
-## Algebraic Structure
+## Implementation Mapping
 
 1. **State Transitions**
 
-   TYPE StateTransition = ThreadState -> Action -> Result
+   TYPE StateTransition<A> = ThreadState → Action → Result<A>
 
-   FUNCTION validate_transition(t: StateTransition) -> Bool:
-     PIPE t THROUGH
-       check_invariant_preservation
-       verify_token_conservation
-       ensure_coherence
-       validate_causality
+   FUNCTION validate_transition(t: StateTransition<A>) -> Result<Bool> =
+     t |> check_invariant_preservation
+       |> verify_token_conservation
+       |> ensure_coherence
+       |> validate_causality
 
    PROPERTY transition_composition:
-     FORALL t1, t2: StateTransition:
-       compose(t1, t2) IMPLIES
-         preserves_properties(t1) AND
+     FORALL t1 t2: StateTransition<A>.
+       compose(t1, t2) ⟹
+         preserves_properties(t1) ∧
          preserves_properties(t2)
 
 2. **Compositional Properties**
 
-   TYPE ThreadOperation = {
+   TYPE ThreadOperation<A> = {
      action: Action,
      pre_state: ThreadState,
      post_state: ThreadState,
-     invariants: Set Property
+     invariants: Set<Property>
    }
 
    SEQUENCE operation_composition:
-     1. Verify pre-conditions
-     2. Apply operation
-     3. Check invariants
-     4. Update state
-     5. Emit events
+     1. verify_pre : ThreadOperation<A> → Result<()>
+     2. apply_op : ThreadOperation<A> → Result<A>
+     3. check_inv : ThreadOperation<A> → Result<()>
+     4. update : ThreadOperation<A> → Result<State>
+     5. emit : ThreadOperation<A> → Result<Event>
 
-3. **Implementation Mapping**
+3. **Implementation Verification**
 
-   TYPE Implementation = {
+   TYPE Implementation<A> = {
      theoretical: Property,
-     practical: Verification,
-     mapping: Theory -> Practice
+     practical: Verification<A>,
+     mapping: Theory → Practice
    }
 
-   FUNCTION verify_implementation(impl: Implementation) -> Bool:
-     PIPE impl THROUGH
-       map_theoretical_to_practical
-       verify_preservation
-       check_completeness
-       validate_coherence
+   FUNCTION verify_implementation<A>(impl: Implementation<A>) -> Result<Bool> =
+     impl |> map_theoretical_to_practical
+          |> verify_preservation
+          |> check_completeness
+          |> validate_coherence
 
 ## Unified View
 
