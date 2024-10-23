@@ -173,8 +173,7 @@ spl-associated-token-account = "2.2"
 
 ## Version History
 
-Version 0.1.0 (October 2024)
-
+Version 0.1.0 (October 31st, 2023)
 - Initial implementation
 - Core thread functionality
 - Basic message handling

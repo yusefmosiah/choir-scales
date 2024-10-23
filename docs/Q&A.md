@@ -1,10 +1,26 @@
 # Choir Project Questions and Discussion Points
 
-After reviewing the updated project documentation and recent clarifications, the following questions and areas for discussion have been addressed:
+VERSION qa_system:
+  invariants: {
+    "Core design decisions",
+    "Architectural boundaries",
+    "Feature requirements"
+  }
+  assumptions: {
+    "Implementation choices",
+    "Scaling decisions",
+    "Evolution paths"
+  }
+  implementation: "0.1.0"
 
 ---
 
 ## 1. Thread Ownership and Co-authorship
+
+ASSUMPTION ownership_model:
+  "Simple co-author equality model"
+  "May introduce governance layers"
+  "Must maintain clear ownership"
 
 - **Question**: How does the concept of "co-authors" align with the initial thread creator?
 - **Answer**: The initial thread creator is the first co-author. Every message is owned by its creator, and threads are owned by the creators of the messages within them. This simplifies the ownership model and aligns with the collaborative nature of the platform.
@@ -13,7 +29,12 @@ After reviewing the updated project documentation and recent clarifications, the
 
 ## 2. Message Approval Process
 
-- **Question**: How does the "spec" (speculative response) mechanism work in relation to the existing approval process?
+ASSUMPTION approval_process:
+  "Unanimous approval requirement"
+  "May introduce weighted voting"
+  "Must maintain quality control"
+
+- **Question**: How does the "spec" mechanism work in relation to the existing approval process?
 - **Answer**: The "spec" mechanism replaces the existing approval process on a 1-to-1 basis. This streamlines the contribution process while maintaining the quality control aspect of the platform.
 
 ---
@@ -73,6 +94,11 @@ After reviewing the updated project documentation and recent clarifications, the
 ---
 
 ## Future Considerations
+
+ASSUMPTION future_development:
+  "Core feature set defined"
+  "May expand capabilities"
+  "Must maintain system coherence"
 
 - Post-MVP, threads could potentially hold SOL, stablecoins, or DeFi assets.
 - AI-enabled group chats may manage these assets in the future.

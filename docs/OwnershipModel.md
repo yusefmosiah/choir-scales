@@ -1,80 +1,101 @@
 # Choir Ownership Model
 
-## Current State
+VERSION ownership_system:
+  invariants: {
+    "Thread must have at least one co-author",
+    "Co-author rights are non-transferable",
+    "Thread token balance integrity"
+  }
+  assumptions: {
+    "Co-authorship approval model",
+    "Divestment mechanics",
+    "Thread token distribution"
+  }
+  implementation: "0.1.0"
 
-The Choir platform implements a unique ownership model that emphasizes collaborative content creation and curation. This document outlines the current state of ownership within Choir and provides guidelines for implementation in the accelerated MVP launch (October 31st, 2023).
+## Core Ownership Concepts
 
-### Key Concepts
+ASSUMPTION co_authorship:
+  "Unanimous approval for new co-authors"
+  "May introduce weighted voting in future"
+  "Must maintain quality control"
 
-1. **Message Ownership**
+ASSUMPTION divestment:
+  "Equal share distribution on divestment"
+  "May introduce vesting periods"
+  "Must preserve token conservation"
 
-   - Each message is owned by its creator.
-   - Messages are the fundamental units of content within Choir.
+## Thread Ownership
 
-2. **Thread Ownership**
+1. **Ownership Properties**
+   - Messages owned by creators
+   - Threads owned by co-authors collectively
+   - Token balances owned by thread PDA
 
-   - Threads are owned collectively by the creators of the messages within them (co-authors).
-   - The initial thread creator is the first co-author.
+2. **Co-authorship Rules**
+   - Initial thread creator is first co-author
+   - New co-authors added through spec approval
+   - Co-authors can divest their share
 
-3. **Co-authorship**
+## Token Integration
 
-   - Co-authors have full read-write access to the thread.
-   - New co-authors are added when their messages are approved and published in the thread.
+ASSUMPTION token_mechanics:
+  "Simple token distribution model"
+  "May introduce complex reward structures"
+  "Must maintain economic incentives"
 
-4. **Thread Accessibility**
+1. **Token Flow**
+   - Approved messages add to thread balance
+   - Denied specs distribute to deniers
+   - Mixed decisions return to treasury
 
-   - All chat threads are accessible at `choir.chat/stream/<thread_id>`.
-   - Co-authors have full read-write access to the thread.
-   - Non-co-authors can view AI-generated summaries of the thread.
+2. **Divestment Process**
+   - Co-authors can divest at any time
+   - Receive (1 / n-1) share of balance
+   - Remaining co-authors maintain thread
 
-5. **Speculative Responses ("Specs")**
+## Access Control
 
-   - Non-co-authors can pay CHOIR tokens to submit a speculative response ("spec") to a thread.
-   - Co-authors have a 7-day window to approve or deny the spec.
-   - If approved unanimously, the spec is published, and the contributor becomes a co-author.
-   - If denied, the spec is rejected, and rejecting co-authors split the staked tokens.
+ASSUMPTION access_model:
+  "Binary co-author/non-co-author distinction"
+  "May introduce graduated access levels"
+  "Must maintain clear ownership boundaries"
 
-6. **Token Mechanics**
+1. **Co-author Rights**
+   - Full read-write access
+   - Approval/denial rights
+   - Divestment rights
 
-   - Threads have Solana accounts that store CHOIR tokens.
-   - When a new message is approved, staked tokens go to the thread's token balance.
-   - When a message is denied:
-     - Rejecting co-authors split the staked tokens.
-     - Any approvers get nothing.
-     - Remaining tokens go to the Choir Treasury.
+2. **Non-co-author Access**
+   - Read public content
+   - Submit specs with stake
+   - View AI summaries
 
-7. **Divestment**
+## State Management
 
-   - Co-authors can divest their token share from a thread at any time.
-   - Upon divestment, they receive a (1 / n - 1) share of the thread's CHOIR tokens.
+ASSUMPTION state_handling:
+  "Solana as ownership source of truth"
+  "May introduce caching layers"
+  "Must maintain state consistency"
 
-8. **AI-Generated Summaries**
-   - Non-co-authors can access AI-generated summaries of threads.
-   - Summaries are designed to create interest and stimulate engagement.
-   - They compress content to tease the full discussion.
+1. **Ownership State**
+   - Stored on Solana
+   - Thread PDA contains co-authors
+   - Token balances in PDAs
 
-## Path Forward
+2. **Content State**
+   - Content in Qdrant
+   - Hashes on Solana
+   - Metadata distributed
 
-To implement and support this ownership model in the Choir codebase by October 31st, the following steps will be taken:
+## Implementation Notes
 
-1. **Solana Program Development (Oct 24)**
-   - Implement Thread account structure
-   - Develop message and spec handling
-   - Create token management system
+NOTE future_extensions:
+  "Current model focuses on basic ownership"
+  "May add governance features"
+  "Must maintain ownership clarity"
 
-2. **Backend Integration (Oct 25)**
-   - Update Message Model with ownership fields
-   - Implement ThreadOwnership handling
-   - Integrate with Solana program
-
-3. **Frontend Implementation (Oct 26)**
-   - Update UI components for ownership display
-   - Implement co-authorship management interface
-   - Add token balance visualization
-
-4. **Testing and Refinement (Oct 27-30)**
-   - Comprehensive testing of ownership mechanics
-   - Security audit of token operations
-   - User feedback integration
-
-By following these steps, Choir can fully realize its unique ownership model, fostering a collaborative environment where high-quality content creation is incentivized and rewarded.
+NOTE scalability:
+  "Current design optimized for clarity"
+  "May optimize for high transaction volume"
+  "Must preserve ownership guarantees"

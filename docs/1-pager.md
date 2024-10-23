@@ -1,8 +1,26 @@
-# Choir: Revolutionizing AI through Collaborative Chat and Tokenomics
+# Choir: Collaborative Chat with Token-Driven Quality
 
----
+VERSION platform_overview:
+  invariants: {
+    "Token-driven quality control",
+    "Collaborative ownership model",
+    "AI dataset generation"
+  }
+  assumptions: {
+    "Chat-based interaction model",
+    "Token incentive structure",
+    "AI summary generation"
+  }
+  implementation: "0.1.0"
 
-**Mission**: To create the world's highest signal human dataset by leveraging a decentralized, token-driven chat platform, ultimately developing AI models that excel in qualitative, stylistic, and artistic dimensions.
+## Mission
+
+ASSUMPTION platform_focus:
+  "Chat-based content generation"
+  "May expand to other content types"
+  "Must maintain quality control"
+
+To create the world's highest signal human dataset by leveraging a decentralized, token-driven chat platform, ultimately developing AI models that excel in qualitative, stylistic, and artistic dimensions.
 
 ---
 

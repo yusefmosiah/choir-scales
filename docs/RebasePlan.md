@@ -1,7 +1,72 @@
 # Choir Rebase Plan
 
+VERSION rebase_system:
+  invariants: {
+    "Core functionality preservation",
+    "State model consistency",
+    "Security requirements"
+  }
+  assumptions: {
+    "Development timeline",
+    "Resource availability",
+    "Technical dependencies"
+  }
+  implementation: "0.1.0"
+
 ## Overview
-Rebase the Choir project to create-solana-dapp template, prioritizing the Solana program development first, followed by frontend and backend integration. Target launch: October 31st.
+
+ASSUMPTION development_pace:
+  "Accelerated timeline for MVP"
+  "May adjust based on blockers"
+  "Must maintain quality standards"
+
+The purpose of this rebase is to establish a robust, secure, and maintainable foundation for Choir by:
+- Building on proven patterns from create-solana-dapp
+- Implementing comprehensive testing from the start
+- Following security best practices at every layer
+- Ensuring maintainable and documented code
+- Creating clear upgrade paths for future development
+
+## Core Principles
+
+1. **Security First**
+   - Comprehensive testing suite
+   - Bankrun for fast unit tests
+   - Trident for fuzzing
+   - Clear security boundaries
+   - Explicit error handling
+
+2. **Maintainable Architecture**
+   - Clean separation of concerns
+   - Well-documented interfaces
+   - Type-safe implementations
+   - Consistent patterns
+   - Clear state management
+
+3. **Deployment Stability**
+   - Containerized development
+   - CI/CD automation
+   - Environment parity
+   - Monitoring and logging
+   - Recovery procedures
+
+## Implementation Focus
+
+Each phase emphasizes:
+1. **Testing**: Write tests before implementation
+2. **Security**: Review and verify security properties
+3. **Documentation**: Keep docs in sync with code
+4. **Maintainability**: Follow consistent patterns
+5. **Monitoring**: Add observability from start
+
+## Success Criteria
+
+Beyond features, measure:
+1. **Test Coverage**: > 90%
+2. **Security Audits**: Pass all checks
+3. **Documentation**: Complete and current
+4. **Performance**: Meet all SLAs
+5. **Maintainability**: Clear upgrade paths
 
 ## Phase 1: Infrastructure Setup (Oct 23)
 1. **Development Environment**

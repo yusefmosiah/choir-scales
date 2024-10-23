@@ -1,10 +1,33 @@
 # Chorus Development Plan
 
+VERSION chorus_system:
+  invariants: {
+    "AEIOU(Y) loop structure",
+    "Source integration requirements",
+    "Token-aware citations"
+  }
+  assumptions: {
+    "AI model capabilities",
+    "Response generation patterns",
+    "Source handling methods"
+  }
+  implementation: "0.1.0"
+
 ## Overview
 
-This document outlines the development plan for enhancing the Chorus loop, focusing on improving source handling, integration, and presentation throughout the process. The plan maintains the AEIOU(Y) structure (Action, Experience, Intention, Observation, Update, Yield) while introducing more interactive and context-aware ways of presenting sources to users, aligning with Choir's ownership model and token mechanics.
+ASSUMPTION ai_integration:
+  "Current LLM integration patterns"
+  "May evolve with new AI capabilities"
+  "Must maintain response quality"
+
+This document outlines the development plan for enhancing the Chorus loop, focusing on improving source handling, integration, and presentation throughout the process.
 
 ## Chorus Loop Steps
+
+ASSUMPTION loop_structure:
+  "Six-step AEIOU(Y) process"
+  "May introduce parallel processing"
+  "Must maintain logical progression"
 
 ### 1. Action Step
 - User input initiates the process
@@ -39,6 +62,11 @@ This document outlines the development plan for enhancing the Chorus loop, focus
 
 ## Implementation Timeline
 
+ASSUMPTION development_phases:
+  "Phased implementation approach"
+  "May adjust based on dependencies"
+  "Must maintain feature completeness"
+
 ### Week 1 (Oct 23-29): Accelerated Development
 - Oct 23: Infrastructure setup, DNS, and website
 - Oct 24: Solana program development
@@ -53,11 +81,22 @@ This document outlines the development plan for enhancing the Chorus loop, focus
 - Oct 31: Public launch
 
 ## Future Enhancements
+
+ASSUMPTION enhancement_priorities:
+  "Focus on core functionality first"
+  "May add advanced features later"
+  "Must maintain system coherence"
+
 - Implement caching for frequently accessed sources
 - Develop more sophisticated AI summarization techniques
 - Integrate full Solana token system
 
 ## Implementation Details
+
+ASSUMPTION implementation_approach:
+  "Component-based architecture"
+  "May introduce microservices"
+  "Must maintain system integrity"
 
 ### Data Models
 
@@ -141,9 +180,51 @@ This document outlines the development plan for enhancing the Chorus loop, focus
 
 ## Deployment Strategy
 
+ASSUMPTION deployment_model:
+  "Containerized deployment"
+  "May introduce additional infrastructure"
+  "Must maintain reliability"
+
 We are using a containerized approach for deploying both the frontend and backend:
 
 - The application is containerized using Docker, combining the Next.js frontend and FastAPI backend in a single image.
 - The container is built and pushed to Azure Container Registry (choir.azurecr.io).
 - Deployment is managed through GitHub Actions, which builds the container and deploys it to Azure Container Instances.
 - This approach ensures consistency between development and production environments and simplifies the deployment process.
+
+## Development Methodology
+
+ASSUMPTION dev_approach:
+  "Documentation-driven development"
+  "AI-assisted code generation"
+  "Test-first implementation"
+
+1. **Documentation Pipeline**
+   ```
+   SEQUENCE doc_to_code:
+     1. Comprehensive documentation
+     2. Test specification extraction
+     3. AI-assisted test generation
+     4. Implementation scaffolding
+     5. Code completion   ```
+
+2. **AI-Assisted Development**
+   - Using Cursor for intelligent code completion
+   - Leveraging LLM context for pattern matching
+   - Generating test cases from documentation
+   - Maintaining consistency across components
+
+3. **Test-Driven Security**
+   - Documentation defines security boundaries
+   - Tests verify security properties
+   - AI helps identify edge cases
+   - Continuous security validation
+
+4. **Development Flow**
+   ```
+   SEQUENCE implementation_flow:
+     1. Write/update documentation
+     2. Extract test specifications
+     3. Generate test suite
+     4. Implement with AI assistance
+     5. Verify against specs   ```

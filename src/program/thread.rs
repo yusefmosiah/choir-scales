@@ -58,6 +58,7 @@ pub struct Approval {
     pub timestamp: i64,
 }
 
+// Modern Anchor account validation
 #[derive(Accounts)]
 pub struct InitializeThread<'info> {
     #[account(
