@@ -60,6 +60,11 @@
 │   ├── Entry_QA.md
 │   ├── Entry_Vision.md
 │   ├── Error_Correction_Layers.md
+│   ├── Frontend_AIResponse.md
+│   ├── Frontend_ChoirChat.md
+│   ├── Frontend_ChoirChat_UI.md
+│   ├── Frontend_ChorusPanel.md
+│   ├── Frontend_UserInput.md
 │   ├── Impl_API.md
 │   ├── Impl_ChorusLoop.md
 │   ├── Impl_Integration.md
@@ -114,12 +119,15 @@
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
 │   ├── Theory_TopologyExplained.md
+│   ├── To_Do.md
 │   ├── combined
+│   │   ├── Combined_Backend.md
 │   │   ├── Combined_Core.md
 │   │   ├── Combined_Crystallization.md
 │   │   ├── Combined_Dev.md
 │   │   ├── Combined_Entry.md
 │   │   ├── Combined_Error.md
+│   │   ├── Combined_Frontend.md
 │   │   ├── Combined_Impl.md
 │   │   ├── Combined_Implementation.md
 │   │   ├── Combined_Level.md
@@ -128,7 +136,8 @@
 │   │   ├── Combined_Model.md
 │   │   ├── Combined_Plan.md
 │   │   ├── Combined_State.md
-│   │   └── Combined_Theory.md
+│   │   ├── Combined_Theory.md
+│   │   └── Combined_To.md
 │   ├── scripts
 │   │   ├── combiner.sh
 │   │   └── update_tree.sh
@@ -230,4 +239,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-30 directories, 198 files
+30 directories, 207 files
