@@ -39,6 +39,7 @@
 │   ├── Core_StateTransitions.md
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
+│   ├── Crystallization_Map.md
 │   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
 │   ├── Dev_Plan.md
@@ -54,6 +55,7 @@
 │   ├── Entry_Overview.md
 │   ├── Entry_QA.md
 │   ├── Entry_Vision.md
+│   ├── Error_Correction_Layers.md
 │   ├── Impl_API.md
 │   ├── Impl_ChorusLoop.md
 │   ├── Impl_Integration.md
@@ -63,12 +65,13 @@
 │   ├── Impl_StateMachine.md
 │   ├── Impl_StateManagement.md
 │   ├── Impl_WebSocket.md
-│   ├── Level0_SystemOverview.md
-│   ├── Level1_BasicMechanics.md
-│   ├── Level2_CoreMechanics.md
-│   ├── Level3_ValueCreation.md
-│   ├── Level4_MetastableEmergence.md
-│   ├── Level5_QuantumSemantics.md
+│   ├── Implementation_Dependencies.md
+│   ├── Level_0_SystemOverview.md
+│   ├── Level_1_BasicMechanics.md
+│   ├── Level_2_CoreMechanics.md
+│   ├── Level_3_ValueCreation.md
+│   ├── Level_4_MetastableEmergence.md
+│   ├── Level_5_QuantumSemantics.md
 │   ├── Meta_Bridges.md
 │   ├── Meta_Density.md
 │   ├── Meta_Diagrams.md
@@ -87,6 +90,10 @@
 │   ├── Model_Ring.md
 │   ├── Model_ThreadEvolution.md
 │   ├── Plan_Hyperconverge.md
+│   ├── State
+│   ├── State_Boundaries.md
+│   ├── State_Transitions.md
+│   ├── Theory
 │   ├── Theory_Algebra.md
 │   ├── Theory_ApprovalMeasurement.md
 │   ├── Theory_ChorusQuantum.md
@@ -94,6 +101,7 @@
 │   ├── Theory_GameMechanicsAdversarial.md
 │   ├── Theory_GameMechanicsSparsity.md
 │   ├── Theory_Implementation.md
+│   ├── Theory_Implementation_Bridge.md
 │   ├── Theory_Integration.md
 │   ├── Theory_QuantumProtocol.md
 │   ├── Theory_SemanticGameTopology.md
@@ -106,12 +114,18 @@
 │   ├── Theory_TopologyExplained.md
 │   ├── combined
 │   │   ├── Combined_Core.md
+│   │   ├── Combined_Crystallization.md
 │   │   ├── Combined_Dev.md
 │   │   ├── Combined_Entry.md
+│   │   ├── Combined_Error.md
 │   │   ├── Combined_Impl.md
+│   │   ├── Combined_Implementation.md
+│   │   ├── Combined_Level.md
 │   │   ├── Combined_Levels.md
 │   │   ├── Combined_Meta.md
 │   │   ├── Combined_Model.md
+│   │   ├── Combined_Plan.md
+│   │   ├── Combined_State.md
 │   │   └── Combined_Theory.md
 │   ├── scripts
 │   │   ├── combiner.sh
@@ -214,4 +228,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-30 directories, 182 files
+32 directories, 194 files
