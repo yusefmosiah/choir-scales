@@ -25,6 +25,10 @@
 │   ├── requirements.txt
 │   └── utils.py
 ├── docs
+│   ├── Backend_Chorus.md
+│   ├── Backend_Database.md
+│   ├── Backend_Main.md
+│   ├── Backend_Models.md
 │   ├── Core_Blueprint.md
 │   ├── Core_Comprehensive.md
 │   ├── Core_Consistency.md
@@ -39,7 +43,7 @@
 │   ├── Core_StateTransitions.md
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
-│   ├── Crystallization_Map.md
+│   ├── Crystallization_Checklist.md
 │   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
 │   ├── Dev_Plan.md
@@ -90,10 +94,8 @@
 │   ├── Model_Ring.md
 │   ├── Model_ThreadEvolution.md
 │   ├── Plan_Hyperconverge.md
-│   ├── State
 │   ├── State_Boundaries.md
 │   ├── State_Transitions.md
-│   ├── Theory
 │   ├── Theory_Algebra.md
 │   ├── Theory_ApprovalMeasurement.md
 │   ├── Theory_ChorusQuantum.md
@@ -228,4 +230,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-32 directories, 194 files
+30 directories, 198 files

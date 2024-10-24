@@ -1,13 +1,3 @@
-# Crystallization Documentation 
-
-
-
-
-==
-Crystallization_Checklist
-==
-
-
 # Crystallization Checklist
 
 VERSION checklist_system:
