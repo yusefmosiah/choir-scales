@@ -99,6 +99,14 @@
 │   ├── Model_Ring.md
 │   ├── Model_ThreadEvolution.md
 │   ├── Plan_Hyperconverge.md
+│   ├── Reward_Service.md
+│   ├── Solana_lib.md
+│   ├── Solana_message.md
+│   ├── Solana_settlement.md
+│   ├── Solana_thread.md
+│   ├── Solana_thread_fuzzer.md
+│   ├── Solana_thread_test.md
+│   ├── Solana_validation.md
 │   ├── State_Boundaries.md
 │   ├── State_Transitions.md
 │   ├── Theory_Algebra.md
@@ -152,6 +160,9 @@
 ├── package.json
 ├── pnpm-lock.yaml
 ├── postcss.config.js
+├── program
+│   └── src
+│       └── lib.rs
 ├── public
 │   ├── favicon.ico
 │   ├── solanaLogo.png
@@ -239,4 +250,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-30 directories, 207 files
+32 directories, 216 files
