@@ -24,6 +24,78 @@
 │   ├── models.py
 │   ├── requirements.txt
 │   └── utils.py
+├── choir-new
+│   ├── LICENSE
+│   ├── README.md
+│   ├── anchor
+│   │   ├── Anchor.toml
+│   │   ├── Cargo.lock
+│   │   ├── Cargo.toml
+│   │   ├── migrations
+│   │   │   └── deploy.ts
+│   │   ├── programs
+│   │   │   └── basic
+│   │   │       ├── Cargo.toml
+│   │   │       ├── Xargo.toml
+│   │   │       └── src
+│   │   │           └── lib.rs
+│   │   ├── src
+│   │   │   ├── basic-exports.ts
+│   │   │   └── index.ts
+│   │   ├── target
+│   │   │   ├── idl
+│   │   │   │   └── basic.json
+│   │   │   └── types
+│   │   │       └── basic.ts
+│   │   ├── tests
+│   │   │   └── basic.spec.ts
+│   │   └── tsconfig.json
+│   ├── next.config.mjs
+│   ├── package.json
+│   ├── pnpm-lock.yaml
+│   ├── postcss.config.mjs
+│   ├── public
+│   │   └── logo.png
+│   ├── src
+│   │   ├── app
+│   │   │   ├── account
+│   │   │   │   ├── [address]
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── api
+│   │   │   │   └── hello
+│   │   │   │       └── route.ts
+│   │   │   ├── basic
+│   │   │   │   └── page.tsx
+│   │   │   ├── clusters
+│   │   │   │   └── page.tsx
+│   │   │   ├── favicon.ico
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   └── react-query-provider.tsx
+│   │   └── components
+│   │       ├── account
+│   │       │   ├── account-data-access.tsx
+│   │       │   ├── account-detail-feature.tsx
+│   │       │   ├── account-list-feature.tsx
+│   │       │   └── account-ui.tsx
+│   │       ├── basic
+│   │       │   ├── basic-data-access.tsx
+│   │       │   ├── basic-feature.tsx
+│   │       │   └── basic-ui.tsx
+│   │       ├── cluster
+│   │       │   ├── cluster-data-access.tsx
+│   │       │   ├── cluster-feature.tsx
+│   │       │   └── cluster-ui.tsx
+│   │       ├── dashboard
+│   │       │   └── dashboard-feature.tsx
+│   │       ├── solana
+│   │       │   └── solana-provider.tsx
+│   │       └── ui
+│   │           └── ui-layout.tsx
+│   ├── tailwind.config.ts
+│   └── tsconfig.json
 ├── docs
 │   ├── Backend_Chorus.md
 │   ├── Backend_Database.md
@@ -44,6 +116,9 @@
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
 │   ├── Crystallization_Checklist.md
+│   ├── Deploy_Predeployment.md
+│   ├── Deploy_Predeployment_Checklist.md
+│   ├── Deploy_Report.md
 │   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
 │   ├── Dev_Plan.md
@@ -132,6 +207,7 @@
 │   │   ├── Combined_Backend.md
 │   │   ├── Combined_Core.md
 │   │   ├── Combined_Crystallization.md
+│   │   ├── Combined_Deploy.md
 │   │   ├── Combined_Dev.md
 │   │   ├── Combined_Entry.md
 │   │   ├── Combined_Error.md
@@ -252,4 +328,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-32 directories, 218 files
+59 directories, 267 files
