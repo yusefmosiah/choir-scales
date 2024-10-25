@@ -1,4 +1,4 @@
-# Error Documentation 
+# Error Documentation - Error Handling
 
 
 

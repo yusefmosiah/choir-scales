@@ -139,6 +139,7 @@
 │   ├── Frontend_ChoirChat_UI.md
 │   ├── Frontend_ChorusPanel.md
 │   ├── Frontend_UserInput.md
+│   ├── Harmonic_Theory.md
 │   ├── Impl_API.md
 │   ├── Impl_ChorusLoop.md
 │   ├── Impl_Integration.md
@@ -215,6 +216,7 @@
 │   │   ├── Combined_Entry.md
 │   │   ├── Combined_Error.md
 │   │   ├── Combined_Frontend.md
+│   │   ├── Combined_Harmonic.md
 │   │   ├── Combined_Impl.md
 │   │   ├── Combined_Implementation.md
 │   │   ├── Combined_Level.md
@@ -228,6 +230,13 @@
 │   │   ├── Combined_Theory.md
 │   │   ├── Combined_V10.md
 │   │   └── Combined_V12.md
+│   ├── levels
+│   │   ├── level0.md
+│   │   ├── level1.md
+│   │   ├── level2.md
+│   │   ├── level3.md
+│   │   ├── level4.md
+│   │   └── level5.md
 │   ├── scripts
 │   │   ├── combiner.sh
 │   │   └── update_tree.sh
@@ -332,4 +341,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-59 directories, 271 files
+60 directories, 279 files

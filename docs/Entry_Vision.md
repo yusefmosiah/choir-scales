@@ -2,12 +2,12 @@
 
 VERSION vision_system:
   invariants: {
-    "Quality-driven collaboration",
+    "Quality-driven communication",
     "Distributed value creation",
     "Evolutionary potential"
   }
   assumptions: {
-    "Human creativity",
+    "Human harmony",
     "AI augmentation",
     "Network effects"
   }
@@ -15,35 +15,43 @@ VERSION vision_system:
 
 ## Core Vision
 
-Choir envisions a world where quality conversations create lasting value. By combining human insight with AI capabilities, we enable collaborative spaces where good ideas can grow and evolve naturally.
+Choir envisions a world where quality communication creates lasting value. Like voices joining in song, we enable collaborative spaces where ideas harmonize, evolve, and create something greater than the sum of their parts.
 
 ## Foundation
 
-At its heart, Choir is a chat platform with an unusual property: messages require unanimous approval from thread co-authors. This simple rule creates profound effects:
+At its heart, Choir is a communication platform with an unusual property: contributions require unanimous approval from thread co-authors. This simple rule creates profound effects:
 
-- Quality emerges from consensus
+- Quality emerges from harmony
 - Value accrues to contributors
 - Collaboration becomes ownership
 - Ideas evolve into assets
 
 ## Growth Pattern
 
-Threads in Choir aren't just containers for messages - they're living spaces that can evolve in unexpected ways. Like seeds that might become flowers or trees, threads contain potential that unfolds based on their participants and environment.
+Threads in Choir aren't just containers for messages - they're living spaces that can evolve in unexpected ways. Like musical themes that might become symphonies, threads contain potential that unfolds through synchrony and resonance.
+
+## Voice-First Future
+
+While beginning with text, Choir's natural form is voice - enabling participation while walking, driving, or simply living life. AI helps transform these communications into:
+- Dynamic audio experiences
+- Rich multimedia expression
+- Generative radio and video
+- The rhythm of daily life
 
 ## AI Integration
 
-AI serves not as a replacement but as an amplifier of human capability. It helps surface patterns, bridge perspectives, and accelerate understanding. The AI doesn't lead - it accompanies and augments the human journey of discovery.
+AI serves not as a replacement but as an amplifier of human communication. Like an instrument augmenting voice, it helps surface patterns, bridge perspectives, and accelerate understanding. The AI doesn't lead - it accompanies and harmonizes with the human journey of discovery.
 
 ## Token Mechanics
 
-The CHOIR token isn't just a currency - it's a tool for capturing and distributing value created through collaboration. As threads mature, tokens naturally flow to those who contribute to quality outcomes.
+The CHOIR token isn't just a currency - it's a tool for capturing and distributing value created through authentic communication. As threads mature, tokens naturally flow to those who contribute to the harmony.
 
 ## Network Effects
 
-Each successful thread strengthens the network. Quality attracts quality. Value creates value. The system naturally evolves toward higher forms of collaboration and more sophisticated value creation.
+Each resonant thread strengthens the network. Quality attracts quality. Harmony creates harmony. The system naturally evolves toward higher forms of synchrony and more sophisticated composition.
 
 ## Future Horizons
 
-We don't prescribe where threads might lead - we provide the conditions for organic growth. Some threads might remain pure conversation. Others might evolve in ways we haven't imagined.
+We don't prescribe where threads might lead - we provide the conditions for organic growth. Some threads might remain pure communication. Others might evolve into songs, dances, projects, or entirely new forms of human coordination.
 
-The beauty is in the emergence.
+The beauty is in the emergence - in letting natural human communication, augmented by AI and incentivized by tokens, create new possibilities for harmony and collective creation.
