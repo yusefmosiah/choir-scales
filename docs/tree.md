@@ -116,8 +116,9 @@
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
 │   ├── Crystallization_Checklist.md
-│   ├── Deploy_Predeployment.md
-│   ├── Deploy_Predeployment_Checklist.md
+│   ├── Data_Engine_Vision.md
+│   ├── Deploy_Checklist.md
+│   ├── Deploy_Render_Checklist.md
 │   ├── Deploy_Report.md
 │   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
@@ -184,6 +185,7 @@
 │   ├── Solana_validation.md
 │   ├── State_Boundaries.md
 │   ├── State_Transitions.md
+│   ├── Tech_Arts_Intersection.md
 │   ├── Theory_Algebra.md
 │   ├── Theory_ApprovalMeasurement.md
 │   ├── Theory_ChorusQuantum.md
@@ -203,6 +205,7 @@
 │   ├── Theory_Topology.md
 │   ├── Theory_TopologyExplained.md
 │   ├── To_Do.md
+│   ├── V12_Data_Engines.md
 │   ├── combined
 │   │   ├── Combined_Backend.md
 │   │   ├── Combined_Core.md
@@ -328,4 +331,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-59 directories, 267 files
+59 directories, 270 files

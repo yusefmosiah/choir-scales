@@ -4,209 +4,160 @@
 
 
 ==
-Deploy_Predeployment
+Deploy_Checklist
 ==
 
 
-# Deploy Predeployment Guide
+# Deploy Checklist for Azure Container Instances
 
-This guide will help you create a Dockerfile for deploying your project locally and then on Azure. Containerizing your application makes it easier to deploy and manage across different environments.
-
-## Step 1: Create a Dockerfile
-
-1. **Base Image**: Choose a base image that matches your application's runtime environment. For a Node.js application, you might use `node:18-alpine` for a lightweight image.
-
-2. **Set Working Directory**: Set the working directory inside the container.
-
-3. **Copy Files**: Copy your application files into the container.
-
-4. **Install Dependencies**: Install the necessary dependencies using `pnpm`.
-
-5. **Build Application**: If your application requires a build step (e.g., for a React app), include it.
-
-6. **Expose Ports**: Expose the necessary ports for your application.
-
-7. **Run the Application**: Specify the command to run your application.
-
-Here's a sample Dockerfile for a Node.js application using `pnpm`:
-
-```dockerfile
-# Use the official Node.js image.
-# https://hub.docker.com/_/node
-FROM node:18-alpine
-
-# Install pnpm
-RUN npm install -g pnpm
-
-# Set the working directory
-WORKDIR /app
-
-# Copy package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
-RUN pnpm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the application (if needed)
-RUN pnpm run build
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Run the application
-CMD ["pnpm", "start"]
-```
-
-## Step 2: Build and Run the Docker Image Locally
-
-1. **Build the Docker Image**: Run the following command in the directory containing your Dockerfile:
-
-   ```bash
-   docker build -t choir-collective .
-   ```
-
-2. **Run the Docker Container**: Start a container from the image:
-
-   ```bash
-   docker run -p 3000:3000 choir-collective
-   ```
-
-   This maps port 3000 on your host to port 3000 in the container.
-
-## Step 3: Deploy to Azure
-
-1. **Create an Azure Container Registry (ACR)**: If you don't have one, create it using the Azure portal or CLI.
-
-2. **Login to ACR**: Use the Azure CLI to log in to your ACR.
-
-   ```bash
-   az acr login --name <your-acr-name>
-   ```
-
-3. **Tag the Docker Image**: Tag your Docker image for the ACR.
-
-   ```bash
-   docker tag choir-collective <your-acr-name>.azurecr.io/choir-collective
-   ```
-
-4. **Push the Image to ACR**: Push your Docker image to the ACR.
-
-   ```bash
-   docker push <your-acr-name>.azurecr.io/choir-collective
-   ```
-
-5. **Deploy to Azure App Service**: Use Azure App Service to deploy the container.
-
-   ```bash
-   az webapp create --resource-group <your-resource-group> --plan <your-app-service-plan> --name <your-app-name> --deployment-container-image-name <your-acr-name>.azurecr.io/choir-collective
-   ```
-
-6. **Configure Continuous Deployment (Optional)**: Set up continuous deployment from your ACR to Azure App Service for automatic updates.
-
-## Step 4: Verify Deployment
-
-1. **Access the Application**: Visit the URL provided by Azure App Service to ensure your application is running.
-
-2. **Monitor Logs**: Use Azure's monitoring tools to check logs and ensure everything is functioning correctly.
-
-This guide provides a basic framework for containerizing and deploying your application. You can customize the Dockerfile and deployment steps based on your specific requirements and application architecture.
-
-
-==
-Deploy_Predeployment_Checklist
-==
-
-
-# Deploy Predeployment Checklist for AI Execution
-
-This checklist is designed to guide an AI model through the process of deploying a project locally and on Azure. Follow these steps to ensure a successful deployment. This is part of our documentation-driven development approach with AI supercoders.
+This checklist is designed to guide you through deploying a Docker container to Azure Container Instances (ACI). Follow these steps to ensure a successful deployment.
 
 **Instructions**: As you complete each task, mark it as done by changing `[ ]` to `[x]`.
 
-## Dockerfile Creation
+## Prerequisites
 
-- [ ] **Select Base Image**: Choose a base image that matches the application's runtime environment (e.g., `node:18-alpine` for Node.js). Ensure compatibility with the application's dependencies.
+- [x] **Azure CLI**: Ensure you have the Azure CLI installed and updated to the latest version.
+- [x] **Azure Subscription**: Verify you have an active Azure subscription.
+- [x] **Docker Installed**: Ensure Docker is installed and running on your local machine.
 
-- [ ] **Set Working Directory**: Define the working directory inside the container using `WORKDIR /app`. This is where the application files will reside.
+## Docker Image Preparation
 
-- [ ] **Copy Application Files**: Transfer the application files into the container using `COPY . .`. Ensure that all necessary files are included.
+- [x] **Build Docker Image**: Execute `docker build -t choir-collective .` in the directory containing the Dockerfile. Ensure the build completes successfully.
 
-- [ ] **Install Dependencies**: Use `pnpm` to install all necessary dependencies with `RUN pnpm install`. Ensure `pnpm-lock.yaml` is present for consistent dependency resolution.
+- [x] **Test Docker Image Locally**: Run the container locally using `docker run -p 8080:8080 choir-collective` and verify the application is accessible at `http://localhost:8080`.
 
-- [ ] **Build Application**: Execute a build step if required by the application (e.g., for a React app) using `RUN pnpm run build`. Verify that the build completes without errors.
+## Azure Container Registry (ACR)
 
-- [ ] **Expose Application Ports**: Specify the ports that need to be exposed for the application using `EXPOSE 3000`. Ensure the port matches the application's configuration.
+- [x] **Use Existing ACR**: Use the existing Azure Container Registry named `choir` in the `Choir` resource group. The login server is `choir.azurecr.io`.
 
-- [ ] **Define Run Command**: Set the command to start the application using `CMD ["pnpm", "start"]`. Verify that the command correctly starts the application.
-
-### Sample Dockerfile
-
-```dockerfile
-# Use the official Node.js image.
-# https://hub.docker.com/_/node
-FROM node:18-alpine
-
-# Install pnpm
-RUN npm install -g pnpm
-
-# Set the working directory
-WORKDIR /app
-
-# Copy package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
-RUN pnpm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the application (if needed)
-RUN pnpm run build
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Run the application
-CMD ["pnpm", "start"]
-```
-
-## Local Docker Image Build and Run
-
-- [ ] **Build Docker Image**: Execute `docker build -t choir-collective .` in the directory containing the Dockerfile. Ensure the build completes successfully.
-
-- [ ] **Run Docker Container**: Start the container using `docker run -p 3000:3000 choir-collective`. Verify that the application is accessible at `http://localhost:3000`.
-
-## Azure Deployment
-
-- [ ] **Create Azure Container Registry (ACR)**: If not already created, set up an ACR using the Azure portal or CLI. Ensure the registry is accessible and configured correctly.
-
-- [ ] **Login to ACR**: Authenticate with the ACR using `az acr login --name <your-acr-name>`. Verify successful login.
-
-- [ ] **Tag Docker Image**: Tag the Docker image for the ACR with `docker tag choir-collective <your-acr-name>.azurecr.io/choir-collective`. Ensure the tag is correct.
-
-- [ ] **Push Image to ACR**: Upload the Docker image to the ACR using `docker push <your-acr-name>.azurecr.io/choir-collective`. Confirm the image is available in the registry.
-
-- [ ] **Deploy to Azure App Service**: Deploy the container using:
+- [x] **Login to ACR**: Authenticate with the ACR using:
 
   ```bash
-  az webapp create --resource-group <your-resource-group> --plan <your-app-service-plan> --name <your-app-name> --deployment-container-image-name <your-acr-name>.azurecr.io/choir-collective
+  az acr login --name choir
   ```
 
-  Ensure the deployment completes without errors.
+- [x] **Tag Docker Image**: Tag the Docker image for the ACR:
 
-- [ ] **Configure Continuous Deployment (Optional)**: Set up continuous deployment from the ACR to Azure App Service for automatic updates. Verify the setup is correct.
+  ```bash
+  docker tag choir-collective choir.azurecr.io/choir-collective
+  ```
+
+- [x] **Push Image to ACR**: Upload the Docker image to the ACR:
+  ```bash
+  docker push choir.azurecr.io/choir-collective
+  ```
+
+## Azure Container Instances (ACI) Deployment
+
+- [ ] **Create ACI**: Deploy the container to ACI using:
+  ```bash
+  az container create --resource-group Choir --name choir-collective --image choir.azurecr.io/choir-collective --cpu 1 --memory 1 --registry-login-server choir.azurecr.io --registry-username <your-acr-username> --registry-password <your-acr-password> --dns-name-label choir-collective --ports 80 8080 --environment-variables PORT=80
+  ```
 
 ## Deployment Verification
 
-- [ ] **Access Application**: Visit the URL provided by Azure App Service to verify the application is running. Check for any issues.
+- [ ] **Access Application**: Visit the URL `http://choir-collective.eastus.azurecontainer.io` to verify the application is running. Replace `<region>` with your Azure region.
 
-- [ ] **Monitor Logs**: Use Azure's monitoring tools to check logs and ensure everything is functioning correctly. Address any errors or warnings.
+- [ ] **Monitor Logs**: Use Azure CLI to view logs and ensure everything is functioning correctly:
+  ```bash
+  az container logs --resource-group Choir --name choir-collective
+  ```
 
-This checklist is intended for AI execution. Ensure all placeholders like `<your-acr-name>`, `<your-resource-group>`, `<your-app-service-plan>`, and `<your-app-name>` are replaced with actual configuration details before proceeding. This approach supports documentation-driven development with AI supercoders.
+This checklist is intended to streamline the deployment process using Azure Container Instances. Ensure all placeholders like `<your-acr-username>` and `<your-acr-password>` are replaced with actual configuration details before proceeding.
+
+
+==
+Deploy_Render_Checklist
+==
+
+
+# Deploy Checklist for Render
+
+This checklist guides you through deploying the Next.js application on Render. After successful deployment and CI/CD setup, we can integrate the Python backend.
+
+**Instructions**: As you complete each task, mark it as done by changing `[ ]` to `[x]`.
+
+## Prerequisites
+
+- [x] **Render Account**: Ensure you have a Render account and are logged in.
+- [x] **Git Repository**: Your code should be in a Git repository.
+
+## Current Repository Structure
+
+- [x] **Verify Structure**:
+  ```
+  .
+  ├── src/               # Next.js application source
+  ├── public/           # Static files
+  ├── Dockerfile        # Docker configuration
+  ├── package.json      # Node.js dependencies
+  └── pnpm-lock.yaml    # Lock file
+  ```
+
+## Next.js Deployment
+
+- [ ] **Create Web Service**:
+  - Click **New** and select **Web Service**
+  - Connect your repository
+  - Set root directory to `/` (project root)
+  - Set build command: `pnpm install && pnpm run build`
+  - Set start command: `pnpm start`
+
+- [ ] **Configure Service**:
+  - **Name**: Choose a name (e.g., `choir-collective`)
+  - **Region**: Select deployment region
+  - **Instance Type**: Choose appropriate instance type
+  - **Branch**: Select deployment branch (e.g., `main`)
+
+- [ ] **Set Environment Variables**:
+  - `NODE_ENV`: Set to `production`
+  - `PORT`: Set to `80` for production (Render will handle HTTPS/TLS termination automatically)
+  - Any other required environment variables
+
+## Security & HTTPS
+
+- [ ] **Verify HTTPS**:
+  - Render automatically provisions and manages TLS certificates
+  - All HTTP traffic is automatically redirected to HTTPS
+  - No manual SSL/TLS configuration is required
+
+## Deployment Verification
+
+- [ ] **Test Application**: Visit the Render-provided URL and verify:
+  - Application loads correctly over HTTPS
+  - All pages are accessible
+  - Solana integration works
+  - UI components render properly
+  - SSL certificate is valid
+
+- [ ] **Monitor Logs**: Use Render's logging tools to:
+  - Check for any startup issues
+  - Verify application is running correctly
+  - Monitor for any errors
+
+## Continuous Deployment
+
+- [ ] **Auto-Deploy Settings**:
+  - Enable auto-deploy for the main branch
+  - Configure branch deploy settings if needed
+  - Test auto-deploy by pushing a small change
+
+## Performance Monitoring
+
+- [ ] **Configure Monitoring**:
+  - Set up logging
+  - Monitor service metrics
+  - Set up alerts for any issues
+
+## Future Integration Notes
+
+- [ ] **Document Integration Points**: Identify where the Python backend will integrate
+- [ ] **Plan API Structure**: Document the API endpoints needed for backend integration
+- [ ] **Update Environment Variables**: List additional variables needed for backend integration
+
+This checklist ensures the Next.js application is properly deployed and stable before adding the Python backend. Refer to Render's documentation for detailed instructions on specific steps.
+
+Note: Render handles all HTTPS/TLS certificate management and termination automatically. Your application only needs to listen on HTTP (port 80), and Render's proxy layer will handle the SSL/TLS termination.
 
 
 ==
