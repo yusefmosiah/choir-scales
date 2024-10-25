@@ -303,7 +303,7 @@ The Chorus Loop is a decision-making model implemented in the platform:
 - Set up new project with create-solana-dapp
 - Implement basic chat functionality and WebSocket connections
 - Implement basic Chorus loop in Python backend
-- Deploy to Azure and set up DNS
+- Deploy to Render and set up DNS
 
 ### Week 2 (Oct 27-Nov 2): Ownership Model and Enhanced Chorus Loop
 - Implement core ownership model features

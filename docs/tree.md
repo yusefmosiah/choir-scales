@@ -117,14 +117,12 @@
 │   ├── Core_Whitepaper.md
 │   ├── Crystallization_Checklist.md
 │   ├── Data_Engine_Vision.md
-│   ├── Deploy_Checklist.md
 │   ├── Deploy_Render_Checklist.md
 │   ├── Deploy_Report.md
 │   ├── Dev_Crystallization.md
 │   ├── Dev_FormalMethods.md
 │   ├── Dev_Plan.md
 │   ├── Dev_Pseudocode.md
-│   ├── Dev_Rebase.md
 │   ├── Dev_Strategy.md
 │   ├── Dev_Versioning.md
 │   ├── Entry_Accessibility.md
@@ -204,29 +202,8 @@
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
 │   ├── Theory_TopologyExplained.md
-│   ├── To_Do.md
 │   ├── V12_Data_Engines.md
 │   ├── combined
-│   │   ├── Combined_Backend.md
-│   │   ├── Combined_Core.md
-│   │   ├── Combined_Crystallization.md
-│   │   ├── Combined_Deploy.md
-│   │   ├── Combined_Dev.md
-│   │   ├── Combined_Entry.md
-│   │   ├── Combined_Error.md
-│   │   ├── Combined_Frontend.md
-│   │   ├── Combined_Impl.md
-│   │   ├── Combined_Implementation.md
-│   │   ├── Combined_Level.md
-│   │   ├── Combined_Levels.md
-│   │   ├── Combined_Meta.md
-│   │   ├── Combined_Model.md
-│   │   ├── Combined_Plan.md
-│   │   ├── Combined_Reward.md
-│   │   ├── Combined_Solana.md
-│   │   ├── Combined_State.md
-│   │   ├── Combined_Theory.md
-│   │   └── Combined_To.md
 │   ├── scripts
 │   │   ├── combiner.sh
 │   │   └── update_tree.sh
@@ -331,4 +308,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-59 directories, 270 files
+59 directories, 247 files
