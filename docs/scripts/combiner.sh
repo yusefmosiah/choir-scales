@@ -43,7 +43,7 @@ add_separator() {
 }
 
 # First phase: Combine by prefix as before
-prefixes=$(ls docs/*_*.md | sed 's/docs\///g' | grep -v 'tree' | cut -d'_' -f1 | sort -u)
+prefixes=$(ls docs/docs/*_*.md | sed 's/docs\/docs\///g' | grep -v 'tree' | cut -d'_' -f1 | sort -u)
 
 for prefix in $prefixes; do
     # Create title from prefix
@@ -78,7 +78,7 @@ for prefix in $prefixes; do
         echo -e "\n"
 
         # Concatenate all files with this prefix, excluding tree
-        for file in docs/${prefix}_*.md; do
+        for file in docs/docs/${prefix}_*.md; do
             if [ -f "$file" ] && ! grep -q "tree" <<< "$file"; then
                 add_separator "$(basename "$file" .md)"
                 cat "$file"
@@ -90,7 +90,7 @@ for prefix in $prefixes; do
 done
 
 # Create a list of all markdown files for verification
-all_docs=$(find docs -name "*.md" ! -path "docs/combined/*" ! -path "docs/levels/*" ! -name "tree.md")
+all_docs=$(find docs/docs -name "*.md" ! -name "tree.md")
 
 # Base patterns that define the core structure of each level
 base_patterns=(
@@ -140,14 +140,14 @@ get_level_patterns() {
 process_level() {
     level=$1
     patterns=$2
-    output_file="docs/levels/level${level}.md"  # Changed from combined to levels
+    output_file="docs/levels/level${level}.md"
 
     echo "# Level ${level} Documentation" > "$output_file"
     echo -e "\n" >> "$output_file"
 
     # Special handling for level 0
     if [ "$level" -eq 0 ]; then
-        for special_file in "docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
+        for special_file in "docs/docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
             if [ -f "$special_file" ]; then
                 add_separator "$(basename "$special_file")" >> "$output_file"
                 cat "$special_file" >> "$output_file"
@@ -160,7 +160,7 @@ process_level() {
         if [ "$level" -eq 0 ] && { [ "$pattern" = "tree.md" ] || [ "$pattern" = "scripts/combiner.sh" ] || [ "$pattern" = "scripts/update_tree.sh" ]; }; then
             continue
         fi
-        for file in docs/*${pattern}*.md; do
+        for file in docs/docs/*${pattern}*.md; do
             if [ -f "$file" ]; then
                 add_separator "$(basename "$file" .md)" >> "$output_file"
                 cat "$file" >> "$output_file"

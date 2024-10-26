@@ -4,7 +4,7 @@
 tree_output=$(tree -I 'venv|node_modules')
 
 # Create a temporary file with the new content
-cat > docs/tree.md.tmp << EOL
+cat > docs/docs/tree.md.tmp << EOL
 # Choir Scales Directory Structure
 ## Output of $ tree -I 'venv|node_modules' | pbcopy
 
@@ -12,5 +12,4 @@ $tree_output
 EOL
 
 # Replace the old file with the new one
-mv docs/tree.md.tmp docs/tree.md
-
+mv docs/docs/tree.md.tmp docs/docs/tree.md

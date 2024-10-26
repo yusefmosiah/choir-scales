@@ -107,115 +107,6 @@ tree.md
 │   ├── tailwind.config.ts
 │   └── tsconfig.json
 ├── docs
-│   ├── Backend_Chorus.md
-│   ├── Backend_Database.md
-│   ├── Backend_Main.md
-│   ├── Backend_Models.md
-│   ├── Core_Blueprint.md
-│   ├── Core_Comprehensive.md
-│   ├── Core_Consistency.md
-│   ├── Core_Context.md
-│   ├── Core_Convergence.md
-│   ├── Core_Economics.md
-│   ├── Core_Invariants.md
-│   ├── Core_Moat.md
-│   ├── Core_Ownership.md
-│   ├── Core_Persuasion.md
-│   ├── Core_ProofOfText.md
-│   ├── Core_StateTransitions.md
-│   ├── Core_Types.md
-│   ├── Core_Whitepaper.md
-│   ├── Crystallization_Checklist.md
-│   ├── Data_Engine_Vision.md
-│   ├── Deploy_Render_Checklist.md
-│   ├── Deploy_Report.md
-│   ├── Dev_Crystallization.md
-│   ├── Dev_FormalMethods.md
-│   ├── Dev_Plan.md
-│   ├── Dev_Pseudocode.md
-│   ├── Dev_Strategy.md
-│   ├── Dev_Versioning.md
-│   ├── Entry_Accessibility.md
-│   ├── Entry_Business.md
-│   ├── Entry_Glossary.md
-│   ├── Entry_Guide.md
-│   ├── Entry_InverseEquity.md
-│   ├── Entry_Overview.md
-│   ├── Entry_QA.md
-│   ├── Entry_Vision.md
-│   ├── Error_Correction_Layers.md
-│   ├── Frontend_AIResponse.md
-│   ├── Frontend_ChoirChat.md
-│   ├── Frontend_ChoirChat_UI.md
-│   ├── Frontend_ChorusPanel.md
-│   ├── Frontend_UserInput.md
-│   ├── Harmonic_Theory.md
-│   ├── Impl_API.md
-│   ├── Impl_ChorusLoop.md
-│   ├── Impl_Integration.md
-│   ├── Impl_Messages.md
-│   ├── Impl_Privacy.md
-│   ├── Impl_Security.md
-│   ├── Impl_StateMachine.md
-│   ├── Impl_StateManagement.md
-│   ├── Impl_WebSocket.md
-│   ├── Implementation_Dependencies.md
-│   ├── Level_0_SystemOverview.md
-│   ├── Level_1_BasicMechanics.md
-│   ├── Level_2_CoreMechanics.md
-│   ├── Level_3_ValueCreation.md
-│   ├── Level_4_MetastableEmergence.md
-│   ├── Level_5_QuantumSemantics.md
-│   ├── Meta_Bridges.md
-│   ├── Meta_Density.md
-│   ├── Meta_Diagrams.md
-│   ├── Meta_Emergence.md
-│   ├── Meta_Evolution.md
-│   ├── Meta_Experience.md
-│   ├── Meta_Index.md
-│   ├── Meta_Layers.md
-│   ├── Meta_Navigation.md
-│   ├── Meta_Network.md
-│   ├── Meta_Overview.md
-│   ├── Meta_Progression.md
-│   ├── Model_Emergency.md
-│   ├── Model_Metastability.md
-│   ├── Model_Recursion.md
-│   ├── Model_Ring.md
-│   ├── Model_ThreadEvolution.md
-│   ├── Plan_Hyperconverge.md
-│   ├── Reward_Service.md
-│   ├── Solana_lib.md
-│   ├── Solana_message.md
-│   ├── Solana_settlement.md
-│   ├── Solana_thread.md
-│   ├── Solana_thread_fuzzer.md
-│   ├── Solana_thread_test.md
-│   ├── Solana_validation.md
-│   ├── State_Boundaries.md
-│   ├── State_Transitions.md
-│   ├── Tech_Arts_Intersection.md
-│   ├── Theory_Algebra.md
-│   ├── Theory_ApprovalMeasurement.md
-│   ├── Theory_ChorusQuantum.md
-│   ├── Theory_GameMechanics.md
-│   ├── Theory_GameMechanicsAdversarial.md
-│   ├── Theory_GameMechanicsSparsity.md
-│   ├── Theory_Implementation.md
-│   ├── Theory_Implementation_Bridge.md
-│   ├── Theory_Integration.md
-│   ├── Theory_QuantumProtocol.md
-│   ├── Theory_SemanticGameTopology.md
-│   ├── Theory_Semantics.md
-│   ├── Theory_SemanticsExplained.md
-│   ├── Theory_StakeEntanglement.md
-│   ├── Theory_StateAlgebra.md
-│   ├── Theory_StateAlgebraExplained.md
-│   ├── Theory_Topology.md
-│   ├── Theory_TopologyExplained.md
-│   ├── V10_Loop_Theory.md
-│   ├── V10_Prompt_Engineering.md
-│   ├── V12_Data_Engines.md
 │   ├── combined
 │   │   ├── Combined_Backend.md
 │   │   ├── Combined_Core.md
@@ -240,6 +131,117 @@ tree.md
 │   │   ├── Combined_Theory.md
 │   │   ├── Combined_V10.md
 │   │   └── Combined_V12.md
+│   ├── docs
+│   │   ├── Backend_Chorus.md
+│   │   ├── Backend_Database.md
+│   │   ├── Backend_Main.md
+│   │   ├── Backend_Models.md
+│   │   ├── Core_Blueprint.md
+│   │   ├── Core_Comprehensive.md
+│   │   ├── Core_Consistency.md
+│   │   ├── Core_Context.md
+│   │   ├── Core_Convergence.md
+│   │   ├── Core_Economics.md
+│   │   ├── Core_Invariants.md
+│   │   ├── Core_Moat.md
+│   │   ├── Core_Ownership.md
+│   │   ├── Core_Persuasion.md
+│   │   ├── Core_ProofOfText.md
+│   │   ├── Core_StateTransitions.md
+│   │   ├── Core_Types.md
+│   │   ├── Core_Whitepaper.md
+│   │   ├── Crystallization_Checklist.md
+│   │   ├── Data_Engine_Vision.md
+│   │   ├── Deploy_Render_Checklist.md
+│   │   ├── Deploy_Report.md
+│   │   ├── Dev_Crystallization.md
+│   │   ├── Dev_FormalMethods.md
+│   │   ├── Dev_Plan.md
+│   │   ├── Dev_Pseudocode.md
+│   │   ├── Dev_Strategy.md
+│   │   ├── Dev_Versioning.md
+│   │   ├── Entry_Accessibility.md
+│   │   ├── Entry_Business.md
+│   │   ├── Entry_Glossary.md
+│   │   ├── Entry_Guide.md
+│   │   ├── Entry_InverseEquity.md
+│   │   ├── Entry_Overview.md
+│   │   ├── Entry_QA.md
+│   │   ├── Entry_Vision.md
+│   │   ├── Error_Correction_Layers.md
+│   │   ├── Frontend_AIResponse.md
+│   │   ├── Frontend_ChoirChat.md
+│   │   ├── Frontend_ChoirChat_UI.md
+│   │   ├── Frontend_ChorusPanel.md
+│   │   ├── Frontend_UserInput.md
+│   │   ├── Harmonic_Theory.md
+│   │   ├── Impl_API.md
+│   │   ├── Impl_ChorusLoop.md
+│   │   ├── Impl_Integration.md
+│   │   ├── Impl_Messages.md
+│   │   ├── Impl_Privacy.md
+│   │   ├── Impl_Security.md
+│   │   ├── Impl_StateMachine.md
+│   │   ├── Impl_StateManagement.md
+│   │   ├── Impl_WebSocket.md
+│   │   ├── Implementation_Dependencies.md
+│   │   ├── Level_0_SystemOverview.md
+│   │   ├── Level_1_BasicMechanics.md
+│   │   ├── Level_2_CoreMechanics.md
+│   │   ├── Level_3_ValueCreation.md
+│   │   ├── Level_4_MetastableEmergence.md
+│   │   ├── Level_5_QuantumSemantics.md
+│   │   ├── Meta_Bridges.md
+│   │   ├── Meta_Density.md
+│   │   ├── Meta_Diagrams.md
+│   │   ├── Meta_Emergence.md
+│   │   ├── Meta_Evolution.md
+│   │   ├── Meta_Experience.md
+│   │   ├── Meta_Index.md
+│   │   ├── Meta_Layers.md
+│   │   ├── Meta_Navigation.md
+│   │   ├── Meta_Network.md
+│   │   ├── Meta_Overview.md
+│   │   ├── Meta_Progression.md
+│   │   ├── Model_Emergency.md
+│   │   ├── Model_Metastability.md
+│   │   ├── Model_Recursion.md
+│   │   ├── Model_Ring.md
+│   │   ├── Model_ThreadEvolution.md
+│   │   ├── Plan_Hyperconverge.md
+│   │   ├── Reward_Service.md
+│   │   ├── Solana_lib.md
+│   │   ├── Solana_message.md
+│   │   ├── Solana_settlement.md
+│   │   ├── Solana_thread.md
+│   │   ├── Solana_thread_fuzzer.md
+│   │   ├── Solana_thread_test.md
+│   │   ├── Solana_validation.md
+│   │   ├── State_Boundaries.md
+│   │   ├── State_Transitions.md
+│   │   ├── Tech_Arts_Intersection.md
+│   │   ├── Theory_Algebra.md
+│   │   ├── Theory_ApprovalMeasurement.md
+│   │   ├── Theory_ChorusQuantum.md
+│   │   ├── Theory_GameMechanics.md
+│   │   ├── Theory_GameMechanicsAdversarial.md
+│   │   ├── Theory_GameMechanicsSparsity.md
+│   │   ├── Theory_Implementation.md
+│   │   ├── Theory_Implementation_Bridge.md
+│   │   ├── Theory_Integration.md
+│   │   ├── Theory_QuantumProtocol.md
+│   │   ├── Theory_SemanticGameTopology.md
+│   │   ├── Theory_Semantics.md
+│   │   ├── Theory_SemanticsExplained.md
+│   │   ├── Theory_StakeEntanglement.md
+│   │   ├── Theory_StateAlgebra.md
+│   │   ├── Theory_StateAlgebraExplained.md
+│   │   ├── Theory_Topology.md
+│   │   ├── Theory_TopologyExplained.md
+│   │   ├── V10_Loop_Theory.md
+│   │   ├── V10_Prompt_Engineering.md
+│   │   ├── V12_Data_Engines.md
+│   │   └── tree.md
 │   ├── levels
 │   │   ├── level0.md
 │   │   ├── level1.md
@@ -247,10 +249,9 @@ tree.md
 │   │   ├── level3.md
 │   │   ├── level4.md
 │   │   └── level5.md
-│   ├── scripts
-│   │   ├── combiner.sh
-│   │   └── update_tree.sh
-│   └── tree.md
+│   └── scripts
+│       ├── combiner.sh
+│       └── update_tree.sh
 ├── jest.config.js
 ├── jest.setup.js
 ├── next-env.d.ts
@@ -351,7 +352,7 @@ tree.md
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-60 directories, 279 files
+61 directories, 279 files
 
 
 ==
@@ -404,7 +405,7 @@ add_separator() {
 }
 
 # First phase: Combine by prefix as before
-prefixes=$(ls docs/*_*.md | sed 's/docs\///g' | grep -v 'tree' | cut -d'_' -f1 | sort -u)
+prefixes=$(ls docs/docs/*_*.md | sed 's/docs\/docs\///g' | grep -v 'tree' | cut -d'_' -f1 | sort -u)
 
 for prefix in $prefixes; do
     # Create title from prefix
@@ -439,7 +440,7 @@ for prefix in $prefixes; do
         echo -e "\n"
 
         # Concatenate all files with this prefix, excluding tree
-        for file in docs/${prefix}_*.md; do
+        for file in docs/docs/${prefix}_*.md; do
             if [ -f "$file" ] && ! grep -q "tree" <<< "$file"; then
                 add_separator "$(basename "$file" .md)"
                 cat "$file"
@@ -451,7 +452,7 @@ for prefix in $prefixes; do
 done
 
 # Create a list of all markdown files for verification
-all_docs=$(find docs -name "*.md" ! -path "docs/combined/*" ! -path "docs/levels/*" ! -name "tree.md")
+all_docs=$(find docs/docs -name "*.md" ! -name "tree.md")
 
 # Base patterns that define the core structure of each level
 base_patterns=(
@@ -501,14 +502,14 @@ get_level_patterns() {
 process_level() {
     level=$1
     patterns=$2
-    output_file="docs/levels/level${level}.md"  # Changed from combined to levels
+    output_file="docs/levels/level${level}.md"
 
     echo "# Level ${level} Documentation" > "$output_file"
     echo -e "\n" >> "$output_file"
 
     # Special handling for level 0
     if [ "$level" -eq 0 ]; then
-        for special_file in "docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
+        for special_file in "docs/docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
             if [ -f "$special_file" ]; then
                 add_separator "$(basename "$special_file")" >> "$output_file"
                 cat "$special_file" >> "$output_file"
@@ -521,7 +522,7 @@ process_level() {
         if [ "$level" -eq 0 ] && { [ "$pattern" = "tree.md" ] || [ "$pattern" = "scripts/combiner.sh" ] || [ "$pattern" = "scripts/update_tree.sh" ]; }; then
             continue
         fi
-        for file in docs/*${pattern}*.md; do
+        for file in docs/docs/*${pattern}*.md; do
             if [ -f "$file" ]; then
                 add_separator "$(basename "$file" .md)" >> "$output_file"
                 cat "$file" >> "$output_file"
@@ -573,7 +574,7 @@ update_tree.sh
 tree_output=$(tree -I 'venv|node_modules')
 
 # Create a temporary file with the new content
-cat > docs/tree.md.tmp << EOL
+cat > docs/docs/tree.md.tmp << EOL
 # Choir Scales Directory Structure
 ## Output of $ tree -I 'venv|node_modules' | pbcopy
 
@@ -581,8 +582,7 @@ $tree_output
 EOL
 
 # Replace the old file with the new one
-mv docs/tree.md.tmp docs/tree.md
-
+mv docs/docs/tree.md.tmp docs/docs/tree.md
 
 
 ==
