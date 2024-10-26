@@ -140,26 +140,31 @@ get_level_patterns() {
 process_level() {
     level=$1
     patterns=$2
-    output_file="docs/levels/level${level}.md"
+
+    # Handle negative level number in filename
+    if [ "$level" -eq -1 ]; then
+        output_file="docs/levels/level-1.md"
+    else
+        output_file="docs/levels/level${level}.md"
+    fi
 
     echo "# Level ${level} Documentation" > "$output_file"
     echo -e "\n" >> "$output_file"
 
-    # Special handling for level 0
-    if [ "$level" -eq 0 ]; then
+    # Special handling for level -1 (system files)
+    if [ "$level" -eq -1 ]; then
         for special_file in "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh" "docs/docs/tree.md"; do
             if [ -f "$special_file" ]; then
                 add_separator "$(basename "$special_file")" >> "$output_file"
                 cat "$special_file" >> "$output_file"
             fi
         done
+        echo "Created level-1.md"
+        return
     fi
 
-    # Process patterns
+    # Process patterns (now only for levels 0-5)
     for pattern in $patterns; do
-        if [ "$level" -eq 0 ] && { [ "$pattern" = "tree.md" ] || [ "$pattern" = "scripts/combiner.sh" ] || [ "$pattern" = "scripts/update_tree.sh" ]; }; then
-            continue
-        fi
         for file in docs/docs/*${pattern}*.md; do
             if [ -f "$file" ]; then
                 add_separator "$(basename "$file" .md)" >> "$output_file"
@@ -175,7 +180,10 @@ process_level() {
 # Clear processed files tracking
 > "/tmp/processed_files.txt"
 
-# Process each level
+# Process level -1 first for system files
+process_level -1 ""
+
+# Process levels 0-5
 for level in {0..5}; do
     process_level $level "$(get_level_patterns $level)"
 done
