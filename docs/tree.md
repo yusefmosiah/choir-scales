@@ -115,7 +115,6 @@
 │   ├── Core_StateTransitions.md
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
-│   ├── Crystallization_Checklist.md
 │   ├── Data_Engine_Vision.md
 │   ├── Deploy_Render_Checklist.md
 │   ├── Deploy_Report.md
@@ -191,9 +190,9 @@
 │   ├── Theory_GameMechanics.md
 │   ├── Theory_GameMechanicsAdversarial.md
 │   ├── Theory_GameMechanicsSparsity.md
-│   ├── Theory_Implementation.md
+│   ├── Theory_HarmonicBondingCurve.md
+│   ├── Theory_HarmonicMetastability.md
 │   ├── Theory_Implementation_Bridge.md
-│   ├── Theory_Integration.md
 │   ├── Theory_QuantumProtocol.md
 │   ├── Theory_SemanticGameTopology.md
 │   ├── Theory_Semantics.md
@@ -203,6 +202,7 @@
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
 │   ├── Theory_TopologyExplained.md
+│   ├── ThreadDynamics.md
 │   ├── V10_Loop_Theory.md
 │   ├── V10_Prompt_Engineering.md
 │   ├── V12_Data_Engines.md
@@ -247,7 +247,9 @@
 ├── next-env.d.ts
 ├── next.config.js
 ├── notebooks
-│   └── create_collections.ipynb
+│   ├── create_collections.ipynb
+│   ├── harmonic_curve.ipynb
+│   └── quantum_harmonic.ipynb
 ├── package-lock.json
 ├── package.json
 ├── pnpm-lock.yaml
@@ -342,4 +344,4 @@
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-60 directories, 280 files
+60 directories, 282 files

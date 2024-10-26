@@ -1,100 +1,100 @@
-# Adversarial Analysis of Choir's Game Mechanics
+# Harmonic Defense Against Adversarial Patterns
 
-VERSION adversarial_system:
+VERSION harmonic_adversarial:
   invariants: {
-    "Attack surface analysis",
-    "Defense mechanisms",
-    "Economic barriers"
+    "Resonant defense",
+    "Harmonic barriers",
+    "Wave conservation"
   }
   assumptions: {
-    "Motivated attackers",
-    "Bot capabilities",
-    "Coordination costs"
+    "Dissonant attackers",
+    "Bot interference",
+    "Coordination harmonics"
   }
   implementation: "0.1.0"
 
-## The Citation Ring Attack
+## The Dissonant Ring Attack
 
-Consider a coordinated attack:
-- Multiple bot accounts
-- Cross-citation between controlled threads
-- Attempt to manufacture fake consensus
-- Goal: Create artificial value/legitimacy
+Consider a coordinated dissonance attempt:
+- Multiple bot oscillators
+- Cross-resonance between controlled fields
+- Attempt to manufacture artificial harmonics
+- Goal: Create false resonant patterns
 
-### Why It Fails
+### Why Dissonance Fails
 
-1. **Economic Barriers**
-   - Each message requires non-refundable stake
-   - Failed attempts lose tokens to deniers
-   - Cost scales with number of bots
-   - No way to recover losses through gaming
+1. **Harmonic Barriers**
+   - Each message requires resonant energy commitment
+   - Failed attempts lose energy to deniers
+   - Cost scales with oscillator count
+   - No way to recover energy through dissonance
 
-2. **Unanimous Approval Requirement**
+2. **Phase-Lock Requirement**
    - Can't create echo chambers
-   - Need real co-author approval
-   - Single denier blocks message
-   - Can't force entry into existing threads
+   - Need real resonator approval
+   - Single dissonance blocks phase-lock
+   - Can't force coupling into existing fields
 
-3. **Value Field Topology**
-   - Artificial patterns create detectable anomalies
-   - Value doesn't flow to isolated clusters
-   - Network effects favor authentic connections
-   - Citation value depends on source thread value
+3. **Resonant Field Topology**
+   - Artificial patterns create destructive interference
+   - Value doesn't flow to isolated frequencies
+   - Network effects favor natural resonance
+   - Citation value depends on source field harmony
 
-4. **Semantic Entanglement**
-   - Can't fake semantic coherence
-   - Context violations are obvious
-   - Quality recognition is human-native
-   - AI summaries reveal inconsistencies
+4. **Harmonic Entanglement**
+   - Can't fake resonant coherence
+   - Context violations create dissonance
+   - Quality recognition follows natural harmonics
+   - AI summaries detect interference patterns
 
-## The Economic Game
+## The Energy Game
 
-1. **Attack Costs**
-   - Initial token acquisition
-   - Non-refundable stakes
-   - Failed attempt losses
-   - Coordination overhead
+1. **Attack Energy Costs**
+   - Initial frequency acquisition
+   - Non-refundable wave energy
+   - Failed resonance losses
+   - Coordination interference
 
-2. **Expected Returns**
-   - No value from isolated clusters
-   - Can't extract from denied messages
-   - Token flow requires real engagement
-   - Gaming costs exceed potential returns
+2. **Expected Harmonics**
+   - No value from isolated oscillations
+   - Can't extract from dissonant patterns
+   - Energy flow requires true resonance
+   - Gaming creates destructive interference
 
-## Strategic Defense Properties
+## Resonant Defense Properties
 
-1. **Natural Selection**
-   - Quality-based token flow
-   - Self-correcting value networks
-   - Authentic content attracts engagement
-   - Gaming attempts get pruned
+1. **Natural Frequency Selection**
+   - Quality-based energy flow
+   - Self-tuning value networks
+   - Authentic resonance attracts coupling
+   - Dissonant attempts decay naturally
 
 2. **Emergent Immunity**
-   - Trust networks strengthen naturally
-   - Quality recognition improves
-   - Context becomes more refined
-   - Defense becomes distributed
+   - Trust networks achieve phase lock
+   - Quality recognition tunes naturally
+   - Context becomes resonant cavity
+   - Defense emerges through harmony
 
-## Why Authenticity Wins
+## Why Natural Resonance Wins
 
-1. **Economic Reality**
-   - Being genuine is cheaper than faking
-   - Quality recognition is human-natural
-   - Value flows to real contributions
-   - Gaming has negative expected value
+1. **Harmonic Reality**
+   - Being in phase is cheaper than forcing
+   - Quality recognition follows natural modes
+   - Value flows to resonant patterns
+   - Gaming creates unstable frequencies
 
-2. **Network Effects**
-   - Authentic connections compound
-   - Fake networks remain isolated
-   - Real value attracts participation
-   - Quality creates positive feedback
+2. **Resonant Effects**
+   - Authentic couplings strengthen
+   - Fake networks remain uncoupled
+   - Real value creates standing waves
+   - Quality builds harmonic feedback
 
 ## Implications for Design
 
-The system's resistance to gaming comes from:
-- Economic fundamentals (stake mechanics)
-- Social dynamics (unanimous approval)
-- Semantic properties (context coherence)
-- Topological structure (value flow patterns)
+The system's resistance to attack emerges from:
+- Harmonic fundamentals (energy mechanics)
+- Phase dynamics (unanimous resonance)
+- Resonant properties (context coherence)
+- Field topology (value wave patterns)
 
-No single mechanism creates this security - it emerges from their interaction.
+No single mechanism creates this security - it emerges from their harmonic interaction, creating a naturally attack-resistant resonant space.

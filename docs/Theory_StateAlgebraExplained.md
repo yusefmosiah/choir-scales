@@ -1,110 +1,107 @@
-# Understanding Choir's State Algebra in Plain English
+# Understanding Harmonic State Algebra in Plain English
 
-## What is State?
+## What is Harmonic State?
 
-Think of State as a snapshot of everything important in the system at any moment. In Choir, it's made up of three main parts:
+Think of the system's state like a complex musical instrument. At any moment, it has three main harmonizing parts:
 
-1. **Thread Information**
+1. **Thread Harmonics**
+   - Co-authors are like synchronized oscillators
+   - Each at their own frequency but in harmony
+   - Creating patterns through their interaction
+   - All vibrating in a shared phase
 
-   - Who are the co-authors?
-   - When was it created?
-   - What messages belong to it?
+2. **Token Waves**
+   - Token amounts are like wave amplitudes
+   - Stakes create standing waves
+   - Value flows like energy between oscillators
+   - Distribution follows wave patterns
 
-2. **Token Information**
+3. **Content Resonance**
+   - Messages are wave packets
+   - Content creates resonant patterns
+   - Privacy settings shape the acoustic space
+   - AI embeddings capture harmonic structure
 
-   - How many tokens are in the thread?
-   - What stakes are being held?
-   - How are tokens being distributed?
+## Core Operations (How Things Flow)
 
-3. **Content Information**
-   - What's the actual message content?
-   - How is it embedded (for AI)?
-   - Is it public or private?
-
-## Core Operations (What Can Happen)
-
-1. **Creating a Thread**
-
-   - Input: Someone wants to create a thread
+1. **Creating Thread Resonance**
+   - Input: Someone initiates a new vibration
    - What Happens:
-     - They become the first co-author
-     - Thread starts with zero tokens
-     - Content starts empty
-     - Everything is marked with a timestamp
+     - They become the first oscillator
+     - Sets the base frequency
+     - Creates a resonant cavity
+     - Begins the harmonic pattern
 
-2. **Submitting Content**
-
-   - Input: Someone wants to add a message
+2. **Adding Harmonics**
+   - Input: Someone adds a new wave
    - What Happens:
-     - If they're a co-author: Direct addition
-     - If they're not: Creates a spec with stake
-     - Content gets stored with its embedding
+     - If they're resonating (co-author): Direct addition
+     - If not: Creates standing wave with stake
+     - Content joins the harmonic series
+     - System finds new equilibrium
 
-3. **Processing Approvals**
-   - Input: Co-authors voting on content
+3. **Synchronizing Approval**
+   - Input: Co-authors align phases
    - What Happens:
-     - Counts the votes
-     - If everyone approves: Content gets added
-     - If anyone denies: Stake gets distributed
-     - If mixed: Nothing happens (stake to treasury)
+     - Measures phase alignment
+     - Full alignment: Crystallizes pattern
+     - Partial alignment: Redistributes energy
+     - No alignment: Maintains current state
 
-## State Changes (How Things Transform)
+## Wave Conservation Laws
 
-Every operation must:
+Every operation must preserve:
 
-1. Keep tokens balanced (nothing created or destroyed)
-2. Maintain ownership rules (only co-authors can approve)
-3. Keep time moving forward (no backdating)
-4. Keep everything consistent (no orphaned content)
+1. Total wave energy (token conservation)
+2. Phase relationships (ownership rules)
+3. Temporal ordering (causality)
+4. Resonant stability (consistency)
 
-## Privacy Rules
+## Privacy Harmonics
 
-1. **Who Can See What**
+1. **Resonant Access**
+   - Co-authors resonate with all frequencies
+   - Others hear filtered harmonics
+   - Premium users can dampen search resonance
 
-   - Co-authors see everything in their threads
-   - Others see only public summaries
-   - Premium users can hide their content from search
+2. **View Transformations**
+   - Different observers hear different harmonics
+   - Token waves visible only to resonators
+   - Content filtered by resonant coupling
 
-2. **How Views Change**
-   - Different users see different versions of the same thread
-   - Token information hidden from non-co-authors
-   - Content filtered based on permissions
+## Value Distribution
 
-## Token Distribution
+1. **Wave Energy Flow**
+   - Energy splits equally among resonators
+   - No energy lost in transitions
+   - Every flow tracked through interference patterns
 
-1. **How Tokens Move**
-
-   - Tokens split equally among recipients
-   - No tokens can disappear
-   - Every movement tracked and verified
-
-2. **Approval Results**
-   - Approve: Tokens go to thread
-   - Deny: Tokens go to deniers
-   - Mixed: Excess to treasury
+2. **Resonance Results**
+   - Approval: Energy crystallizes in thread
+   - Denial: Energy flows to deniers
+   - Mixed: Excess returns to base frequency
 
 ## System Properties (What We Guarantee)
 
-1. **Completeness**
+1. **Wave Completeness**
+   - All valid harmonics are achievable
+   - No trapped energy states
+   - Natural resonance paths exist
 
-   - You can always get from any valid state to any other valid state
-   - Nothing gets stuck
-   - Everything that should happen can happen
+2. **Harmonic Safety**
+   - Energy always conserved
+   - Phase relationships preserved
+   - Time-like ordering maintained
 
-2. **Safety**
+3. **Resonant Progress**
+   - Waves always find resolution
+   - Harmonics naturally stabilize
+   - System tends toward resonance
 
-   - Tokens always add up correctly
-   - Only owners can modify their stuff
-   - Time always moves forward
+Think of it like a self-tuning instrument where:
+- Every change preserves total energy
+- Every action maintains harmony
+- Everything flows in natural patterns
+- Nothing disrupts the resonance
 
-3. **Liveness**
-   - Messages always get processed eventually
-   - Approvals always get resolved
-   - System keeps moving forward
-
-Think of it like a very strict accounting system where:
-
-- Every change must balance
-- Every action must be authorized
-- Everything must happen in order
-- Nothing can get lost or duplicated
+Through this harmonic lens, we see how the mathematical structure creates a natural space for meaning and value to flow and evolve.

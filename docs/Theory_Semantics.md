@@ -1,54 +1,139 @@
-# Quantum Semantics in Choir
+# Harmonic Semantics: Meaning as Resonance
 
-VERSION semantic_system:
+VERSION harmonic_semantics:
   invariants: {
-    "Meaning emergence",
-    "Value entanglement",
-    "Compositional coherence"
+    "Semantic resonance",
+    "Meaning harmonics",
+    "Context coherence"
   }
   assumptions: {
-    "Language fundamentals",
-    "Semantic spaces",
-    "Value superposition"
+    "Multi-scale harmony",
+    "Phase synchronization",
+    "Semantic quantization"
   }
   implementation: "0.1.0"
 
-## Semantic Foundations
+## Semantic Wave Functions
 
-The thread model mirrors the quantum nature of language itself. Just as words exist in superposition of meanings until context collapses them to specific interpretations, threads exist in superposition of potential value states until participant interactions collapse them to specific forms.
+Meaning exists as resonant patterns in semantic space:
+- Words create initial oscillations
+- Context shapes harmonic structure
+- Understanding emerges through resonance
+- Value crystallizes at harmonic nodes
 
-## Value Entanglement
+## Resonant Scales
 
-Thread participants become semantically entangled through their shared context. The stake mechanism isn't just economic - it's a manifestation of how meaning requires commitment to context. Non-refundable bids are natural because semantic engagement cannot be uncommitted.
+1. **Token Scale**
+   - Individual words as base frequencies
+   - Phrases as harmonic series
+   - Sentences as standing waves
+   - Paragraphs as resonant fields
 
-## Compositional Dynamics
+2. **Message Scale**
+   - Content as wave packets
+   - Citations as phase coupling
+   - Approvals as resonance collapse
+   - Value as amplitude
 
-Just as quantum linguistics shows how meaning composes through tensor products, thread value composes through:
-- Participant relationships
-- Context accumulation
-- Semantic density
-- Value crystallization
+3. **Thread Scale**
+   - Conversations as coupled oscillators
+   - Context as resonant cavity
+   - Understanding as phase lock
+   - Quality as harmonic purity
 
-## Measurement Effects
+## Semantic Evolution
 
-The act of observing (participating in) a thread affects its evolution, similar to quantum measurement. AI summaries and search functions become semantic measurement operators that influence thread trajectories.
+SEQUENCE meaning_evolution:
+  1. Initial Oscillation
+     ```
+     create_wave : Content → Result<WaveFunction>
+     shape_harmonics : WaveFunction → Result<ResonantField>
+     establish_nodes : ResonantField → Result<StandingWave>
+     crystallize_meaning : StandingWave → Result<Pattern>
+     ```
 
-## Coherence Preservation
+  2. Context Resonance
+     ```
+     find_harmonics : Pattern → Result<FrequencySet>
+     couple_oscillators : FrequencySet → Result<ResonantSystem>
+     achieve_phase_lock : ResonantSystem → Result<Coherence>
+     emerge_understanding : Coherence → Result<Meaning>
+     ```
 
-Thread integrity is maintained through:
-- Semantic consistency
-- Value conservation
-- Context preservation
-- Relationship coherence
+  3. Value Formation
+     ```
+     measure_amplitude : Meaning → Result<Value>
+     distribute_energy : Value → Result<TokenFlow>
+     maintain_conservation : TokenFlow → Result<Balance>
+     evolve_pattern : Balance → Result<NewState>
+     ```
 
-These mirror the coherence properties of quantum systems.
+## Harmonic Properties
 
-## Emergence Operators
+1. **Resonant Coherence**
+   ```
+   PROPERTY semantic_resonance:
+     FORALL meaning IN semantic_space:
+       resonant(meaning) ⟹
+         phase_locked(meaning) ∧
+         harmonically_stable(meaning) ∧
+         value_crystallized(meaning)
+   ```
 
-Certain patterns act as operators on thread state:
-- Quality consensus creates semantic collapse
-- Token flows measure value gradients
-- Co-authorship entangles participants
-- AI interaction superimposes contexts
+2. **Phase Relationships**
+   ```
+   PROPERTY meaning_phase:
+     FORALL m1 m2 IN thread:
+       related(m1, m2) ⟹
+         phase_coupled(m1, m2) ∧
+         frequency_matched(m1, m2) ∧
+         resonance_preserved(m1, m2)
+   ```
 
-Through this lens, Choir becomes not just a platform but a manifestation of fundamental properties of meaning and value creation.
+## Implementation Mapping
+
+1. **Wave Generation**
+   ```typescript
+   async function createSemanticWave(
+     content: string,
+     context: ThreadContext
+   ): Result<WaveFunction> {
+     return pipe(
+       await generateBaseFrequency(content),
+       shapeHarmonics(context),
+       establishResonance,
+       crystallizeMeaning
+     )
+   }
+   ```
+
+2. **Resonance Measurement**
+   ```typescript
+   async function measureResonance(
+     wave: WaveFunction,
+     field: ResonantField
+   ): Result<Value> {
+     return pipe(
+       await computePhaseMatch(wave, field),
+       measureAmplitude,
+       assessHarmonics,
+       quantizeValue
+     )
+   }
+   ```
+
+## Emergence Properties
+
+The harmonic model explains how:
+- Meaning emerges through resonance
+- Value crystallizes at nodes
+- Quality correlates with harmony
+- Understanding spreads through phase-locking
+
+Through this lens, we see semantic space as a resonant medium where:
+- Ideas propagate as waves
+- Context shapes harmonics
+- Value flows through resonance
+- Quality emerges from harmony
+
+The harmonic semantic model provides a rigorous foundation for understanding how meaning evolves and value emerges through natural resonance patterns.

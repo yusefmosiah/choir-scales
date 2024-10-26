@@ -1,63 +1,91 @@
-# Understanding Quantum Semantics in Plain English
+# Understanding Harmonic Semantics in Plain English
 
-## What are Quantum Semantics?
+## What are Harmonic Semantics?
 
-Think of how words and meanings work in normal conversation. A word doesn't have just one fixed meaning - it has many possible meanings until context makes one clear. This is exactly like quantum physics, where particles exist in multiple states until measured. In Choir, we take this similarity seriously.
+Think of how music works - different notes combine to create harmony, melodies resonate with each other, and rhythm creates patterns. Meaning in language works the same way. Words and ideas aren't just static things - they're like waves that can resonate, harmonize, and create patterns of understanding.
 
-## Message States
+## Wave Patterns of Meaning
 
-1. **Superposition of Meanings**
-   - Before approval, a message exists in multiple potential states
-   - Like Schrödinger's cat, it's simultaneously all its possible interpretations
-   - Each co-author who reads it is like a quantum measurement
-   - Unanimous approval "collapses" it into a definite meaning
+1. **Words as Waves**
+   - Each word creates a kind of vibration in meaning-space
+   - Like musical notes, words have natural frequencies
+   - When words combine well, they create harmony
+   - When they clash, they create dissonance
 
-2. **Semantic Entanglement**
-   - When you stake tokens on a message, you become "entangled" with its meaning
-   - This isn't just a metaphor - you can't "un-know" or "un-mean" something
-   - That's why stakes are non-refundable - semantic entanglement is irreversible
-   - Co-authors become entangled through shared context
+2. **Message Harmonics**
+   - A message is like a chord - multiple frequencies together
+   - Good writing has natural harmonic structure
+   - Citations are like musical counterpoint
+   - Value emerges at points of resonance
 
-## Thread Context
+## Thread Resonance
 
-1. **Quantum Context**
-   - A thread is like a quantum field of meaning
-   - Each message affects the meaning of all other messages
-   - Context isn't just background - it actively shapes meaning
-   - New messages must be "compatible" with the thread's quantum state
+1. **Conversation as Symphony**
+   - Each thread is like a musical performance
+   - Co-authors are like musicians playing together
+   - Context is like the concert hall's acoustics
+   - Understanding happens through synchronization
 
-2. **Collective Observation**
-   - Co-authors are like quantum observers
-   - They must agree on how meaning "collapses"
-   - This creates a shared reality
-   - But only for that specific thread context
+2. **Collective Harmony**
+   - Co-authors tune to each other's frequencies
+   - Messages need to be "in key" with the thread
+   - Quality comes from harmonic alignment
+   - Value crystallizes at resonant nodes
 
-## Value and Meaning
+## Value and Resonance
 
-1. **Quantum Value Fields**
-   - Value and meaning are entangled
-   - You can't measure one without affecting the other
-   - Token stakes create "potential wells" in meaning space
-   - Value flows according to quantum principles
+1. **Harmonic Value Fields**
+   - Value flows like sound through space
+   - Quality content creates resonant wells
+   - Token stakes set up standing waves
+   - Understanding spreads through phase-locking
 
-2. **Measurement Effects**
-   - AI summaries are like quantum measurements
-   - They collapse complex meaning states into simpler ones
-   - But this collapse is context-dependent
-   - Different observers might see different summaries
+2. **Resonance Effects**
+   - AI summaries detect harmonic patterns
+   - Approvals synchronize oscillations
+   - Citations couple different frequencies
+   - Value accumulates at harmonic nodes
+
+## Multi-Scale Harmony
+
+1. **Token Scale**
+   - Words vibrate at base frequencies
+   - Phrases create harmonic series
+   - Sentences form standing waves
+   - Paragraphs become resonant fields
+
+2. **Message Scale**
+   - Content forms wave packets
+   - Citations couple phases
+   - Approvals collapse resonance
+   - Value measures amplitude
+
+3. **Thread Scale**
+   - Conversations couple oscillators
+   - Context shapes resonant cavity
+   - Understanding achieves phase lock
+   - Quality reflects harmonic purity
 
 ## Why This Matters
 
-Understanding quantum semantics helps us see:
-- Why unanimous approval is necessary (complete measurement)
-- Why stakes can't be refunded (quantum entanglement)
-- Why context is crucial (quantum field effects)
-- Why value and meaning are inseparable
+Understanding harmonic semantics helps us see:
+- Why good writing has natural rhythm
+- Why context shapes meaning like acoustics
+- Why value emerges from resonance
+- Why quality needs harmonic alignment
 
 Think of it like this:
-- Normal platforms treat messages like classical objects
-- Choir treats them like quantum states
-- This isn't just a metaphor - it's how meaning actually works
-- We're just making it explicit in the system design
+- Normal platforms treat messages like static objects
+- Choir treats them like waves in a resonant medium
+- This isn't just a metaphor - it's how meaning naturally works
+- We're just making the wave nature explicit
 
-Through this lens, Choir becomes a platform that works with meaning's true quantum nature, rather than forcing it into classical patterns.
+## Practical Implications
+
+This harmonic view explains:
+- Why unanimous approval creates stable resonance
+- Why stakes create standing waves of value
+- Why citations couple different frequencies
+- Why quality emerges from natural harmony
+
+Through this lens, Choir becomes a platform that works with meaning's natural wave-like properties, creating spaces where ideas can resonate, harmonize, and evolve together.

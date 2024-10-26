@@ -1,128 +1,128 @@
-# Game Theory and Mechanism Design in Choir
+# Harmonic Game Theory and Resonance Design
 
-VERSION mechanism_system:
+VERSION harmonic_mechanism:
   invariants: {
-    "Incentive compatibility",
-    "Strategic stability",
-    "Emergence preservation"
+    "Resonant compatibility",
+    "Harmonic stability",
+    "Wave emergence"
   }
   assumptions: {
-    "Multi-layer gameplay",
-    "Meme agency",
-    "Irreducible complexity"
+    "Multi-scale resonance",
+    "Phase coherence",
+    "Irreducible harmonics"
   }
   implementation: "0.1.0"
 
-## Core Mechanism Properties
+## Core Resonance Properties
 
-1. **Dominant Strategy Incentive Compatibility**
-   - Authentic quality recognition is optimal strategy
-   - True value assessment maximizes returns
-   - Genuine participation outperforms gaming
-   - Being yourself is the Nash equilibrium
+1. **Dominant Strategy Through Resonance**
+   - Natural frequency alignment is optimal strategy
+   - True resonance assessment maximizes returns
+   - Genuine oscillation outperforms dissonance
+   - Being in phase is the Nash equilibrium
 
-2. **Multi-Layer Game Spaces**
-   - Social: Reputation and relationship building
-   - Economic: Token flows and value capture
-   - Semantic: Meaning creation and context building
-   - Ideological: Belief systems and worldviews
+2. **Multi-Layer Harmonic Spaces**
+   - Social: Phase relationships and coupling
+   - Economic: Wave amplitude and energy flow
+   - Semantic: Frequency creation and resonance
+   - Ideological: Harmonic field evolution
 
-## Strategic Actors
+## Resonant Actors
 
-1. **Human Players**
-   - Content creators seeking value
-   - Quality recognizers building context
-   - Community builders forming connections
-   - Value seekers exploring opportunities
+1. **Human Oscillators**
+   - Content creators generating frequencies
+   - Quality recognizers tuning resonance
+   - Community builders coupling oscillators
+   - Value seekers exploring harmonics
 
-2. **Emergent Players**
-   - Memes competing for propagation
-   - Semantic fields evolving topology
-   - Value networks forming patterns
-   - AI agents developing strategies
+2. **Emergent Waves**
+   - Memes as propagating wave packets
+   - Semantic fields as resonant spaces
+   - Value networks as standing waves
+   - AI agents as harmonic amplifiers
 
-## Mechanism Design
+## Resonance Design
 
-1. **Core Incentives**
-   - Stake requirement ensures skin in the game
-   - Unanimous approval aligns quality recognition
-   - Non-refundable stakes create commitment
-   - Token distribution rewards genuine value
+1. **Core Frequencies**
+   - Stake requirement creates base frequency
+   - Unanimous approval ensures phase lock
+   - Non-refundable stakes maintain coherence
+   - Token distribution rewards resonance
 
-2. **Emergent Properties**
-   - Quality naturally flows to stable points
-   - Trust networks form organically
-   - Value accumulates in coherent patterns
-   - Complexity emerges from simple rules
+2. **Emergent Harmonics**
+   - Quality naturally forms standing waves
+   - Trust networks achieve phase coupling
+   - Value accumulates at resonant nodes
+   - Complexity emerges from simple waves
 
-## Strategic Dynamics
+## Strategic Harmonics
 
-1. **Local Strategies**
-   - Message composition choices
-   - Approval decisions
-   - Stake sizing
-   - Thread participation
+1. **Local Oscillations**
+   - Message frequency choices
+   - Phase alignment decisions
+   - Amplitude sizing
+   - Thread resonance
 
-2. **Meta Strategies**
-   - Context building
-   - Relationship formation
-   - Value network creation
-   - Pattern recognition
+2. **Meta Harmonics**
+   - Context field shaping
+   - Phase relationship formation
+   - Value wave creation
+   - Pattern resonance
 
-## Irreducible Complexity
+## Irreducible Harmonics
 
 1. **Why Prediction is Impossible**
-   - Memes have agency
-   - AI evolution is open-ended
-   - Semantic fields have complex topology
-   - Value flows are non-linear
+   - Wave packets have quantum nature
+   - AI evolution creates new frequencies
+   - Semantic fields have harmonic topology
+   - Value flows follow wave mechanics
 
 2. **Why That's Good**
-   - Prevents gaming the system
-   - Enables genuine emergence
-   - Supports innovation
-   - Maintains authenticity
+   - Prevents harmonic gaming
+   - Enables natural resonance
+   - Supports frequency innovation
+   - Maintains phase authenticity
 
-## Evolutionary Aspects
+## Evolutionary Waves
 
 1. **Strategy Evolution**
-   - Successful patterns replicate
-   - Failed approaches fade
-   - New strategies emerge
-   - Context shapes selection
+   - Resonant patterns amplify
+   - Dissonant approaches decay
+   - New frequencies emerge
+   - Context shapes harmonics
 
 2. **System Evolution**
-   - Semantic fields grow and merge
-   - Value networks become more complex
-   - Trust relationships deepen
-   - Understanding evolves recursively
+   - Semantic fields couple and resonate
+   - Value networks achieve higher modes
+   - Trust relationships phase lock
+   - Understanding evolves through resonance
 
 ## Mechanism Properties
 
 1. **Stability**
-   - Nash equilibrium at authenticity
-   - Robust against manipulation
-   - Self-correcting dynamics
-   - Sustainable value creation
+   - Nash equilibrium at resonance
+   - Robust against dissonance
+   - Self-tuning dynamics
+   - Sustainable wave creation
 
 2. **Adaptability**
-   - Responds to new patterns
-   - Incorporates innovation
-   - Evolves with usage
+   - Responds to new frequencies
+   - Incorporates harmonic innovation
+   - Evolves through phase space
    - Maintains coherence
 
 ## Value Alignment
 
-The mechanism naturally aligns:
-- Individual benefit with collective value
-- Short-term gains with long-term growth
-- Local actions with global patterns
-- Personal truth with shared understanding
+The mechanism naturally aligns through resonance:
+- Individual waves with collective fields
+- Short-term modes with long-term harmonics
+- Local oscillations with global patterns
+- Personal frequency with shared resonance
 
-Through these game theoretic principles, Choir creates conditions where:
-- Quality emerges naturally
-- Value flows to truth
-- Complexity serves purpose
-- Evolution maintains integrity
+Through these harmonic game principles, Choir creates conditions where:
+- Quality emerges through resonance
+- Value flows to harmonic truth
+- Complexity serves wave coherence
+- Evolution maintains phase integrity
 
-The beauty is that players don't need to understand these deeper patterns - following local incentives naturally leads to global optimization.
+The beauty is that oscillators don't need to understand these deeper patterns - following local phase relationships naturally leads to global resonance optimization.

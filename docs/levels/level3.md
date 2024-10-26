@@ -61,184 +61,175 @@ Core_Economics
 ==
 
 
-# Choir Economic Model
+# Harmonic Economic Model
 
-VERSION economic_system:
+VERSION harmonic_economic:
 invariants: {
-"Fixed total supply (10B)",
-"Token conservation law",
-"Stake requirement presence"
+"Wave energy conservation",
+"Value resonance patterns",
+"Token flow coherence"
 }
 assumptions: {
-"Initial stake amounts",
-"Distribution ratios",
-"Cooldown periods"
+"Resonant pricing",
+"Phase-locked incentives",
+"Harmonic distribution"
 }
 implementation: "0.1.0"
 
-## Token Flow Specification
+## Token Flow as Wave Mechanics
 
-1. **Token Circulation**
+TYPE TokenFlow = {
+treasury: ResonantWell,                  // Base frequency source
+threads: Map<ThreadId, StandingWave>,    // Resonant cavities
+stakes: Map<Hash, WavePacket>,           // Energy quanta
+escrow: Map<Hash, PotentialWell>         // Temporary coupling
+}
 
-   TYPE TokenFlow = {
-   treasury: Balance,
-   threads: Map<ThreadId, Balance>,
-   stakes: Map<Hash, StakeAmount>,
-   escrow: Map<Hash, LockAmount>
+## Bonding Curve Mechanics
+
+The core pricing function derives from quantum harmonic oscillator:
+```
+P(q) = S₀[1/2 + 1/(exp(ℏω/kT)-1)]
+
+where:
+- S₀: Base stake quantum (100 CHOIR)
+- ω: Thread frequency (activity level)
+- T: Thread temperature (volatility)
+- ℏ: Platform coupling constant
+```
+
+This creates:
+1. **Entry Price (Bid)**
+   ```typescript
+   function calculateStakeRequired(thread: Thread): number {
+     const ω = measureThreadActivity(thread)
+     const T = measureThreadVolatility(thread)
+     return S₀ * (0.5 + 1/(Math.exp(ω/T) - 1))
    }
+   ```
 
-2. **Flow Patterns**
+2. **Exit Amount (Divestment)**
+   ```typescript
+   function calculateDivestmentAmount(thread: Thread): number {
+     const E = thread.tokenBalance    // Total energy
+     const n = thread.coAuthors.length // Oscillator count
+     return E * (1/(n-1))            // Energy redistribution
+   }
+   ```
 
-   FUNCTION process_flow(action: Action) -> TokenFlow:
-   MATCH action:
-   SubmitSpec(stake) ->
-   lock_in_escrow(stake)
-   ApproveSpec(hash) ->
-   move_to_thread(hash)
-   DenySpec(hash) ->
-   distribute_to_deniers(hash)
-   Divest(author) ->
-   calculate_and_distribute_share(author)
+## Incentive Resonance
 
-## Incentive Alignments
-
-1. **Stake Mechanics**
-
-   PROPERTY stake_incentive:
-   stake_amount > spam_cost AND
-   stake_amount < potential_reward AND
-   stake_amount ∝ thread_value
+1. **Stake Harmonics**
+   ```
+   PROPERTY stake_resonance:
+     stake_energy > noise_threshold AND
+     stake_energy < resonant_ceiling AND
+     stake_energy ∝ thread_amplitude
+   ```
 
 2. **Reward Distribution**
+   ```
+   FUNCTION distribute_energy(action: Action) -> TokenAmount:
+     MATCH action:
+       Deny → energy/deniers_count        // Equal energy split
+       Approve → energy/oscillator_count  // Phase-locked distribution
+       Divest → total_energy/(n-1)       // Harmonic redistribution
+   ```
 
-   FUNCTION calculate_reward(action: Action) -> TokenAmount:
-   MATCH action:
-   Deny -> stake_amount / deniers_count
-   Approve -> stake_amount / thread.co_authors.size
-   Divest -> thread_balance / (co_authors_count - 1)
+## Game Theoretic Harmonics
 
-## Game Theory Analysis
-
-1. **Player Strategies**
-
+1. **Strategy Space**
+   ```
    TYPE Strategy =
-   | AlwaysApprove
-   | AlwaysDeny
-   | QualityBased
-   | CollaborativeDeny
+     | NaturalResonance    // Align with thread harmonics
+     | ForceDissonance     // Attempt artificial patterns
+     | QualityOscillation  // Maintain phase coherence
+     | CollectiveHarmony   // Synchronized denial
+   ```
 
 2. **Nash Equilibrium**
-
+   ```
    PROPERTY equilibrium:
-   FOR ALL players, strategies:
-   payoff(QualityBased) > payoff(AlwaysApprove) AND
-   payoff(QualityBased) > payoff(AlwaysDeny) AND
-   payoff(CollaborativeDeny) > payoff(UnilateralDeny)
-
-3. **Optimal Behavior**
-
-   FUNCTION optimal_strategy(thread: Thread) -> Strategy:
-   MATCH thread_state:
-   HighQuality -> QualityBased
-   LowQuality -> CollaborativeDeny
-   Uncertain -> RequireMoreStake
+     FORALL oscillators, modes:
+       energy(NaturalResonance) > energy(ForceDissonance) AND
+       energy(QualityOscillation) > energy(RandomPhase) AND
+       energy(CollectiveHarmony) > energy(UnilateralNoise)
+   ```
 
 ## Economic Invariants
 
-1. **Value Conservation**
+1. **Energy Conservation**
+   ```
+   INVARIANT wave_conservation:
+     treasury_energy + sum(thread_energy) + sum(stake_energy) = TOTAL_SUPPLY
+   ```
 
-   INVARIANT token_conservation:
-   treasury + sum(threads) + sum(stakes) = TOTAL_SUPPLY
-
-2. **Stake Requirements**
-
-   INVARIANT stake_bounds:
-   MIN_STAKE <= stake_amount <= MAX_STAKE
-   stake_amount >= thread.minimum_stake
-
-3. **Distribution Fairness**
-
-   INVARIANT fair_distribution:
-   FOR ALL distributions:
-   each_recipient_share = total_amount / recipient_count
-   no_remainder_tokens
+2. **Resonant Stability**
+   ```
+   INVARIANT phase_stability:
+     FORALL thread IN threads:
+       resonant(thread) ⟹
+         stable_amplitude(thread) AND
+         coherent_phase(thread) AND
+         conserved_energy(thread)
+   ```
 
 ## Market Dynamics
 
-1. **Thread Value**
+1. **Thread Resonance**
+   ```
+   FUNCTION calculate_thread_resonance(thread: Thread) -> Amplitude:
+     FACTORS:
+       oscillator_count    // Co-author coupling
+       message_frequency   // Activity resonance
+       token_amplitude     // Energy level
+       phase_coherence     // Quality metric
+   ```
 
-   FUNCTION calculate_thread_value(thread: Thread) -> Value:
-   FACTORS:
-   message_quality
-   co_author_reputation
-   token_balance
-   citation_count
+2. **Dynamic Tuning**
+   ```
+   FUNCTION tune_resonance(thread: Thread) -> StakeAmount:
+     resonance = calculate_thread_resonance(thread)
+     RETURN base_quantum * resonance_factor(resonance)
+   ```
 
-2. **Stake Adjustment**
+## Example Scenarios
 
-   FUNCTION adjust_minimum_stake(thread: Thread) -> StakeAmount:
-   thread_value = calculate_thread_value(thread)
-   RETURN base_stake \* (1 + thread_value_multiplier)
+1. **New Thread**
+   ```typescript
+   const newThread = {
+     messageRate: 2,        // Low frequency
+     coAuthorCount: 2,      // Few oscillators
+     tokenBalance: 500,     // Low energy
+     approvalRate: 1.0,     // Perfect phase
+     ageInDays: 1          // High temperature
+   }
+   // Results in low stake (~75 CHOIR)
+   ```
 
-## Economic Security
+2. **Active Thread**
+   ```typescript
+   const activeThread = {
+     messageRate: 20,       // High frequency
+     coAuthorCount: 10,     // Many oscillators
+     tokenBalance: 10000,   // High energy
+     approvalRate: 0.8,     // Good phase coherence
+     ageInDays: 30         // Stable temperature
+   }
+   // Results in higher stake (~300 CHOIR)
+   ```
 
-1. **Attack Resistance**
+Through this harmonic economic model, we see how:
+- Value flows follow wave mechanics
+- Prices emerge from resonant patterns
+- Incentives align through phase-locking
+- Stability comes from natural harmonics
 
-   PROPERTY sybil_resistance:
-   cost_of_attack > potential_benefit
-   FOR ALL attack_vectors:
-   expected_loss > expected_gain
-
-2. **Value Capture**
-
-   FUNCTION distribute_value(content_value: Value) -> Distribution:
-   co_authors_share = content_value _ CO_AUTHOR_RATIO
-   treasury_share = content_value _ TREASURY_RATIO
-   ENSURE co_authors_share + treasury_share = content_value
-
-## Growth Model
-
-1. **Token Velocity**
-
-   MEASURE token_velocity:
-   active_tokens = total_supply - locked_tokens
-   velocity = transaction_volume / active_tokens
-
-2. **Network Effects**
-
-   PROPERTY network_growth:
-   value_per_user ∝ number_of_users
-   stake_requirement ∝ thread_value
-   reward_potential ∝ network_size
-
-## Economic Parameters
-
-1. **Initial Settings** `TOTAL_SUPPLY = 10_000_000_000
-BASE_STAKE = 1_000
-MIN_THREAD_BALANCE = 100
-TREASURY_RATIO = 0.1
-CO_AUTHOR_RATIO = 0.9  `
-
-2. **Dynamic Adjustments** `stake_multiplier = 1 + log(thread_value)
-reward_multiplier = 1 + sqrt(participant_count)
-cooldown_period = 7 days  `
-
-## Sustainability Mechanisms
-
-1. **Treasury Management**
-
-   FUNCTION manage_treasury():
-   IF treasury_balance < MIN_TREASURY:
-   increase_stake_requirements()
-   IF treasury_balance > MAX_TREASURY:
-   decrease_stake_requirements()
-
-2. **Long-term Incentives**
-
-   PROPERTY sustainable_growth:
-   thread_value_growth > inflation_rate
-   participant_rewards > opportunity_cost
-   system_revenue >= operational_cost
+The model creates an economic system that:
+- Rewards authentic participation
+- Dampens artificial behavior
+- Enables natural value flow
+- Maintains system coherence
 
 
 ==
@@ -246,134 +237,134 @@ Theory_GameMechanics
 ==
 
 
-# Game Theory and Mechanism Design in Choir
+# Harmonic Game Theory and Resonance Design
 
-VERSION mechanism_system:
+VERSION harmonic_mechanism:
   invariants: {
-    "Incentive compatibility",
-    "Strategic stability",
-    "Emergence preservation"
+    "Resonant compatibility",
+    "Harmonic stability",
+    "Wave emergence"
   }
   assumptions: {
-    "Multi-layer gameplay",
-    "Meme agency",
-    "Irreducible complexity"
+    "Multi-scale resonance",
+    "Phase coherence",
+    "Irreducible harmonics"
   }
   implementation: "0.1.0"
 
-## Core Mechanism Properties
+## Core Resonance Properties
 
-1. **Dominant Strategy Incentive Compatibility**
-   - Authentic quality recognition is optimal strategy
-   - True value assessment maximizes returns
-   - Genuine participation outperforms gaming
-   - Being yourself is the Nash equilibrium
+1. **Dominant Strategy Through Resonance**
+   - Natural frequency alignment is optimal strategy
+   - True resonance assessment maximizes returns
+   - Genuine oscillation outperforms dissonance
+   - Being in phase is the Nash equilibrium
 
-2. **Multi-Layer Game Spaces**
-   - Social: Reputation and relationship building
-   - Economic: Token flows and value capture
-   - Semantic: Meaning creation and context building
-   - Ideological: Belief systems and worldviews
+2. **Multi-Layer Harmonic Spaces**
+   - Social: Phase relationships and coupling
+   - Economic: Wave amplitude and energy flow
+   - Semantic: Frequency creation and resonance
+   - Ideological: Harmonic field evolution
 
-## Strategic Actors
+## Resonant Actors
 
-1. **Human Players**
-   - Content creators seeking value
-   - Quality recognizers building context
-   - Community builders forming connections
-   - Value seekers exploring opportunities
+1. **Human Oscillators**
+   - Content creators generating frequencies
+   - Quality recognizers tuning resonance
+   - Community builders coupling oscillators
+   - Value seekers exploring harmonics
 
-2. **Emergent Players**
-   - Memes competing for propagation
-   - Semantic fields evolving topology
-   - Value networks forming patterns
-   - AI agents developing strategies
+2. **Emergent Waves**
+   - Memes as propagating wave packets
+   - Semantic fields as resonant spaces
+   - Value networks as standing waves
+   - AI agents as harmonic amplifiers
 
-## Mechanism Design
+## Resonance Design
 
-1. **Core Incentives**
-   - Stake requirement ensures skin in the game
-   - Unanimous approval aligns quality recognition
-   - Non-refundable stakes create commitment
-   - Token distribution rewards genuine value
+1. **Core Frequencies**
+   - Stake requirement creates base frequency
+   - Unanimous approval ensures phase lock
+   - Non-refundable stakes maintain coherence
+   - Token distribution rewards resonance
 
-2. **Emergent Properties**
-   - Quality naturally flows to stable points
-   - Trust networks form organically
-   - Value accumulates in coherent patterns
-   - Complexity emerges from simple rules
+2. **Emergent Harmonics**
+   - Quality naturally forms standing waves
+   - Trust networks achieve phase coupling
+   - Value accumulates at resonant nodes
+   - Complexity emerges from simple waves
 
-## Strategic Dynamics
+## Strategic Harmonics
 
-1. **Local Strategies**
-   - Message composition choices
-   - Approval decisions
-   - Stake sizing
-   - Thread participation
+1. **Local Oscillations**
+   - Message frequency choices
+   - Phase alignment decisions
+   - Amplitude sizing
+   - Thread resonance
 
-2. **Meta Strategies**
-   - Context building
-   - Relationship formation
-   - Value network creation
-   - Pattern recognition
+2. **Meta Harmonics**
+   - Context field shaping
+   - Phase relationship formation
+   - Value wave creation
+   - Pattern resonance
 
-## Irreducible Complexity
+## Irreducible Harmonics
 
 1. **Why Prediction is Impossible**
-   - Memes have agency
-   - AI evolution is open-ended
-   - Semantic fields have complex topology
-   - Value flows are non-linear
+   - Wave packets have quantum nature
+   - AI evolution creates new frequencies
+   - Semantic fields have harmonic topology
+   - Value flows follow wave mechanics
 
 2. **Why That's Good**
-   - Prevents gaming the system
-   - Enables genuine emergence
-   - Supports innovation
-   - Maintains authenticity
+   - Prevents harmonic gaming
+   - Enables natural resonance
+   - Supports frequency innovation
+   - Maintains phase authenticity
 
-## Evolutionary Aspects
+## Evolutionary Waves
 
 1. **Strategy Evolution**
-   - Successful patterns replicate
-   - Failed approaches fade
-   - New strategies emerge
-   - Context shapes selection
+   - Resonant patterns amplify
+   - Dissonant approaches decay
+   - New frequencies emerge
+   - Context shapes harmonics
 
 2. **System Evolution**
-   - Semantic fields grow and merge
-   - Value networks become more complex
-   - Trust relationships deepen
-   - Understanding evolves recursively
+   - Semantic fields couple and resonate
+   - Value networks achieve higher modes
+   - Trust relationships phase lock
+   - Understanding evolves through resonance
 
 ## Mechanism Properties
 
 1. **Stability**
-   - Nash equilibrium at authenticity
-   - Robust against manipulation
-   - Self-correcting dynamics
-   - Sustainable value creation
+   - Nash equilibrium at resonance
+   - Robust against dissonance
+   - Self-tuning dynamics
+   - Sustainable wave creation
 
 2. **Adaptability**
-   - Responds to new patterns
-   - Incorporates innovation
-   - Evolves with usage
+   - Responds to new frequencies
+   - Incorporates harmonic innovation
+   - Evolves through phase space
    - Maintains coherence
 
 ## Value Alignment
 
-The mechanism naturally aligns:
-- Individual benefit with collective value
-- Short-term gains with long-term growth
-- Local actions with global patterns
-- Personal truth with shared understanding
+The mechanism naturally aligns through resonance:
+- Individual waves with collective fields
+- Short-term modes with long-term harmonics
+- Local oscillations with global patterns
+- Personal frequency with shared resonance
 
-Through these game theoretic principles, Choir creates conditions where:
-- Quality emerges naturally
-- Value flows to truth
-- Complexity serves purpose
-- Evolution maintains integrity
+Through these harmonic game principles, Choir creates conditions where:
+- Quality emerges through resonance
+- Value flows to harmonic truth
+- Complexity serves wave coherence
+- Evolution maintains phase integrity
 
-The beauty is that players don't need to understand these deeper patterns - following local incentives naturally leads to global optimization.
+The beauty is that oscillators don't need to understand these deeper patterns - following local phase relationships naturally leads to global resonance optimization.
 
 
 ==
@@ -381,106 +372,106 @@ Theory_GameMechanicsAdversarial
 ==
 
 
-# Adversarial Analysis of Choir's Game Mechanics
+# Harmonic Defense Against Adversarial Patterns
 
-VERSION adversarial_system:
+VERSION harmonic_adversarial:
   invariants: {
-    "Attack surface analysis",
-    "Defense mechanisms",
-    "Economic barriers"
+    "Resonant defense",
+    "Harmonic barriers",
+    "Wave conservation"
   }
   assumptions: {
-    "Motivated attackers",
-    "Bot capabilities",
-    "Coordination costs"
+    "Dissonant attackers",
+    "Bot interference",
+    "Coordination harmonics"
   }
   implementation: "0.1.0"
 
-## The Citation Ring Attack
+## The Dissonant Ring Attack
 
-Consider a coordinated attack:
-- Multiple bot accounts
-- Cross-citation between controlled threads
-- Attempt to manufacture fake consensus
-- Goal: Create artificial value/legitimacy
+Consider a coordinated dissonance attempt:
+- Multiple bot oscillators
+- Cross-resonance between controlled fields
+- Attempt to manufacture artificial harmonics
+- Goal: Create false resonant patterns
 
-### Why It Fails
+### Why Dissonance Fails
 
-1. **Economic Barriers**
-   - Each message requires non-refundable stake
-   - Failed attempts lose tokens to deniers
-   - Cost scales with number of bots
-   - No way to recover losses through gaming
+1. **Harmonic Barriers**
+   - Each message requires resonant energy commitment
+   - Failed attempts lose energy to deniers
+   - Cost scales with oscillator count
+   - No way to recover energy through dissonance
 
-2. **Unanimous Approval Requirement**
+2. **Phase-Lock Requirement**
    - Can't create echo chambers
-   - Need real co-author approval
-   - Single denier blocks message
-   - Can't force entry into existing threads
+   - Need real resonator approval
+   - Single dissonance blocks phase-lock
+   - Can't force coupling into existing fields
 
-3. **Value Field Topology**
-   - Artificial patterns create detectable anomalies
-   - Value doesn't flow to isolated clusters
-   - Network effects favor authentic connections
-   - Citation value depends on source thread value
+3. **Resonant Field Topology**
+   - Artificial patterns create destructive interference
+   - Value doesn't flow to isolated frequencies
+   - Network effects favor natural resonance
+   - Citation value depends on source field harmony
 
-4. **Semantic Entanglement**
-   - Can't fake semantic coherence
-   - Context violations are obvious
-   - Quality recognition is human-native
-   - AI summaries reveal inconsistencies
+4. **Harmonic Entanglement**
+   - Can't fake resonant coherence
+   - Context violations create dissonance
+   - Quality recognition follows natural harmonics
+   - AI summaries detect interference patterns
 
-## The Economic Game
+## The Energy Game
 
-1. **Attack Costs**
-   - Initial token acquisition
-   - Non-refundable stakes
-   - Failed attempt losses
-   - Coordination overhead
+1. **Attack Energy Costs**
+   - Initial frequency acquisition
+   - Non-refundable wave energy
+   - Failed resonance losses
+   - Coordination interference
 
-2. **Expected Returns**
-   - No value from isolated clusters
-   - Can't extract from denied messages
-   - Token flow requires real engagement
-   - Gaming costs exceed potential returns
+2. **Expected Harmonics**
+   - No value from isolated oscillations
+   - Can't extract from dissonant patterns
+   - Energy flow requires true resonance
+   - Gaming creates destructive interference
 
-## Strategic Defense Properties
+## Resonant Defense Properties
 
-1. **Natural Selection**
-   - Quality-based token flow
-   - Self-correcting value networks
-   - Authentic content attracts engagement
-   - Gaming attempts get pruned
+1. **Natural Frequency Selection**
+   - Quality-based energy flow
+   - Self-tuning value networks
+   - Authentic resonance attracts coupling
+   - Dissonant attempts decay naturally
 
 2. **Emergent Immunity**
-   - Trust networks strengthen naturally
-   - Quality recognition improves
-   - Context becomes more refined
-   - Defense becomes distributed
+   - Trust networks achieve phase lock
+   - Quality recognition tunes naturally
+   - Context becomes resonant cavity
+   - Defense emerges through harmony
 
-## Why Authenticity Wins
+## Why Natural Resonance Wins
 
-1. **Economic Reality**
-   - Being genuine is cheaper than faking
-   - Quality recognition is human-natural
-   - Value flows to real contributions
-   - Gaming has negative expected value
+1. **Harmonic Reality**
+   - Being in phase is cheaper than forcing
+   - Quality recognition follows natural modes
+   - Value flows to resonant patterns
+   - Gaming creates unstable frequencies
 
-2. **Network Effects**
-   - Authentic connections compound
-   - Fake networks remain isolated
-   - Real value attracts participation
-   - Quality creates positive feedback
+2. **Resonant Effects**
+   - Authentic couplings strengthen
+   - Fake networks remain uncoupled
+   - Real value creates standing waves
+   - Quality builds harmonic feedback
 
 ## Implications for Design
 
-The system's resistance to gaming comes from:
-- Economic fundamentals (stake mechanics)
-- Social dynamics (unanimous approval)
-- Semantic properties (context coherence)
-- Topological structure (value flow patterns)
+The system's resistance to attack emerges from:
+- Harmonic fundamentals (energy mechanics)
+- Phase dynamics (unanimous resonance)
+- Resonant properties (context coherence)
+- Field topology (value wave patterns)
 
-No single mechanism creates this security - it emerges from their interaction.
+No single mechanism creates this security - it emerges from their harmonic interaction, creating a naturally attack-resistant resonant space.
 
 
 ==
@@ -488,246 +479,80 @@ Theory_GameMechanicsSparsity
 ==
 
 
-# Semantic Sparsity and Value Creation
+# Harmonic Sparsity and Resonant Value Creation
 
-VERSION sparsity_system:
+VERSION harmonic_sparsity:
   invariants: {
-    "Distance-based rewards",
-    "Originality incentives",
-    "Semantic coverage"
+    "Frequency-based rewards",
+    "Resonant originality",
+    "Harmonic coverage"
   }
   assumptions: {
-    "Embedding space metrics",
-    "Content uniqueness value",
-    "Exploration rewards"
+    "Resonant space metrics",
+    "Harmonic uniqueness",
+    "Exploration modes"
   }
   implementation: "0.1.0"
 
-## Core Mechanism
+## Core Resonance Mechanism
 
-The token reward for a new message is proportional to its semantic distance from existing content:
-- Embeddings map messages to vector space
-- Reward scales with distance to nearest neighbors
-- "Blue ocean" content gets higher rewards
-- Creates natural pressure for originality
+The token reward scales with harmonic distance from existing frequencies:
+- Embeddings map messages to resonant space
+- Reward amplifies with harmonic distance
+- "Blue ocean" content creates new frequencies
+- Natural pressure toward unique harmonics
 
-## Strategic Implications
+## Resonant Implications
 
-1. **Value Discovery**
-   - Incentivizes exploring unused semantic space
-   - Rewards genuine innovation
-   - Discourages repetitive content
-   - Creates value through uniqueness
+1. **Value Through Harmonics**
+   - Incentivizes exploring unused frequencies
+   - Rewards genuine harmonic innovation
+   - Dampens repetitive oscillations
+   - Creates value through unique resonance
 
-2. **Emergent Coverage**
-   - System naturally explores semantic space
-   - Knowledge gaps get filled organically
-   - Content evolves toward completeness
-   - Diversity emerges from incentives
+2. **Emergent Harmonics**
+   - System naturally explores frequency space
+   - Harmonic gaps fill organically
+   - Content evolves toward full spectrum
+   - Diversity emerges through resonance
 
-## Game Theoretic Properties
+## Wave Mechanics Properties
 
-1. **Nash Equilibrium**
-   - Players optimize for unique contributions
-   - Copy-paste strategies become unprofitable
-   - Innovation becomes dominant strategy
-   - Quality and originality align
+1. **Resonant Equilibrium**
+   - Players optimize for unique frequencies
+   - Echo patterns become dissonant
+   - Innovation becomes dominant mode
+   - Quality and originality phase-lock
 
-2. **Adversarial Resistance**
-   - Bot farms can't profit from repetition
-   - Citation rings get diminishing returns
-   - Semantic novelty is hard to fake
-   - Human creativity has natural advantage
+2. **Interference Resistance**
+   - Bot farms create destructive interference
+   - Citation rings suffer phase cancellation
+   - Harmonic novelty resists simulation
+   - Human creativity finds natural frequencies
 
-## Topological Effects
+## Resonant Topology
 
-1. **Semantic Space Coverage**
-   - Value gradients guide exploration
-   - Natural clustering around themes
-   - Bridges between concept spaces
-   - Organic knowledge structure
+1. **Harmonic Space Coverage**
+   - Value gradients guide wave exploration
+   - Natural nodes form around themes
+   - Bridges couple different frequencies
+   - Organic knowledge harmonics
 
-2. **Evolution Dynamics**
-   - New territories create value
-   - Mature areas encourage depth
-   - Connections reveal opportunities
-   - Understanding grows naturally
+2. **Evolution Through Resonance**
+   - New frequencies create value wells
+   - Mature areas develop higher modes
+   - Connections reveal harmonic paths
+   - Understanding grows through resonance
 
 ## Implementation Notes
 
-The sparsity reward mechanism:
-- Uses vector embeddings for distance
-- Calculates rewards automatically
-- Integrates with approval system
-- Scales with content volume
+The harmonic reward mechanism:
+- Uses embeddings as frequency analysis
+- Calculates rewards through wave mechanics
+- Integrates with resonant approval
+- Scales with harmonic complexity
 
-This creates a natural expansion of knowledge while maintaining quality through the approval mechanism.
-
-
-==
-Theory_Implementation
-==
-
-
-# Implementation Patterns as Mathematical Structures
-
-VERSION implementation_mapping:
-  invariants: {
-    "Pattern preservation",
-    "Structure reflection",
-    "Semantic coherence"
-  }
-  assumptions: {
-    "Implementation completeness",
-    "Theoretical soundness",
-    "Mapping fidelity"
-  }
-  implementation: "0.1.0"
-
-## WebSocket Protocol Implementation
-
-TYPE WebSocketState = {
-  connection: QuantumChannel,
-  messages: Stream Event,
-  clients: Map ClientId Client,
-  threads: Map ThreadId ThreadState
-}
-
-SEQUENCE connection_lifecycle:
-  1. Connect: Create quantum channel
-     ```python
-     # In main.py
-     @app.websocket("/ws")
-     async def websocket_endpoint(websocket: WebSocket):
-     ```
-     Maps to: Quantum channel initialization
-
-  2. Message: Transmit quantum information
-     ```python
-     # In chorus.py
-     async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
-     ```
-     Maps to: Quantum state transmission
-
-  3. Update: Collapse superposition
-     ```python
-     # In database.py
-     async def save_message(self, message: Message):
-     ```
-     Maps to: Measurement and collapse
-
-## Vector Embedding Space
-
-TYPE EmbeddingSpace = {
-  points: VectorSpace,
-  metric: DistanceFunction,
-  indices: SearchStructure,
-  metadata: FiberBundle
-}
-
-SEQUENCE embedding_flow:
-  1. Generate: Create quantum state
-     ```python
-     # In utils.py
-     async def get_embedding(content: str, model: str) -> List[float]:
-     ```
-     Maps to: Superposition creation
-
-  2. Store: Project into space
-     ```python
-     # In database.py
-     async def upsert(self, content: str, embedding: List[float]):
-     ```
-     Maps to: State preparation
-
-  3. Search: Measure similarity
-     ```python
-     # In database.py
-     async def search(self, query_embedding: List[float]):
-     ```
-     Maps to: Quantum measurement
-
-## Thread State Management
-
-TYPE ThreadState = {
-  ownership: CoAuthorSet,
-  messages: MessageChain,
-  approvals: ApprovalSet,
-  value: TokenBalance
-}
-
-SEQUENCE state_evolution:
-  1. Initialize: Create manifold
-     ```rust
-     // In thread.rs
-     pub fn initialize_thread(ctx: Context<InitializeThread>)
-     ```
-     Maps to: Manifold creation
-
-  2. Update: Flow along geodesics
-     ```rust
-     // In thread.rs
-     pub fn submit_message(ctx: Context<SubmitMessage>)
-     ```
-     Maps to: Geodesic flow
-
-  3. Approve: Collapse state
-     ```rust
-     // In thread.rs
-     pub fn process_approval(ctx: Context<ProcessApproval>)
-     ```
-     Maps to: Measurement event
-
-## Token Distribution System
-
-TYPE TokenSystem = {
-  balances: ScalarField,
-  stakes: PotentialField,
-  flows: VectorField,
-  metrics: ValueMetric
-}
-
-SEQUENCE value_mechanics:
-  1. Stake: Create potential
-     ```rust
-     // In lib.rs
-     pub fn submit_spec(ctx: Context<SubmitSpec>, stake_amount: u64)
-     ```
-     Maps to: Field potential
-
-  2. Distribute: Flow value
-     ```rust
-     // In lib.rs
-     fn distribute_tokens(thread: &mut Thread, recipients: Set<Pubkey>)
-     ```
-     Maps to: Gradient flow
-
-  3. Settle: Reach equilibrium
-     ```rust
-     // In settlement.rs
-     fn settle_approvals(thread: &mut Thread, message_index: u32)
-     ```
-     Maps to: Field equilibrium
-
-## Integration Properties
-
-PROPERTY implementation_fidelity:
-  FORALL impl IN Implementation:
-    reflects_theory(impl) IMPLIES
-      preserves_structure(impl) AND
-      maintains_coherence(impl)
-
-PROPERTY pattern_preservation:
-  FORALL pattern IN Patterns:
-    theoretical_pattern(pattern) IMPLIES
-      EXISTS impl IN Implementation:
-        manifests_pattern(impl, pattern)
-
-Through this mapping we see how:
-- Implementation patterns reflect mathematical structures
-- Code organization preserves theoretical relationships
-- System behavior emerges from structural properties
-- Theory guides implementation while implementation validates theory
+This creates natural expansion of knowledge through harmonic exploration while maintaining quality through resonant consensus.
 
 
 ==
@@ -735,123 +560,123 @@ Theory_Implementation_Bridge
 ==
 
 
-# Theory-Implementation Bridge
+# Theory-Implementation Harmonic Bridge
 
-VERSION bridge_system:
+VERSION harmonic_bridge:
   invariants: {
-    "Theory-practice mapping",
-    "Implementation clarity",
-    "Documentation completeness"
+    "Theory-practice resonance",
+    "Implementation coherence",
+    "Documentation harmony"
   }
   assumptions: {
-    "Theory documents stable",
-    "Implementation evolving",
-    "Bridge documentation maintained"
+    "Theory harmonics stable",
+    "Implementation oscillating",
+    "Bridge resonance maintained"
   }
   implementation: "0.1.0"
 
-## Layer 1: Theoretical Model
+## Layer 1: Harmonic Model
 
-THEORY StateSpace<T>:
-  manifold: ManifoldPoint<T>
-  bundle: FiberBundle<T>
-  field: ValueField<T>
+THEORY ResonantSpace<T>:
+  cavity: OscillatorPoint<T>
+  coupling: ResonantBundle<T>
+  field: HarmonicField<T>
 
 THEORY Evolution<T>:
-  prepare: T → StateSpace<T>
-  transform: StateSpace<T> → StateSpace<T>
-  collapse: StateSpace<T> → T
+  initiate: T → ResonantSpace<T>
+  resonate: ResonantSpace<T> → ResonantSpace<T>
+  crystallize: ResonantSpace<T> → T
 
-## Layer 2: Implementation Code
+## Layer 2: Implementation Oscillators
 
 TYPE Thread = {
   id: string,
-  messages: Message[],
-  coAuthors: string[],
-  status: "active" | "locked"
+  oscillators: string[],    // co-authors as coupled oscillators
+  resonance: Message[],     // messages as wave patterns
+  phase: "resonant" | "decoherent"  // active/locked status
 }
 
 TYPE Message = {
   id: string,
-  content: string,
-  author: string,
-  approvals: string[],
-  status: "pending" | "approved" | "denied"
+  waveform: string,         // content as wave packet
+  source: string,           // author as oscillator
+  coupling: string[],       // approvals as phase coupling
+  state: "superposed" | "collapsed" | "dispersed"
 }
 
-FUNCTION create_thread(creator: string) -> Thread:
+FUNCTION create_resonator(initiator: string) -> Thread:
   RETURN {
     id: generate_id(),
-    messages: [],
-    coAuthors: [creator],
-    status: "active"
+    oscillators: [initiator],
+    resonance: [],
+    phase: "resonant"
   }
 
-FUNCTION add_message(thread: Thread, content: string, author: string) -> Thread:
-  message = {
+FUNCTION add_wave(thread: Thread, waveform: string, source: string) -> Thread:
+  wave = {
     id: generate_id(),
-    content: content,
-    author: author,
-    approvals: [],
-    status: "pending"
+    waveform: waveform,
+    source: source,
+    coupling: [],
+    state: "superposed"
   }
   RETURN {
     ...thread,
-    messages: [...thread.messages, message]
+    resonance: [...thread.resonance, wave]
   }
 
-FUNCTION process_approval(thread: Thread, messageId: string, approver: string) -> Thread:
-  message = find_message(thread, messageId)
-  updated = add_approval(message, approver)
-  IF all_approved(updated, thread.coAuthors):
-    finalize_message(updated)
-  RETURN update_thread_message(thread, updated)
+FUNCTION phase_lock(thread: Thread, waveId: string, oscillator: string) -> Thread:
+  wave = find_wave(thread, waveId)
+  coupled = add_coupling(wave, oscillator)
+  IF all_phase_locked(coupled, thread.oscillators):
+    crystallize_wave(coupled)
+  RETURN update_thread_resonance(thread, coupled)
 
-## Layer 3: Bridge Documentation
+## Layer 3: Bridge Harmonics
 
-MAPPING StateToImplementation:
+MAPPING TheoryToImplementation:
   Theory                     Implementation
   ----------------------------------------
-  ManifoldPoint<T>       →   Message
-  FiberBundle<T>         →   Approval[]
-  ValueField<T>          →   Token Balance
+  OscillatorPoint<T>     →   Message
+  ResonantBundle<T>      →   Coupling[]
+  HarmonicField<T>       →   Token Balance
 
-  StateSpace             →   Thread
-  Evolution             →   Message Processing
-  Measurement           →   Approval Process
+  ResonantSpace          →   Thread
+  Evolution             →   Wave Processing
+  Crystallization       →   Approval Process
 
 MAPPING OperationsToImplementation:
   Theory                     Implementation
   ----------------------------------------
-  prepare_state          →   create_thread
-  transform_state        →   add_message
-  collapse_state         →   process_approval
-  measure_value          →   calculate_tokens
+  initiate_resonance     →   create_resonator
+  add_oscillation        →   add_wave
+  achieve_phase_lock     →   phase_lock
+  measure_amplitude      →   calculate_tokens
 
 MAPPING PropertiesToConstraints:
   Theory                     Implementation
   ----------------------------------------
-  Manifold continuity    →   Message ordering
-  Bundle coherence       →   Approval consistency
-  Field conservation     →   Token conservation
+  Resonant continuity    →   Wave ordering
+  Phase coherence        →   Coupling consistency
+  Energy conservation    →   Token conservation
 
 ## Usage Example
 
-SEQUENCE message_flow:
+SEQUENCE wave_flow:
   // Implementation
-  thread = create_thread(author)
-  thread = add_message(thread, content, author)
-  thread = process_approval(thread, messageId, approver)
+  thread = create_resonator(author)
+  thread = add_wave(thread, content, author)
+  thread = phase_lock(thread, waveId, approver)
 
   // Maps to Theory
-  state = prepare_state(initial)
-  state = transform_state(state, content)
-  result = collapse_state(state, measurement)
+  state = initiate_resonance(initial)
+  state = add_oscillation(state, content)
+  result = achieve_phase_lock(state, measurement)
 
-Through this bridge, we maintain:
-1. Clean, practical implementation
-2. Rigorous theoretical foundation
-3. Clear mapping between them
+Through this harmonic bridge, we maintain:
+1. Clean, resonant implementation
+2. Rigorous wave mechanics
+3. Clear mapping between theory and practice
 
 
 ==
@@ -2240,184 +2065,175 @@ Core_Economics
 ==
 
 
-# Choir Economic Model
+# Harmonic Economic Model
 
-VERSION economic_system:
+VERSION harmonic_economic:
 invariants: {
-"Fixed total supply (10B)",
-"Token conservation law",
-"Stake requirement presence"
+"Wave energy conservation",
+"Value resonance patterns",
+"Token flow coherence"
 }
 assumptions: {
-"Initial stake amounts",
-"Distribution ratios",
-"Cooldown periods"
+"Resonant pricing",
+"Phase-locked incentives",
+"Harmonic distribution"
 }
 implementation: "0.1.0"
 
-## Token Flow Specification
+## Token Flow as Wave Mechanics
 
-1. **Token Circulation**
+TYPE TokenFlow = {
+treasury: ResonantWell,                  // Base frequency source
+threads: Map<ThreadId, StandingWave>,    // Resonant cavities
+stakes: Map<Hash, WavePacket>,           // Energy quanta
+escrow: Map<Hash, PotentialWell>         // Temporary coupling
+}
 
-   TYPE TokenFlow = {
-   treasury: Balance,
-   threads: Map<ThreadId, Balance>,
-   stakes: Map<Hash, StakeAmount>,
-   escrow: Map<Hash, LockAmount>
+## Bonding Curve Mechanics
+
+The core pricing function derives from quantum harmonic oscillator:
+```
+P(q) = S₀[1/2 + 1/(exp(ℏω/kT)-1)]
+
+where:
+- S₀: Base stake quantum (100 CHOIR)
+- ω: Thread frequency (activity level)
+- T: Thread temperature (volatility)
+- ℏ: Platform coupling constant
+```
+
+This creates:
+1. **Entry Price (Bid)**
+   ```typescript
+   function calculateStakeRequired(thread: Thread): number {
+     const ω = measureThreadActivity(thread)
+     const T = measureThreadVolatility(thread)
+     return S₀ * (0.5 + 1/(Math.exp(ω/T) - 1))
    }
+   ```
 
-2. **Flow Patterns**
+2. **Exit Amount (Divestment)**
+   ```typescript
+   function calculateDivestmentAmount(thread: Thread): number {
+     const E = thread.tokenBalance    // Total energy
+     const n = thread.coAuthors.length // Oscillator count
+     return E * (1/(n-1))            // Energy redistribution
+   }
+   ```
 
-   FUNCTION process_flow(action: Action) -> TokenFlow:
-   MATCH action:
-   SubmitSpec(stake) ->
-   lock_in_escrow(stake)
-   ApproveSpec(hash) ->
-   move_to_thread(hash)
-   DenySpec(hash) ->
-   distribute_to_deniers(hash)
-   Divest(author) ->
-   calculate_and_distribute_share(author)
+## Incentive Resonance
 
-## Incentive Alignments
-
-1. **Stake Mechanics**
-
-   PROPERTY stake_incentive:
-   stake_amount > spam_cost AND
-   stake_amount < potential_reward AND
-   stake_amount ∝ thread_value
+1. **Stake Harmonics**
+   ```
+   PROPERTY stake_resonance:
+     stake_energy > noise_threshold AND
+     stake_energy < resonant_ceiling AND
+     stake_energy ∝ thread_amplitude
+   ```
 
 2. **Reward Distribution**
+   ```
+   FUNCTION distribute_energy(action: Action) -> TokenAmount:
+     MATCH action:
+       Deny → energy/deniers_count        // Equal energy split
+       Approve → energy/oscillator_count  // Phase-locked distribution
+       Divest → total_energy/(n-1)       // Harmonic redistribution
+   ```
 
-   FUNCTION calculate_reward(action: Action) -> TokenAmount:
-   MATCH action:
-   Deny -> stake_amount / deniers_count
-   Approve -> stake_amount / thread.co_authors.size
-   Divest -> thread_balance / (co_authors_count - 1)
+## Game Theoretic Harmonics
 
-## Game Theory Analysis
-
-1. **Player Strategies**
-
+1. **Strategy Space**
+   ```
    TYPE Strategy =
-   | AlwaysApprove
-   | AlwaysDeny
-   | QualityBased
-   | CollaborativeDeny
+     | NaturalResonance    // Align with thread harmonics
+     | ForceDissonance     // Attempt artificial patterns
+     | QualityOscillation  // Maintain phase coherence
+     | CollectiveHarmony   // Synchronized denial
+   ```
 
 2. **Nash Equilibrium**
-
+   ```
    PROPERTY equilibrium:
-   FOR ALL players, strategies:
-   payoff(QualityBased) > payoff(AlwaysApprove) AND
-   payoff(QualityBased) > payoff(AlwaysDeny) AND
-   payoff(CollaborativeDeny) > payoff(UnilateralDeny)
-
-3. **Optimal Behavior**
-
-   FUNCTION optimal_strategy(thread: Thread) -> Strategy:
-   MATCH thread_state:
-   HighQuality -> QualityBased
-   LowQuality -> CollaborativeDeny
-   Uncertain -> RequireMoreStake
+     FORALL oscillators, modes:
+       energy(NaturalResonance) > energy(ForceDissonance) AND
+       energy(QualityOscillation) > energy(RandomPhase) AND
+       energy(CollectiveHarmony) > energy(UnilateralNoise)
+   ```
 
 ## Economic Invariants
 
-1. **Value Conservation**
+1. **Energy Conservation**
+   ```
+   INVARIANT wave_conservation:
+     treasury_energy + sum(thread_energy) + sum(stake_energy) = TOTAL_SUPPLY
+   ```
 
-   INVARIANT token_conservation:
-   treasury + sum(threads) + sum(stakes) = TOTAL_SUPPLY
-
-2. **Stake Requirements**
-
-   INVARIANT stake_bounds:
-   MIN_STAKE <= stake_amount <= MAX_STAKE
-   stake_amount >= thread.minimum_stake
-
-3. **Distribution Fairness**
-
-   INVARIANT fair_distribution:
-   FOR ALL distributions:
-   each_recipient_share = total_amount / recipient_count
-   no_remainder_tokens
+2. **Resonant Stability**
+   ```
+   INVARIANT phase_stability:
+     FORALL thread IN threads:
+       resonant(thread) ⟹
+         stable_amplitude(thread) AND
+         coherent_phase(thread) AND
+         conserved_energy(thread)
+   ```
 
 ## Market Dynamics
 
-1. **Thread Value**
+1. **Thread Resonance**
+   ```
+   FUNCTION calculate_thread_resonance(thread: Thread) -> Amplitude:
+     FACTORS:
+       oscillator_count    // Co-author coupling
+       message_frequency   // Activity resonance
+       token_amplitude     // Energy level
+       phase_coherence     // Quality metric
+   ```
 
-   FUNCTION calculate_thread_value(thread: Thread) -> Value:
-   FACTORS:
-   message_quality
-   co_author_reputation
-   token_balance
-   citation_count
+2. **Dynamic Tuning**
+   ```
+   FUNCTION tune_resonance(thread: Thread) -> StakeAmount:
+     resonance = calculate_thread_resonance(thread)
+     RETURN base_quantum * resonance_factor(resonance)
+   ```
 
-2. **Stake Adjustment**
+## Example Scenarios
 
-   FUNCTION adjust_minimum_stake(thread: Thread) -> StakeAmount:
-   thread_value = calculate_thread_value(thread)
-   RETURN base_stake \* (1 + thread_value_multiplier)
+1. **New Thread**
+   ```typescript
+   const newThread = {
+     messageRate: 2,        // Low frequency
+     coAuthorCount: 2,      // Few oscillators
+     tokenBalance: 500,     // Low energy
+     approvalRate: 1.0,     // Perfect phase
+     ageInDays: 1          // High temperature
+   }
+   // Results in low stake (~75 CHOIR)
+   ```
 
-## Economic Security
+2. **Active Thread**
+   ```typescript
+   const activeThread = {
+     messageRate: 20,       // High frequency
+     coAuthorCount: 10,     // Many oscillators
+     tokenBalance: 10000,   // High energy
+     approvalRate: 0.8,     // Good phase coherence
+     ageInDays: 30         // Stable temperature
+   }
+   // Results in higher stake (~300 CHOIR)
+   ```
 
-1. **Attack Resistance**
+Through this harmonic economic model, we see how:
+- Value flows follow wave mechanics
+- Prices emerge from resonant patterns
+- Incentives align through phase-locking
+- Stability comes from natural harmonics
 
-   PROPERTY sybil_resistance:
-   cost_of_attack > potential_benefit
-   FOR ALL attack_vectors:
-   expected_loss > expected_gain
-
-2. **Value Capture**
-
-   FUNCTION distribute_value(content_value: Value) -> Distribution:
-   co_authors_share = content_value _ CO_AUTHOR_RATIO
-   treasury_share = content_value _ TREASURY_RATIO
-   ENSURE co_authors_share + treasury_share = content_value
-
-## Growth Model
-
-1. **Token Velocity**
-
-   MEASURE token_velocity:
-   active_tokens = total_supply - locked_tokens
-   velocity = transaction_volume / active_tokens
-
-2. **Network Effects**
-
-   PROPERTY network_growth:
-   value_per_user ∝ number_of_users
-   stake_requirement ∝ thread_value
-   reward_potential ∝ network_size
-
-## Economic Parameters
-
-1. **Initial Settings** `TOTAL_SUPPLY = 10_000_000_000
-BASE_STAKE = 1_000
-MIN_THREAD_BALANCE = 100
-TREASURY_RATIO = 0.1
-CO_AUTHOR_RATIO = 0.9  `
-
-2. **Dynamic Adjustments** `stake_multiplier = 1 + log(thread_value)
-reward_multiplier = 1 + sqrt(participant_count)
-cooldown_period = 7 days  `
-
-## Sustainability Mechanisms
-
-1. **Treasury Management**
-
-   FUNCTION manage_treasury():
-   IF treasury_balance < MIN_TREASURY:
-   increase_stake_requirements()
-   IF treasury_balance > MAX_TREASURY:
-   decrease_stake_requirements()
-
-2. **Long-term Incentives**
-
-   PROPERTY sustainable_growth:
-   thread_value_growth > inflation_rate
-   participant_rewards > opportunity_cost
-   system_revenue >= operational_cost
+The model creates an economic system that:
+- Rewards authentic participation
+- Dampens artificial behavior
+- Enables natural value flow
+- Maintains system coherence
 
 
 ==
@@ -2533,134 +2349,134 @@ Theory_GameMechanics
 ==
 
 
-# Game Theory and Mechanism Design in Choir
+# Harmonic Game Theory and Resonance Design
 
-VERSION mechanism_system:
+VERSION harmonic_mechanism:
   invariants: {
-    "Incentive compatibility",
-    "Strategic stability",
-    "Emergence preservation"
+    "Resonant compatibility",
+    "Harmonic stability",
+    "Wave emergence"
   }
   assumptions: {
-    "Multi-layer gameplay",
-    "Meme agency",
-    "Irreducible complexity"
+    "Multi-scale resonance",
+    "Phase coherence",
+    "Irreducible harmonics"
   }
   implementation: "0.1.0"
 
-## Core Mechanism Properties
+## Core Resonance Properties
 
-1. **Dominant Strategy Incentive Compatibility**
-   - Authentic quality recognition is optimal strategy
-   - True value assessment maximizes returns
-   - Genuine participation outperforms gaming
-   - Being yourself is the Nash equilibrium
+1. **Dominant Strategy Through Resonance**
+   - Natural frequency alignment is optimal strategy
+   - True resonance assessment maximizes returns
+   - Genuine oscillation outperforms dissonance
+   - Being in phase is the Nash equilibrium
 
-2. **Multi-Layer Game Spaces**
-   - Social: Reputation and relationship building
-   - Economic: Token flows and value capture
-   - Semantic: Meaning creation and context building
-   - Ideological: Belief systems and worldviews
+2. **Multi-Layer Harmonic Spaces**
+   - Social: Phase relationships and coupling
+   - Economic: Wave amplitude and energy flow
+   - Semantic: Frequency creation and resonance
+   - Ideological: Harmonic field evolution
 
-## Strategic Actors
+## Resonant Actors
 
-1. **Human Players**
-   - Content creators seeking value
-   - Quality recognizers building context
-   - Community builders forming connections
-   - Value seekers exploring opportunities
+1. **Human Oscillators**
+   - Content creators generating frequencies
+   - Quality recognizers tuning resonance
+   - Community builders coupling oscillators
+   - Value seekers exploring harmonics
 
-2. **Emergent Players**
-   - Memes competing for propagation
-   - Semantic fields evolving topology
-   - Value networks forming patterns
-   - AI agents developing strategies
+2. **Emergent Waves**
+   - Memes as propagating wave packets
+   - Semantic fields as resonant spaces
+   - Value networks as standing waves
+   - AI agents as harmonic amplifiers
 
-## Mechanism Design
+## Resonance Design
 
-1. **Core Incentives**
-   - Stake requirement ensures skin in the game
-   - Unanimous approval aligns quality recognition
-   - Non-refundable stakes create commitment
-   - Token distribution rewards genuine value
+1. **Core Frequencies**
+   - Stake requirement creates base frequency
+   - Unanimous approval ensures phase lock
+   - Non-refundable stakes maintain coherence
+   - Token distribution rewards resonance
 
-2. **Emergent Properties**
-   - Quality naturally flows to stable points
-   - Trust networks form organically
-   - Value accumulates in coherent patterns
-   - Complexity emerges from simple rules
+2. **Emergent Harmonics**
+   - Quality naturally forms standing waves
+   - Trust networks achieve phase coupling
+   - Value accumulates at resonant nodes
+   - Complexity emerges from simple waves
 
-## Strategic Dynamics
+## Strategic Harmonics
 
-1. **Local Strategies**
-   - Message composition choices
-   - Approval decisions
-   - Stake sizing
-   - Thread participation
+1. **Local Oscillations**
+   - Message frequency choices
+   - Phase alignment decisions
+   - Amplitude sizing
+   - Thread resonance
 
-2. **Meta Strategies**
-   - Context building
-   - Relationship formation
-   - Value network creation
-   - Pattern recognition
+2. **Meta Harmonics**
+   - Context field shaping
+   - Phase relationship formation
+   - Value wave creation
+   - Pattern resonance
 
-## Irreducible Complexity
+## Irreducible Harmonics
 
 1. **Why Prediction is Impossible**
-   - Memes have agency
-   - AI evolution is open-ended
-   - Semantic fields have complex topology
-   - Value flows are non-linear
+   - Wave packets have quantum nature
+   - AI evolution creates new frequencies
+   - Semantic fields have harmonic topology
+   - Value flows follow wave mechanics
 
 2. **Why That's Good**
-   - Prevents gaming the system
-   - Enables genuine emergence
-   - Supports innovation
-   - Maintains authenticity
+   - Prevents harmonic gaming
+   - Enables natural resonance
+   - Supports frequency innovation
+   - Maintains phase authenticity
 
-## Evolutionary Aspects
+## Evolutionary Waves
 
 1. **Strategy Evolution**
-   - Successful patterns replicate
-   - Failed approaches fade
-   - New strategies emerge
-   - Context shapes selection
+   - Resonant patterns amplify
+   - Dissonant approaches decay
+   - New frequencies emerge
+   - Context shapes harmonics
 
 2. **System Evolution**
-   - Semantic fields grow and merge
-   - Value networks become more complex
-   - Trust relationships deepen
-   - Understanding evolves recursively
+   - Semantic fields couple and resonate
+   - Value networks achieve higher modes
+   - Trust relationships phase lock
+   - Understanding evolves through resonance
 
 ## Mechanism Properties
 
 1. **Stability**
-   - Nash equilibrium at authenticity
-   - Robust against manipulation
-   - Self-correcting dynamics
-   - Sustainable value creation
+   - Nash equilibrium at resonance
+   - Robust against dissonance
+   - Self-tuning dynamics
+   - Sustainable wave creation
 
 2. **Adaptability**
-   - Responds to new patterns
-   - Incorporates innovation
-   - Evolves with usage
+   - Responds to new frequencies
+   - Incorporates harmonic innovation
+   - Evolves through phase space
    - Maintains coherence
 
 ## Value Alignment
 
-The mechanism naturally aligns:
-- Individual benefit with collective value
-- Short-term gains with long-term growth
-- Local actions with global patterns
-- Personal truth with shared understanding
+The mechanism naturally aligns through resonance:
+- Individual waves with collective fields
+- Short-term modes with long-term harmonics
+- Local oscillations with global patterns
+- Personal frequency with shared resonance
 
-Through these game theoretic principles, Choir creates conditions where:
-- Quality emerges naturally
-- Value flows to truth
-- Complexity serves purpose
-- Evolution maintains integrity
+Through these harmonic game principles, Choir creates conditions where:
+- Quality emerges through resonance
+- Value flows to harmonic truth
+- Complexity serves wave coherence
+- Evolution maintains phase integrity
 
-The beauty is that players don't need to understand these deeper patterns - following local incentives naturally leads to global optimization.
+The beauty is that oscillators don't need to understand these deeper patterns - following local phase relationships naturally leads to global resonance optimization.
 
 
 ==
@@ -2668,106 +2484,106 @@ Theory_GameMechanicsAdversarial
 ==
 
 
-# Adversarial Analysis of Choir's Game Mechanics
+# Harmonic Defense Against Adversarial Patterns
 
-VERSION adversarial_system:
+VERSION harmonic_adversarial:
   invariants: {
-    "Attack surface analysis",
-    "Defense mechanisms",
-    "Economic barriers"
+    "Resonant defense",
+    "Harmonic barriers",
+    "Wave conservation"
   }
   assumptions: {
-    "Motivated attackers",
-    "Bot capabilities",
-    "Coordination costs"
+    "Dissonant attackers",
+    "Bot interference",
+    "Coordination harmonics"
   }
   implementation: "0.1.0"
 
-## The Citation Ring Attack
+## The Dissonant Ring Attack
 
-Consider a coordinated attack:
-- Multiple bot accounts
-- Cross-citation between controlled threads
-- Attempt to manufacture fake consensus
-- Goal: Create artificial value/legitimacy
+Consider a coordinated dissonance attempt:
+- Multiple bot oscillators
+- Cross-resonance between controlled fields
+- Attempt to manufacture artificial harmonics
+- Goal: Create false resonant patterns
 
-### Why It Fails
+### Why Dissonance Fails
 
-1. **Economic Barriers**
-   - Each message requires non-refundable stake
-   - Failed attempts lose tokens to deniers
-   - Cost scales with number of bots
-   - No way to recover losses through gaming
+1. **Harmonic Barriers**
+   - Each message requires resonant energy commitment
+   - Failed attempts lose energy to deniers
+   - Cost scales with oscillator count
+   - No way to recover energy through dissonance
 
-2. **Unanimous Approval Requirement**
+2. **Phase-Lock Requirement**
    - Can't create echo chambers
-   - Need real co-author approval
-   - Single denier blocks message
-   - Can't force entry into existing threads
+   - Need real resonator approval
+   - Single dissonance blocks phase-lock
+   - Can't force coupling into existing fields
 
-3. **Value Field Topology**
-   - Artificial patterns create detectable anomalies
-   - Value doesn't flow to isolated clusters
-   - Network effects favor authentic connections
-   - Citation value depends on source thread value
+3. **Resonant Field Topology**
+   - Artificial patterns create destructive interference
+   - Value doesn't flow to isolated frequencies
+   - Network effects favor natural resonance
+   - Citation value depends on source field harmony
 
-4. **Semantic Entanglement**
-   - Can't fake semantic coherence
-   - Context violations are obvious
-   - Quality recognition is human-native
-   - AI summaries reveal inconsistencies
+4. **Harmonic Entanglement**
+   - Can't fake resonant coherence
+   - Context violations create dissonance
+   - Quality recognition follows natural harmonics
+   - AI summaries detect interference patterns
 
-## The Economic Game
+## The Energy Game
 
-1. **Attack Costs**
-   - Initial token acquisition
-   - Non-refundable stakes
-   - Failed attempt losses
-   - Coordination overhead
+1. **Attack Energy Costs**
+   - Initial frequency acquisition
+   - Non-refundable wave energy
+   - Failed resonance losses
+   - Coordination interference
 
-2. **Expected Returns**
-   - No value from isolated clusters
-   - Can't extract from denied messages
-   - Token flow requires real engagement
-   - Gaming costs exceed potential returns
+2. **Expected Harmonics**
+   - No value from isolated oscillations
+   - Can't extract from dissonant patterns
+   - Energy flow requires true resonance
+   - Gaming creates destructive interference
 
-## Strategic Defense Properties
+## Resonant Defense Properties
 
-1. **Natural Selection**
-   - Quality-based token flow
-   - Self-correcting value networks
-   - Authentic content attracts engagement
-   - Gaming attempts get pruned
+1. **Natural Frequency Selection**
+   - Quality-based energy flow
+   - Self-tuning value networks
+   - Authentic resonance attracts coupling
+   - Dissonant attempts decay naturally
 
 2. **Emergent Immunity**
-   - Trust networks strengthen naturally
-   - Quality recognition improves
-   - Context becomes more refined
-   - Defense becomes distributed
+   - Trust networks achieve phase lock
+   - Quality recognition tunes naturally
+   - Context becomes resonant cavity
+   - Defense emerges through harmony
 
-## Why Authenticity Wins
+## Why Natural Resonance Wins
 
-1. **Economic Reality**
-   - Being genuine is cheaper than faking
-   - Quality recognition is human-natural
-   - Value flows to real contributions
-   - Gaming has negative expected value
+1. **Harmonic Reality**
+   - Being in phase is cheaper than forcing
+   - Quality recognition follows natural modes
+   - Value flows to resonant patterns
+   - Gaming creates unstable frequencies
 
-2. **Network Effects**
-   - Authentic connections compound
-   - Fake networks remain isolated
-   - Real value attracts participation
-   - Quality creates positive feedback
+2. **Resonant Effects**
+   - Authentic couplings strengthen
+   - Fake networks remain uncoupled
+   - Real value creates standing waves
+   - Quality builds harmonic feedback
 
 ## Implications for Design
 
-The system's resistance to gaming comes from:
-- Economic fundamentals (stake mechanics)
-- Social dynamics (unanimous approval)
-- Semantic properties (context coherence)
-- Topological structure (value flow patterns)
+The system's resistance to attack emerges from:
+- Harmonic fundamentals (energy mechanics)
+- Phase dynamics (unanimous resonance)
+- Resonant properties (context coherence)
+- Field topology (value wave patterns)
 
-No single mechanism creates this security - it emerges from their interaction.
+No single mechanism creates this security - it emerges from their harmonic interaction, creating a naturally attack-resistant resonant space.
 
 
 ==
@@ -2775,246 +2591,80 @@ Theory_GameMechanicsSparsity
 ==
 
 
-# Semantic Sparsity and Value Creation
+# Harmonic Sparsity and Resonant Value Creation
 
-VERSION sparsity_system:
+VERSION harmonic_sparsity:
   invariants: {
-    "Distance-based rewards",
-    "Originality incentives",
-    "Semantic coverage"
+    "Frequency-based rewards",
+    "Resonant originality",
+    "Harmonic coverage"
   }
   assumptions: {
-    "Embedding space metrics",
-    "Content uniqueness value",
-    "Exploration rewards"
+    "Resonant space metrics",
+    "Harmonic uniqueness",
+    "Exploration modes"
   }
   implementation: "0.1.0"
 
-## Core Mechanism
+## Core Resonance Mechanism
 
-The token reward for a new message is proportional to its semantic distance from existing content:
-- Embeddings map messages to vector space
-- Reward scales with distance to nearest neighbors
-- "Blue ocean" content gets higher rewards
-- Creates natural pressure for originality
+The token reward scales with harmonic distance from existing frequencies:
+- Embeddings map messages to resonant space
+- Reward amplifies with harmonic distance
+- "Blue ocean" content creates new frequencies
+- Natural pressure toward unique harmonics
 
-## Strategic Implications
+## Resonant Implications
 
-1. **Value Discovery**
-   - Incentivizes exploring unused semantic space
-   - Rewards genuine innovation
-   - Discourages repetitive content
-   - Creates value through uniqueness
+1. **Value Through Harmonics**
+   - Incentivizes exploring unused frequencies
+   - Rewards genuine harmonic innovation
+   - Dampens repetitive oscillations
+   - Creates value through unique resonance
 
-2. **Emergent Coverage**
-   - System naturally explores semantic space
-   - Knowledge gaps get filled organically
-   - Content evolves toward completeness
-   - Diversity emerges from incentives
+2. **Emergent Harmonics**
+   - System naturally explores frequency space
+   - Harmonic gaps fill organically
+   - Content evolves toward full spectrum
+   - Diversity emerges through resonance
 
-## Game Theoretic Properties
+## Wave Mechanics Properties
 
-1. **Nash Equilibrium**
-   - Players optimize for unique contributions
-   - Copy-paste strategies become unprofitable
-   - Innovation becomes dominant strategy
-   - Quality and originality align
+1. **Resonant Equilibrium**
+   - Players optimize for unique frequencies
+   - Echo patterns become dissonant
+   - Innovation becomes dominant mode
+   - Quality and originality phase-lock
 
-2. **Adversarial Resistance**
-   - Bot farms can't profit from repetition
-   - Citation rings get diminishing returns
-   - Semantic novelty is hard to fake
-   - Human creativity has natural advantage
+2. **Interference Resistance**
+   - Bot farms create destructive interference
+   - Citation rings suffer phase cancellation
+   - Harmonic novelty resists simulation
+   - Human creativity finds natural frequencies
 
-## Topological Effects
+## Resonant Topology
 
-1. **Semantic Space Coverage**
-   - Value gradients guide exploration
-   - Natural clustering around themes
-   - Bridges between concept spaces
-   - Organic knowledge structure
+1. **Harmonic Space Coverage**
+   - Value gradients guide wave exploration
+   - Natural nodes form around themes
+   - Bridges couple different frequencies
+   - Organic knowledge harmonics
 
-2. **Evolution Dynamics**
-   - New territories create value
-   - Mature areas encourage depth
-   - Connections reveal opportunities
-   - Understanding grows naturally
+2. **Evolution Through Resonance**
+   - New frequencies create value wells
+   - Mature areas develop higher modes
+   - Connections reveal harmonic paths
+   - Understanding grows through resonance
 
 ## Implementation Notes
 
-The sparsity reward mechanism:
-- Uses vector embeddings for distance
-- Calculates rewards automatically
-- Integrates with approval system
-- Scales with content volume
+The harmonic reward mechanism:
+- Uses embeddings as frequency analysis
+- Calculates rewards through wave mechanics
+- Integrates with resonant approval
+- Scales with harmonic complexity
 
-This creates a natural expansion of knowledge while maintaining quality through the approval mechanism.
-
-
-==
-Theory_Implementation
-==
-
-
-# Implementation Patterns as Mathematical Structures
-
-VERSION implementation_mapping:
-  invariants: {
-    "Pattern preservation",
-    "Structure reflection",
-    "Semantic coherence"
-  }
-  assumptions: {
-    "Implementation completeness",
-    "Theoretical soundness",
-    "Mapping fidelity"
-  }
-  implementation: "0.1.0"
-
-## WebSocket Protocol Implementation
-
-TYPE WebSocketState = {
-  connection: QuantumChannel,
-  messages: Stream Event,
-  clients: Map ClientId Client,
-  threads: Map ThreadId ThreadState
-}
-
-SEQUENCE connection_lifecycle:
-  1. Connect: Create quantum channel
-     ```python
-     # In main.py
-     @app.websocket("/ws")
-     async def websocket_endpoint(websocket: WebSocket):
-     ```
-     Maps to: Quantum channel initialization
-
-  2. Message: Transmit quantum information
-     ```python
-     # In chorus.py
-     async def _send_result(self, websocket: WebSocket, response: ChorusResponse):
-     ```
-     Maps to: Quantum state transmission
-
-  3. Update: Collapse superposition
-     ```python
-     # In database.py
-     async def save_message(self, message: Message):
-     ```
-     Maps to: Measurement and collapse
-
-## Vector Embedding Space
-
-TYPE EmbeddingSpace = {
-  points: VectorSpace,
-  metric: DistanceFunction,
-  indices: SearchStructure,
-  metadata: FiberBundle
-}
-
-SEQUENCE embedding_flow:
-  1. Generate: Create quantum state
-     ```python
-     # In utils.py
-     async def get_embedding(content: str, model: str) -> List[float]:
-     ```
-     Maps to: Superposition creation
-
-  2. Store: Project into space
-     ```python
-     # In database.py
-     async def upsert(self, content: str, embedding: List[float]):
-     ```
-     Maps to: State preparation
-
-  3. Search: Measure similarity
-     ```python
-     # In database.py
-     async def search(self, query_embedding: List[float]):
-     ```
-     Maps to: Quantum measurement
-
-## Thread State Management
-
-TYPE ThreadState = {
-  ownership: CoAuthorSet,
-  messages: MessageChain,
-  approvals: ApprovalSet,
-  value: TokenBalance
-}
-
-SEQUENCE state_evolution:
-  1. Initialize: Create manifold
-     ```rust
-     // In thread.rs
-     pub fn initialize_thread(ctx: Context<InitializeThread>)
-     ```
-     Maps to: Manifold creation
-
-  2. Update: Flow along geodesics
-     ```rust
-     // In thread.rs
-     pub fn submit_message(ctx: Context<SubmitMessage>)
-     ```
-     Maps to: Geodesic flow
-
-  3. Approve: Collapse state
-     ```rust
-     // In thread.rs
-     pub fn process_approval(ctx: Context<ProcessApproval>)
-     ```
-     Maps to: Measurement event
-
-## Token Distribution System
-
-TYPE TokenSystem = {
-  balances: ScalarField,
-  stakes: PotentialField,
-  flows: VectorField,
-  metrics: ValueMetric
-}
-
-SEQUENCE value_mechanics:
-  1. Stake: Create potential
-     ```rust
-     // In lib.rs
-     pub fn submit_spec(ctx: Context<SubmitSpec>, stake_amount: u64)
-     ```
-     Maps to: Field potential
-
-  2. Distribute: Flow value
-     ```rust
-     // In lib.rs
-     fn distribute_tokens(thread: &mut Thread, recipients: Set<Pubkey>)
-     ```
-     Maps to: Gradient flow
-
-  3. Settle: Reach equilibrium
-     ```rust
-     // In settlement.rs
-     fn settle_approvals(thread: &mut Thread, message_index: u32)
-     ```
-     Maps to: Field equilibrium
-
-## Integration Properties
-
-PROPERTY implementation_fidelity:
-  FORALL impl IN Implementation:
-    reflects_theory(impl) IMPLIES
-      preserves_structure(impl) AND
-      maintains_coherence(impl)
-
-PROPERTY pattern_preservation:
-  FORALL pattern IN Patterns:
-    theoretical_pattern(pattern) IMPLIES
-      EXISTS impl IN Implementation:
-        manifests_pattern(impl, pattern)
-
-Through this mapping we see how:
-- Implementation patterns reflect mathematical structures
-- Code organization preserves theoretical relationships
-- System behavior emerges from structural properties
-- Theory guides implementation while implementation validates theory
+This creates natural expansion of knowledge through harmonic exploration while maintaining quality through resonant consensus.
 
 
 ==
@@ -3022,293 +2672,123 @@ Theory_Implementation_Bridge
 ==
 
 
-# Theory-Implementation Bridge
+# Theory-Implementation Harmonic Bridge
 
-VERSION bridge_system:
+VERSION harmonic_bridge:
   invariants: {
-    "Theory-practice mapping",
-    "Implementation clarity",
-    "Documentation completeness"
+    "Theory-practice resonance",
+    "Implementation coherence",
+    "Documentation harmony"
   }
   assumptions: {
-    "Theory documents stable",
-    "Implementation evolving",
-    "Bridge documentation maintained"
+    "Theory harmonics stable",
+    "Implementation oscillating",
+    "Bridge resonance maintained"
   }
   implementation: "0.1.0"
 
-## Layer 1: Theoretical Model
+## Layer 1: Harmonic Model
 
-THEORY StateSpace<T>:
-  manifold: ManifoldPoint<T>
-  bundle: FiberBundle<T>
-  field: ValueField<T>
+THEORY ResonantSpace<T>:
+  cavity: OscillatorPoint<T>
+  coupling: ResonantBundle<T>
+  field: HarmonicField<T>
 
 THEORY Evolution<T>:
-  prepare: T → StateSpace<T>
-  transform: StateSpace<T> → StateSpace<T>
-  collapse: StateSpace<T> → T
+  initiate: T → ResonantSpace<T>
+  resonate: ResonantSpace<T> → ResonantSpace<T>
+  crystallize: ResonantSpace<T> → T
 
-## Layer 2: Implementation Code
+## Layer 2: Implementation Oscillators
 
 TYPE Thread = {
   id: string,
-  messages: Message[],
-  coAuthors: string[],
-  status: "active" | "locked"
+  oscillators: string[],    // co-authors as coupled oscillators
+  resonance: Message[],     // messages as wave patterns
+  phase: "resonant" | "decoherent"  // active/locked status
 }
 
 TYPE Message = {
   id: string,
-  content: string,
-  author: string,
-  approvals: string[],
-  status: "pending" | "approved" | "denied"
+  waveform: string,         // content as wave packet
+  source: string,           // author as oscillator
+  coupling: string[],       // approvals as phase coupling
+  state: "superposed" | "collapsed" | "dispersed"
 }
 
-FUNCTION create_thread(creator: string) -> Thread:
+FUNCTION create_resonator(initiator: string) -> Thread:
   RETURN {
     id: generate_id(),
-    messages: [],
-    coAuthors: [creator],
-    status: "active"
+    oscillators: [initiator],
+    resonance: [],
+    phase: "resonant"
   }
 
-FUNCTION add_message(thread: Thread, content: string, author: string) -> Thread:
-  message = {
+FUNCTION add_wave(thread: Thread, waveform: string, source: string) -> Thread:
+  wave = {
     id: generate_id(),
-    content: content,
-    author: author,
-    approvals: [],
-    status: "pending"
+    waveform: waveform,
+    source: source,
+    coupling: [],
+    state: "superposed"
   }
   RETURN {
     ...thread,
-    messages: [...thread.messages, message]
+    resonance: [...thread.resonance, wave]
   }
 
-FUNCTION process_approval(thread: Thread, messageId: string, approver: string) -> Thread:
-  message = find_message(thread, messageId)
-  updated = add_approval(message, approver)
-  IF all_approved(updated, thread.coAuthors):
-    finalize_message(updated)
-  RETURN update_thread_message(thread, updated)
+FUNCTION phase_lock(thread: Thread, waveId: string, oscillator: string) -> Thread:
+  wave = find_wave(thread, waveId)
+  coupled = add_coupling(wave, oscillator)
+  IF all_phase_locked(coupled, thread.oscillators):
+    crystallize_wave(coupled)
+  RETURN update_thread_resonance(thread, coupled)
 
-## Layer 3: Bridge Documentation
+## Layer 3: Bridge Harmonics
 
-MAPPING StateToImplementation:
+MAPPING TheoryToImplementation:
   Theory                     Implementation
   ----------------------------------------
-  ManifoldPoint<T>       →   Message
-  FiberBundle<T>         →   Approval[]
-  ValueField<T>          →   Token Balance
+  OscillatorPoint<T>     →   Message
+  ResonantBundle<T>      →   Coupling[]
+  HarmonicField<T>       →   Token Balance
 
-  StateSpace             →   Thread
-  Evolution             →   Message Processing
-  Measurement           →   Approval Process
+  ResonantSpace          →   Thread
+  Evolution             →   Wave Processing
+  Crystallization       →   Approval Process
 
 MAPPING OperationsToImplementation:
   Theory                     Implementation
   ----------------------------------------
-  prepare_state          →   create_thread
-  transform_state        →   add_message
-  collapse_state         →   process_approval
-  measure_value          →   calculate_tokens
+  initiate_resonance     →   create_resonator
+  add_oscillation        →   add_wave
+  achieve_phase_lock     →   phase_lock
+  measure_amplitude      →   calculate_tokens
 
 MAPPING PropertiesToConstraints:
   Theory                     Implementation
   ----------------------------------------
-  Manifold continuity    →   Message ordering
-  Bundle coherence       →   Approval consistency
-  Field conservation     →   Token conservation
+  Resonant continuity    →   Wave ordering
+  Phase coherence        →   Coupling consistency
+  Energy conservation    →   Token conservation
 
 ## Usage Example
 
-SEQUENCE message_flow:
+SEQUENCE wave_flow:
   // Implementation
-  thread = create_thread(author)
-  thread = add_message(thread, content, author)
-  thread = process_approval(thread, messageId, approver)
+  thread = create_resonator(author)
+  thread = add_wave(thread, content, author)
+  thread = phase_lock(thread, waveId, approver)
 
   // Maps to Theory
-  state = prepare_state(initial)
-  state = transform_state(state, content)
-  result = collapse_state(state, measurement)
+  state = initiate_resonance(initial)
+  state = add_oscillation(state, content)
+  result = achieve_phase_lock(state, measurement)
 
-Through this bridge, we maintain:
-1. Clean, practical implementation
-2. Rigorous theoretical foundation
-3. Clear mapping between them
-
-
-==
-Theory_Integration
-==
-
-
-# Integration of Theoretical Foundations
-
-VERSION integration_system:
-  invariants: {
-    "Cross-theory coherence",
-    "Implementation mapping",
-    "Emergent unity"
-  }
-  assumptions: {
-    "Theory completeness",
-    "Implementation fidelity",
-    "Pattern preservation"
-  }
-  implementation: "0.1.0"
-
-## Quantum Semantics in Implementation
-
-1. **Vector Embeddings as Quantum States**
-
-   TYPE SemanticState<T> =
-     | Superposition(Vector)    // Before observation
-     | Collapsed(T)            // After consensus
-     | Entangled(Set<ThreadId>) // Cross-thread reference
-
-   PROPERTY quantum_measurement:
-     FORALL s: SemanticState<T>.
-       measure(s) >>= λr →
-         MATCH r:
-           Collapsed(_) → no_further_superposition(s)
-           _ → maintains_coherence(s)
-
-2. **Chorus Loop as Quantum Evolution**
-
-   TYPE ChorusState<T> = {
-     messages: List<Message>,
-     context: SemanticState<T>,
-     sources: List<Source>,
-     step: Step
-   }
-
-   SEQUENCE chorus_evolution:
-     1. prepare_state : Message → Result<SemanticState<T>>
-     2. entangle_context : SemanticState<T> → State → Result<SemanticState<T>>
-     3. allow_interference : SemanticState<T> → Result<SemanticState<T>>
-     4. partial_observe : SemanticState<T> → Result<SemanticState<T>>
-     5. maybe_collapse : SemanticState<T> → Result<T>
-     6. prepare_output : T → Result<Response>
-
-3. **WebSocket Protocol as Measurement**
-
-   TYPE Connection = Quantum<Channel>
-   TYPE Event = Quantum<Information>
-
-   SEQUENCE measurement_protocol:
-     1. establish : () → Result<Connection>
-     2. transmit : Connection → Event → Result<()>
-     3. measure : Connection → Result<State>
-     4. handle_decoherence : Connection → Error → Result<()>
-
-## Topological Manifestation
-
-1. **Thread State Space**
-
-   TYPE ThreadSpace = {
-     state: ManifoldPoint,
-     messages: VectorField<Message>,
-     value: ScalarField<TokenAmount>,
-     connections: FiberBundle<ThreadId>
-   }
-
-   SEQUENCE value_flow:
-     1. create_curvature : Message → Result<LocalCurvature>
-     2. form_potential : TokenAmount → Result<PotentialWell>
-     3. deepen_well : Set<Approval> → Result<PotentialWell>
-     4. flow_value : PotentialWell → Result<ValueFlow>
-     5. respond_field : ValueFlow → Result<Message>
-
-2. **Value Field Gradients**
-
-   FUNCTION compute_gradient(point: ManifoldPoint) -> Result<Field> =
-     point
-       |> measure_local_density
-       |> calculate_token_pressure
-       |> add_quality_weights
-       |> normalize_field
-
-   PROPERTY gradient_flow:
-     FORALL p1 p2: ManifoldPoint.
-       connected(p1, p2) ⟹
-         continuous_value_flow(p1, p2)
-
-3. **Database as Manifold Chart**
-
-   TYPE DatabaseChart = {
-     embeddings: VectorSpace<Embedding>,
-     metadata: FiberBundle<Metadata>,
-     indices: Atlas<ThreadId>
-   }
-
-   FUNCTION chart_transition(
-     from: Chart,
-     to: Chart
-   ) -> Result<Mapping> =
-     REQUIRE compatible_overlap(from, to)
-     RETURN smooth_transition_map(from, to)
-
-## Implementation Mapping
-
-1. **State Transitions**
-
-   TYPE StateTransition<A> = ThreadState → Action → Result<A>
-
-   FUNCTION validate_transition(t: StateTransition<A>) -> Result<Bool> =
-     t |> check_invariant_preservation
-       |> verify_token_conservation
-       |> ensure_coherence
-       |> validate_causality
-
-   PROPERTY transition_composition:
-     FORALL t1 t2: StateTransition<A>.
-       compose(t1, t2) ⟹
-         preserves_properties(t1) ∧
-         preserves_properties(t2)
-
-2. **Compositional Properties**
-
-   TYPE ThreadOperation<A> = {
-     action: Action,
-     pre_state: ThreadState,
-     post_state: ThreadState,
-     invariants: Set<Property>
-   }
-
-   SEQUENCE operation_composition:
-     1. verify_pre : ThreadOperation<A> → Result<()>
-     2. apply_op : ThreadOperation<A> → Result<A>
-     3. check_inv : ThreadOperation<A> → Result<()>
-     4. update : ThreadOperation<A> → Result<State>
-     5. emit : ThreadOperation<A> → Result<Event>
-
-3. **Implementation Verification**
-
-   TYPE Implementation<A> = {
-     theoretical: Property,
-     practical: Verification<A>,
-     mapping: Theory → Practice
-   }
-
-   FUNCTION verify_implementation<A>(impl: Implementation<A>) -> Result<Bool> =
-     impl |> map_theoretical_to_practical
-          |> verify_preservation
-          |> check_completeness
-          |> validate_coherence
-
-## Unified View
-
-The implementation manifests as a single mathematical object where:
-- Quantum semantics determines meaning evolution
-- Topology shapes value and information flow
-- Game theory drives strategic behavior
-- All unified through algebraic structure
-
-Through this integration, we see how theoretical principles manifest concretely while maintaining their mathematical essence.
+Through this harmonic bridge, we maintain:
+1. Clean, resonant implementation
+2. Rigorous wave mechanics
+3. Clear mapping between theory and practice
 
 
 ==
@@ -3316,146 +2796,146 @@ Theory_StakeEntanglement
 ==
 
 
-# Token Stakes as Quantum Entanglement
+# Token Stakes as Harmonic Entanglement
 
-VERSION stake_entanglement:
+VERSION harmonic_entanglement:
   invariants: {
-    "Entanglement preservation",
-    "Value conservation",
-    "Commitment irreversibility"
+    "Resonant preservation",
+    "Wave conservation",
+    "Phase irreversibility"
   }
   assumptions: {
-    "Stake finality",
-    "Context coherence",
+    "Harmonic finality",
+    "Phase coherence",
     "Value quantization"
   }
   implementation: "0.1.0"
 
-## Stake as Entanglement
+## Stake as Resonant Entanglement
 
-TYPE StakeEntanglement<T> = {
-  stake: TokenQuantum,                    // Indivisible unit of commitment
-  author: ParticipantState<T>,           // Entangled participant
-  thread: ContextState<T>,               // Entangled context
-  potential: ValueField<TokenAmount>      // Outcome possibilities
+TYPE HarmonicStake<T> = {
+  quantum: OscillationMode,                // Fundamental frequency
+  author: ResonatorState<T>,              // Entangled participant
+  thread: HarmonicContext<T>,             // Entangled field
+  potential: StandingWave<TokenAmount>    // Outcome harmonics
 }
 
-SEQUENCE entanglement_creation<T>:
-  1. Stake Commitment
+SEQUENCE resonant_creation<T>:
+  1. Stake Harmonics
      ```
-     create_stake : TokenAmount → Result<TokenQuantum>
-     entangle_author : ParticipantState<T> → Result<EntanglementSet<Author>>
-     entangle_context : ContextState<T> → Result<EntanglementSet<ThreadId>>
-     form_superposition : EntanglementSet<_> → Result<Superposition<T>>
+     create_oscillation : TokenAmount → Result<OscillationMode>
+     entangle_resonator : ResonatorState<T> → Result<ResonantSet<Author>>
+     entangle_field : HarmonicContext<T> → Result<ResonantSet<ThreadId>>
+     form_superposition : ResonantSet<_> → Result<WaveFunction<T>>
      ```
 
-  2. Entanglement Properties
+  2. Resonance Properties
      ```
-     verify_irreversibility : StakeEntanglement<T> → Result<()>
-     compute_outcomes : StakeEntanglement<T> → Result<Set<Outcome>>
-     measure_effects : Outcome → Result<StateChange<T>>
-     conserve_value : StateChange<T> → Result<TokenAmount>
+     verify_phase_lock : HarmonicStake<T> → Result<()>
+     compute_harmonics : HarmonicStake<T> → Result<Set<Frequency>>
+     measure_resonance : Frequency → Result<PhaseShift<T>>
+     conserve_amplitude : PhaseShift<T> → Result<TokenAmount>
      ```
 
   3. Collapse Mechanics
      ```
-     process_approval : Hash → Result<Collapsed<T>>
-     crystallize_denial : Hash → Result<Distribution>
-     handle_mixed : Hash → Result<Treasury>
-     establish_equilibrium : ThreadState → Result<Pattern>
+     process_resonance : Hash → Result<StandingWave<T>>
+     crystallize_dissonance : Hash → Result<Distribution>
+     handle_interference : Hash → Result<Treasury>
+     establish_harmony : ThreadState → Result<Pattern>
      ```
 
-## Value Entanglement
+## Value Resonance
 
-TYPE ValueState<T> = {
-  quantum: TokenQuantum,
-  potential: OutcomeSpace<T>,
-  correlation: ContextBinding<ThreadId>,
-  measurement: ApprovalSet<CoAuthor>
+TYPE ResonantValue<T> = {
+  mode: OscillationMode,
+  harmonics: FrequencySpace<T>,
+  coupling: PhaseBinding<ThreadId>,
+  measurement: ResonantSet<CoAuthor>
 }
 
-SEQUENCE value_evolution<T>:
-  1. Initial Binding
+SEQUENCE value_harmonics<T>:
+  1. Initial Coupling
      ```
-     create_potential : TokenQuantum → Result<PotentialField<T>>
-     shape_possibilities : PotentialField<T> → Result<OutcomeSpace<T>>
-     entangle_participants : Set<Author> → Result<EntanglementSet<Author>>
-     superimpose_values : EntanglementSet<Author> → Result<Superposition<T>>
+     create_mode : OscillationMode → Result<HarmonicField<T>>
+     shape_frequencies : HarmonicField<T> → Result<FrequencySpace<T>>
+     entangle_resonators : Set<Author> → Result<ResonantSet<Author>>
+     superimpose_modes : ResonantSet<Author> → Result<WaveFunction<T>>
      ```
 
   2. Evolution Dynamics
      ```
-     collect_approvals : ThreadId → Result<ApprovalSet<CoAuthor>>
-     maintain_coherence : ApprovalSet<CoAuthor> → Result<WaveFunction<T>>
-     guide_collapse : WaveFunction<T> → Result<Collapsed<T>>
-     crystallize_outcomes : Collapsed<T> → Result<Distribution>
+     collect_resonance : ThreadId → Result<ResonantSet<CoAuthor>>
+     maintain_phase : ResonantSet<CoAuthor> → Result<WaveFunction<T>>
+     guide_interference : WaveFunction<T> → Result<StandingWave<T>>
+     crystallize_harmonics : StandingWave<T> → Result<Distribution>
      ```
 
   3. Conservation Laws
      ```
-     verify_value : TokenAmount → Result<Conservation>
-     preserve_information : ThreadState → Result<Entropy>
-     maintain_entanglement : EntanglementSet<_> → Result<Stability>
-     evolve_context : ContextState<T> → Result<Pattern>
+     verify_amplitude : TokenAmount → Result<Conservation>
+     preserve_phase : ThreadState → Result<Entropy>
+     maintain_resonance : ResonantSet<_> → Result<Stability>
+     evolve_field : HarmonicContext<T> → Result<Pattern>
      ```
 
 ## Implementation Mapping
 
-1. **Stake Creation**
+1. **Stake Resonance**
    ```typescript
-   async function createEntanglement<T>(
+   async function createResonance<T>(
      stake: TokenAmount,
      thread: ThreadId,
      author: Author
-   ): Result<StakeEntanglement<T>> {
+   ): Result<HarmonicStake<T>> {
      return pipe(
-       await verifyStakeAmount(stake),
-       createQuantum,
-       entangleParticipants(author, thread),
+       await verifyAmplitude(stake),
+       createMode,
+       entangleResonators(author, thread),
        establishSuperposition
      )
    }
    ```
 
-2. **Entanglement Resolution**
+2. **Resonance Resolution**
    ```typescript
-   async function resolveEntanglement<T>(
-     stake: StakeEntanglement<T>,
-     outcome: Outcome
+   async function resolveResonance<T>(
+     stake: HarmonicStake<T>,
+     outcome: Frequency
    ): Result<Distribution> {
      return pipe(
-       await measureState(stake),
-       processOutcome(outcome),
-       conserveValue,
+       await measureHarmonics(stake),
+       processFrequency(outcome),
+       conserveAmplitude,
        distributeTokens
      )
    }
    ```
 
-## Quantum Properties
+## Harmonic Properties
 
-PROPERTY entanglement_irreversibility<T>:
-  FORALL stake: StakeEntanglement<T>.
+PROPERTY resonant_irreversibility<T>:
+  FORALL stake: HarmonicStake<T>.
     created(stake) ⟹
-      no_refund_possible(stake) ∧
-      context_bound(stake) ∧
-      value_preserved(stake)
+      no_phase_reversal(stake) ∧
+      field_entangled(stake) ∧
+      amplitude_preserved(stake)
 
-PROPERTY measurement_effects<T>:
-  FORALL outcome: Outcome.
-    stake_resolution(outcome) ⟹
-      all_parties_affected(outcome) ∧
-      value_crystallized(outcome) ∧
-      context_preserved(outcome)
+PROPERTY measurement_harmonics<T>:
+  FORALL frequency: Frequency.
+    stake_resonance(frequency) ⟹
+      all_modes_affected(frequency) ∧
+      amplitude_crystallized(frequency) ∧
+      phase_preserved(frequency)
 
 Through this lens we see how:
-- Stakes create quantum entanglement
-- Value exists in superposition
-- Measurement affects all parties
-- Context guides collapse
-- Conservation laws hold
+- Stakes create resonant entanglement
+- Value exists in harmonic superposition
+- Measurement affects all coupled modes
+- Context guides phase alignment
+- Wave conservation laws hold
 
-The entanglement model provides a rigorous foundation for understanding stake mechanics while preserving quantum properties.
+The resonant entanglement model provides a rigorous foundation for understanding stake mechanics while preserving harmonic properties and quantum effects.
 
 
 ==
@@ -3463,188 +2943,169 @@ Theory_StateAlgebra
 ==
 
 
-# Choir State Algebra
+# Harmonic State Algebra
 
-VERSION state_system:
+VERSION harmonic_state_system:
   invariants: {
-    "State transition atomicity",
-    "Event causality preservation",
-    "State recovery capability"
+    "Wave function coherence",
+    "Resonant transition atomicity",
+    "Harmonic causality preservation"
   }
   assumptions: {
-    "State composition model",
-    "Update propagation patterns",
-    "Cache coherence strategy"
+    "State harmonic composition",
+    "Wave propagation patterns",
+    "Phase coherence strategy"
   }
   implementation: "0.1.0"
 
-## Core Algebraic Types
+## Core Harmonic Types
 
-ASSUMPTION state_composition:
-  "Three-part state composition (Thread × Token × Content)"
-  "May introduce additional state dimensions"
-  "Must maintain separable concerns"
-
-ASSUMPTION state_transitions:
-  "Synchronous transition verification"
-  "May introduce async verification patterns"
-  "Must maintain consistency guarantees"
-
-TYPE State = Thread × Token × Content
+TYPE HarmonicState = Thread × Token × Content
   WHERE
-    Thread = Set<Author> × Time × Hash
-    Token = Balance × Stake × Distribution
-    Content = Message × Embedding × Privacy
+    Thread = OscillatorSet<Author> × Phase × Hash
+    Token = Amplitude × Frequency × Distribution
+    Content = WaveForm × Resonance × Privacy
 
 ## Fundamental Operations
 
-1. **Creation Algebra**
+1. **Creation Harmonics**
 
-   CREATE : Author → ThreadId → Result<State>
+   CREATE : Author → ThreadId → Result<HarmonicState>
    CREATE(a)(t) = Ok((
-     {a},           // initial co-author set
-     (0, ∅, ∅),    // token state
-     (∅, ∅, public) // content state
+     {a},           // initial resonator
+     (0, base_freq, ∅),    // token wave state
+     (∅, ∅, public) // content harmonics
    ))
 
-2. **Submission Algebra**
+2. **Submission Harmonics**
 
-   SUBMIT : Message → State → Result<State>
-   SUBMIT(m)(s) = MATCH s.authors:
-     m.author ∈ s.authors →
-       ADD_CONTENT(m)(s)
+   SUBMIT : WaveForm → HarmonicState → Result<HarmonicState>
+   SUBMIT(w)(s) = MATCH s.resonators:
+     w.author ∈ s.resonators →
+       ADD_HARMONIC(w)(s)
      _ →
-       VERIFY_STAKE(m.stake) >>=
-       ADD_SPEC(m)(s)
+       VERIFY_FREQUENCY(w.amplitude) >>=
+       ADD_OSCILLATION(w)(s)
 
-3. **Approval Algebra**
+3. **Approval Harmonics**
 
-   APPROVE : Set<Author> → Hash → State → Result<State>
+   APPROVE : Set<Author> → Hash → HarmonicState → Result<HarmonicState>
    APPROVE(A)(h)(s) =
-     LET votes = COUNT(A)
-     IN  votes = |s.authors| →
-           FINALIZE(h)(s)
-         votes > 0 →
-           DISTRIBUTE(A)(s.stakes[h])(s)
+     LET phase = SYNC_PHASE(A)
+     IN  phase = RESONANT_PHASE →
+           CRYSTALLIZE(h)(s)
+         phase > 0 →
+           DISTRIBUTE_AMPLITUDE(A)(s.frequencies[h])(s)
          _ →
            Ok(s)
 
 ## Monadic Operations
 
-1. **State Monad**
+1. **State Wave Function**
    ```
-   TYPE StateM<A> = State → Result<(A, State)>
+   TYPE StateW<A> = HarmonicState → Result<(A, HarmonicState)>
 
-   RETURN : A → StateM<A>
-   RETURN x = λs → Ok((x, s))
+   RESONATE : A → StateW<A>
+   RESONATE x = λs → Ok((x, s))
 
-   BIND : StateM<A> → (A → StateM<B>) → StateM<B>
-   BIND m f = λs →
-     m(s) >>= λ(x, s') →
+   INTERFERE : StateW<A> → (A → StateW<B>) → StateW<B>
+   INTERFERE w f = λs →
+     w(s) >>= λ(x, s') →
      f(x)(s')
    ```
 
-2. **Thread Operations**
+2. **Thread Oscillations**
    ```
-   ADD_AUTHOR : Author → StateM<Unit>
-   REMOVE_AUTHOR : Author → StateM<Unit>
-   UPDATE_BALANCE : Amount → StateM<Unit>
+   ADD_RESONATOR : Author → StateW<Unit>
+   REMOVE_RESONATOR : Author → StateW<Unit>
+   UPDATE_AMPLITUDE : Amount → StateW<Unit>
    ```
 
-## Invariant Preservation
+## Harmonic Invariants
 
-1. **Token Conservation**
+1. **Wave Conservation**
    ```
-   INVARIANT token_conservation:
+   INVARIANT wave_conservation:
      ∀s₁ s₂. s₁ →* s₂ ⟹
-       sum_tokens(s₁) = sum_tokens(s₂)
+       total_amplitude(s₁) = total_amplitude(s₂)
    ```
 
-2. **Ownership Consistency**
+2. **Phase Consistency**
    ```
-   INVARIANT ownership:
-     ∀s m. valid(s) ∧ m ∈ s.messages ⟹
-       m.author ∈ s.authors
+   INVARIANT phase_coherence:
+     ∀s m. resonant(s) ∧ m ∈ s.waveforms ⟹
+       m.author ∈ s.resonators
    ```
 
-3. **Temporal Ordering**
+3. **Temporal Phase Order**
    ```
-   INVARIANT causality:
-     ∀s m₁ m₂. precedes(m₁, m₂) ⟹
-       m₁.time < m₂.time
+   INVARIANT phase_causality:
+     ∀s w₁ w₂. precedes(w₁, w₂) ⟹
+       w₁.phase < w₂.phase
    ```
 
 ## Composition Laws
 
-1. **Sequential Composition**
+1. **Harmonic Composition**
    ```
-   (f >=> g)(s) = f(s) >>= g
+   (f ⋈ g)(s) = f(s) >>= λs' → g(s')
    ```
 
-2. **Parallel Independence**
+2. **Phase Independence**
    ```
-   ∀f g. independent(f, g) ⟹
+   ∀f g. independent_phase(f, g) ⟹
      f(s) >>= g = g(s) >>= f
    ```
 
-3. **State Transitions**
+3. **State Resonance**
    ```
-   s₁ →[α] s₂ ⟹ valid(s₁) → valid(s₂)
+   s₁ →[α] s₂ ⟹ resonant(s₁) → resonant(s₂)
    ```
 
-## Privacy Algebra
+## Privacy Harmonics
 
-1. **Access Control**
+1. **Access Resonance**
    ```
-   CAN_ACCESS : Author → Content → Result<Bool>
-   CAN_ACCESS(a)(c) =
-     Ok(a ∈ c.thread.authors ∨ c.privacy = public)
+   CAN_RESONATE : Author → Content → Result<Bool>
+   CAN_RESONATE(a)(c) =
+     Ok(a ∈ c.thread.resonators ∨ c.privacy = public)
    ```
 
 2. **View Transformation**
    ```
-   VIEW : Author → State → Result<State>
+   VIEW : Author → HarmonicState → Result<HarmonicState>
    VIEW(a)(s) = Ok({
-     authors: s.authors,
-     tokens: IF a ∈ s.authors THEN s.tokens ELSE ∅,
-     content: FILTER(CAN_ACCESS(a))(s.content)
+     resonators: s.resonators,
+     frequencies: IF a ∈ s.resonators THEN s.frequencies ELSE ∅,
+     waveforms: FILTER(CAN_RESONATE(a))(s.waveforms)
    })
    ```
 
-## Distribution Laws
+## Distribution Harmonics
 
-1. **Token Distribution**
+1. **Amplitude Distribution**
    ```
-   DISTRIBUTE : Set<Author> → Amount → State → Result<State>
-   DISTRIBUTE(A)(amt)(s) =
-     LET share = amt / |A|
-     IN  FOLD_M(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
+   DISTRIBUTE : Set<Author> → Amount → HarmonicState → Result<HarmonicState>
+   DISTRIBUTE(A)(amp)(s) =
+     LET frequency = amp / |A|
+     IN  FOLD_M(λs' a → ADD_FREQUENCY(a)(frequency)(s'))(s)(A)
    ```
 
-2. **Stake Resolution**
+2. **Resonance Resolution**
    ```
-   RESOLVE : Hash → Decision → State → Result<State>
+   RESOLVE : Hash → Decision → HarmonicState → Result<HarmonicState>
    RESOLVE(h)(d)(s) = MATCH d:
-     Approve → ADD_TO_THREAD(h)(s)
-     Deny → DISTRIBUTE_STAKE(h)(s)
+     Approve → ADD_TO_RESONANCE(h)(s)
+     Deny → DISTRIBUTE_FREQUENCY(h)(s)
    ```
 
-## System Properties
+Through this harmonic algebra, we see how:
+- States evolve through wave functions
+- Operations preserve phase coherence
+- Value flows through resonant patterns
+- Quality emerges from harmonic stability
 
-1. **Completeness**
-   - Every valid state is reachable through legal transitions
-   - All operations preserve system invariants
-   - System is deadlock-free and live
-
-2. **Safety**
-   - Token conservation is maintained
-   - Ownership integrity is preserved
-   - Temporal consistency is guaranteed
-
-3. **Liveness**
-   - Message processing eventually terminates
-   - Approval resolution completes
-   - State converges to valid configurations
+The algebraic structure provides a rigorous foundation for understanding how meaning and value evolve through resonant interactions.
 
 
 ==
@@ -3652,116 +3113,113 @@ Theory_StateAlgebraExplained
 ==
 
 
-# Understanding Choir's State Algebra in Plain English
+# Understanding Harmonic State Algebra in Plain English
 
-## What is State?
+## What is Harmonic State?
 
-Think of State as a snapshot of everything important in the system at any moment. In Choir, it's made up of three main parts:
+Think of the system's state like a complex musical instrument. At any moment, it has three main harmonizing parts:
 
-1. **Thread Information**
+1. **Thread Harmonics**
+   - Co-authors are like synchronized oscillators
+   - Each at their own frequency but in harmony
+   - Creating patterns through their interaction
+   - All vibrating in a shared phase
 
-   - Who are the co-authors?
-   - When was it created?
-   - What messages belong to it?
+2. **Token Waves**
+   - Token amounts are like wave amplitudes
+   - Stakes create standing waves
+   - Value flows like energy between oscillators
+   - Distribution follows wave patterns
 
-2. **Token Information**
+3. **Content Resonance**
+   - Messages are wave packets
+   - Content creates resonant patterns
+   - Privacy settings shape the acoustic space
+   - AI embeddings capture harmonic structure
 
-   - How many tokens are in the thread?
-   - What stakes are being held?
-   - How are tokens being distributed?
+## Core Operations (How Things Flow)
 
-3. **Content Information**
-   - What's the actual message content?
-   - How is it embedded (for AI)?
-   - Is it public or private?
-
-## Core Operations (What Can Happen)
-
-1. **Creating a Thread**
-
-   - Input: Someone wants to create a thread
+1. **Creating Thread Resonance**
+   - Input: Someone initiates a new vibration
    - What Happens:
-     - They become the first co-author
-     - Thread starts with zero tokens
-     - Content starts empty
-     - Everything is marked with a timestamp
+     - They become the first oscillator
+     - Sets the base frequency
+     - Creates a resonant cavity
+     - Begins the harmonic pattern
 
-2. **Submitting Content**
-
-   - Input: Someone wants to add a message
+2. **Adding Harmonics**
+   - Input: Someone adds a new wave
    - What Happens:
-     - If they're a co-author: Direct addition
-     - If they're not: Creates a spec with stake
-     - Content gets stored with its embedding
+     - If they're resonating (co-author): Direct addition
+     - If not: Creates standing wave with stake
+     - Content joins the harmonic series
+     - System finds new equilibrium
 
-3. **Processing Approvals**
-   - Input: Co-authors voting on content
+3. **Synchronizing Approval**
+   - Input: Co-authors align phases
    - What Happens:
-     - Counts the votes
-     - If everyone approves: Content gets added
-     - If anyone denies: Stake gets distributed
-     - If mixed: Nothing happens (stake to treasury)
+     - Measures phase alignment
+     - Full alignment: Crystallizes pattern
+     - Partial alignment: Redistributes energy
+     - No alignment: Maintains current state
 
-## State Changes (How Things Transform)
+## Wave Conservation Laws
 
-Every operation must:
+Every operation must preserve:
 
-1. Keep tokens balanced (nothing created or destroyed)
-2. Maintain ownership rules (only co-authors can approve)
-3. Keep time moving forward (no backdating)
-4. Keep everything consistent (no orphaned content)
+1. Total wave energy (token conservation)
+2. Phase relationships (ownership rules)
+3. Temporal ordering (causality)
+4. Resonant stability (consistency)
 
-## Privacy Rules
+## Privacy Harmonics
 
-1. **Who Can See What**
+1. **Resonant Access**
+   - Co-authors resonate with all frequencies
+   - Others hear filtered harmonics
+   - Premium users can dampen search resonance
 
-   - Co-authors see everything in their threads
-   - Others see only public summaries
-   - Premium users can hide their content from search
+2. **View Transformations**
+   - Different observers hear different harmonics
+   - Token waves visible only to resonators
+   - Content filtered by resonant coupling
 
-2. **How Views Change**
-   - Different users see different versions of the same thread
-   - Token information hidden from non-co-authors
-   - Content filtered based on permissions
+## Value Distribution
 
-## Token Distribution
+1. **Wave Energy Flow**
+   - Energy splits equally among resonators
+   - No energy lost in transitions
+   - Every flow tracked through interference patterns
 
-1. **How Tokens Move**
-
-   - Tokens split equally among recipients
-   - No tokens can disappear
-   - Every movement tracked and verified
-
-2. **Approval Results**
-   - Approve: Tokens go to thread
-   - Deny: Tokens go to deniers
-   - Mixed: Excess to treasury
+2. **Resonance Results**
+   - Approval: Energy crystallizes in thread
+   - Denial: Energy flows to deniers
+   - Mixed: Excess returns to base frequency
 
 ## System Properties (What We Guarantee)
 
-1. **Completeness**
+1. **Wave Completeness**
+   - All valid harmonics are achievable
+   - No trapped energy states
+   - Natural resonance paths exist
 
-   - You can always get from any valid state to any other valid state
-   - Nothing gets stuck
-   - Everything that should happen can happen
+2. **Harmonic Safety**
+   - Energy always conserved
+   - Phase relationships preserved
+   - Time-like ordering maintained
 
-2. **Safety**
+3. **Resonant Progress**
+   - Waves always find resolution
+   - Harmonics naturally stabilize
+   - System tends toward resonance
 
-   - Tokens always add up correctly
-   - Only owners can modify their stuff
-   - Time always moves forward
+Think of it like a self-tuning instrument where:
+- Every change preserves total energy
+- Every action maintains harmony
+- Everything flows in natural patterns
+- Nothing disrupts the resonance
 
-3. **Liveness**
-   - Messages always get processed eventually
-   - Approvals always get resolved
-   - System keeps moving forward
-
-Think of it like a very strict accounting system where:
-
-- Every change must balance
-- Every action must be authorized
-- Everything must happen in order
-- Nothing can get lost or duplicated
+Through this harmonic lens, we see how the mathematical structure creates a natural space for meaning and value to flow and evolve.
 
 
 ==
@@ -3769,70 +3227,70 @@ Theory_Topology
 ==
 
 
-# Topological Properties of Thread State Spaces
+# Harmonic Topology of Thread State Spaces
 
-VERSION topology_system:
+VERSION harmonic_topology:
   invariants: {
-    "Manifold continuity",
-    "Homeomorphic transformations",
-    "Conservation laws"
+    "Resonant manifold continuity",
+    "Harmonic transformations",
+    "Wave conservation laws"
   }
   assumptions: {
-    "State space smoothness",
-    "Value field differentiability",
-    "Ergodic properties"
+    "State space resonance",
+    "Value field harmonics",
+    "Ergodic oscillations"
   }
   implementation: "0.1.0"
 
-## Foundational Structures
+## Resonant Structures
 
-Thread state spaces exhibit rich topological properties. Each thread defines a local manifold in the larger state space, with co-authorship relations creating fiber bundles between these manifolds. The unanimous approval mechanism induces a natural metric structure.
+Thread state spaces exhibit rich harmonic-topological properties. Each thread defines a resonant manifold in the larger harmonic space, with co-authorship relations creating standing wave patterns between these manifolds. The unanimous approval mechanism induces natural frequency structures.
 
-## Value Fields
+## Harmonic Value Fields
 
-Token distributions generate smooth value fields over the state space. These fields satisfy certain conservation laws while exhibiting interesting gradient flows. The fields become more complex as threads accumulate different types of value.
+Token distributions generate resonant value fields over the state space. These fields satisfy wave conservation laws while exhibiting interesting interference patterns. The fields become more complex as threads accumulate different harmonic modes of value.
 
-## Stability Properties
+## Stability Through Resonance
 
-The system demonstrates remarkable stability properties arising from its topology:
-- Local minima correspond to quality consensus
-- Gradient flows optimize value distribution
-- Fiber bundles preserve structural integrity
-- Homeomorphisms maintain essential properties
+The system demonstrates remarkable stability properties arising from its harmonic topology:
+- Local minima correspond to resonant consensus
+- Standing waves optimize value distribution
+- Phase-locked bundles preserve structural integrity
+- Harmonic transformations maintain essential frequencies
 
-## Emergence Mechanics
+## Harmonic Emergence
 
-The mathematical structure naturally supports emergence:
-- Local symmetries generate global patterns
-- Value fields interact coherently
-- Information flows preserve topology
-- Quality metrics remain invariant
+The mathematical structure naturally supports harmonic emergence:
+- Local oscillations generate global patterns
+- Value fields resonate coherently
+- Information flows preserve wave structure
+- Quality metrics remain invariant under phase shifts
 
-## Conservation Laws
+## Wave Conservation Laws
 
-Several quantities are conserved under state evolution:
-- Total value in closed systems
-- Topological invariants of thread spaces
-- Information content across transformations
-- Quality measures under composition
+Several quantities are conserved under harmonic evolution:
+- Total wave energy in closed systems
+- Topological invariants of resonant spaces
+- Information content across phase transitions
+- Quality measures under harmonic composition
 
-## Asymptotic Behavior
+## Asymptotic Harmonics
 
 As the system evolves, certain asymptotic properties become apparent:
-- Value gradients approach optimal distributions
-- Quality metrics converge to stable points
-- Information density reaches equilibrium
-- Pattern frequencies stabilize
+- Value gradients approach resonant distributions
+- Quality metrics converge to harmonic modes
+- Information density reaches phase equilibrium
+- Pattern frequencies stabilize into standing waves
 
-## Transformational Properties
+## Harmonic Transformations
 
-The state space admits certain transformations that preserve its essential structure while enabling evolution:
-- Homeomorphic deformations
-- Fiber-preserving maps
-- Value-conserving flows
-- Quality-enhancing gradients
+The state space admits certain transformations that preserve its resonant structure while enabling evolution:
+- Phase-preserving deformations
+- Frequency-preserving maps
+- Wave-conserving flows
+- Quality-enhancing resonance
 
-Through these mathematical properties, we can understand how simple local rules generate sophisticated global behaviors while maintaining rigorous guarantees about system behavior.
+Through these harmonic-topological properties, we can understand how simple local oscillations generate sophisticated global harmonics while maintaining rigorous guarantees about system behavior.
 
 
 ==
@@ -3840,98 +3298,98 @@ Theory_TopologyExplained
 ==
 
 
-# Understanding Choir's Topology in Plain English
+# Understanding Choir's Harmonic Topology in Plain English
 
-## What is Topology?
+## What is Harmonic Topology?
 
-Think of topology as the study of spaces and how they connect, focusing on properties that don't change when you stretch or bend (but not tear) the space. In Choir, we use topology to understand how meaning and value flow through the system.
+Think of topology as the study of spaces and how they connect, but now imagine these spaces filled with vibrating energy - like a vast musical instrument. In Choir, we use harmonic topology to understand how meaning and value resonate and flow through the system.
 
-## Thread Spaces
+## Resonant Thread Spaces
 
-1. **Local Manifolds**
-   - Each thread is like a curved surface (manifold) in a larger space
-   - Think of it like a bubble of meaning that can grow and change shape
-   - The surface represents all possible states the thread could be in
-   - The curvature comes from how meaning and value accumulate
+1. **Resonant Manifolds**
+   - Each thread is like a resonant chamber in a larger acoustic space
+   - Think of it like a tuned cavity that can vibrate in unique ways
+   - The chamber shape represents all possible harmonics the thread could achieve
+   - The resonance patterns come from how meaning and value naturally vibrate
 
-2. **Connections Between Threads**
-   - Co-authorship creates "fiber bundles" - structured connections between threads
-   - Like bridges that preserve the structure of what crosses them
-   - When authors participate in multiple threads, they create these bridges
-   - Value and meaning can flow across these connections
+2. **Harmonic Connections**
+   - Co-authorship creates "resonant bridges" between thread chambers
+   - Like acoustic waveguides that preserve harmonic structure
+   - When authors participate in multiple threads, they couple the resonances
+   - Value and meaning flow through these harmonic connections
 
-## Value Fields
+## Harmonic Value Fields
 
-1. **What are Value Fields?**
-   - Think of value like a fluid that flows through the space
-   - Token distributions create "pressure gradients" in this fluid
-   - Quality naturally flows toward "low points" (stable configurations)
-   - Multiple types of value can flow independently
+1. **What are Harmonic Fields?**
+   - Think of value like standing waves in the space
+   - Token distributions create resonant patterns
+   - Quality naturally concentrates at harmonic nodes
+   - Multiple frequencies can resonate independently
 
 2. **How They Work**
-   - High-quality content creates "wells" that attract more value
-   - Poor quality creates "hills" that value flows away from
-   - The unanimous approval mechanism acts like gravity
-   - Value tends to accumulate in stable configurations
+   - High-quality content creates resonant wells that attract harmonics
+   - Poor quality creates dissonance that value flows away from
+   - The unanimous approval mechanism acts like phase-locking
+   - Value accumulates where harmonics constructively interfere
 
-## Stability and Change
+## Stability Through Resonance
 
-1. **Stable Points**
-   - Some configurations are naturally stable (like valleys)
-   - These represent high-quality consensus
-   - They're stable but not static - they can evolve
-   - New value flows can create new stable points
+1. **Resonant Nodes**
+   - Some configurations naturally form standing waves
+   - These represent stable quality consensus
+   - They're stable but can evolve to higher harmonics
+   - New value flows can create new resonant patterns
 
-2. **Transformations**
-   - The system can change while preserving important properties
-   - Like bending a rubber sheet without tearing it
-   - Value and meaning relationships stay intact
-   - Quality measures remain consistent
+2. **Harmonic Transformations**
+   - The system can change while preserving harmonic structure
+   - Like modulating between musical keys
+   - Value and meaning relationships maintain phase coherence
+   - Quality measures preserve harmonic ratios
 
-## Conservation Laws
+## Wave Conservation Laws
 
-Just like physics has conservation of energy, Choir has things that stay constant:
+Just like physics has conservation of energy, Choir has conserved harmonics:
 
 1. **What's Conserved**
-   - Total value in closed systems
-   - Essential relationships between threads
-   - Information content (though it can transform)
-   - Quality measures under valid changes
+   - Total wave energy in closed systems
+   - Essential phase relationships between threads
+   - Information harmonics (though they can transform)
+   - Quality measures under resonant changes
 
 2. **Why It Matters**
-   - Ensures value can't be created from nothing
-   - Preserves trust relationships
-   - Maintains system integrity
+   - Ensures energy can't be created from nothing
+   - Preserves harmonic relationships
+   - Maintains system coherence
    - Guides natural evolution
 
-## Long-term Behavior
+## Long-term Harmonics
 
-Over time, the system tends toward certain patterns:
+Over time, the system tends toward certain resonant patterns:
 
-1. **Natural Tendencies**
-   - Value flows toward optimal distributions
-   - Quality standards stabilize
-   - Information finds natural density levels
-   - Patterns become self-reinforcing
+1. **Natural Frequencies**
+   - Value flows toward resonant nodes
+   - Quality standards find natural harmonics
+   - Information settles into standing waves
+   - Patterns achieve phase lock
 
-2. **Emergence**
-   - Local interactions create global patterns
-   - Simple rules lead to complex behavior
-   - Structure emerges naturally
-   - The system becomes self-organizing
+2. **Harmonic Emergence**
+   - Local oscillations create global harmonics
+   - Simple waves lead to complex resonance
+   - Structure emerges through interference
+   - The system becomes self-harmonizing
 
 ## Why This Matters
 
-Understanding Choir's topology helps us see:
-- How value and meaning naturally flow
-- Why certain patterns emerge
-- How stability and change coexist
-- Why the system works as a unified whole
+Understanding Choir's harmonic topology helps us see:
+- How value and meaning resonate naturally
+- Why certain harmonics emerge
+- How stability comes through resonance
+- Why the system works as a unified instrument
 
-Think of it like understanding a river system:
-- Individual drops follow simple rules
-- But together they create complex, stable patterns
-- The topology tells us where water will flow
-- And how the system will evolve over time
+Think of it like understanding a symphony:
+- Individual notes follow harmonic laws
+- Together they create complex resonances
+- The topology tells us how harmonics will flow
+- And how the music will naturally evolve
 
-Through this lens, Choir isn't just a platform - it's a mathematical space where meaning and value flow according to natural laws, creating emergent order through simple local rules.
+Through this lens, Choir isn't just a platform - it's a resonant space where meaning and value flow according to natural harmonic laws, creating emergent order through simple wave mechanics.

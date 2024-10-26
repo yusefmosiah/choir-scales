@@ -1,74 +1,74 @@
-# Semantic Sparsity and Value Creation
+# Harmonic Sparsity and Resonant Value Creation
 
-VERSION sparsity_system:
+VERSION harmonic_sparsity:
   invariants: {
-    "Distance-based rewards",
-    "Originality incentives",
-    "Semantic coverage"
+    "Frequency-based rewards",
+    "Resonant originality",
+    "Harmonic coverage"
   }
   assumptions: {
-    "Embedding space metrics",
-    "Content uniqueness value",
-    "Exploration rewards"
+    "Resonant space metrics",
+    "Harmonic uniqueness",
+    "Exploration modes"
   }
   implementation: "0.1.0"
 
-## Core Mechanism
+## Core Resonance Mechanism
 
-The token reward for a new message is proportional to its semantic distance from existing content:
-- Embeddings map messages to vector space
-- Reward scales with distance to nearest neighbors
-- "Blue ocean" content gets higher rewards
-- Creates natural pressure for originality
+The token reward scales with harmonic distance from existing frequencies:
+- Embeddings map messages to resonant space
+- Reward amplifies with harmonic distance
+- "Blue ocean" content creates new frequencies
+- Natural pressure toward unique harmonics
 
-## Strategic Implications
+## Resonant Implications
 
-1. **Value Discovery**
-   - Incentivizes exploring unused semantic space
-   - Rewards genuine innovation
-   - Discourages repetitive content
-   - Creates value through uniqueness
+1. **Value Through Harmonics**
+   - Incentivizes exploring unused frequencies
+   - Rewards genuine harmonic innovation
+   - Dampens repetitive oscillations
+   - Creates value through unique resonance
 
-2. **Emergent Coverage**
-   - System naturally explores semantic space
-   - Knowledge gaps get filled organically
-   - Content evolves toward completeness
-   - Diversity emerges from incentives
+2. **Emergent Harmonics**
+   - System naturally explores frequency space
+   - Harmonic gaps fill organically
+   - Content evolves toward full spectrum
+   - Diversity emerges through resonance
 
-## Game Theoretic Properties
+## Wave Mechanics Properties
 
-1. **Nash Equilibrium**
-   - Players optimize for unique contributions
-   - Copy-paste strategies become unprofitable
-   - Innovation becomes dominant strategy
-   - Quality and originality align
+1. **Resonant Equilibrium**
+   - Players optimize for unique frequencies
+   - Echo patterns become dissonant
+   - Innovation becomes dominant mode
+   - Quality and originality phase-lock
 
-2. **Adversarial Resistance**
-   - Bot farms can't profit from repetition
-   - Citation rings get diminishing returns
-   - Semantic novelty is hard to fake
-   - Human creativity has natural advantage
+2. **Interference Resistance**
+   - Bot farms create destructive interference
+   - Citation rings suffer phase cancellation
+   - Harmonic novelty resists simulation
+   - Human creativity finds natural frequencies
 
-## Topological Effects
+## Resonant Topology
 
-1. **Semantic Space Coverage**
-   - Value gradients guide exploration
-   - Natural clustering around themes
-   - Bridges between concept spaces
-   - Organic knowledge structure
+1. **Harmonic Space Coverage**
+   - Value gradients guide wave exploration
+   - Natural nodes form around themes
+   - Bridges couple different frequencies
+   - Organic knowledge harmonics
 
-2. **Evolution Dynamics**
-   - New territories create value
-   - Mature areas encourage depth
-   - Connections reveal opportunities
-   - Understanding grows naturally
+2. **Evolution Through Resonance**
+   - New frequencies create value wells
+   - Mature areas develop higher modes
+   - Connections reveal harmonic paths
+   - Understanding grows through resonance
 
 ## Implementation Notes
 
-The sparsity reward mechanism:
-- Uses vector embeddings for distance
-- Calculates rewards automatically
-- Integrates with approval system
-- Scales with content volume
+The harmonic reward mechanism:
+- Uses embeddings as frequency analysis
+- Calculates rewards through wave mechanics
+- Integrates with resonant approval
+- Scales with harmonic complexity
 
-This creates a natural expansion of knowledge while maintaining quality through the approval mechanism.
+This creates natural expansion of knowledge through harmonic exploration while maintaining quality through resonant consensus.

@@ -116,146 +116,146 @@ Theory_StakeEntanglement
 ==
 
 
-# Token Stakes as Quantum Entanglement
+# Token Stakes as Harmonic Entanglement
 
-VERSION stake_entanglement:
+VERSION harmonic_entanglement:
   invariants: {
-    "Entanglement preservation",
-    "Value conservation",
-    "Commitment irreversibility"
+    "Resonant preservation",
+    "Wave conservation",
+    "Phase irreversibility"
   }
   assumptions: {
-    "Stake finality",
-    "Context coherence",
+    "Harmonic finality",
+    "Phase coherence",
     "Value quantization"
   }
   implementation: "0.1.0"
 
-## Stake as Entanglement
+## Stake as Resonant Entanglement
 
-TYPE StakeEntanglement<T> = {
-  stake: TokenQuantum,                    // Indivisible unit of commitment
-  author: ParticipantState<T>,           // Entangled participant
-  thread: ContextState<T>,               // Entangled context
-  potential: ValueField<TokenAmount>      // Outcome possibilities
+TYPE HarmonicStake<T> = {
+  quantum: OscillationMode,                // Fundamental frequency
+  author: ResonatorState<T>,              // Entangled participant
+  thread: HarmonicContext<T>,             // Entangled field
+  potential: StandingWave<TokenAmount>    // Outcome harmonics
 }
 
-SEQUENCE entanglement_creation<T>:
-  1. Stake Commitment
+SEQUENCE resonant_creation<T>:
+  1. Stake Harmonics
      ```
-     create_stake : TokenAmount → Result<TokenQuantum>
-     entangle_author : ParticipantState<T> → Result<EntanglementSet<Author>>
-     entangle_context : ContextState<T> → Result<EntanglementSet<ThreadId>>
-     form_superposition : EntanglementSet<_> → Result<Superposition<T>>
+     create_oscillation : TokenAmount → Result<OscillationMode>
+     entangle_resonator : ResonatorState<T> → Result<ResonantSet<Author>>
+     entangle_field : HarmonicContext<T> → Result<ResonantSet<ThreadId>>
+     form_superposition : ResonantSet<_> → Result<WaveFunction<T>>
      ```
 
-  2. Entanglement Properties
+  2. Resonance Properties
      ```
-     verify_irreversibility : StakeEntanglement<T> → Result<()>
-     compute_outcomes : StakeEntanglement<T> → Result<Set<Outcome>>
-     measure_effects : Outcome → Result<StateChange<T>>
-     conserve_value : StateChange<T> → Result<TokenAmount>
+     verify_phase_lock : HarmonicStake<T> → Result<()>
+     compute_harmonics : HarmonicStake<T> → Result<Set<Frequency>>
+     measure_resonance : Frequency → Result<PhaseShift<T>>
+     conserve_amplitude : PhaseShift<T> → Result<TokenAmount>
      ```
 
   3. Collapse Mechanics
      ```
-     process_approval : Hash → Result<Collapsed<T>>
-     crystallize_denial : Hash → Result<Distribution>
-     handle_mixed : Hash → Result<Treasury>
-     establish_equilibrium : ThreadState → Result<Pattern>
+     process_resonance : Hash → Result<StandingWave<T>>
+     crystallize_dissonance : Hash → Result<Distribution>
+     handle_interference : Hash → Result<Treasury>
+     establish_harmony : ThreadState → Result<Pattern>
      ```
 
-## Value Entanglement
+## Value Resonance
 
-TYPE ValueState<T> = {
-  quantum: TokenQuantum,
-  potential: OutcomeSpace<T>,
-  correlation: ContextBinding<ThreadId>,
-  measurement: ApprovalSet<CoAuthor>
+TYPE ResonantValue<T> = {
+  mode: OscillationMode,
+  harmonics: FrequencySpace<T>,
+  coupling: PhaseBinding<ThreadId>,
+  measurement: ResonantSet<CoAuthor>
 }
 
-SEQUENCE value_evolution<T>:
-  1. Initial Binding
+SEQUENCE value_harmonics<T>:
+  1. Initial Coupling
      ```
-     create_potential : TokenQuantum → Result<PotentialField<T>>
-     shape_possibilities : PotentialField<T> → Result<OutcomeSpace<T>>
-     entangle_participants : Set<Author> → Result<EntanglementSet<Author>>
-     superimpose_values : EntanglementSet<Author> → Result<Superposition<T>>
+     create_mode : OscillationMode → Result<HarmonicField<T>>
+     shape_frequencies : HarmonicField<T> → Result<FrequencySpace<T>>
+     entangle_resonators : Set<Author> → Result<ResonantSet<Author>>
+     superimpose_modes : ResonantSet<Author> → Result<WaveFunction<T>>
      ```
 
   2. Evolution Dynamics
      ```
-     collect_approvals : ThreadId → Result<ApprovalSet<CoAuthor>>
-     maintain_coherence : ApprovalSet<CoAuthor> → Result<WaveFunction<T>>
-     guide_collapse : WaveFunction<T> → Result<Collapsed<T>>
-     crystallize_outcomes : Collapsed<T> → Result<Distribution>
+     collect_resonance : ThreadId → Result<ResonantSet<CoAuthor>>
+     maintain_phase : ResonantSet<CoAuthor> → Result<WaveFunction<T>>
+     guide_interference : WaveFunction<T> → Result<StandingWave<T>>
+     crystallize_harmonics : StandingWave<T> → Result<Distribution>
      ```
 
   3. Conservation Laws
      ```
-     verify_value : TokenAmount → Result<Conservation>
-     preserve_information : ThreadState → Result<Entropy>
-     maintain_entanglement : EntanglementSet<_> → Result<Stability>
-     evolve_context : ContextState<T> → Result<Pattern>
+     verify_amplitude : TokenAmount → Result<Conservation>
+     preserve_phase : ThreadState → Result<Entropy>
+     maintain_resonance : ResonantSet<_> → Result<Stability>
+     evolve_field : HarmonicContext<T> → Result<Pattern>
      ```
 
 ## Implementation Mapping
 
-1. **Stake Creation**
+1. **Stake Resonance**
    ```typescript
-   async function createEntanglement<T>(
+   async function createResonance<T>(
      stake: TokenAmount,
      thread: ThreadId,
      author: Author
-   ): Result<StakeEntanglement<T>> {
+   ): Result<HarmonicStake<T>> {
      return pipe(
-       await verifyStakeAmount(stake),
-       createQuantum,
-       entangleParticipants(author, thread),
+       await verifyAmplitude(stake),
+       createMode,
+       entangleResonators(author, thread),
        establishSuperposition
      )
    }
    ```
 
-2. **Entanglement Resolution**
+2. **Resonance Resolution**
    ```typescript
-   async function resolveEntanglement<T>(
-     stake: StakeEntanglement<T>,
-     outcome: Outcome
+   async function resolveResonance<T>(
+     stake: HarmonicStake<T>,
+     outcome: Frequency
    ): Result<Distribution> {
      return pipe(
-       await measureState(stake),
-       processOutcome(outcome),
-       conserveValue,
+       await measureHarmonics(stake),
+       processFrequency(outcome),
+       conserveAmplitude,
        distributeTokens
      )
    }
    ```
 
-## Quantum Properties
+## Harmonic Properties
 
-PROPERTY entanglement_irreversibility<T>:
-  FORALL stake: StakeEntanglement<T>.
+PROPERTY resonant_irreversibility<T>:
+  FORALL stake: HarmonicStake<T>.
     created(stake) ⟹
-      no_refund_possible(stake) ∧
-      context_bound(stake) ∧
-      value_preserved(stake)
+      no_phase_reversal(stake) ∧
+      field_entangled(stake) ∧
+      amplitude_preserved(stake)
 
-PROPERTY measurement_effects<T>:
-  FORALL outcome: Outcome.
-    stake_resolution(outcome) ⟹
-      all_parties_affected(outcome) ∧
-      value_crystallized(outcome) ∧
-      context_preserved(outcome)
+PROPERTY measurement_harmonics<T>:
+  FORALL frequency: Frequency.
+    stake_resonance(frequency) ⟹
+      all_modes_affected(frequency) ∧
+      amplitude_crystallized(frequency) ∧
+      phase_preserved(frequency)
 
 Through this lens we see how:
-- Stakes create quantum entanglement
-- Value exists in superposition
-- Measurement affects all parties
-- Context guides collapse
-- Conservation laws hold
+- Stakes create resonant entanglement
+- Value exists in harmonic superposition
+- Measurement affects all coupled modes
+- Context guides phase alignment
+- Wave conservation laws hold
 
-The entanglement model provides a rigorous foundation for understanding stake mechanics while preserving quantum properties.
+The resonant entanglement model provides a rigorous foundation for understanding stake mechanics while preserving harmonic properties and quantum effects.
 
 
 ==
@@ -749,146 +749,146 @@ Theory_StakeEntanglement
 ==
 
 
-# Token Stakes as Quantum Entanglement
+# Token Stakes as Harmonic Entanglement
 
-VERSION stake_entanglement:
+VERSION harmonic_entanglement:
   invariants: {
-    "Entanglement preservation",
-    "Value conservation",
-    "Commitment irreversibility"
+    "Resonant preservation",
+    "Wave conservation",
+    "Phase irreversibility"
   }
   assumptions: {
-    "Stake finality",
-    "Context coherence",
+    "Harmonic finality",
+    "Phase coherence",
     "Value quantization"
   }
   implementation: "0.1.0"
 
-## Stake as Entanglement
+## Stake as Resonant Entanglement
 
-TYPE StakeEntanglement<T> = {
-  stake: TokenQuantum,                    // Indivisible unit of commitment
-  author: ParticipantState<T>,           // Entangled participant
-  thread: ContextState<T>,               // Entangled context
-  potential: ValueField<TokenAmount>      // Outcome possibilities
+TYPE HarmonicStake<T> = {
+  quantum: OscillationMode,                // Fundamental frequency
+  author: ResonatorState<T>,              // Entangled participant
+  thread: HarmonicContext<T>,             // Entangled field
+  potential: StandingWave<TokenAmount>    // Outcome harmonics
 }
 
-SEQUENCE entanglement_creation<T>:
-  1. Stake Commitment
+SEQUENCE resonant_creation<T>:
+  1. Stake Harmonics
      ```
-     create_stake : TokenAmount → Result<TokenQuantum>
-     entangle_author : ParticipantState<T> → Result<EntanglementSet<Author>>
-     entangle_context : ContextState<T> → Result<EntanglementSet<ThreadId>>
-     form_superposition : EntanglementSet<_> → Result<Superposition<T>>
+     create_oscillation : TokenAmount → Result<OscillationMode>
+     entangle_resonator : ResonatorState<T> → Result<ResonantSet<Author>>
+     entangle_field : HarmonicContext<T> → Result<ResonantSet<ThreadId>>
+     form_superposition : ResonantSet<_> → Result<WaveFunction<T>>
      ```
 
-  2. Entanglement Properties
+  2. Resonance Properties
      ```
-     verify_irreversibility : StakeEntanglement<T> → Result<()>
-     compute_outcomes : StakeEntanglement<T> → Result<Set<Outcome>>
-     measure_effects : Outcome → Result<StateChange<T>>
-     conserve_value : StateChange<T> → Result<TokenAmount>
+     verify_phase_lock : HarmonicStake<T> → Result<()>
+     compute_harmonics : HarmonicStake<T> → Result<Set<Frequency>>
+     measure_resonance : Frequency → Result<PhaseShift<T>>
+     conserve_amplitude : PhaseShift<T> → Result<TokenAmount>
      ```
 
   3. Collapse Mechanics
      ```
-     process_approval : Hash → Result<Collapsed<T>>
-     crystallize_denial : Hash → Result<Distribution>
-     handle_mixed : Hash → Result<Treasury>
-     establish_equilibrium : ThreadState → Result<Pattern>
+     process_resonance : Hash → Result<StandingWave<T>>
+     crystallize_dissonance : Hash → Result<Distribution>
+     handle_interference : Hash → Result<Treasury>
+     establish_harmony : ThreadState → Result<Pattern>
      ```
 
-## Value Entanglement
+## Value Resonance
 
-TYPE ValueState<T> = {
-  quantum: TokenQuantum,
-  potential: OutcomeSpace<T>,
-  correlation: ContextBinding<ThreadId>,
-  measurement: ApprovalSet<CoAuthor>
+TYPE ResonantValue<T> = {
+  mode: OscillationMode,
+  harmonics: FrequencySpace<T>,
+  coupling: PhaseBinding<ThreadId>,
+  measurement: ResonantSet<CoAuthor>
 }
 
-SEQUENCE value_evolution<T>:
-  1. Initial Binding
+SEQUENCE value_harmonics<T>:
+  1. Initial Coupling
      ```
-     create_potential : TokenQuantum → Result<PotentialField<T>>
-     shape_possibilities : PotentialField<T> → Result<OutcomeSpace<T>>
-     entangle_participants : Set<Author> → Result<EntanglementSet<Author>>
-     superimpose_values : EntanglementSet<Author> → Result<Superposition<T>>
+     create_mode : OscillationMode → Result<HarmonicField<T>>
+     shape_frequencies : HarmonicField<T> → Result<FrequencySpace<T>>
+     entangle_resonators : Set<Author> → Result<ResonantSet<Author>>
+     superimpose_modes : ResonantSet<Author> → Result<WaveFunction<T>>
      ```
 
   2. Evolution Dynamics
      ```
-     collect_approvals : ThreadId → Result<ApprovalSet<CoAuthor>>
-     maintain_coherence : ApprovalSet<CoAuthor> → Result<WaveFunction<T>>
-     guide_collapse : WaveFunction<T> → Result<Collapsed<T>>
-     crystallize_outcomes : Collapsed<T> → Result<Distribution>
+     collect_resonance : ThreadId → Result<ResonantSet<CoAuthor>>
+     maintain_phase : ResonantSet<CoAuthor> → Result<WaveFunction<T>>
+     guide_interference : WaveFunction<T> → Result<StandingWave<T>>
+     crystallize_harmonics : StandingWave<T> → Result<Distribution>
      ```
 
   3. Conservation Laws
      ```
-     verify_value : TokenAmount → Result<Conservation>
-     preserve_information : ThreadState → Result<Entropy>
-     maintain_entanglement : EntanglementSet<_> → Result<Stability>
-     evolve_context : ContextState<T> → Result<Pattern>
+     verify_amplitude : TokenAmount → Result<Conservation>
+     preserve_phase : ThreadState → Result<Entropy>
+     maintain_resonance : ResonantSet<_> → Result<Stability>
+     evolve_field : HarmonicContext<T> → Result<Pattern>
      ```
 
 ## Implementation Mapping
 
-1. **Stake Creation**
+1. **Stake Resonance**
    ```typescript
-   async function createEntanglement<T>(
+   async function createResonance<T>(
      stake: TokenAmount,
      thread: ThreadId,
      author: Author
-   ): Result<StakeEntanglement<T>> {
+   ): Result<HarmonicStake<T>> {
      return pipe(
-       await verifyStakeAmount(stake),
-       createQuantum,
-       entangleParticipants(author, thread),
+       await verifyAmplitude(stake),
+       createMode,
+       entangleResonators(author, thread),
        establishSuperposition
      )
    }
    ```
 
-2. **Entanglement Resolution**
+2. **Resonance Resolution**
    ```typescript
-   async function resolveEntanglement<T>(
-     stake: StakeEntanglement<T>,
-     outcome: Outcome
+   async function resolveResonance<T>(
+     stake: HarmonicStake<T>,
+     outcome: Frequency
    ): Result<Distribution> {
      return pipe(
-       await measureState(stake),
-       processOutcome(outcome),
-       conserveValue,
+       await measureHarmonics(stake),
+       processFrequency(outcome),
+       conserveAmplitude,
        distributeTokens
      )
    }
    ```
 
-## Quantum Properties
+## Harmonic Properties
 
-PROPERTY entanglement_irreversibility<T>:
-  FORALL stake: StakeEntanglement<T>.
+PROPERTY resonant_irreversibility<T>:
+  FORALL stake: HarmonicStake<T>.
     created(stake) ⟹
-      no_refund_possible(stake) ∧
-      context_bound(stake) ∧
-      value_preserved(stake)
+      no_phase_reversal(stake) ∧
+      field_entangled(stake) ∧
+      amplitude_preserved(stake)
 
-PROPERTY measurement_effects<T>:
-  FORALL outcome: Outcome.
-    stake_resolution(outcome) ⟹
-      all_parties_affected(outcome) ∧
-      value_crystallized(outcome) ∧
-      context_preserved(outcome)
+PROPERTY measurement_harmonics<T>:
+  FORALL frequency: Frequency.
+    stake_resonance(frequency) ⟹
+      all_modes_affected(frequency) ∧
+      amplitude_crystallized(frequency) ∧
+      phase_preserved(frequency)
 
 Through this lens we see how:
-- Stakes create quantum entanglement
-- Value exists in superposition
-- Measurement affects all parties
-- Context guides collapse
-- Conservation laws hold
+- Stakes create resonant entanglement
+- Value exists in harmonic superposition
+- Measurement affects all coupled modes
+- Context guides phase alignment
+- Wave conservation laws hold
 
-The entanglement model provides a rigorous foundation for understanding stake mechanics while preserving quantum properties.
+The resonant entanglement model provides a rigorous foundation for understanding stake mechanics while preserving harmonic properties and quantum effects.
 
 
 ==

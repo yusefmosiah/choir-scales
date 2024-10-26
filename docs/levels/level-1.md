@@ -125,7 +125,6 @@ tree.md
 │   ├── Core_StateTransitions.md
 │   ├── Core_Types.md
 │   ├── Core_Whitepaper.md
-│   ├── Crystallization_Checklist.md
 │   ├── Data_Engine_Vision.md
 │   ├── Deploy_Render_Checklist.md
 │   ├── Deploy_Report.md
@@ -201,9 +200,9 @@ tree.md
 │   ├── Theory_GameMechanics.md
 │   ├── Theory_GameMechanicsAdversarial.md
 │   ├── Theory_GameMechanicsSparsity.md
-│   ├── Theory_Implementation.md
+│   ├── Theory_HarmonicBondingCurve.md
+│   ├── Theory_HarmonicMetastability.md
 │   ├── Theory_Implementation_Bridge.md
-│   ├── Theory_Integration.md
 │   ├── Theory_QuantumProtocol.md
 │   ├── Theory_SemanticGameTopology.md
 │   ├── Theory_Semantics.md
@@ -213,6 +212,7 @@ tree.md
 │   ├── Theory_StateAlgebraExplained.md
 │   ├── Theory_Topology.md
 │   ├── Theory_TopologyExplained.md
+│   ├── ThreadDynamics.md
 │   ├── V10_Loop_Theory.md
 │   ├── V10_Prompt_Engineering.md
 │   ├── V12_Data_Engines.md
@@ -257,7 +257,9 @@ tree.md
 ├── next-env.d.ts
 ├── next.config.js
 ├── notebooks
-│   └── create_collections.ipynb
+│   ├── create_collections.ipynb
+│   ├── harmonic_curve.ipynb
+│   └── quantum_harmonic.ipynb
 ├── package-lock.json
 ├── package.json
 ├── pnpm-lock.yaml
@@ -352,7 +354,7 @@ tree.md
 │       └── thread_fuzzer.rs
 └── tsconfig.json
 
-60 directories, 280 files
+60 directories, 282 files
 
 
 ==
@@ -457,11 +459,11 @@ all_docs=$(find docs -maxdepth 1 -name "*.md" ! -name "tree.md")
 # Base patterns that define the core structure of each level
 base_patterns=(
     "Level_0_ tree.md scripts/ Solana_ Frontend_ Backend_ Deploy_ Implementation_ Data_ Error_ Reward_"
-    "Level_1_ Entry_ Dev_ Plan_ Tech_ Crystallization_"
+    "Level_1_ Entry_ Dev_ Plan_ Tech_ Crystallization_ Thread"
     "Level_2_ Core_State Core_Types Core_Blueprint Impl_ State_"
     "Level_3_ Core_Economics Theory_Game Theory_Implementation V10_ V12_"
     "Level_4_ Core_Convergence Theory_Stake Model_ Meta_Overview"
-    "Level_5_ Theory_Quantum Theory_Semantic Harmonic_ Meta_"
+    "Level_5_ Theory_Quantum Theory_Semantic Harmonic_ Meta_ Theory_"
 )
 
 # Additional patterns for each level that follow the concrete->abstract progression

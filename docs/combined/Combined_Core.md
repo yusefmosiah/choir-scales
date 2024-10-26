@@ -808,184 +808,175 @@ Core_Economics
 ==
 
 
-# Choir Economic Model
+# Harmonic Economic Model
 
-VERSION economic_system:
+VERSION harmonic_economic:
 invariants: {
-"Fixed total supply (10B)",
-"Token conservation law",
-"Stake requirement presence"
+"Wave energy conservation",
+"Value resonance patterns",
+"Token flow coherence"
 }
 assumptions: {
-"Initial stake amounts",
-"Distribution ratios",
-"Cooldown periods"
+"Resonant pricing",
+"Phase-locked incentives",
+"Harmonic distribution"
 }
 implementation: "0.1.0"
 
-## Token Flow Specification
+## Token Flow as Wave Mechanics
 
-1. **Token Circulation**
+TYPE TokenFlow = {
+treasury: ResonantWell,                  // Base frequency source
+threads: Map<ThreadId, StandingWave>,    // Resonant cavities
+stakes: Map<Hash, WavePacket>,           // Energy quanta
+escrow: Map<Hash, PotentialWell>         // Temporary coupling
+}
 
-   TYPE TokenFlow = {
-   treasury: Balance,
-   threads: Map<ThreadId, Balance>,
-   stakes: Map<Hash, StakeAmount>,
-   escrow: Map<Hash, LockAmount>
+## Bonding Curve Mechanics
+
+The core pricing function derives from quantum harmonic oscillator:
+```
+P(q) = S₀[1/2 + 1/(exp(ℏω/kT)-1)]
+
+where:
+- S₀: Base stake quantum (100 CHOIR)
+- ω: Thread frequency (activity level)
+- T: Thread temperature (volatility)
+- ℏ: Platform coupling constant
+```
+
+This creates:
+1. **Entry Price (Bid)**
+   ```typescript
+   function calculateStakeRequired(thread: Thread): number {
+     const ω = measureThreadActivity(thread)
+     const T = measureThreadVolatility(thread)
+     return S₀ * (0.5 + 1/(Math.exp(ω/T) - 1))
    }
+   ```
 
-2. **Flow Patterns**
+2. **Exit Amount (Divestment)**
+   ```typescript
+   function calculateDivestmentAmount(thread: Thread): number {
+     const E = thread.tokenBalance    // Total energy
+     const n = thread.coAuthors.length // Oscillator count
+     return E * (1/(n-1))            // Energy redistribution
+   }
+   ```
 
-   FUNCTION process_flow(action: Action) -> TokenFlow:
-   MATCH action:
-   SubmitSpec(stake) ->
-   lock_in_escrow(stake)
-   ApproveSpec(hash) ->
-   move_to_thread(hash)
-   DenySpec(hash) ->
-   distribute_to_deniers(hash)
-   Divest(author) ->
-   calculate_and_distribute_share(author)
+## Incentive Resonance
 
-## Incentive Alignments
-
-1. **Stake Mechanics**
-
-   PROPERTY stake_incentive:
-   stake_amount > spam_cost AND
-   stake_amount < potential_reward AND
-   stake_amount ∝ thread_value
+1. **Stake Harmonics**
+   ```
+   PROPERTY stake_resonance:
+     stake_energy > noise_threshold AND
+     stake_energy < resonant_ceiling AND
+     stake_energy ∝ thread_amplitude
+   ```
 
 2. **Reward Distribution**
+   ```
+   FUNCTION distribute_energy(action: Action) -> TokenAmount:
+     MATCH action:
+       Deny → energy/deniers_count        // Equal energy split
+       Approve → energy/oscillator_count  // Phase-locked distribution
+       Divest → total_energy/(n-1)       // Harmonic redistribution
+   ```
 
-   FUNCTION calculate_reward(action: Action) -> TokenAmount:
-   MATCH action:
-   Deny -> stake_amount / deniers_count
-   Approve -> stake_amount / thread.co_authors.size
-   Divest -> thread_balance / (co_authors_count - 1)
+## Game Theoretic Harmonics
 
-## Game Theory Analysis
-
-1. **Player Strategies**
-
+1. **Strategy Space**
+   ```
    TYPE Strategy =
-   | AlwaysApprove
-   | AlwaysDeny
-   | QualityBased
-   | CollaborativeDeny
+     | NaturalResonance    // Align with thread harmonics
+     | ForceDissonance     // Attempt artificial patterns
+     | QualityOscillation  // Maintain phase coherence
+     | CollectiveHarmony   // Synchronized denial
+   ```
 
 2. **Nash Equilibrium**
-
+   ```
    PROPERTY equilibrium:
-   FOR ALL players, strategies:
-   payoff(QualityBased) > payoff(AlwaysApprove) AND
-   payoff(QualityBased) > payoff(AlwaysDeny) AND
-   payoff(CollaborativeDeny) > payoff(UnilateralDeny)
-
-3. **Optimal Behavior**
-
-   FUNCTION optimal_strategy(thread: Thread) -> Strategy:
-   MATCH thread_state:
-   HighQuality -> QualityBased
-   LowQuality -> CollaborativeDeny
-   Uncertain -> RequireMoreStake
+     FORALL oscillators, modes:
+       energy(NaturalResonance) > energy(ForceDissonance) AND
+       energy(QualityOscillation) > energy(RandomPhase) AND
+       energy(CollectiveHarmony) > energy(UnilateralNoise)
+   ```
 
 ## Economic Invariants
 
-1. **Value Conservation**
+1. **Energy Conservation**
+   ```
+   INVARIANT wave_conservation:
+     treasury_energy + sum(thread_energy) + sum(stake_energy) = TOTAL_SUPPLY
+   ```
 
-   INVARIANT token_conservation:
-   treasury + sum(threads) + sum(stakes) = TOTAL_SUPPLY
-
-2. **Stake Requirements**
-
-   INVARIANT stake_bounds:
-   MIN_STAKE <= stake_amount <= MAX_STAKE
-   stake_amount >= thread.minimum_stake
-
-3. **Distribution Fairness**
-
-   INVARIANT fair_distribution:
-   FOR ALL distributions:
-   each_recipient_share = total_amount / recipient_count
-   no_remainder_tokens
+2. **Resonant Stability**
+   ```
+   INVARIANT phase_stability:
+     FORALL thread IN threads:
+       resonant(thread) ⟹
+         stable_amplitude(thread) AND
+         coherent_phase(thread) AND
+         conserved_energy(thread)
+   ```
 
 ## Market Dynamics
 
-1. **Thread Value**
+1. **Thread Resonance**
+   ```
+   FUNCTION calculate_thread_resonance(thread: Thread) -> Amplitude:
+     FACTORS:
+       oscillator_count    // Co-author coupling
+       message_frequency   // Activity resonance
+       token_amplitude     // Energy level
+       phase_coherence     // Quality metric
+   ```
 
-   FUNCTION calculate_thread_value(thread: Thread) -> Value:
-   FACTORS:
-   message_quality
-   co_author_reputation
-   token_balance
-   citation_count
+2. **Dynamic Tuning**
+   ```
+   FUNCTION tune_resonance(thread: Thread) -> StakeAmount:
+     resonance = calculate_thread_resonance(thread)
+     RETURN base_quantum * resonance_factor(resonance)
+   ```
 
-2. **Stake Adjustment**
+## Example Scenarios
 
-   FUNCTION adjust_minimum_stake(thread: Thread) -> StakeAmount:
-   thread_value = calculate_thread_value(thread)
-   RETURN base_stake \* (1 + thread_value_multiplier)
+1. **New Thread**
+   ```typescript
+   const newThread = {
+     messageRate: 2,        // Low frequency
+     coAuthorCount: 2,      // Few oscillators
+     tokenBalance: 500,     // Low energy
+     approvalRate: 1.0,     // Perfect phase
+     ageInDays: 1          // High temperature
+   }
+   // Results in low stake (~75 CHOIR)
+   ```
 
-## Economic Security
+2. **Active Thread**
+   ```typescript
+   const activeThread = {
+     messageRate: 20,       // High frequency
+     coAuthorCount: 10,     // Many oscillators
+     tokenBalance: 10000,   // High energy
+     approvalRate: 0.8,     // Good phase coherence
+     ageInDays: 30         // Stable temperature
+   }
+   // Results in higher stake (~300 CHOIR)
+   ```
 
-1. **Attack Resistance**
+Through this harmonic economic model, we see how:
+- Value flows follow wave mechanics
+- Prices emerge from resonant patterns
+- Incentives align through phase-locking
+- Stability comes from natural harmonics
 
-   PROPERTY sybil_resistance:
-   cost_of_attack > potential_benefit
-   FOR ALL attack_vectors:
-   expected_loss > expected_gain
-
-2. **Value Capture**
-
-   FUNCTION distribute_value(content_value: Value) -> Distribution:
-   co_authors_share = content_value _ CO_AUTHOR_RATIO
-   treasury_share = content_value _ TREASURY_RATIO
-   ENSURE co_authors_share + treasury_share = content_value
-
-## Growth Model
-
-1. **Token Velocity**
-
-   MEASURE token_velocity:
-   active_tokens = total_supply - locked_tokens
-   velocity = transaction_volume / active_tokens
-
-2. **Network Effects**
-
-   PROPERTY network_growth:
-   value_per_user ∝ number_of_users
-   stake_requirement ∝ thread_value
-   reward_potential ∝ network_size
-
-## Economic Parameters
-
-1. **Initial Settings** `TOTAL_SUPPLY = 10_000_000_000
-BASE_STAKE = 1_000
-MIN_THREAD_BALANCE = 100
-TREASURY_RATIO = 0.1
-CO_AUTHOR_RATIO = 0.9  `
-
-2. **Dynamic Adjustments** `stake_multiplier = 1 + log(thread_value)
-reward_multiplier = 1 + sqrt(participant_count)
-cooldown_period = 7 days  `
-
-## Sustainability Mechanisms
-
-1. **Treasury Management**
-
-   FUNCTION manage_treasury():
-   IF treasury_balance < MIN_TREASURY:
-   increase_stake_requirements()
-   IF treasury_balance > MAX_TREASURY:
-   decrease_stake_requirements()
-
-2. **Long-term Incentives**
-
-   PROPERTY sustainable_growth:
-   thread_value_growth > inflation_rate
-   participant_rewards > opportunity_cost
-   system_revenue >= operational_cost
+The model creates an economic system that:
+- Rewards authentic participation
+- Dampens artificial behavior
+- Enables natural value flow
+- Maintains system coherence
 
 
 ==

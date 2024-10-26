@@ -1,73 +1,73 @@
-# Approval Mechanism as Quantum Measurement
+# Approval Mechanism as Harmonic Resonance
 
-VERSION approval_measurement:
+VERSION harmonic_approval:
   invariants: {
-    "Measurement coherence",
-    "Consensus collapse",
+    "Resonant coherence",
+    "Harmonic consensus",
     "Value crystallization"
   }
   assumptions: {
-    "Co-author independence",
-    "Measurement simultaneity",
-    "Entanglement preservation"
+    "Oscillator independence",
+    "Phase synchronization",
+    "Resonant preservation"
   }
   implementation: "0.1.0"
 
-## Measurement Operators
+## Resonance Operators
 
-TYPE ApprovalOperator = {
-  observers: Set CoAuthor,        // Independent observers
-  target: MessageState,           // Quantum state to measure
-  basis: ConsensusSpace,          // Measurement basis
-  outcome: CollapseResult         // Measurement result
+TYPE ResonanceOperator = {
+  oscillators: Set CoAuthor,      // Coupled oscillators
+  target: WaveState,              // Wave to measure
+  mode: ResonantMode,             // Harmonic basis
+  outcome: PhaseResult            // Resonance result
 }
 
-SEQUENCE measurement_process:
-  1. State Preparation
-     - Message enters superposition
-     - Co-authors become observers
-     - Context defines basis
-     - Stakes create potential
+SEQUENCE resonance_process:
+  1. Wave Preparation
+     - Message forms standing wave
+     - Co-authors become coupled oscillators
+     - Context defines resonant modes
+     - Stakes create potential wells
 
-  2. Observation Dynamics
-     - Each approval is partial measurement
-     - Observations must be compatible
-     - Unanimous consent required
-     - Partial collapse forbidden
+  2. Resonance Dynamics
+     - Each approval attempts phase-locking
+     - Oscillations must synchronize
+     - Unanimous resonance required
+     - Partial coupling forbidden
 
-  3. Consensus Collapse
-     - All observers agree → Full collapse
-     - Any disagreement → State rejection
-     - Mixed votes → Treasury recapture
-     - New state crystallizes
+  3. Harmonic Consensus
+     - All oscillators phase-lock → Full resonance
+     - Any dissonance → Wave dispersion
+     - Mixed phases → Energy recapture
+     - New pattern crystallizes
 
-## Entanglement Effects
+## Resonant Coupling
 
-TYPE EntanglementState = {
-  message: Superposition,
-  stakes: TokenPotential,
-  authors: ObserverSet,
-  context: ThreadSpace
+TYPE ResonantState = {
+  wave: StandingWave,
+  energy: TokenPotential,
+  oscillators: CoupledSet,
+  field: HarmonicSpace
 }
 
-SEQUENCE entanglement_flow:
-  1. Stake Creation
+SEQUENCE resonant_flow:
+  1. Energy Well Creation
      - Token commitment
-     - Author entanglement
-     - Context binding
-     - Value potential
+     - Oscillator coupling
+     - Field binding
+     - Potential formation
 
-  2. Measurement Propagation
-     - Observer coupling
-     - State correlation
-     - Information flow
-     - Consensus building
+  2. Phase Propagation
+     - Oscillator synchronization
+     - Wave correlation
+     - Harmonic flow
+     - Resonance building
 
-  3. Collapse Resolution
-     - State determination
-     - Value crystallization
-     - Context update
-     - Entanglement preservation
+  3. Pattern Resolution
+     - Mode determination
+     - Energy crystallization
+     - Field update
+     - Resonance preservation
 
 ## Implementation Mapping
 
@@ -132,7 +132,7 @@ PROPERTY measurement_integrity:
       preserved_entanglement(obs)
 
 Through this lens we see how:
-- Approval acts as quantum measurement
-- Consensus creates collapse
+- Approval acts as harmonic resonance
+- Consensus creates resonance
 - Stakes maintain entanglement
 - Value crystallizes through observation

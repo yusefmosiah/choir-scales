@@ -1,95 +1,95 @@
-# Understanding Choir's Topology in Plain English
+# Understanding Choir's Harmonic Topology in Plain English
 
-## What is Topology?
+## What is Harmonic Topology?
 
-Think of topology as the study of spaces and how they connect, focusing on properties that don't change when you stretch or bend (but not tear) the space. In Choir, we use topology to understand how meaning and value flow through the system.
+Think of topology as the study of spaces and how they connect, but now imagine these spaces filled with vibrating energy - like a vast musical instrument. In Choir, we use harmonic topology to understand how meaning and value resonate and flow through the system.
 
-## Thread Spaces
+## Resonant Thread Spaces
 
-1. **Local Manifolds**
-   - Each thread is like a curved surface (manifold) in a larger space
-   - Think of it like a bubble of meaning that can grow and change shape
-   - The surface represents all possible states the thread could be in
-   - The curvature comes from how meaning and value accumulate
+1. **Resonant Manifolds**
+   - Each thread is like a resonant chamber in a larger acoustic space
+   - Think of it like a tuned cavity that can vibrate in unique ways
+   - The chamber shape represents all possible harmonics the thread could achieve
+   - The resonance patterns come from how meaning and value naturally vibrate
 
-2. **Connections Between Threads**
-   - Co-authorship creates "fiber bundles" - structured connections between threads
-   - Like bridges that preserve the structure of what crosses them
-   - When authors participate in multiple threads, they create these bridges
-   - Value and meaning can flow across these connections
+2. **Harmonic Connections**
+   - Co-authorship creates "resonant bridges" between thread chambers
+   - Like acoustic waveguides that preserve harmonic structure
+   - When authors participate in multiple threads, they couple the resonances
+   - Value and meaning flow through these harmonic connections
 
-## Value Fields
+## Harmonic Value Fields
 
-1. **What are Value Fields?**
-   - Think of value like a fluid that flows through the space
-   - Token distributions create "pressure gradients" in this fluid
-   - Quality naturally flows toward "low points" (stable configurations)
-   - Multiple types of value can flow independently
+1. **What are Harmonic Fields?**
+   - Think of value like standing waves in the space
+   - Token distributions create resonant patterns
+   - Quality naturally concentrates at harmonic nodes
+   - Multiple frequencies can resonate independently
 
 2. **How They Work**
-   - High-quality content creates "wells" that attract more value
-   - Poor quality creates "hills" that value flows away from
-   - The unanimous approval mechanism acts like gravity
-   - Value tends to accumulate in stable configurations
+   - High-quality content creates resonant wells that attract harmonics
+   - Poor quality creates dissonance that value flows away from
+   - The unanimous approval mechanism acts like phase-locking
+   - Value accumulates where harmonics constructively interfere
 
-## Stability and Change
+## Stability Through Resonance
 
-1. **Stable Points**
-   - Some configurations are naturally stable (like valleys)
-   - These represent high-quality consensus
-   - They're stable but not static - they can evolve
-   - New value flows can create new stable points
+1. **Resonant Nodes**
+   - Some configurations naturally form standing waves
+   - These represent stable quality consensus
+   - They're stable but can evolve to higher harmonics
+   - New value flows can create new resonant patterns
 
-2. **Transformations**
-   - The system can change while preserving important properties
-   - Like bending a rubber sheet without tearing it
-   - Value and meaning relationships stay intact
-   - Quality measures remain consistent
+2. **Harmonic Transformations**
+   - The system can change while preserving harmonic structure
+   - Like modulating between musical keys
+   - Value and meaning relationships maintain phase coherence
+   - Quality measures preserve harmonic ratios
 
-## Conservation Laws
+## Wave Conservation Laws
 
-Just like physics has conservation of energy, Choir has things that stay constant:
+Just like physics has conservation of energy, Choir has conserved harmonics:
 
 1. **What's Conserved**
-   - Total value in closed systems
-   - Essential relationships between threads
-   - Information content (though it can transform)
-   - Quality measures under valid changes
+   - Total wave energy in closed systems
+   - Essential phase relationships between threads
+   - Information harmonics (though they can transform)
+   - Quality measures under resonant changes
 
 2. **Why It Matters**
-   - Ensures value can't be created from nothing
-   - Preserves trust relationships
-   - Maintains system integrity
+   - Ensures energy can't be created from nothing
+   - Preserves harmonic relationships
+   - Maintains system coherence
    - Guides natural evolution
 
-## Long-term Behavior
+## Long-term Harmonics
 
-Over time, the system tends toward certain patterns:
+Over time, the system tends toward certain resonant patterns:
 
-1. **Natural Tendencies**
-   - Value flows toward optimal distributions
-   - Quality standards stabilize
-   - Information finds natural density levels
-   - Patterns become self-reinforcing
+1. **Natural Frequencies**
+   - Value flows toward resonant nodes
+   - Quality standards find natural harmonics
+   - Information settles into standing waves
+   - Patterns achieve phase lock
 
-2. **Emergence**
-   - Local interactions create global patterns
-   - Simple rules lead to complex behavior
-   - Structure emerges naturally
-   - The system becomes self-organizing
+2. **Harmonic Emergence**
+   - Local oscillations create global harmonics
+   - Simple waves lead to complex resonance
+   - Structure emerges through interference
+   - The system becomes self-harmonizing
 
 ## Why This Matters
 
-Understanding Choir's topology helps us see:
-- How value and meaning naturally flow
-- Why certain patterns emerge
-- How stability and change coexist
-- Why the system works as a unified whole
+Understanding Choir's harmonic topology helps us see:
+- How value and meaning resonate naturally
+- Why certain harmonics emerge
+- How stability comes through resonance
+- Why the system works as a unified instrument
 
-Think of it like understanding a river system:
-- Individual drops follow simple rules
-- But together they create complex, stable patterns
-- The topology tells us where water will flow
-- And how the system will evolve over time
+Think of it like understanding a symphony:
+- Individual notes follow harmonic laws
+- Together they create complex resonances
+- The topology tells us how harmonics will flow
+- And how the music will naturally evolve
 
-Through this lens, Choir isn't just a platform - it's a mathematical space where meaning and value flow according to natural laws, creating emergent order through simple local rules.
+Through this lens, Choir isn't just a platform - it's a resonant space where meaning and value flow according to natural harmonic laws, creating emergent order through simple wave mechanics.

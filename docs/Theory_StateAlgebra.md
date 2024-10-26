@@ -1,182 +1,163 @@
-# Choir State Algebra
+# Harmonic State Algebra
 
-VERSION state_system:
+VERSION harmonic_state_system:
   invariants: {
-    "State transition atomicity",
-    "Event causality preservation",
-    "State recovery capability"
+    "Wave function coherence",
+    "Resonant transition atomicity",
+    "Harmonic causality preservation"
   }
   assumptions: {
-    "State composition model",
-    "Update propagation patterns",
-    "Cache coherence strategy"
+    "State harmonic composition",
+    "Wave propagation patterns",
+    "Phase coherence strategy"
   }
   implementation: "0.1.0"
 
-## Core Algebraic Types
+## Core Harmonic Types
 
-ASSUMPTION state_composition:
-  "Three-part state composition (Thread × Token × Content)"
-  "May introduce additional state dimensions"
-  "Must maintain separable concerns"
-
-ASSUMPTION state_transitions:
-  "Synchronous transition verification"
-  "May introduce async verification patterns"
-  "Must maintain consistency guarantees"
-
-TYPE State = Thread × Token × Content
+TYPE HarmonicState = Thread × Token × Content
   WHERE
-    Thread = Set<Author> × Time × Hash
-    Token = Balance × Stake × Distribution
-    Content = Message × Embedding × Privacy
+    Thread = OscillatorSet<Author> × Phase × Hash
+    Token = Amplitude × Frequency × Distribution
+    Content = WaveForm × Resonance × Privacy
 
 ## Fundamental Operations
 
-1. **Creation Algebra**
+1. **Creation Harmonics**
 
-   CREATE : Author → ThreadId → Result<State>
+   CREATE : Author → ThreadId → Result<HarmonicState>
    CREATE(a)(t) = Ok((
-     {a},           // initial co-author set
-     (0, ∅, ∅),    // token state
-     (∅, ∅, public) // content state
+     {a},           // initial resonator
+     (0, base_freq, ∅),    // token wave state
+     (∅, ∅, public) // content harmonics
    ))
 
-2. **Submission Algebra**
+2. **Submission Harmonics**
 
-   SUBMIT : Message → State → Result<State>
-   SUBMIT(m)(s) = MATCH s.authors:
-     m.author ∈ s.authors →
-       ADD_CONTENT(m)(s)
+   SUBMIT : WaveForm → HarmonicState → Result<HarmonicState>
+   SUBMIT(w)(s) = MATCH s.resonators:
+     w.author ∈ s.resonators →
+       ADD_HARMONIC(w)(s)
      _ →
-       VERIFY_STAKE(m.stake) >>=
-       ADD_SPEC(m)(s)
+       VERIFY_FREQUENCY(w.amplitude) >>=
+       ADD_OSCILLATION(w)(s)
 
-3. **Approval Algebra**
+3. **Approval Harmonics**
 
-   APPROVE : Set<Author> → Hash → State → Result<State>
+   APPROVE : Set<Author> → Hash → HarmonicState → Result<HarmonicState>
    APPROVE(A)(h)(s) =
-     LET votes = COUNT(A)
-     IN  votes = |s.authors| →
-           FINALIZE(h)(s)
-         votes > 0 →
-           DISTRIBUTE(A)(s.stakes[h])(s)
+     LET phase = SYNC_PHASE(A)
+     IN  phase = RESONANT_PHASE →
+           CRYSTALLIZE(h)(s)
+         phase > 0 →
+           DISTRIBUTE_AMPLITUDE(A)(s.frequencies[h])(s)
          _ →
            Ok(s)
 
 ## Monadic Operations
 
-1. **State Monad**
+1. **State Wave Function**
    ```
-   TYPE StateM<A> = State → Result<(A, State)>
+   TYPE StateW<A> = HarmonicState → Result<(A, HarmonicState)>
 
-   RETURN : A → StateM<A>
-   RETURN x = λs → Ok((x, s))
+   RESONATE : A → StateW<A>
+   RESONATE x = λs → Ok((x, s))
 
-   BIND : StateM<A> → (A → StateM<B>) → StateM<B>
-   BIND m f = λs →
-     m(s) >>= λ(x, s') →
+   INTERFERE : StateW<A> → (A → StateW<B>) → StateW<B>
+   INTERFERE w f = λs →
+     w(s) >>= λ(x, s') →
      f(x)(s')
    ```
 
-2. **Thread Operations**
+2. **Thread Oscillations**
    ```
-   ADD_AUTHOR : Author → StateM<Unit>
-   REMOVE_AUTHOR : Author → StateM<Unit>
-   UPDATE_BALANCE : Amount → StateM<Unit>
+   ADD_RESONATOR : Author → StateW<Unit>
+   REMOVE_RESONATOR : Author → StateW<Unit>
+   UPDATE_AMPLITUDE : Amount → StateW<Unit>
    ```
 
-## Invariant Preservation
+## Harmonic Invariants
 
-1. **Token Conservation**
+1. **Wave Conservation**
    ```
-   INVARIANT token_conservation:
+   INVARIANT wave_conservation:
      ∀s₁ s₂. s₁ →* s₂ ⟹
-       sum_tokens(s₁) = sum_tokens(s₂)
+       total_amplitude(s₁) = total_amplitude(s₂)
    ```
 
-2. **Ownership Consistency**
+2. **Phase Consistency**
    ```
-   INVARIANT ownership:
-     ∀s m. valid(s) ∧ m ∈ s.messages ⟹
-       m.author ∈ s.authors
+   INVARIANT phase_coherence:
+     ∀s m. resonant(s) ∧ m ∈ s.waveforms ⟹
+       m.author ∈ s.resonators
    ```
 
-3. **Temporal Ordering**
+3. **Temporal Phase Order**
    ```
-   INVARIANT causality:
-     ∀s m₁ m₂. precedes(m₁, m₂) ⟹
-       m₁.time < m₂.time
+   INVARIANT phase_causality:
+     ∀s w₁ w₂. precedes(w₁, w₂) ⟹
+       w₁.phase < w₂.phase
    ```
 
 ## Composition Laws
 
-1. **Sequential Composition**
+1. **Harmonic Composition**
    ```
-   (f >=> g)(s) = f(s) >>= g
+   (f ⋈ g)(s) = f(s) >>= λs' → g(s')
    ```
 
-2. **Parallel Independence**
+2. **Phase Independence**
    ```
-   ∀f g. independent(f, g) ⟹
+   ∀f g. independent_phase(f, g) ⟹
      f(s) >>= g = g(s) >>= f
    ```
 
-3. **State Transitions**
+3. **State Resonance**
    ```
-   s₁ →[α] s₂ ⟹ valid(s₁) → valid(s₂)
+   s₁ →[α] s₂ ⟹ resonant(s₁) → resonant(s₂)
    ```
 
-## Privacy Algebra
+## Privacy Harmonics
 
-1. **Access Control**
+1. **Access Resonance**
    ```
-   CAN_ACCESS : Author → Content → Result<Bool>
-   CAN_ACCESS(a)(c) =
-     Ok(a ∈ c.thread.authors ∨ c.privacy = public)
+   CAN_RESONATE : Author → Content → Result<Bool>
+   CAN_RESONATE(a)(c) =
+     Ok(a ∈ c.thread.resonators ∨ c.privacy = public)
    ```
 
 2. **View Transformation**
    ```
-   VIEW : Author → State → Result<State>
+   VIEW : Author → HarmonicState → Result<HarmonicState>
    VIEW(a)(s) = Ok({
-     authors: s.authors,
-     tokens: IF a ∈ s.authors THEN s.tokens ELSE ∅,
-     content: FILTER(CAN_ACCESS(a))(s.content)
+     resonators: s.resonators,
+     frequencies: IF a ∈ s.resonators THEN s.frequencies ELSE ∅,
+     waveforms: FILTER(CAN_RESONATE(a))(s.waveforms)
    })
    ```
 
-## Distribution Laws
+## Distribution Harmonics
 
-1. **Token Distribution**
+1. **Amplitude Distribution**
    ```
-   DISTRIBUTE : Set<Author> → Amount → State → Result<State>
-   DISTRIBUTE(A)(amt)(s) =
-     LET share = amt / |A|
-     IN  FOLD_M(λs' a → ADD_BALANCE(a)(share)(s'))(s)(A)
+   DISTRIBUTE : Set<Author> → Amount → HarmonicState → Result<HarmonicState>
+   DISTRIBUTE(A)(amp)(s) =
+     LET frequency = amp / |A|
+     IN  FOLD_M(λs' a → ADD_FREQUENCY(a)(frequency)(s'))(s)(A)
    ```
 
-2. **Stake Resolution**
+2. **Resonance Resolution**
    ```
-   RESOLVE : Hash → Decision → State → Result<State>
+   RESOLVE : Hash → Decision → HarmonicState → Result<HarmonicState>
    RESOLVE(h)(d)(s) = MATCH d:
-     Approve → ADD_TO_THREAD(h)(s)
-     Deny → DISTRIBUTE_STAKE(h)(s)
+     Approve → ADD_TO_RESONANCE(h)(s)
+     Deny → DISTRIBUTE_FREQUENCY(h)(s)
    ```
 
-## System Properties
+Through this harmonic algebra, we see how:
+- States evolve through wave functions
+- Operations preserve phase coherence
+- Value flows through resonant patterns
+- Quality emerges from harmonic stability
 
-1. **Completeness**
-   - Every valid state is reachable through legal transitions
-   - All operations preserve system invariants
-   - System is deadlock-free and live
-
-2. **Safety**
-   - Token conservation is maintained
-   - Ownership integrity is preserved
-   - Temporal consistency is guaranteed
-
-3. **Liveness**
-   - Message processing eventually terminates
-   - Approval resolution completes
-   - State converges to valid configurations
+The algebraic structure provides a rigorous foundation for understanding how meaning and value evolve through resonant interactions.

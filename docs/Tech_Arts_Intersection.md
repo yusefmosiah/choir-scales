@@ -76,20 +76,6 @@ Documentation, like art, is about conveying meaning through carefully chosen rep
    - Screenshots that guide intuition
    - Whitespace that enables comprehension
 
-## Examples
-
-### Poor Documentation
-```markdown
-Configure Azure Container Registry (ACR) using standard procedures...
-```
-
-### Artistic Documentation
-```markdown
-Like a mechanic's garage that only works when the mechanic is watching,
-enterprise cloud platforms create artificial complexity that resolves
-mysteriously under expert observation. Let's explore simpler paths...
-```
-
 ## Principles in Practice
 
 1. **Plot Development**
