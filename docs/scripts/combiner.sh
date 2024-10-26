@@ -42,8 +42,8 @@ add_separator() {
     echo -e "\n"
 }
 
-# First phase: Combine by prefix as before
-prefixes=$(ls docs/docs/*_*.md | sed 's/docs\/docs\///g' | grep -v 'tree' | cut -d'_' -f1 | sort -u)
+# First phase: Combine by prefix
+prefixes=$(ls docs/*_*.md | grep -v 'tree' | cut -d'_' -f1 | sed 's/docs\///g' | sort -u)
 
 for prefix in $prefixes; do
     # Create title from prefix
@@ -72,13 +72,13 @@ for prefix in $prefixes; do
         *) subtitle="" ;;
     esac
 
-    # Create combined file
+    # Create combined file with correct path
     {
         echo "# ${title} ${subtitle}"
         echo -e "\n"
 
         # Concatenate all files with this prefix, excluding tree
-        for file in docs/docs/${prefix}_*.md; do
+        for file in docs/${prefix}_*.md; do
             if [ -f "$file" ] && ! grep -q "tree" <<< "$file"; then
                 add_separator "$(basename "$file" .md)"
                 cat "$file"
@@ -89,17 +89,17 @@ for prefix in $prefixes; do
     echo "Created Combined_${prefix}.md"
 done
 
-# Create a list of all markdown files for verification
-all_docs=$(find docs/docs -name "*.md" ! -name "tree.md")
+# Update file finding patterns to look directly in docs/
+all_docs=$(find docs -maxdepth 1 -name "*.md" ! -name "tree.md")
 
 # Base patterns that define the core structure of each level
 base_patterns=(
-    "Level_0_ tree.md scripts/ Solana_ Frontend_ Backend_ Deploy_ Implementation_ Data_ Error_ Reward_"  # Most concrete
-    "Level_1_ Entry_ Dev_ Plan_ Tech_ Crystallization_"                                                  # Getting started
-    "Level_2_ Core_State Core_Types Core_Blueprint Impl_ State_"                                        # System structure
-    "Level_3_ Core_Economics Theory_Game Theory_Implementation V10_ V12_"                               # Game theory
-    "Level_4_ Core_Convergence Theory_Stake Model_ Meta_Overview"                                       # System concepts
-    "Level_5_ Theory_Quantum Theory_Semantic Harmonic_ Meta_"                                           # Most abstract
+    "Level_0_ tree.md scripts/ Solana_ Frontend_ Backend_ Deploy_ Implementation_ Data_ Error_ Reward_"
+    "Level_1_ Entry_ Dev_ Plan_ Tech_ Crystallization_"
+    "Level_2_ Core_State Core_Types Core_Blueprint Impl_ State_"
+    "Level_3_ Core_Economics Theory_Game Theory_Implementation V10_ V12_"
+    "Level_4_ Core_Convergence Theory_Stake Model_ Meta_Overview"
+    "Level_5_ Theory_Quantum Theory_Semantic Harmonic_ Meta_"
 )
 
 # Additional patterns for each level that follow the concrete->abstract progression
@@ -153,7 +153,7 @@ process_level() {
 
     # Special handling for level -1 (system files)
     if [ "$level" -eq -1 ]; then
-        for special_file in "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh" "docs/docs/tree.md"; do
+        for special_file in "docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
             if [ -f "$special_file" ]; then
                 add_separator "$(basename "$special_file")" >> "$output_file"
                 cat "$special_file" >> "$output_file"
@@ -163,9 +163,9 @@ process_level() {
         return
     fi
 
-    # Process patterns (now only for levels 0-5)
+    # Process patterns
     for pattern in $patterns; do
-        for file in docs/docs/*${pattern}*.md; do
+        for file in docs/*${pattern}*.md; do
             if [ -f "$file" ]; then
                 add_separator "$(basename "$file" .md)" >> "$output_file"
                 cat "$file" >> "$output_file"
