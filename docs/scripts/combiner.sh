@@ -147,7 +147,7 @@ process_level() {
 
     # Special handling for level 0
     if [ "$level" -eq 0 ]; then
-        for special_file in "docs/docs/tree.md" "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh"; do
+        for special_file in "docs/scripts/combiner.sh" "docs/scripts/update_tree.sh" "docs/docs/tree.md"; do
             if [ -f "$special_file" ]; then
                 add_separator "$(basename "$special_file")" >> "$output_file"
                 cat "$special_file" >> "$output_file"
